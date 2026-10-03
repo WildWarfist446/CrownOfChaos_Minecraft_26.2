@@ -1,6 +1,7 @@
 package com.crownofchaos;
 
 import com.crownofchaos.item.ModItems;
+import com.crownofchaos.ability.CrownAbilities;
 import com.crownofchaos.item.CrownEffects;
 
 import net.fabricmc.api.ModInitializer;
@@ -28,6 +29,7 @@ public class CrownOfChaos implements ModInitializer {
 
 		ModItems.initialize();
 		CrownEffects.initialize();
+		CrownAbilities.initialize();
 	}
 
 	public static Identifier id(String path) {
