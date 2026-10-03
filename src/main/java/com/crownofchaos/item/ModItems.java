@@ -28,6 +28,10 @@ public final class ModItems {
 			.humanoidArmor(ArmorMaterials.DIAMOND, ArmorType.HELMET)
 			.rarity(Rarity.EPIC));
 
+	public static final Item CROWN_OF_NETHER = register("crown_of_nether", Item::new, new Item.Properties()
+			.humanoidArmor(ArmorMaterials.DIAMOND, ArmorType.HELMET)
+			.rarity(Rarity.EPIC));
+
 	private ModItems() {
 	}
 
@@ -38,6 +42,6 @@ public final class ModItems {
 
 	public static void initialize() {
 		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.COMBAT)
-				.register(output -> output.insertAfter(Items.NETHERITE_BOOTS, UNDER_CROWN, CROWN_OF_POSEIDON));
+				.register(output -> output.insertAfter(Items.NETHERITE_BOOTS, UNDER_CROWN, CROWN_OF_POSEIDON, CROWN_OF_NETHER));
 	}
 }

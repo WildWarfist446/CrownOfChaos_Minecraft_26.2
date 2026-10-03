@@ -14,6 +14,7 @@ import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -26,6 +27,9 @@ import net.minecraft.world.item.ItemStack;
  * Maps each crown to its ability and handles the ability key sent from the client.
  */
 public final class CrownAbilities {
+	/** Color for crown ability messages; matches the crowns' epic (purple) item names. */
+	public static final ChatFormatting MESSAGE_COLOR = ChatFormatting.LIGHT_PURPLE;
+
 	private static final Map<Item, CrownAbility> ABILITIES = new HashMap<>();
 
 	/** Players currently holding the ability key. Only touched on the server thread. */
@@ -49,6 +53,7 @@ public final class CrownAbilities {
 	public static void initialize() {
 		register(ModItems.UNDER_CROWN, new VeinMinerAbility());
 		register(ModItems.CROWN_OF_POSEIDON, new RiptideAbility());
+		register(ModItems.CROWN_OF_NETHER, new FireChargeAbility());
 
 		VeinMinerAbility.initialize();
 
@@ -76,14 +81,14 @@ public final class CrownAbilities {
 		if (ability == null) {
 			player.sendOverlayMessage(Component.translatable(crown.isEmpty()
 					? "message.crownofchaos.ability.no_crown"
-					: "message.crownofchaos.ability.no_power"));
+					: "message.crownofchaos.ability.no_power").withStyle(MESSAGE_COLOR));
 			return;
 		}
 
 		ItemCooldowns cooldowns = player.getCooldowns();
 		if (cooldowns.isOnCooldown(crown)) {
 			int secondsLeft = Mth.ceil(cooldowns.getCooldownPercent(crown, 0.0F) * ability.cooldownTicks() / 20.0F);
-			player.sendOverlayMessage(Component.translatable("message.crownofchaos.ability.cooldown", secondsLeft));
+			player.sendOverlayMessage(Component.translatable("message.crownofchaos.ability.cooldown", secondsLeft).withStyle(MESSAGE_COLOR));
 			return;
 		}
 

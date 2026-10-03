@@ -36,7 +36,9 @@ public final class CrownEffects {
 			ModItems.CROWN_OF_POSEIDON, List.of(
 					new CrownEffect(MobEffects.WATER_BREATHING, 0),
 					new CrownEffect(MobEffects.DOLPHINS_GRACE, 0),
-					new CrownEffect(MobEffects.NIGHT_VISION, 0)));
+					new CrownEffect(MobEffects.NIGHT_VISION, 0)),
+			ModItems.CROWN_OF_NETHER, List.of(
+					new CrownEffect(MobEffects.FIRE_RESISTANCE, 0)));
 
 	private static final int CHECK_INTERVAL_TICKS = 10;
 

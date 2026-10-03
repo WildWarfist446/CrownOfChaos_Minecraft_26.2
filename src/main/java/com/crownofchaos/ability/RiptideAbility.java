@@ -31,7 +31,8 @@ public final class RiptideAbility implements CrownAbility {
 	@Override
 	public boolean activate(ServerPlayer player, ItemStack crown) {
 		if (!player.isInWaterOrRain() || player.isPassenger()) {
-			player.sendOverlayMessage(Component.translatable("message.crownofchaos.ability.riptide.needs_water"));
+			player.sendOverlayMessage(Component.translatable("message.crownofchaos.ability.riptide.needs_water")
+					.withStyle(CrownAbilities.MESSAGE_COLOR));
 			return false;
 		}
 

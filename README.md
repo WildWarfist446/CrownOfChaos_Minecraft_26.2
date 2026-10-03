@@ -47,6 +47,15 @@ are left untouched.
 | **Middle** | Prismarine Crystals | Golden Helmet | Prismarine Crystals |
 | **Bottom** | Prismarine Shard | Trident | Prismarine Shard |
 
+### Crown of Nether
+
+| Ability | Details |
+|---|---|
+| Fire Resistance | Permanent while worn: immune to fire and lava damage |
+| **Ability: Fire Charge** | Press the crown ability key (default **R**) to shoot a Ghast fireball where you're looking, no fire charge item needed. It flies 25% faster than a Ghast's and explodes like one, hurting nearby mobs, but never breaks blocks or starts fires. The blast can hurt you too, so don't fire it at point-blank range. 2 second cooldown. |
+
+No crafting recipe yet.
+
 ## Crown abilities
 
 Every crown has an active ability, triggered with the **Use Crown Ability** key (default
@@ -57,12 +66,15 @@ is worn.
 |---|---|---|---|
 | Under Crown | Vein Miner | Toggle: press to switch on or off | None |
 | Crown of Poseidon | Riptide | Press to launch | 4.5 seconds |
+| Crown of Nether | Fire Charge | Press to shoot | 2 seconds |
 
 - Abilities with a cooldown show it on the crown's icon, and pressing the key early shows
   the time remaining in the action bar.
 - Toggles show "enabled" or "disabled" in the action bar, and reset to off when you leave
   the world or server.
 - Pressing the key without a crown on shows "Wear a crown to use its power".
+- Ability messages are shown in light purple to match the crowns' item names, except Vein
+  Miner's toggle messages, which are green (enabled) and red (disabled).
 
 ## Installation
 
@@ -88,6 +100,7 @@ In a Creative world with cheats on, crowns can also be found in the Combat tab o
 ```
 /give @s crownofchaos:under_crown
 /give @s crownofchaos:crown_of_poseidon
+/give @s crownofchaos:crown_of_nether
 ```
 
 ### Project layout
@@ -98,8 +111,9 @@ In a Creative world with cheats on, crowns can also be found in the Combat tab o
 | `src/main/java/com/crownofchaos/item/CrownEffects.java` | Each crown's effects and tuning values |
 | `src/main/java/com/crownofchaos/ability/` | Crown abilities and the registry that links each crown to its ability |
 | `src/main/java/com/crownofchaos/network/` | Messages between the client and server (ability key, Riptide launch) |
-| `src/main/java/com/crownofchaos/mixin/` | Passive bonuses that hook into Minecraft (Fortune, water damage) |
+| `src/main/java/com/crownofchaos/mixin/` | Changes that hook into Minecraft (Fortune, water damage, crown fireball explosions) |
 | `src/client/java/com/crownofchaos/client/` | Client-only code: the ability keybind and client-side ability effects |
+| `src/client/java/com/crownofchaos/client/model/` | Crown 3D models and the renderer that draws them on the head |
 | `src/main/resources/assets/crownofchaos/` | Textures, item models and names |
 | `src/main/resources/data/crownofchaos/` | Crafting recipes |
 | `Sprites/` | Source artwork (Aseprite files and PNG exports) |
@@ -111,12 +125,28 @@ In a Creative world with cheats on, crowns can also be found in the Combat tab o
    server when the key is pressed; return `true` to start the cooldown.
 2. Attach it to a crown in `CrownAbilities.initialize()`:
    `register(ModItems.YOUR_CROWN, new YourAbility());`
-3. Add any action-bar messages to `assets/crownofchaos/lang/en_us.json`.
+3. Add any action-bar messages to `assets/crownofchaos/lang/en_us.json`, styled with
+   `CrownAbilities.MESSAGE_COLOR` so they match the other crown messages.
 
 The server also tracks whether the key is held (`CrownAbilities.isHoldingAbilityKey`) for
 abilities that should work while the key is held down.
 
-## Planned
+## 3D models
 
-- Custom 3D crown models, made in Blockbench as Modded Entity exports (Mojang mappings).
-  Until then, crowns look like a diamond helmet when worn.
+Crowns can have a custom 3D model when worn, made in Blockbench as a Modded Entity export
+(Mojang mappings) and kept in `3dmodels/`.
+
+| Crown | Worn model |
+|---|---|
+| Under Crown | Custom 3D model |
+| Crown of Poseidon | Diamond helmet (3D model planned) |
+| Crown of Nether | Diamond helmet (3D model planned) |
+
+### Adding a 3D model
+
+1. Export the model from Blockbench and put the `.java` file and its texture `.png` in
+   `3dmodels/`.
+2. Convert it into a model class in `client/model/` (see `UnderCrownModel`), with the crown
+   parts nested under a part named `head` so they follow the wearer's head.
+3. Copy the texture to `assets/crownofchaos/textures/entity/`.
+4. Register it in `CrownModels.initialize()`.
