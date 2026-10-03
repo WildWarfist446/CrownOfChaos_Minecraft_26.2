@@ -103,6 +103,7 @@ In a Creative world with cheats on, crowns can also be found in the Combat tab o
 | `src/main/resources/assets/crownofchaos/` | Textures, item models and names |
 | `src/main/resources/data/crownofchaos/` | Crafting recipes |
 | `Sprites/` | Source artwork (Aseprite files and PNG exports) |
+| `3dmodels/` | Blockbench 3D model exports for the crowns |
 
 ### Adding a crown ability
 
