@@ -1,7 +1,7 @@
 package com.crownofchaos;
 
 import com.crownofchaos.item.ModItems;
-import com.crownofchaos.item.UnderCrownEffects;
+import com.crownofchaos.item.CrownEffects;
 
 import net.fabricmc.api.ModInitializer;
 
@@ -27,7 +27,7 @@ public class CrownOfChaos implements ModInitializer {
 		LOGGER.info("The Crown of Chaos is loading...");
 
 		ModItems.initialize();
-		UnderCrownEffects.initialize();
+		CrownEffects.initialize();
 	}
 
 	public static Identifier id(String path) {

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "D": "minecraft:diamond_block",
+    "E": "minecraft:emerald_block",
+    "L": "minecraft:lapis_block",
+    "H": "minecraft:golden_helmet",
+    "O": "minecraft:obsidian",
+    "N": "minecraft:lantern"
+  },
+  "pattern": [
+    "DED",
+    "LHL",
+    "ONO"
+  ],
+  "result": {
+    "id": "crownofchaos:under_crown"
+  }
+}

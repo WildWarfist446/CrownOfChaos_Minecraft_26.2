@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "N": "minecraft:nautilus_shell",
+    "H": "minecraft:heart_of_the_sea",
+    "C": "minecraft:prismarine_crystals",
+    "G": "minecraft:golden_helmet",
+    "S": "minecraft:prismarine_shard",
+    "T": "minecraft:trident"
+  },
+  "pattern": [
+    "NHN",
+    "CGC",
+    "STS"
+  ],
+  "result": {
+    "id": "crownofchaos:crown_of_poseidon"
+  }
+}

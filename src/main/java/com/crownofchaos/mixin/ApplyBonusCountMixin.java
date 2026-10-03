@@ -1,6 +1,7 @@
 package com.crownofchaos.mixin;
 
-import com.crownofchaos.item.UnderCrownEffects;
+import com.crownofchaos.item.CrownEffects;
+import com.crownofchaos.item.ModItems;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import org.spongepowered.asm.mixin.Final;
@@ -19,7 +20,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 
 /**
  * Makes block drops that scale with Fortune (ores, crops, etc.) treat the Under Crown's
- * wearer as having at least {@link UnderCrownEffects#FORTUNE_LEVEL} Fortune on their tool.
+ * wearer as having at least {@link CrownEffects.UNDER_CROWN_FORTUNE_LEVEL} Fortune on their tool.
  */
 @Mixin(ApplyBonusCount.class)
 public abstract class ApplyBonusCountMixin {
@@ -38,8 +39,8 @@ public abstract class ApplyBonusCountMixin {
 		}
 
 		Entity entity = context.getOptionalParameter(LootContextParams.THIS_ENTITY);
-		if (entity instanceof LivingEntity living && UnderCrownEffects.isWearing(living)) {
-			return Math.max(level, UnderCrownEffects.FORTUNE_LEVEL);
+		if (entity instanceof LivingEntity living && CrownEffects.isWearing(living, ModItems.UNDER_CROWN)) {
+			return Math.max(level, CrownEffects.UNDER_CROWN_FORTUNE_LEVEL);
 		}
 
 		return level;
