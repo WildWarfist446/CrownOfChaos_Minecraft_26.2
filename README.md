@@ -74,7 +74,9 @@ and keeps Piglins calm like other gold armor.
 | Ability | Details |
 |---|---|
 | Fire Resistance | Permanent while worn: immune to fire and lava damage |
-| **Ability: Fire Charge** | Press the crown ability key (default **R**) to shoot a Ghast fireball where you're looking, no fire charge item needed. It flies 25% faster than a Ghast's and explodes like one, hurting nearby mobs, but never breaks blocks or starts fires. The blast can hurt you too, so don't fire it at point-blank range. 2 second cooldown. |
+| Fire Aspect | Your melee hits set the target on fire for 8 seconds, like Fire Aspect II |
+| Flame | Arrows you fire are lit like Flame arrows, setting targets on fire and lighting TNT |
+| **Ability: Fire Charge** | Press the crown ability key (default **R**) to shoot a Ghast fireball where you're looking, no fire charge item needed. It flies 25% faster than a Ghast's and explodes like one but deals 50% more damage (9 on a direct hit), and sets everything it damages on fire for 5 seconds. It never breaks blocks or starts fires on the ground. The blast can hurt you too, so don't fire it at point-blank range. 2 second cooldown. |
 
 **Recipe** (unlocked by picking up a Nether Star):
 
@@ -166,10 +168,10 @@ In a Creative world with cheats on, crowns can also be found in the Combat tab o
 | Path | Contents |
 |---|---|
 | `src/main/java/com/crownofchaos/item/ModItems.java` | Item registration |
-| `src/main/java/com/crownofchaos/item/CrownEffects.java` | Each crown's effects and tuning values |
+| `src/main/java/com/crownofchaos/item/CrownEffects.java` | Each crown's potion effects, passive bonuses (Darkness on hit, Fire Aspect, Flame) and tuning values |
 | `src/main/java/com/crownofchaos/ability/` | Crown abilities and the registry that links each crown to its ability |
 | `src/main/java/com/crownofchaos/network/` | Messages between the client and server (ability key, Riptide launch) |
-| `src/main/java/com/crownofchaos/mixin/` | Changes that hook into Minecraft (Fortune, water damage, crown fireball explosions) |
+| `src/main/java/com/crownofchaos/mixin/` | Changes that hook into Minecraft (Fortune, damage bonuses, crown fireball explosions) |
 | `src/client/java/com/crownofchaos/client/` | Client-only code: the ability keybind and client-side ability effects |
 | `src/client/java/com/crownofchaos/client/model/` | Crown 3D models and the renderer that draws them on the head |
 | `src/main/resources/assets/crownofchaos/` | Textures, item models and names |
@@ -199,7 +201,7 @@ Crowns can have a custom 3D model when worn, made in Blockbench as a Modded Enti
 | Golden Crown | Golden helmet (3D model planned) |
 | Under Crown | Custom 3D model |
 | Crown of Poseidon | Custom 3D model |
-| Crown of Nether | Diamond helmet (3D model planned) |
+| Crown of Nether | Custom 3D model |
 | Crown of Darkness | Diamond helmet (3D model planned) |
 
 ### Adding a 3D model

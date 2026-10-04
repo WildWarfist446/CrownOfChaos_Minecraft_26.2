@@ -58,6 +58,7 @@ public final class CrownAbilities {
 
 		VeinMinerAbility.initialize();
 		SonicBoomAbility.initialize();
+		FireChargeAbility.initialize();
 
 		PayloadTypeRegistry.serverboundPlay().register(CrownAbilityKeyPayload.TYPE, CrownAbilityKeyPayload.CODEC);
 		PayloadTypeRegistry.clientboundPlay().register(RiptidePayload.TYPE, RiptidePayload.CODEC);
