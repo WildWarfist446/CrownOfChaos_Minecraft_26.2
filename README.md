@@ -6,32 +6,18 @@ protects like a diamond helmet, and grants its own effects and abilities for as 
 is worn. Every magical crown can also be upgraded to netherite.
 
 **Contents:** [Crowns](#crowns) · [Netherite crowns](#netherite-crowns) ·
-[Materials](#materials) · [Changes to vanilla](#changes-to-vanilla) ·
-[Crown abilities](#crown-abilities) · [Installation](#installation) ·
+[Abilities](#abilities) · [Materials](#materials) · [Changes to vanilla](#changes-to-vanilla) ·
+[Ability keys and cooldowns](#ability-keys-and-cooldowns) · [Installation](#installation) ·
 [Finding the items](#finding-the-items) · [3D models](#3d-models) ·
 [Development](#development)
 
 ## Crowns
 
-| Crown | Passive effects | Ability (R) | Recipe unlocked by |
-|---|---|---|---|
-| Golden Crown | None (base crown) | None | Gold Ingot |
-| Under Crown | Haste II, Night Vision, Hero of the Village, Fortune III | Vein Miner (toggle) | Golden Crown |
-| Crown of Poseidon | Water Breathing, Dolphin's Grace, Night Vision, +50% damage in water | Riptide (G: Lightning Strike) | Heart of the Sea |
-| Crown of Nether | Fire Resistance, Fire Aspect, Flame | Fire Charge | Nether Star |
-| Crown of Darkness | Night Vision, Darkness on hit | Sonic Boom | Sculk Cord |
-| Crown of Sun | Swiftness II on sand | Wind Charge (G: Sun Cycle) | Ankh Charm |
-| Crown of Wither | Wither immunity, Wither on hit | Wither Skull | Wither Skeleton Skull |
-| Crown of Winter | Freeze on hit, freeze immunity, Swiftness and grip on snow and ice | Frost Walker (toggle) | Powder Snow Bucket |
-| Crown of Iron | +50% bow and crossbow damage | Arrow Volley (G: Glowing Arrows) | Totem of Undying |
-| Crown of Void | Teleport when hit, Swiftness on End blocks | Ender Pearl (G: Dragon's Breath) | Dragon Egg |
-
 Every crown shimmers with the enchanted glint, in the inventory and when worn. All crowns
-except the Golden Crown have the same armor, toughness, durability and
-enchantability as a diamond helmet and are repaired with diamonds. Their effects are
-applied while the crown is on your head and removed as soon as it comes off; potion and
-beacon effects you already have
-are left untouched.
+except the Golden Crown have the same armor, toughness, durability and enchantability as a
+diamond helmet and are repaired with diamonds. Their effects are applied while the crown is
+on your head and removed as soon as it comes off; potion and beacon effects you already
+have are left untouched.
 
 ### Golden Crown
 
@@ -231,6 +217,27 @@ the crown's enchantments, effects, abilities and look, and gets netherite helmet
 armor and toughness, knockback resistance, more durability, and it doesn't burn in fire or
 lava. The recipes unlock when you pick up a Netherite Ingot.
 
+## Abilities
+
+Each crown grants passive effects for as long as it's worn, plus an active ability on the
+**Use Crown Ability** key (default **R**). Some crowns also have a secondary ability on the
+**Use Secondary Crown Ability** key (default **G**). The table below sums up every crown;
+see its section above for the details, and
+[Ability keys and cooldowns](#ability-keys-and-cooldowns) for how the keys work.
+
+| Crown | Passive effects | Ability (R) | Secondary ability (G) | Recipe unlocked by |
+|---|---|---|---|---|
+| Golden Crown | None (base crown) | None | None | Gold Ingot |
+| Under Crown | Haste II, Night Vision, Hero of the Village, Fortune III | Vein Miner (toggle) | None | Golden Crown |
+| Crown of Poseidon | Water Breathing, Dolphin's Grace, Night Vision, +50% damage in water | Riptide | Lightning Strike | Heart of the Sea |
+| Crown of Nether | Fire Resistance, Fire Aspect, Flame | Fire Charge | None | Nether Star |
+| Crown of Darkness | Night Vision, Darkness on hit | Sonic Boom | None | Sculk Cord |
+| Crown of Sun | Swiftness II on sand | Wind Charge | Sun Cycle | Ankh Charm |
+| Crown of Wither | Wither immunity, Wither on hit | Wither Skull | None | Wither Skeleton Skull |
+| Crown of Winter | Freeze on hit, freeze immunity, Swiftness and grip on snow and ice | Frost Walker (toggle) | None | Powder Snow Bucket |
+| Crown of Iron | +50% bow and crossbow damage | Arrow Volley | Glowing Arrows (toggle) | Totem of Undying |
+| Crown of Void | Teleport when hit, Swiftness on End blocks | Ender Pearl | Dragon's Breath | Dragon Egg |
+
 ## Materials
 
 | Item | Source | Use |
@@ -251,7 +258,7 @@ These apply to everyone in a world with the mod, not just crown wearers:
 - Wardens drop a Sculk Cord, alongside their Sculk Catalyst.
 - Every desert pyramid has an Ankh Charm in one of its four chests.
 
-## Crown abilities
+## Ability keys and cooldowns
 
 Every crown except the Golden Crown has an active ability, triggered with the **Use Crown
 Ability** key (default **R**) while the crown is worn. Crowns can also have a secondary
