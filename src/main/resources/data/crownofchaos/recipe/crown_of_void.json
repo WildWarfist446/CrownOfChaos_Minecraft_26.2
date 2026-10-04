@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "P": "minecraft:purpur_block",
+    "C": "minecraft:chorus_fruit",
+    "E": "minecraft:ender_eye",
+    "H": "crownofchaos:golden_crown",
+    "S": "minecraft:end_stone",
+    "D": "minecraft:dragon_egg"
+  },
+  "pattern": [
+    "PCP",
+    "EHE",
+    "SDS"
+  ],
+  "result": {
+    "id": "crownofchaos:crown_of_void"
+  }
+}

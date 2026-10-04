@@ -38,9 +38,10 @@ public final class WindChargeAbility implements CrownAbility {
 
 		// The same throw as WindChargeItem#use.
 		ServerLevel level = (ServerLevel) player.level();
-		Projectile.spawnProjectileFromRotation(
+		WindCharge windCharge = Projectile.spawnProjectileFromRotation(
 				(source, l, stack) -> new WindCharge(player, level, player.position().x(), player.getEyePosition().y(), player.position().z()),
 				level, new ItemStack(Items.WIND_CHARGE), player, 0.0F, 1.5F, 1.0F);
+		windCharge.addTag(CrownAbilities.CROWN_ABILITY_TAG);
 		level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.WIND_CHARGE_THROW, SoundSource.NEUTRAL,
 				0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
 

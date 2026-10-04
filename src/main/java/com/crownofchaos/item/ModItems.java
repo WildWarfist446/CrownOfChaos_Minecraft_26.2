@@ -59,6 +59,7 @@ public final class ModItems {
 	public static final Item CROWN_OF_WITHER = registerCrown("crown_of_wither", ArmorMaterials.DIAMOND, Rarity.EPIC);
 	public static final Item CROWN_OF_WINTER = registerCrown("crown_of_winter", ArmorMaterials.DIAMOND, Rarity.EPIC);
 	public static final Item CROWN_OF_IRON = registerCrown("crown_of_iron", ArmorMaterials.DIAMOND, Rarity.EPIC);
+	public static final Item CROWN_OF_VOID = registerCrown("crown_of_void", ArmorMaterials.DIAMOND, Rarity.EPIC);
 
 	/** Netherite versions, made from the crowns above in a smithing table. Maps each to its crown. */
 	private static final Map<Item, Item> NETHERITE_TO_BASE = new HashMap<>();
@@ -73,6 +74,7 @@ public final class ModItems {
 	public static final Item NETHERITE_CROWN_OF_WITHER = registerNetheriteCrown("crown_of_wither", CROWN_OF_WITHER);
 	public static final Item NETHERITE_CROWN_OF_WINTER = registerNetheriteCrown("crown_of_winter", CROWN_OF_WINTER);
 	public static final Item NETHERITE_CROWN_OF_IRON = registerNetheriteCrown("crown_of_iron", CROWN_OF_IRON);
+	public static final Item NETHERITE_CROWN_OF_VOID = registerNetheriteCrown("crown_of_void", CROWN_OF_VOID);
 
 	/** Dropped by Wardens; used to craft the Crown of Darkness. */
 	public static final Item SCULK_CORD = register("sculk_cord", Item::new, withLore("sculk_cord", new Item.Properties()
@@ -178,6 +180,7 @@ public final class ModItems {
 					output.accept(CROWN_OF_WITHER);
 					output.accept(CROWN_OF_WINTER);
 					output.accept(CROWN_OF_IRON);
+					output.accept(CROWN_OF_VOID);
 					output.accept(NETHERITE_UNDER_CROWN);
 					output.accept(NETHERITE_CROWN_OF_POSEIDON);
 					output.accept(NETHERITE_CROWN_OF_NETHER);
@@ -186,6 +189,7 @@ public final class ModItems {
 					output.accept(NETHERITE_CROWN_OF_WITHER);
 					output.accept(NETHERITE_CROWN_OF_WINTER);
 					output.accept(NETHERITE_CROWN_OF_IRON);
+					output.accept(NETHERITE_CROWN_OF_VOID);
 					output.accept(SCULK_CORD);
 					output.accept(ANKH_CHARM);
 				})
@@ -193,8 +197,8 @@ public final class ModItems {
 
 		// Also listed alongside similar vanilla items.
 		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.COMBAT)
-				.register(output -> output.insertAfter(Items.NETHERITE_BOOTS, GOLDEN_CROWN, UNDER_CROWN, CROWN_OF_POSEIDON, CROWN_OF_NETHER, CROWN_OF_DARKNESS, CROWN_OF_SUN, CROWN_OF_WITHER, CROWN_OF_WINTER, CROWN_OF_IRON,
-						NETHERITE_UNDER_CROWN, NETHERITE_CROWN_OF_POSEIDON, NETHERITE_CROWN_OF_NETHER, NETHERITE_CROWN_OF_DARKNESS, NETHERITE_CROWN_OF_SUN, NETHERITE_CROWN_OF_WITHER, NETHERITE_CROWN_OF_WINTER, NETHERITE_CROWN_OF_IRON));
+				.register(output -> output.insertAfter(Items.NETHERITE_BOOTS, GOLDEN_CROWN, UNDER_CROWN, CROWN_OF_POSEIDON, CROWN_OF_NETHER, CROWN_OF_DARKNESS, CROWN_OF_SUN, CROWN_OF_WITHER, CROWN_OF_WINTER, CROWN_OF_IRON, CROWN_OF_VOID,
+						NETHERITE_UNDER_CROWN, NETHERITE_CROWN_OF_POSEIDON, NETHERITE_CROWN_OF_NETHER, NETHERITE_CROWN_OF_DARKNESS, NETHERITE_CROWN_OF_SUN, NETHERITE_CROWN_OF_WITHER, NETHERITE_CROWN_OF_WINTER, NETHERITE_CROWN_OF_IRON, NETHERITE_CROWN_OF_VOID));
 		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.INGREDIENTS)
 				.register(output -> output.insertAfter(Items.ECHO_SHARD, SCULK_CORD, ANKH_CHARM));
 

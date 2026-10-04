@@ -7,10 +7,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import com.crownofchaos.item.CrownEffects;
 import com.crownofchaos.item.ModItems;
 import com.crownofchaos.network.CrownAbilityKeyPayload;
 import com.crownofchaos.network.RiptidePayload;
 
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -19,7 +21,10 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemCooldowns;
 import net.minecraft.world.item.ItemStack;
@@ -33,6 +38,9 @@ import net.minecraft.world.item.ItemStack;
  * cooldown here instead.
  */
 public final class CrownAbilities {
+	/** Entity tag on every projectile and cloud a crown ability creates. Saved with the entity. */
+	public static final String CROWN_ABILITY_TAG = "crownofchaos.crown_ability";
+
 	/** Color for crown ability messages; matches the crowns' epic (purple) item names. */
 	public static final ChatFormatting MESSAGE_COLOR = ChatFormatting.LIGHT_PURPLE;
 
@@ -89,14 +97,17 @@ public final class CrownAbilities {
 		register(ModItems.CROWN_OF_WITHER, new WitherSkullAbility());
 		register(ModItems.CROWN_OF_WINTER, new FrostWalkerAbility());
 		register(ModItems.CROWN_OF_IRON, new ArrowVolleyAbility());
+		register(ModItems.CROWN_OF_VOID, new EnderPearlAbility());
 
 		registerSecondary(ModItems.CROWN_OF_SUN, new SunCycleAbility());
+		registerSecondary(ModItems.CROWN_OF_VOID, new DragonBreathAbility());
 
 		VeinMinerAbility.initialize();
 		SonicBoomAbility.initialize();
 		FireChargeAbility.initialize();
 		FrostWalkerAbility.initialize();
 		ArrowVolleyAbility.initialize();
+		DragonBreathAbility.initialize();
 
 		PayloadTypeRegistry.serverboundPlay().register(CrownAbilityKeyPayload.TYPE, CrownAbilityKeyPayload.CODEC);
 		PayloadTypeRegistry.clientboundPlay().register(RiptidePayload.TYPE, RiptidePayload.CODEC);
@@ -110,11 +121,30 @@ public final class CrownAbilities {
 				holding.remove(player.getUUID());
 			}
 		});
+		// Crown abilities never hurt the wearer's own pets.
+		ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) ->
+				!(CrownEffects.isPetOf(entity, source.getEntity()) && isFromCrownAbility(source)));
+
 		ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> {
 			for (Set<UUID> holding : HOLDING_KEY.values()) {
 				holding.remove(handler.getPlayer().getUUID());
 			}
 		});
+	}
+
+	/**
+	 * Whether damage came from a crown ability: a crown-made projectile, cloud or explosion, the
+	 * Crown of Darkness's sonic boom, or the Crown of Poseidon's Riptide spin attack.
+	 */
+	private static boolean isFromCrownAbility(DamageSource source) {
+		if (source.getDirectEntity() != null && source.getDirectEntity().entityTags().contains(CROWN_ABILITY_TAG)) {
+			return true;
+		}
+		if (!(source.getEntity() instanceof LivingEntity attacker)) {
+			return false;
+		}
+		return source.is(DamageTypes.SONIC_BOOM) && CrownEffects.isWearing(attacker, ModItems.CROWN_OF_DARKNESS)
+				|| attacker.isAutoSpinAttack() && CrownEffects.isWearing(attacker, ModItems.CROWN_OF_POSEIDON);
 	}
 
 	private static void tryActivate(ServerPlayer player, AbilitySlot slot) {

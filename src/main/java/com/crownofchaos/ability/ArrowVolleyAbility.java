@@ -139,6 +139,7 @@ public final class ArrowVolleyAbility implements CrownAbility {
 		arrow.setBaseDamage(ARROW_BASE_DAMAGE);
 		arrow.setDeltaMovement(0.0, -FALL_SPEED, 0.0);
 		arrow.addTag(ARROW_TAG);
+		arrow.addTag(CrownAbilities.CROWN_ABILITY_TAG);
 		level.addFreshEntity(arrow);
 
 		if (volley.fired % 8 == 0) {

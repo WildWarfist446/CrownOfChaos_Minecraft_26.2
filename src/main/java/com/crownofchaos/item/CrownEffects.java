@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import com.crownofchaos.CrownOfChaos;
+import org.jspecify.annotations.Nullable;
 
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
@@ -15,17 +16,26 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.entity.projectile.arrow.ThrownTrident;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.block.Block;
 
 /**
@@ -59,10 +69,24 @@ public final class CrownEffects {
 	public static final TagKey<Block> WINTER_CROWN_SPEED_BLOCKS =
 			TagKey.create(Registries.BLOCK, CrownOfChaos.id("crown_of_winter_speed_blocks"));
 
+	/** Blocks the Crown of Void gives Swiftness on: End blocks like end stone, purpur and obsidian. */
+	public static final TagKey<Block> VOID_CROWN_SPEED_BLOCKS =
+			TagKey.create(Registries.BLOCK, CrownOfChaos.id("crown_of_void_speed_blocks"));
+
 	/** Crowns that give Swiftness while standing on certain blocks. */
 	private static final Map<Item, TagKey<Block>> TERRAIN_SPEED_BLOCKS = Map.of(
 			ModItems.CROWN_OF_SUN, SUN_CROWN_SPEED_BLOCKS,
-			ModItems.CROWN_OF_WINTER, WINTER_CROWN_SPEED_BLOCKS);
+			ModItems.CROWN_OF_WINTER, WINTER_CROWN_SPEED_BLOCKS,
+			ModItems.CROWN_OF_VOID, VOID_CROWN_SPEED_BLOCKS);
+
+	/** A Crown of Void wearer who gets hit teleports to a safe spot up to this many blocks away. */
+	private static final double VOID_CROWN_TELEPORT_RANGE = 5.0;
+
+	/** Minimum time between Crown of Void teleports (5 seconds), so every hit doesn't bounce them around. */
+	private static final int VOID_CROWN_TELEPORT_COOLDOWN_TICKS = 100;
+
+	/** Server tick of each Crown of Void wearer's last teleport. */
+	private static final Map<UUID, Integer> LAST_VOID_TELEPORT = new HashMap<>();
 
 	/** Swiftness II, the strongest level potions and beacons give. */
 	private static final CrownEffect TERRAIN_SWIFTNESS = new CrownEffect(MobEffects.SPEED, 1);
@@ -100,9 +124,14 @@ public final class CrownEffects {
 			ModItems.CROWN_OF_DARKNESS, List.of(
 					new CrownEffect(MobEffects.NIGHT_VISION, 0)));
 
-	private static final int CHECK_INTERVAL_TICKS = 10;
+	private static final int CHECK_INTERVAL_TICKS = 2;
 
 	private CrownEffects() {
+	}
+
+	/** Whether the entity is an animal tamed by the given player or mob: wolves, cats, horses and so on. */
+	public static boolean isPetOf(Entity entity, @Nullable Entity owner) {
+		return owner != null && entity instanceof OwnableEntity pet && pet.getOwner() == owner;
 	}
 
 	public static boolean isWearing(LivingEntity entity, Item crown) {
@@ -117,6 +146,7 @@ public final class CrownEffects {
 					&& !source.is(DamageTypes.THORNS)
 					&& source.getEntity() instanceof LivingEntity attacker
 					&& attacker != target
+					&& !isPetOf(target, attacker)
 					&& isWearing(attacker, ModItems.CROWN_OF_NETHER)) {
 				target.igniteForSeconds(NETHER_CROWN_FIRE_ASPECT_SECONDS);
 			}
@@ -129,6 +159,7 @@ public final class CrownEffects {
 					&& !source.is(DamageTypes.THORNS)
 					&& source.getEntity() instanceof LivingEntity attacker
 					&& attacker != target
+					&& !isPetOf(target, attacker)
 					&& isWearing(attacker, ModItems.CROWN_OF_WITHER)) {
 				target.addEffect(new MobEffectInstance(MobEffects.WITHER, WITHER_CROWN_WITHER_TICKS), attacker);
 			}
@@ -141,9 +172,26 @@ public final class CrownEffects {
 					&& source.getEntity() instanceof LivingEntity attacker
 					&& attacker != target
 					&& target.canFreeze()
+					&& !isPetOf(target, attacker)
 					&& isWearing(attacker, ModItems.CROWN_OF_WINTER)) {
 				int frozen = target.getTicksRequiredToFreeze() + WINTER_CROWN_EXTRA_FREEZE_TICKS;
 				target.setTicksFrozen(Math.max(target.getTicksFrozen(), frozen));
+			}
+		});
+
+		// Crown of Void: getting hit teleports the wearer to a safe spot nearby, like an Enderman,
+		// sidestepping their attacker and turning to face it.
+		ServerLivingEntityEvents.AFTER_DAMAGE.register((target, source, baseDamage, damageTaken, blocked) -> {
+			if (!blocked && damageTaken > 0.0F
+					&& target.isAlive()
+					&& target instanceof ServerPlayer player
+					// Not from landing an ender pearl, which would undo every throw, or from the void.
+					&& !source.is(DamageTypes.ENDER_PEARL)
+					&& !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)
+					&& isWearing(player, ModItems.CROWN_OF_VOID)) {
+				// The one who hit them: for arrows and other projectiles, whoever fired them.
+				Entity attacker = source.getEntity() != null ? source.getEntity() : source.getDirectEntity();
+				voidCrownTeleport(player, attacker == player ? null : attacker);
 			}
 		});
 
@@ -165,12 +213,16 @@ public final class CrownEffects {
 			if (!blocked && damageTaken > 0.0F
 					&& source.getEntity() instanceof LivingEntity attacker
 					&& attacker != target
+					&& !isPetOf(target, attacker)
 					&& isWearing(attacker, ModItems.CROWN_OF_DARKNESS)) {
 				target.addEffect(new MobEffectInstance(MobEffects.DARKNESS, DARKNESS_ON_HIT_TICKS, 0, false, false), attacker);
 			}
 		});
 
-		ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> LAST_ON_TERRAIN.remove(handler.getPlayer().getUUID()));
+		ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> {
+			LAST_ON_TERRAIN.remove(handler.getPlayer().getUUID());
+			LAST_VOID_TELEPORT.remove(handler.getPlayer().getUUID());
+		});
 
 		ServerTickEvents.END_SERVER_TICK.register(server -> {
 			if (server.getTickCount() % CHECK_INTERVAL_TICKS != 0) {
@@ -204,8 +256,101 @@ public final class CrownEffects {
 		});
 	}
 
+	/**
+	 * Teleports a Crown of Void wearer to a safe spot nearby. If something hit them, they
+	 * sidestep up to 5 blocks to its left or right (not straight back, which would leave a
+	 * ranged attacker a clean shot) and end up facing it. Otherwise they teleport to a random
+	 * safe spot within range, like chorus fruit (see vanilla {@code TeleportRandomlyConsumeEffect}).
+	 */
+	private static void voidCrownTeleport(ServerPlayer player, @Nullable Entity attacker) {
+		ServerLevel level = (ServerLevel) player.level();
+		int now = level.getServer().getTickCount();
+		Integer last = LAST_VOID_TELEPORT.get(player.getUUID());
+		// Ignore stale entries from before a world reload, when the server's tick counter restarts.
+		if (last != null && now >= last && now - last < VOID_CROWN_TELEPORT_COOLDOWN_TICKS) {
+			return;
+		}
+
+		if (player.isPassenger()) {
+			player.stopRiding();
+		}
+
+		Vec3 oldPos = player.position();
+		boolean teleported = attacker != null && attacker.level() == level
+				? sidestep(player, attacker)
+				: teleportRandomly(player, level);
+		if (!teleported) {
+			return;
+		}
+
+		level.gameEvent(GameEvent.TELEPORT, oldPos, GameEvent.Context.of(player));
+		level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
+		player.resetFallDistance();
+		LAST_VOID_TELEPORT.put(player.getUUID(), now);
+
+		if (attacker != null && attacker.level() == level) {
+			faceTowards(player, attacker);
+		}
+	}
+
+	/** Teleports to a safe spot to the attacker's left or right, trying farther spots first. */
+	private static boolean sidestep(ServerPlayer player, Entity attacker) {
+		double dx = attacker.getX() - player.getX();
+		double dz = attacker.getZ() - player.getZ();
+		// Straight at the attacker, flattened; if they're right on top of us, use where we're facing.
+		double towardsAttacker = dx * dx + dz * dz > 1.0E-4 ? Math.atan2(dz, dx) : Math.toRadians(player.getYRot() + 90.0F);
+
+		double firstSide = player.getRandom().nextBoolean() ? 1.0 : -1.0;
+		for (double distance = VOID_CROWN_TELEPORT_RANGE; distance >= 2.0; distance -= 1.0) {
+			for (double side : new double[] {firstSide, -firstSide}) {
+				for (int attempt = 0; attempt < 3; attempt++) {
+					// 90 degrees off the line to the attacker, give or take up to 25.
+					double jitter = Math.toRadians((player.getRandom().nextDouble() - 0.5) * 50.0);
+					double angle = towardsAttacker + side * Math.PI / 2.0 + jitter;
+					double x = player.getX() + Math.cos(angle) * distance;
+					double z = player.getZ() + Math.sin(angle) * distance;
+					// Start a little higher so small steps up still count; randomTeleport drops to the ground.
+					double y = player.getY() + 2.0;
+					if (player.randomTeleport(x, y, z, true)) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	private static boolean teleportRandomly(ServerPlayer player, ServerLevel level) {
+		double diameter = VOID_CROWN_TELEPORT_RANGE * 2.0;
+		for (int attempt = 0; attempt < 16; attempt++) {
+			double x = player.getX() + (player.getRandom().nextDouble() - 0.5) * diameter;
+			double y = Mth.clamp(player.getY() + (player.getRandom().nextDouble() - 0.5) * diameter,
+					level.getMinY(), level.getMinY() + level.getLogicalHeight() - 1);
+			double z = player.getZ() + (player.getRandom().nextDouble() - 0.5) * diameter;
+			if (player.randomTeleport(x, y, z, true)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/** Turns the player to look at the entity's eyes. */
+	private static void faceTowards(ServerPlayer player, Entity target) {
+		Vec3 delta = target.getEyePosition().subtract(player.getEyePosition());
+		double horizontal = Math.sqrt(delta.x * delta.x + delta.z * delta.z);
+		float yaw = Mth.wrapDegrees((float) (Mth.atan2(delta.z, delta.x) * Mth.RAD_TO_DEG) - 90.0F);
+		float pitch = Mth.wrapDegrees((float) -(Mth.atan2(delta.y, horizontal) * Mth.RAD_TO_DEG));
+		player.connection.teleport(player.getX(), player.getY(), player.getZ(), yaw, pitch);
+		player.setYHeadRot(yaw);
+	}
+
+	/**
+	 * Whether the player is standing on (or, after the grace period, just stepped off) one of
+	 * the blocks. Also checks the block at their feet: a single layer of snow has no collision,
+	 * so they actually stand on the block beneath it.
+	 */
 	private static boolean isOnTerrain(ServerPlayer player, TagKey<Block> blocks, int tick) {
-		if (player.getBlockStateOn().is(blocks)) {
+		if (player.getBlockStateOn().is(blocks) || player.level().getBlockState(player.blockPosition()).is(blocks)) {
 			LAST_ON_TERRAIN.put(player.getUUID(), tick);
 			return true;
 		}

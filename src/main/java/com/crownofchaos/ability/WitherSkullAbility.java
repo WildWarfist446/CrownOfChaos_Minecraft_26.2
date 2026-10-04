@@ -48,6 +48,7 @@ public final class WitherSkullAbility implements CrownAbility {
 		Vec3 start = player.getEyePosition().add(look.scale(0.5));
 		skull.setPos(start.x, start.y, start.z);
 		skull.addTag(SKULL_TAG);
+		skull.addTag(CrownAbilities.CROWN_ABILITY_TAG);
 		player.level().addFreshEntity(skull);
 		player.level().levelEvent(null, WITHER_SHOOT_EVENT, player.blockPosition(), 0);
 

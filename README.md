@@ -18,6 +18,7 @@ as it is worn.
 | Crown of Wither | Wither immunity, Wither on hit | Wither Skull | Wither Skeleton Skull |
 | Crown of Winter | Freeze on hit, freeze immunity, Swiftness and grip on snow and ice | Frost Walker (toggle) | Powder Snow Bucket |
 | Crown of Iron | +50% bow and crossbow damage | Arrow Volley | Totem of Undying |
+| Crown of Void | Teleport when hit, Swiftness on End blocks | Ender Pearl (G: Dragon's Breath) | Dragon Egg |
 
 Every crown shimmers with the enchanted glint, in the inventory and when worn. All crowns
 except the Golden Crown have the same armor, toughness, durability and
@@ -190,6 +191,29 @@ and keeps Piglins calm like other gold armor.
 | **Middle** | Emerald | Golden Crown | Emerald |
 | **Bottom** | Emerald | Diamond Block | Emerald |
 
+### Crown of Void
+
+*"Congratulations, you killed the dragon."*
+
+| Ability | Details |
+|---|---|
+| Teleport when hit | Getting hit teleports you up to 5 blocks to a safe spot to your attacker's left or right (not straight back, so archers can't keep a clean shot) and turns you to face them. Hits with no attacker, like falls or lava, teleport you to a random safe spot nearby. At most once every 5 seconds, and not from ender pearl landing damage |
+| Swiftness II | While standing on end stone, end stone bricks, purpur, obsidian or End portal frames (and their slabs, stairs and walls). Lasts 1 second after stepping off |
+| **Ability: Ender Pearl** | Press the crown ability key (default **R**) to throw an ender pearl, exactly like the item, no pearl needed. 3 second cooldown. |
+| **Secondary ability: Dragon's Breath** | Press the secondary crown ability key (default **G**) to surround yourself with the Ender Dragon's breath: a cloud that starts 3 blocks wide, spreads to 7 over 30 seconds, and deals 6 damage a second to everything inside except you and your pets, undead mobs included. It can't be bottled. 30 second cooldown. |
+
+**Recipe** (unlocked by picking up the Dragon Egg):
+
+| | Left | Middle | Right |
+|---|---|---|---|
+| **Top** | Purpur Block | Chorus Fruit | Purpur Block |
+| **Middle** | Eye of Ender | Golden Crown | Eye of Ender |
+| **Bottom** | End Stone | Dragon Egg | End Stone |
+
+Every time the Ender Dragon is defeated, including after resummoning it with End Crystals, a
+new Dragon Egg appears on the exit portal (vanilla only gives one, the first time). If an
+egg from an earlier fight is still there, no extra one is added.
+
 ### Netherite crowns
 
 Every crown except the Golden Crown can be upgraded at a smithing table, just like a diamond
@@ -208,6 +232,16 @@ lava. The recipes unlock when you pick up a Netherite Ingot.
 
 Descriptions: the Sculk Cord reads *"The screeching has finally ceased..."* and the Ankh
 Charm reads *"Ra would be proud."*
+
+## Changes to vanilla
+
+These apply to everyone in a world with the mod, not just crown wearers:
+
+- Every Ender Dragon defeat places a Dragon Egg on the exit portal, including resummoned
+  dragons (vanilla only does this the first time). No extra egg is added if one is already
+  there.
+- Wardens drop a Sculk Cord, alongside their Sculk Catalyst.
+- Every desert pyramid has an Ankh Charm in one of its four chests.
 
 ## Crown abilities
 
@@ -230,6 +264,8 @@ other. Pressing **G** on a crown without a secondary ability says so.
 | Crown of Wither | R | Wither Skull | Press to shoot (3 charges) | 3 seconds between shots, 6 seconds per charge |
 | Crown of Winter | R | Frost Walker | Toggle: press to switch on or off | None |
 | Crown of Iron | R | Arrow Volley | Press while looking at a target | 10 seconds |
+| Crown of Void | R | Ender Pearl | Press to throw | 3 seconds |
+| Crown of Void | G | Dragon's Breath | Press to surround yourself with dragon's breath | 30 seconds |
 
 - Primary abilities with a cooldown show it on the crown's icon, and pressing the key early
   shows the time remaining in the action bar. Secondary ability cooldowns show in the action
@@ -239,6 +275,9 @@ other. Pressing **G** on a crown without a secondary ability says so.
 - Toggles show "enabled" or "disabled" in the action bar, and reset to off when you leave
   the world or server.
 - Pressing the key without a crown on shows "Wear a crown to use its power".
+- Crown abilities never hurt animals you've tamed (wolves, cats, parrots, horses and so on),
+  and crown on-hit effects (Darkness, Wither, freezing, Fire Aspect) don't apply to them.
+  Other players' pets can still be hit.
 - Ability messages are shown in light purple to match the crowns' item names, except Vein
   Miner's and Frost Walker's toggle messages, which are green (enabled) and red (disabled).
 
@@ -274,6 +313,7 @@ Combat tab and materials in the Ingredients tab). With cheats on, they can also 
 /give @s crownofchaos:crown_of_wither
 /give @s crownofchaos:crown_of_winter
 /give @s crownofchaos:crown_of_iron
+/give @s crownofchaos:crown_of_void
 /give @s crownofchaos:netherite_crown_of_winter   (netherite_ + any crown's name)
 /give @s crownofchaos:sculk_cord
 /give @s crownofchaos:ankh_charm
@@ -284,10 +324,10 @@ Combat tab and materials in the Ingredients tab). With cheats on, they can also 
 | Path | Contents |
 |---|---|
 | `src/main/java/com/crownofchaos/item/ModItems.java` | Items (crowns, netherite crowns, materials), the creative tab, and loot (Sculk Cord, Ankh Charm) |
-| `src/main/java/com/crownofchaos/item/CrownEffects.java` | Each crown's potion effects, passive bonuses (Darkness on hit, Fire Aspect, Flame, Wither on hit, freeze on hit, Swiftness on sand, snow and ice) and tuning values |
+| `src/main/java/com/crownofchaos/item/CrownEffects.java` | Each crown's potion effects, passive bonuses (Darkness on hit, Fire Aspect, Flame, Wither on hit, freeze on hit, Swiftness on sand, snow, ice and End blocks, Crown of Void teleport) and tuning values |
 | `src/main/java/com/crownofchaos/ability/` | Crown abilities and the registry that links each crown to its ability |
 | `src/main/java/com/crownofchaos/network/` | Messages between the client and server (ability keys, Riptide launch) |
-| `src/main/java/com/crownofchaos/mixin/` | Changes that hook into Minecraft (Fortune, damage bonuses, volley arrows and shield blocking, crown fireball and wither skull explosions, Wither immunity, ice grip, walking on powder snow) |
+| `src/main/java/com/crownofchaos/mixin/` | Changes that hook into Minecraft (Fortune, damage bonuses, a Dragon Egg on every dragon kill, volley arrows and shield blocking, crown fireball and wither skull explosions, Wither immunity, ice grip, walking on powder snow) |
 | `src/client/java/com/crownofchaos/client/` | Client-only code: the ability keybind and client-side ability effects |
 | `src/client/java/com/crownofchaos/client/model/` | Crown 3D models and the renderer that draws them on the head |
 | `src/main/resources/assets/crownofchaos/` | Textures, item models and names |
@@ -336,6 +376,7 @@ Crowns can have a custom 3D model when worn, made in Blockbench as a Modded Enti
 | Crown of Wither | Custom 3D model |
 | Crown of Winter | Diamond helmet (3D model planned) |
 | Crown of Iron | Diamond helmet (3D model planned) |
+| Crown of Void | Diamond helmet (3D model planned) |
 
 ### Adding a 3D model
 

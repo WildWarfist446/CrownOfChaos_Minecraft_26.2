@@ -48,6 +48,7 @@ public final class FireChargeAbility implements CrownAbility {
 		fireball.accelerationPower = ACCELERATION;
 		fireball.setDeltaMovement(look.normalize().scale(ACCELERATION));
 		fireball.addTag(FIREBALL_TAG);
+		fireball.addTag(CrownAbilities.CROWN_ABILITY_TAG);
 		player.level().addFreshEntity(fireball);
 
 		player.level().playSound(null, player, SoundEvents.GHAST_SHOOT, SoundSource.PLAYERS, 1.0F,
