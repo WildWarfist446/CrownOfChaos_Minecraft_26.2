@@ -7,10 +7,14 @@ Crown, then upgrade it into one of the magical crowns. Each is worn in the helme
 protects like a diamond helmet, and grants its own effects and abilities for as long as it
 is worn. Every magical crown can also be upgraded to netherite.
 
+> **AI disclosure:** The code for this mod was written with the help of AI (Claude, by
+> Anthropic). All of the art (item sprites, the logo and the 3D crown models) was drawn by
+> hand by the mod's creators.
+
 **Contents:** [Crowns](#crowns) · [Netherite crowns](#netherite-crowns) ·
 [Abilities](#abilities) · [Materials](#materials) · [Changes to vanilla](#changes-to-vanilla) ·
 [Installation](#installation) · [Finding the items](#finding-the-items) ·
-[3D models](#3d-models) · [Development](#development)
+[3D models](#3d-models) · [Development](#development) · [Credits](#credits)
 
 ## Crowns
 
@@ -333,3 +337,9 @@ made.
 
 Building the mod, the project layout, and how to add crowns, abilities and 3D models are
 covered in [DEVELOPMENT.md](DEVELOPMENT.md).
+
+## Credits
+
+Created by Warfist. All art, including the item sprites, logo and 3D crown models, was drawn
+by hand by the mod's creators. The code was written with the help of AI (Claude, by
+Anthropic).

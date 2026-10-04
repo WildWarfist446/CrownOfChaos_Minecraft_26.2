@@ -1,7 +1,8 @@
 # Developing The Crown of Chaos
 
 How to build, run and extend the mod. For what the mod does in game, see the
-[README](README.md).
+[README](README.md). Working with Claude? [CLAUDE.md](CLAUDE.md) has the context and
+standing rules for AI sessions.
 
 ## Setup
 
