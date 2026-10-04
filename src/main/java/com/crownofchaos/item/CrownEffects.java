@@ -3,6 +3,7 @@ package com.crownofchaos.item;
 import java.util.List;
 import java.util.Map;
 
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 
 import net.minecraft.core.Holder;
@@ -18,7 +19,8 @@ import net.minecraft.world.item.Item;
  * Grants each crown's potion effects while it is worn on the head. Crown abilities that
  * aren't potion effects live in mixins: Under Crown Fortune in
  * {@link com.crownofchaos.mixin.ApplyBonusCountMixin}, Crown of Poseidon damage in
- * {@link com.crownofchaos.mixin.LivingEntityMixin}.
+ * {@link com.crownofchaos.mixin.LivingEntityMixin}. Crown of Darkness on-hit Darkness is
+ * handled here in {@link #initialize()}.
  */
 public final class CrownEffects {
 	/** Fortune level granted to block drops while the Under Crown is worn. */
@@ -26,6 +28,9 @@ public final class CrownEffects {
 
 	/** Damage multiplier for attacks made while wearing the Crown of Poseidon in water. */
 	public static final float POSEIDON_CROWN_WATER_DAMAGE_MULTIPLIER = 1.5F;
+
+	/** Darkness given to anything the Crown of Darkness wearer hits (20 seconds). */
+	public static final int DARKNESS_ON_HIT_TICKS = 400;
 
 	// Amplifiers are zero-based: 0 = level I, 1 = level II.
 	private static final Map<Item, List<CrownEffect>> EFFECTS = Map.of(
@@ -38,7 +43,9 @@ public final class CrownEffects {
 					new CrownEffect(MobEffects.DOLPHINS_GRACE, 0),
 					new CrownEffect(MobEffects.NIGHT_VISION, 0)),
 			ModItems.CROWN_OF_NETHER, List.of(
-					new CrownEffect(MobEffects.FIRE_RESISTANCE, 0)));
+					new CrownEffect(MobEffects.FIRE_RESISTANCE, 0)),
+			ModItems.CROWN_OF_DARKNESS, List.of(
+					new CrownEffect(MobEffects.NIGHT_VISION, 0)));
 
 	private static final int CHECK_INTERVAL_TICKS = 10;
 
@@ -50,6 +57,17 @@ public final class CrownEffects {
 	}
 
 	public static void initialize() {
+		// Crown of Darkness: hits (including the wearer's arrows and tridents) inflict the
+		// Warden's Darkness on the target.
+		ServerLivingEntityEvents.AFTER_DAMAGE.register((target, source, baseDamage, damageTaken, blocked) -> {
+			if (!blocked && damageTaken > 0.0F
+					&& source.getEntity() instanceof LivingEntity attacker
+					&& attacker != target
+					&& isWearing(attacker, ModItems.CROWN_OF_DARKNESS)) {
+				target.addEffect(new MobEffectInstance(MobEffects.DARKNESS, DARKNESS_ON_HIT_TICKS, 0, false, false), attacker);
+			}
+		});
+
 		ServerTickEvents.END_SERVER_TICK.register(server -> {
 			if (server.getTickCount() % CHECK_INTERVAL_TICKS != 0) {
 				return;

@@ -54,7 +54,22 @@ are left untouched.
 | Fire Resistance | Permanent while worn: immune to fire and lava damage |
 | **Ability: Fire Charge** | Press the crown ability key (default **R**) to shoot a Ghast fireball where you're looking, no fire charge item needed. It flies 25% faster than a Ghast's and explodes like one, hurting nearby mobs, but never breaks blocks or starts fires. The blast can hurt you too, so don't fire it at point-blank range. 2 second cooldown. |
 
-No crafting recipe yet.
+**Recipe** (unlocked by picking up a Nether Star):
+
+| | Left | Middle | Right |
+|---|---|---|---|
+| **Top** | Gold Block | Nether Star | Gold Block |
+| **Middle** | Blaze Rod | Golden Helmet | Blaze Rod |
+| **Bottom** | Ghast Tear | Netherrack | Ghast Tear |
+
+### Crown of Darkness
+
+| Ability | Details |
+|---|---|
+| Night Vision | Permanent while worn |
+| Darkness on hit | Anything you hit, including with arrows and tridents you fire, gets the Warden's Darkness effect for 20 seconds |
+
+No crafting recipe or active ability yet.
 
 ## Crown abilities
 
@@ -67,6 +82,7 @@ is worn.
 | Under Crown | Vein Miner | Toggle: press to switch on or off | None |
 | Crown of Poseidon | Riptide | Press to launch | 4.5 seconds |
 | Crown of Nether | Fire Charge | Press to shoot | 2 seconds |
+| Crown of Darkness | None yet | | |
 
 - Abilities with a cooldown show it on the crown's icon, and pressing the key early shows
   the time remaining in the action bar.
@@ -101,6 +117,7 @@ In a Creative world with cheats on, crowns can also be found in the Combat tab o
 /give @s crownofchaos:under_crown
 /give @s crownofchaos:crown_of_poseidon
 /give @s crownofchaos:crown_of_nether
+/give @s crownofchaos:crown_of_darkness
 ```
 
 ### Project layout
@@ -139,8 +156,9 @@ Crowns can have a custom 3D model when worn, made in Blockbench as a Modded Enti
 | Crown | Worn model |
 |---|---|
 | Under Crown | Custom 3D model |
-| Crown of Poseidon | Diamond helmet (3D model planned) |
+| Crown of Poseidon | Custom 3D model |
 | Crown of Nether | Diamond helmet (3D model planned) |
+| Crown of Darkness | Diamond helmet (3D model planned) |
 
 ### Adding a 3D model
 
