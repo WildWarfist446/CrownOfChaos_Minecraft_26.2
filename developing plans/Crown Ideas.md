@@ -1,4 +1,4 @@
-##Checklist
+## Checklist
 
 ~~Crown of Gold~~ - Golden crown that acts like a golden helmet
 
