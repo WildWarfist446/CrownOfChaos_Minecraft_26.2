@@ -42,6 +42,9 @@ Commander's Table: Used to craft the different army units
 
 ### crowns;
 
+
+** possible crown of chaos, combines all the immunities plus the teleport dodge ability and gets two new abilities; "The pain of death" ability shoot the volley of arrows, the wither skeleton head the fire charge and lighting strike abilities at once. secondary ability is called death's door is the same as the darkness pulse but lasts %300 percent longer. texture will be a "glitched" version of all the sprites combined and will require all 9 crowns to be create the "incomplete  crown of chaos" which is not wearable or usable. There will be a tbd boss fight that will drop an item and a smith table template to create the completed crown of chaos. this crown is not upgradable to netherrite, but will start with the netherrite helmet stats. (eventually this will be able to craft and control all units once the faction system is complete)
+
 ** secondary crown of ice power; 3 icicles that drop on enemy and cause freeze
 
 ### factions system; 
