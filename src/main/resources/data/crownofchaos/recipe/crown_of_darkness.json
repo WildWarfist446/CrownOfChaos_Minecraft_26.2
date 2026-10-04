@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "E": "minecraft:echo_shard",
+    "C": "crownofchaos:sculk_cord",
+    "H": "minecraft:golden_helmet",
+    "D": "minecraft:diamond_block",
+    "S": "minecraft:sculk_shrieker"
+  },
+  "pattern": [
+    "ECE",
+    "EHE",
+    "DSD"
+  ],
+  "result": {
+    "id": "crownofchaos:crown_of_darkness"
+  }
+}

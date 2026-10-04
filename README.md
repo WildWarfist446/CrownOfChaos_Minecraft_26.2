@@ -70,7 +70,21 @@ are left untouched.
 | Darkness on hit | Anything you hit, including with arrows and tridents you fire, gets the Warden's Darkness effect for 20 seconds |
 | **Ability: Sonic Boom** | Look at a mob or player within 15 blocks and press the crown ability key (default **R**). Like the Warden, it charges for 1.7 seconds, then blasts that target for 10 damage that ignores armor, with heavy knockback, even through walls. 15 second cooldown. |
 
-No crafting recipe yet.
+**Recipe** (unlocked by picking up a Sculk Cord):
+
+| | Left | Middle | Right |
+|---|---|---|---|
+| **Top** | Echo Shard | Sculk Cord | Echo Shard |
+| **Middle** | Echo Shard | Golden Helmet | Echo Shard |
+| **Bottom** | Diamond Block | Sculk Shrieker | Diamond Block |
+
+## Materials
+
+| Item | Source | Use |
+|---|---|---|
+| Sculk Cord | Every Warden drops one when killed, alongside its Sculk Catalyst | Crafting the Crown of Darkness |
+
+The Sculk Cord's description reads *"The screeching has finally ceased..."*
 
 ## Crown abilities
 
@@ -119,6 +133,7 @@ In a Creative world with cheats on, crowns can also be found in the Combat tab o
 /give @s crownofchaos:crown_of_poseidon
 /give @s crownofchaos:crown_of_nether
 /give @s crownofchaos:crown_of_darkness
+/give @s crownofchaos:sculk_cord
 ```
 
 ### Project layout
