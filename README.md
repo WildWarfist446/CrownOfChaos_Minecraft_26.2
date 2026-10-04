@@ -1,5 +1,7 @@
 # The Crown of Chaos
 
+In the vast and ever-changing world of Minecraft, whispers of a new and unimaginable power have begun to spread. Legends speak of the ancient Crown of Chaos, a dark artifact imbued with unimaginable strength. To craft this crown, however, a hero must first face the fiercest challenges the land has ever known.
+
 A Fabric mod for Minecraft 26.2 by Warfist that adds powerful crowns. Craft a Golden
 Crown, then upgrade it into one of the magical crowns. Each is worn in the helmet slot,
 protects like a diamond helmet, and grants its own effects and abilities for as long as it
