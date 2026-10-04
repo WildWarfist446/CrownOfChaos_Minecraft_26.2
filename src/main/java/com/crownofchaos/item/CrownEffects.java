@@ -1,14 +1,21 @@
 package com.crownofchaos.item;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
+import com.crownofchaos.CrownOfChaos;
 
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -18,6 +25,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.entity.projectile.arrow.ThrownTrident;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 
 /**
  * Grants each crown's potion effects while it is worn on the head. Crown abilities that
@@ -41,6 +49,19 @@ public final class CrownEffects {
 
 	/** Crown of Nether arrows are lit like Flame arrows, which burn for 100 seconds. */
 	public static final float NETHER_CROWN_FLAME_SECONDS = 100.0F;
+
+	/** Blocks the Crown of Sun gives Swiftness on: sand, sandstone and their slabs, stairs and walls. */
+	public static final TagKey<Block> SUN_CROWN_SPEED_BLOCKS =
+			TagKey.create(Registries.BLOCK, CrownOfChaos.id("crown_of_sun_speed_blocks"));
+
+	/** Swiftness II, the strongest level potions and beacons give. */
+	private static final CrownEffect SUN_CROWN_SWIFTNESS = new CrownEffect(MobEffects.SPEED, 1);
+
+	/** Keeps Swiftness for 1 second after leaving sand, so it doesn't flicker off while jumping. */
+	private static final int SUN_CROWN_GRACE_TICKS = 20;
+
+	/** Last server tick each Crown of Sun wearer stood on sand. */
+	private static final Map<UUID, Integer> LAST_ON_SAND = new HashMap<>();
 
 	// Amplifiers are zero-based: 0 = level I, 1 = level II.
 	private static final Map<Item, List<CrownEffect>> EFFECTS = Map.of(
@@ -102,6 +123,8 @@ public final class CrownEffects {
 			}
 		});
 
+		ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> LAST_ON_SAND.remove(handler.getPlayer().getUUID()));
+
 		ServerTickEvents.END_SERVER_TICK.register(server -> {
 			if (server.getTickCount() % CHECK_INTERVAL_TICKS != 0) {
 				return;
@@ -110,6 +133,9 @@ public final class CrownEffects {
 			for (ServerPlayer player : server.getPlayerList().getPlayers()) {
 				Item worn = player.getItemBySlot(EquipmentSlot.HEAD).getItem();
 				List<CrownEffect> active = EFFECTS.getOrDefault(worn, List.of());
+				if (worn == ModItems.CROWN_OF_SUN && isOnSand(player, server.getTickCount())) {
+					active = List.of(SUN_CROWN_SWIFTNESS);
+				}
 
 				// Remove effects from crowns that are no longer worn, e.g. after swapping crowns.
 				for (Map.Entry<Item, List<CrownEffect>> entry : EFFECTS.entrySet()) {
@@ -117,10 +143,20 @@ public final class CrownEffects {
 						removeCrownEffects(player, entry.getValue(), active);
 					}
 				}
+				removeCrownEffects(player, List.of(SUN_CROWN_SWIFTNESS), active);
 
 				apply(player, active);
 			}
 		});
+	}
+
+	private static boolean isOnSand(ServerPlayer player, int tick) {
+		if (player.getBlockStateOn().is(SUN_CROWN_SPEED_BLOCKS)) {
+			LAST_ON_SAND.put(player.getUUID(), tick);
+			return true;
+		}
+		Integer last = LAST_ON_SAND.get(player.getUUID());
+		return last != null && tick - last <= SUN_CROWN_GRACE_TICKS;
 	}
 
 	private static void apply(ServerPlayer player, List<CrownEffect> effects) {

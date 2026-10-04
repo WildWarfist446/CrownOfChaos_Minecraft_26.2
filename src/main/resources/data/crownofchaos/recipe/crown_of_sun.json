@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "G": "minecraft:gold_block",
+    "A": "crownofchaos:ankh_charm",
+    "T": "minecraft:clock",
+    "H": "crownofchaos:golden_crown",
+    "C": "minecraft:cactus",
+    "S": "minecraft:sand",
+    "D": "minecraft:diamond_block"
+  },
+  "pattern": [
+    "GAG",
+    "THC",
+    "SDS"
+  ],
+  "result": {
+    "id": "crownofchaos:crown_of_sun"
+  }
+}

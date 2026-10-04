@@ -1,7 +1,7 @@
 # The Crown of Chaos
 
 A Fabric mod for Minecraft 26.2 by Warfist that adds powerful crowns. Craft a Golden
-Crown, then upgrade it into one of four magical crowns. Each is worn in the helmet slot,
+Crown, then upgrade it into one of the magical crowns. Each is worn in the helmet slot,
 protects like a diamond helmet, and grants its own effects and active ability for as long
 as it is worn.
 
@@ -104,13 +104,32 @@ and keeps Piglins calm like other gold armor.
 | **Middle** | Echo Shard | Golden Crown | Echo Shard |
 | **Bottom** | Diamond Block | Sculk Shrieker | Diamond Block |
 
+### Crown of Sun
+
+*"The supreme sun god who traveled across the sky."*
+
+| Ability | Details |
+|---|---|
+| Swiftness II | While standing on sand, red sand, or any sandstone block, slab, stair or wall. Lasts 1 second after stepping off, so it doesn't drop out while jumping. |
+| **Ability: Wind Charge** | Press the crown ability key (default **R**) to throw a wind charge, exactly like the item, no wind charge needed. The crown holds 3 charges; spent charges come back one at a time, 6 seconds each. The action bar shows charges left after every throw. |
+
+**Recipe** (unlocked by picking up an Ankh Charm):
+
+| | Left | Middle | Right |
+|---|---|---|---|
+| **Top** | Gold Block | Ankh Charm | Gold Block |
+| **Middle** | Clock | Golden Crown | Cactus |
+| **Bottom** | Sand | Diamond Block | Sand |
+
 ## Materials
 
 | Item | Source | Use |
 |---|---|---|
 | Sculk Cord | Every Warden drops one when killed, alongside its Sculk Catalyst | Crafting the Crown of Darkness |
+| Ankh Charm | Desert pyramids: every pyramid has exactly one, in one of its four chests | Crafting the Crown of Sun |
 
-The Sculk Cord's description reads *"The screeching has finally ceased..."*
+Descriptions: the Sculk Cord reads *"The screeching has finally ceased..."* and the Ankh
+Charm reads *"Ra would be proud."*
 
 ## Crown abilities
 
@@ -124,9 +143,12 @@ is worn.
 | Crown of Poseidon | Riptide | Press to launch | 4.5 seconds |
 | Crown of Nether | Fire Charge | Press to shoot | 2 seconds |
 | Crown of Darkness | Sonic Boom | Press while looking at a target | 15 seconds |
+| Crown of Sun | Wind Charge | Press to throw (3 charges) | 6 seconds per charge |
 
 - Abilities with a cooldown show it on the crown's icon, and pressing the key early shows
   the time remaining in the action bar.
+- Charge-based abilities (Wind Charge) show the charges left after every use instead of a
+  cooldown.
 - Toggles show "enabled" or "disabled" in the action bar, and reset to off when you leave
   the world or server.
 - Pressing the key without a crown on shows "Wear a crown to use its power".
@@ -160,7 +182,9 @@ In a Creative world with cheats on, crowns can also be found in the Combat tab o
 /give @s crownofchaos:crown_of_poseidon
 /give @s crownofchaos:crown_of_nether
 /give @s crownofchaos:crown_of_darkness
+/give @s crownofchaos:crown_of_sun
 /give @s crownofchaos:sculk_cord
+/give @s crownofchaos:ankh_charm
 ```
 
 ### Project layout
@@ -203,6 +227,7 @@ Crowns can have a custom 3D model when worn, made in Blockbench as a Modded Enti
 | Crown of Poseidon | Custom 3D model |
 | Crown of Nether | Custom 3D model |
 | Crown of Darkness | Diamond helmet (3D model planned) |
+| Crown of Sun | Diamond helmet (3D model planned) |
 
 ### Adding a 3D model
 

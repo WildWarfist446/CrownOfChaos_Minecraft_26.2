@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_ankh_charm": {
+      "conditions": {
+        "items": [
+          {
+            "items": "crownofchaos:ankh_charm"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "crownofchaos:crown_of_sun"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_ankh_charm"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "crownofchaos:crown_of_sun"
+    ]
+  }
+}

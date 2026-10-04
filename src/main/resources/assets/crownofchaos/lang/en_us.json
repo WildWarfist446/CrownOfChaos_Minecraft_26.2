@@ -9,8 +9,12 @@
   "item.crownofchaos.crown_of_nether.lore": "The Fires of Avernus can't get you here..",
   "item.crownofchaos.crown_of_darkness": "Crown of Darkness",
   "item.crownofchaos.crown_of_darkness.lore": "Screeches echo in the Darkness...",
+  "item.crownofchaos.crown_of_sun": "Crown of Sun",
+  "item.crownofchaos.crown_of_sun.lore": "The supreme sun god who traveled across the sky.",
   "item.crownofchaos.sculk_cord": "Sculk Cord",
   "item.crownofchaos.sculk_cord.lore": "The screeching has finally ceased...",
+  "item.crownofchaos.ankh_charm": "Ankh Charm",
+  "item.crownofchaos.ankh_charm.lore": "Ra would be proud.",
 
   "key.category.crownofchaos.crowns": "Crown of Chaos",
   "key.crownofchaos.use_crown_ability": "Use Crown Ability",
@@ -20,6 +24,8 @@
   "message.crownofchaos.ability.cooldown": "Crown ability recharging: %ss",
   "message.crownofchaos.ability.riptide.needs_water": "Riptide only works in water or rain",
   "message.crownofchaos.ability.sonic_boom.no_target": "No target in range",
+  "message.crownofchaos.ability.wind_charge.charges": "Wind Charges: %s/%s",
+  "message.crownofchaos.ability.wind_charge.empty": "Out of Wind Charges! Next in %ss",
   "message.crownofchaos.ability.vein_miner.enabled": "Vein Miner enabled",
   "message.crownofchaos.ability.vein_miner.disabled": "Vein Miner disabled"
 }

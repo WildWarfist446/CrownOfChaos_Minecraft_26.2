@@ -13,7 +13,7 @@ import net.minecraft.resources.Identifier;
 
 /**
  * The Crown of Nether's worn 3D model, converted from the Blockbench export in
- * {@code 3dmodels/Nether Crown.java}: a crown band with gold points around the top rim.
+ * {@code 3dmodels/Nether_Crown_Converted_Converted.java}: a crown band with gold points around the top rim.
  *
  * <p>The export's {@code head} part sits at y=24 (a player-head template); here it sits on
  * the humanoid head pivot so it copies the wearer's head transform, and the template's own

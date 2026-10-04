@@ -55,6 +55,7 @@ public final class CrownAbilities {
 		register(ModItems.CROWN_OF_POSEIDON, new RiptideAbility());
 		register(ModItems.CROWN_OF_NETHER, new FireChargeAbility());
 		register(ModItems.CROWN_OF_DARKNESS, new SonicBoomAbility());
+		register(ModItems.CROWN_OF_SUN, new WindChargeAbility());
 
 		VeinMinerAbility.initialize();
 		SonicBoomAbility.initialize();
