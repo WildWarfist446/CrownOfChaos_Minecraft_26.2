@@ -55,7 +55,7 @@ Commander's Table: Used to craft the different army units
 
 ** create faction territory - when you enter territory of a faction you don't belong in, enemy units will attack if faction is in red alert or has targeted your current faction. you can manually allow specific factions to enter you territory unharmed or to be attacked. faction territory will be claimed via the faction flag item (to be created and will be placeable) in the surrounding 100 blocks. faction flags cannot be placed in already claimed territory. flags will be items crafted that are automatically assigned to the faction of the creator.
 
-** units; units will be craftable items that spawn mobs based on what crown you have. these unit will act friendly towards owner and others in faction. when directly clicked on, they will enter sentry mode and cease moving until directed or agro'd. when a unit is killed, owner will receive a notification unless the unit is currently in sight line
+** units; units will be craftable items (texture will match the spawn egg but will be named [mob-name] Unit) that spawn mobs based on what crown you have. these unit will act friendly towards owner and others in faction. when directly clicked on, they will enter sentry mode and cease moving until directed or agro'd. when a unit is killed, owner will receive a notification unless the unit is currently in sight line
 
 ** sentry mode; when click, units will enter sentry mode and will only move if agro'd to an enemy. if enemy leaves agro range, unit will return to initial position
 
