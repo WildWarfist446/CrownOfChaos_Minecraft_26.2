@@ -11,6 +11,8 @@
   "item.crownofchaos.crown_of_darkness.lore": "Screeches echo in the Darkness...",
   "item.crownofchaos.crown_of_sun": "Crown of Sun",
   "item.crownofchaos.crown_of_sun.lore": "The supreme sun god who traveled across the sky.",
+  "item.crownofchaos.crown_of_wither": "Crown of Wither",
+  "item.crownofchaos.crown_of_wither.lore": "I've seen this in a painting...",
   "item.crownofchaos.sculk_cord": "Sculk Cord",
   "item.crownofchaos.sculk_cord.lore": "The screeching has finally ceased...",
   "item.crownofchaos.ankh_charm": "Ankh Charm",
@@ -18,14 +20,23 @@
 
   "key.category.crownofchaos.crowns": "Crown of Chaos",
   "key.crownofchaos.use_crown_ability": "Use Crown Ability",
+  "key.crownofchaos.use_secondary_crown_ability": "Use Secondary Crown Ability",
 
   "message.crownofchaos.ability.no_crown": "Wear a crown to use its power",
   "message.crownofchaos.ability.no_power": "This crown has no ability yet",
   "message.crownofchaos.ability.cooldown": "Crown ability recharging: %ss",
+  "message.crownofchaos.ability.no_secondary": "This crown has no secondary ability yet",
+  "message.crownofchaos.ability.secondary_cooldown": "Secondary crown ability recharging: %ss",
   "message.crownofchaos.ability.riptide.needs_water": "Riptide only works in water or rain",
   "message.crownofchaos.ability.sonic_boom.no_target": "No target in range",
   "message.crownofchaos.ability.wind_charge.charges": "Wind Charges: %s/%s",
   "message.crownofchaos.ability.wind_charge.empty": "Out of Wind Charges! Next in %ss",
+  "message.crownofchaos.ability.wither_skull.charges": "Wither Skulls: %s/%s",
+  "message.crownofchaos.ability.wither_skull.empty": "Out of Wither Skulls! Next in %ss",
+  "message.crownofchaos.ability.wither_skull.too_soon": "Next Wither Skull ready in %ss",
+  "message.crownofchaos.ability.sun_cycle.day": "The sun rises",
+  "message.crownofchaos.ability.sun_cycle.night": "The sun sets",
+  "message.crownofchaos.ability.sun_cycle.no_sky": "There is no sun here to command",
   "message.crownofchaos.ability.vein_miner.enabled": "Vein Miner enabled",
   "message.crownofchaos.ability.vein_miner.disabled": "Vein Miner disabled"
 }

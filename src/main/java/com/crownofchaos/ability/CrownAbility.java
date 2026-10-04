@@ -4,9 +4,9 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * A power a crown can trigger with the "Use Crown Ability" keybind. Abilities always run on
- * the server, and only after {@link CrownAbilities} has checked that the player is wearing
- * the crown and that it is off cooldown.
+ * A power a crown can trigger with the "Use Crown Ability" (primary) or "Use Secondary Crown
+ * Ability" keybind. Abilities always run on the server, and only after {@link CrownAbilities}
+ * has checked that the player is wearing the crown and that it is off cooldown.
  */
 public interface CrownAbility {
 	/**

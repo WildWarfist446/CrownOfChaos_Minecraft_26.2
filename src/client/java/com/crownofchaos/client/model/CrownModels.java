@@ -28,5 +28,10 @@ public final class CrownModels {
 		ArmorRenderer.register(
 				context -> new CrownArmorRenderer(context.bakeLayer(CrownOfNetherModel.LAYER), CrownOfNetherModel.TEXTURE),
 				ModItems.CROWN_OF_NETHER);
+
+		ModelLayerRegistry.registerModelLayer(CrownOfWitherModel.LAYER, CrownOfWitherModel::createLayer);
+		ArmorRenderer.register(
+				context -> new CrownArmorRenderer(context.bakeLayer(CrownOfWitherModel.LAYER), CrownOfWitherModel.TEXTURE),
+				ModItems.CROWN_OF_WITHER);
 	}
 }

@@ -112,6 +112,7 @@ and keeps Piglins calm like other gold armor.
 |---|---|
 | Swiftness II | While standing on sand, red sand, or any sandstone block, slab, stair or wall. Lasts 1 second after stepping off, so it doesn't drop out while jumping. |
 | **Ability: Wind Charge** | Press the crown ability key (default **R**) to throw a wind charge, exactly like the item, no wind charge needed. The crown holds 3 charges; spent charges come back one at a time, 6 seconds each. The action bar shows charges left after every throw. |
+| **Secondary ability: Sun Cycle** | Press the secondary crown ability key (default **G**) to switch between day and night, like `/time set day` or `/time set night`. Changes the time for everyone in that dimension. Only works where there's a day cycle (not the Nether or the End). 20 second cooldown. |
 
 **Recipe** (unlocked by picking up an Ankh Charm):
 
@@ -120,6 +121,24 @@ and keeps Piglins calm like other gold armor.
 | **Top** | Gold Block | Ankh Charm | Gold Block |
 | **Middle** | Clock | Golden Crown | Cactus |
 | **Bottom** | Sand | Diamond Block | Sand |
+
+### Crown of Wither
+
+*"I've seen this in a painting..."*
+
+| Ability | Details |
+|---|---|
+| Wither immunity | Immune to the Wither effect from any source: Wither Skeletons, the Wither, wither roses and potions |
+| Wither on hit | Your melee hits give the target Wither I for 10 seconds, like a Wither Skeleton's |
+| **Ability: Wither Skull** | Press the crown ability key (default **R**) to shoot a wither skull where you're looking, like the Wither: 8 damage and Wither II on a hit (10 seconds on Normal, 40 on Hard, none on Easy), and you heal 2.5 hearts if it kills. The small explosion never breaks blocks. Holds 3 skulls, each taking 6 seconds to recharge, with 3 seconds between shots. |
+
+**Recipe** (unlocked by picking up a Wither Skeleton Skull):
+
+| | Left | Middle | Right |
+|---|---|---|---|
+| **Top** | Wither Skeleton Skull | Nether Star | Wither Skeleton Skull |
+| **Middle** | Soul Sand | Golden Crown | Soul Sand |
+| **Bottom** | Bone | Diamond Block | Bone |
 
 ## Materials
 
@@ -133,22 +152,29 @@ Charm reads *"Ra would be proud."*
 
 ## Crown abilities
 
-Every crown except the Golden Crown has an active ability, triggered with the **Use Crown Ability** key (default
-**R**, rebindable under Options → Controls → Key Binds → Crown of Chaos) while the crown
-is worn.
+Every crown except the Golden Crown has an active ability, triggered with the **Use Crown
+Ability** key (default **R**) while the crown is worn. Crowns can also have a secondary
+ability on the **Use Secondary Crown Ability** key (default **G**). Both keys can be
+rebound under Options → Controls → Key Binds → Crown of Chaos.
 
-| Crown | Ability | Type | Cooldown |
-|---|---|---|---|
-| Under Crown | Vein Miner | Toggle: press to switch on or off | None |
-| Crown of Poseidon | Riptide | Press to launch | 4.5 seconds |
-| Crown of Nether | Fire Charge | Press to shoot | 2 seconds |
-| Crown of Darkness | Sonic Boom | Press while looking at a target | 15 seconds |
-| Crown of Sun | Wind Charge | Press to throw (3 charges) | 6 seconds per charge |
+Primary and secondary abilities have separate cooldowns, so using one never blocks the
+other. Pressing **G** on a crown without a secondary ability says so.
 
-- Abilities with a cooldown show it on the crown's icon, and pressing the key early shows
-  the time remaining in the action bar.
-- Charge-based abilities (Wind Charge) show the charges left after every use instead of a
-  cooldown.
+| Crown | Key | Ability | Type | Cooldown |
+|---|---|---|---|---|
+| Under Crown | R | Vein Miner | Toggle: press to switch on or off | None |
+| Crown of Poseidon | R | Riptide | Press to launch | 4.5 seconds |
+| Crown of Nether | R | Fire Charge | Press to shoot | 2 seconds |
+| Crown of Darkness | R | Sonic Boom | Press while looking at a target | 15 seconds |
+| Crown of Sun | R | Wind Charge | Press to throw (3 charges) | 6 seconds per charge |
+| Crown of Sun | G | Sun Cycle | Press to switch day and night | 20 seconds |
+| Crown of Wither | R | Wither Skull | Press to shoot (3 charges) | 3 seconds between shots, 6 seconds per charge |
+
+- Primary abilities with a cooldown show it on the crown's icon, and pressing the key early
+  shows the time remaining in the action bar. Secondary ability cooldowns show in the action
+  bar only.
+- Charge-based abilities (Wind Charge, Wither Skull) show the charges left after every use
+  instead of a cooldown.
 - Toggles show "enabled" or "disabled" in the action bar, and reset to off when you leave
   the world or server.
 - Pressing the key without a crown on shows "Wear a crown to use its power".
@@ -183,6 +209,7 @@ In a Creative world with cheats on, crowns can also be found in the Combat tab o
 /give @s crownofchaos:crown_of_nether
 /give @s crownofchaos:crown_of_darkness
 /give @s crownofchaos:crown_of_sun
+/give @s crownofchaos:crown_of_wither
 /give @s crownofchaos:sculk_cord
 /give @s crownofchaos:ankh_charm
 ```
@@ -192,10 +219,10 @@ In a Creative world with cheats on, crowns can also be found in the Combat tab o
 | Path | Contents |
 |---|---|
 | `src/main/java/com/crownofchaos/item/ModItems.java` | Item registration |
-| `src/main/java/com/crownofchaos/item/CrownEffects.java` | Each crown's potion effects, passive bonuses (Darkness on hit, Fire Aspect, Flame) and tuning values |
+| `src/main/java/com/crownofchaos/item/CrownEffects.java` | Each crown's potion effects, passive bonuses (Darkness on hit, Fire Aspect, Flame, Wither on hit) and tuning values |
 | `src/main/java/com/crownofchaos/ability/` | Crown abilities and the registry that links each crown to its ability |
-| `src/main/java/com/crownofchaos/network/` | Messages between the client and server (ability key, Riptide launch) |
-| `src/main/java/com/crownofchaos/mixin/` | Changes that hook into Minecraft (Fortune, damage bonuses, crown fireball explosions) |
+| `src/main/java/com/crownofchaos/network/` | Messages between the client and server (ability keys, Riptide launch) |
+| `src/main/java/com/crownofchaos/mixin/` | Changes that hook into Minecraft (Fortune, damage bonuses, crown fireball and wither skull explosions, Wither immunity) |
 | `src/client/java/com/crownofchaos/client/` | Client-only code: the ability keybind and client-side ability effects |
 | `src/client/java/com/crownofchaos/client/model/` | Crown 3D models and the renderer that draws them on the head |
 | `src/main/resources/assets/crownofchaos/` | Textures, item models and names |
@@ -208,11 +235,12 @@ In a Creative world with cheats on, crowns can also be found in the Combat tab o
 1. Create a class in `ability/` that implements `CrownAbility`. `activate` runs on the
    server when the key is pressed; return `true` to start the cooldown.
 2. Attach it to a crown in `CrownAbilities.initialize()`:
-   `register(ModItems.YOUR_CROWN, new YourAbility());`
+   `register(ModItems.YOUR_CROWN, new YourAbility());` for the primary key (R), or
+   `registerSecondary(ModItems.YOUR_CROWN, new YourAbility());` for the secondary key (G).
 3. Add any action-bar messages to `assets/crownofchaos/lang/en_us.json`, styled with
    `CrownAbilities.MESSAGE_COLOR` so they match the other crown messages.
 
-The server also tracks whether the key is held (`CrownAbilities.isHoldingAbilityKey`) for
+The server also tracks whether each key is held (`CrownAbilities.isHoldingAbilityKey`) for
 abilities that should work while the key is held down.
 
 ## 3D models
@@ -228,6 +256,7 @@ Crowns can have a custom 3D model when worn, made in Blockbench as a Modded Enti
 | Crown of Nether | Custom 3D model |
 | Crown of Darkness | Diamond helmet (3D model planned) |
 | Crown of Sun | Diamond helmet (3D model planned) |
+| Crown of Wither | Custom 3D model |
 
 ### Adding a 3D model
 

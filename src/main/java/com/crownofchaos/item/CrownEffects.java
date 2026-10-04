@@ -63,6 +63,9 @@ public final class CrownEffects {
 	/** Last server tick each Crown of Sun wearer stood on sand. */
 	private static final Map<UUID, Integer> LAST_ON_SAND = new HashMap<>();
 
+	/** Crown of Wither melee hits give Wither I for 10 seconds, like a Wither Skeleton's. */
+	public static final int WITHER_CROWN_WITHER_TICKS = 200;
+
 	// Amplifiers are zero-based: 0 = level I, 1 = level II.
 	private static final Map<Item, List<CrownEffect>> EFFECTS = Map.of(
 			ModItems.UNDER_CROWN, List.of(
@@ -97,6 +100,18 @@ public final class CrownEffects {
 					&& attacker != target
 					&& isWearing(attacker, ModItems.CROWN_OF_NETHER)) {
 				target.igniteForSeconds(NETHER_CROWN_FIRE_ASPECT_SECONDS);
+			}
+		});
+
+		// Crown of Wither: direct melee hits inflict Wither, like a Wither Skeleton's.
+		ServerLivingEntityEvents.AFTER_DAMAGE.register((target, source, baseDamage, damageTaken, blocked) -> {
+			if (!blocked && damageTaken > 0.0F
+					&& source.isDirect()
+					&& !source.is(DamageTypes.THORNS)
+					&& source.getEntity() instanceof LivingEntity attacker
+					&& attacker != target
+					&& isWearing(attacker, ModItems.CROWN_OF_WITHER)) {
+				target.addEffect(new MobEffectInstance(MobEffects.WITHER, WITHER_CROWN_WITHER_TICKS), attacker);
 			}
 		});
 
@@ -146,6 +161,11 @@ public final class CrownEffects {
 				removeCrownEffects(player, List.of(SUN_CROWN_SWIFTNESS), active);
 
 				apply(player, active);
+
+				// Crown of Wither immunity also clears Wither the wearer already had.
+				if (worn == ModItems.CROWN_OF_WITHER && player.hasEffect(MobEffects.WITHER)) {
+					player.removeEffect(MobEffects.WITHER);
+				}
 			}
 		});
 	}

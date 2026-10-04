@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "W": "minecraft:wither_skeleton_skull",
+    "N": "minecraft:nether_star",
+    "S": "minecraft:soul_sand",
+    "H": "crownofchaos:golden_crown",
+    "B": "minecraft:bone",
+    "D": "minecraft:diamond_block"
+  },
+  "pattern": [
+    "WNW",
+    "SHS",
+    "BDB"
+  ],
+  "result": {
+    "id": "crownofchaos:crown_of_wither"
+  }
+}
