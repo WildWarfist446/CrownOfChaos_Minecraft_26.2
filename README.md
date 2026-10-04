@@ -68,8 +68,9 @@ are left untouched.
 |---|---|
 | Night Vision | Permanent while worn |
 | Darkness on hit | Anything you hit, including with arrows and tridents you fire, gets the Warden's Darkness effect for 20 seconds |
+| **Ability: Sonic Boom** | Look at a mob or player within 15 blocks and press the crown ability key (default **R**). Like the Warden, it charges for 1.7 seconds, then blasts that target for 10 damage that ignores armor, with heavy knockback, even through walls. 15 second cooldown. |
 
-No crafting recipe or active ability yet.
+No crafting recipe yet.
 
 ## Crown abilities
 
@@ -82,7 +83,7 @@ is worn.
 | Under Crown | Vein Miner | Toggle: press to switch on or off | None |
 | Crown of Poseidon | Riptide | Press to launch | 4.5 seconds |
 | Crown of Nether | Fire Charge | Press to shoot | 2 seconds |
-| Crown of Darkness | None yet | | |
+| Crown of Darkness | Sonic Boom | Press while looking at a target | 15 seconds |
 
 - Abilities with a cooldown show it on the crown's icon, and pressing the key early shows
   the time remaining in the action bar.

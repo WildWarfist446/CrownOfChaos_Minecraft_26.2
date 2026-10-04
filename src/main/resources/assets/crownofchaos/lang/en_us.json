@@ -11,6 +11,7 @@
   "message.crownofchaos.ability.no_power": "This crown has no ability yet",
   "message.crownofchaos.ability.cooldown": "Crown ability recharging: %ss",
   "message.crownofchaos.ability.riptide.needs_water": "Riptide only works in water or rain",
+  "message.crownofchaos.ability.sonic_boom.no_target": "No target in range",
   "message.crownofchaos.ability.vein_miner.enabled": "Vein Miner enabled",
   "message.crownofchaos.ability.vein_miner.disabled": "Vein Miner disabled"
 }
