@@ -61,6 +61,11 @@
   "message.crownofchaos.ability.lightning.no_target": "No target in range",
   "message.crownofchaos.ability.glowing_arrows.enabled": "Glowing Arrows enabled",
   "message.crownofchaos.ability.glowing_arrows.disabled": "Glowing Arrows disabled",
+  "message.crownofchaos.ability.blaze_flight.time_left": "Blaze Flight: %ss",
+  "message.crownofchaos.ability.blaze_flight.ended": "Blaze Flight ended",
+  "message.crownofchaos.ability.wither_flight.time_left": "Wither Flight: %ss",
+  "message.crownofchaos.ability.wither_flight.ended": "Wither Flight ended",
+  "message.crownofchaos.ability.flight.already_flying": "You can already fly",
   "message.crownofchaos.ability.vein_miner.enabled": "Vein Miner enabled",
   "message.crownofchaos.ability.vein_miner.disabled": "Vein Miner disabled"
 }

@@ -85,6 +85,7 @@ and keeps Piglins calm like other gold armor.
 | Fire Aspect | Your melee hits set the target on fire for 8 seconds, like Fire Aspect II |
 | Flame | Arrows you fire are lit like Flame arrows, setting targets on fire and lighting TNT |
 | **Ability: Fire Charge** | Press the crown ability key (default **R**) to shoot a Ghast fireball where you're looking, no fire charge item needed. It flies 25% faster than a Ghast's and explodes like one but deals 50% more damage (9 on a direct hit), and sets everything it damages on fire for 5 seconds. It never breaks blocks or starts fires on the ground. The blast can hurt you too, so don't fire it at point-blank range. 2 second cooldown. |
+| **Secondary ability: Blaze Flight** | Press the secondary crown ability key (default **G**) to fly for 60 seconds, slowly like a hovering Blaze. It works like creative flight (double-tap jump; jump and sneak to rise and sink) at 40% of creative speed, smoking and crackling like a Blaze the whole time, with a countdown in the action bar for the last 10 seconds. When it ends you get Slow Falling until you land (up to 30 seconds), so you can't take fall damage. Ends early if you take the crown off. 2 minute cooldown, counted from takeoff. |
 
 **Recipe** (unlocked by picking up a Nether Star):
 
@@ -103,6 +104,7 @@ and keeps Piglins calm like other gold armor.
 | Night Vision | Permanent while worn |
 | Darkness on hit | Anything you hit, including with arrows and tridents you fire, gets the Warden's Darkness effect for 20 seconds |
 | **Ability: Sonic Boom** | Look at a mob or player within 15 blocks and press the crown ability key (default **R**). Like the Warden, it charges for 1.7 seconds, then blasts that target for 10 damage that ignores armor, with heavy knockback, even through walls. 15 second cooldown. |
+| **Secondary ability: Darkness Pulse** | Press the secondary crown ability key (default **G**) to let out a shriek that gives every other player within 30 blocks the Warden's Darkness for 20 seconds. Like the Warden's, it only affects players. 30 second cooldown. |
 
 **Recipe** (unlocked by picking up a Sculk Cord):
 
@@ -139,6 +141,7 @@ and keeps Piglins calm like other gold armor.
 | Wither immunity | Immune to the Wither effect from any source: Wither Skeletons, the Wither, wither roses and potions |
 | Wither on hit | Your melee hits give the target Wither I for 10 seconds, like a Wither Skeleton's |
 | **Ability: Wither Skull** | Press the crown ability key (default **R**) to shoot a wither skull where you're looking, like the Wither: 8 damage and Wither II on a hit (10 seconds on Normal, 40 on Hard, none on Easy), and you heal 2.5 hearts if it kills. The small explosion never breaks blocks. Holds 3 skulls, each taking 6 seconds to recharge, with 3 seconds between shots. |
+| **Secondary ability: Wither Flight** | Press the secondary crown ability key (default **G**) to fly for 60 seconds at 60% of creative flight speed (1.5 times Blaze Flight), trailing smoke from your head like the Wither does. It works like creative flight (double-tap jump; jump and sneak to rise and sink), with a countdown in the action bar for the last 10 seconds. When it ends you get Slow Falling until you land (up to 30 seconds), so you can't take fall damage. Ends early if you take the crown off. 2 minute cooldown, counted from takeoff. |
 
 **Recipe** (unlocked by picking up a Wither Skeleton Skull):
 
@@ -230,10 +233,10 @@ see its section above for the details, and
 | Golden Crown | None (base crown) | None | None | Gold Ingot |
 | Under Crown | Haste II, Night Vision, Hero of the Village, Fortune III | Vein Miner (toggle) | None | Golden Crown |
 | Crown of Poseidon | Water Breathing, Dolphin's Grace, Night Vision, +50% damage in water | Riptide | Lightning Strike | Heart of the Sea |
-| Crown of Nether | Fire Resistance, Fire Aspect, Flame | Fire Charge | None | Nether Star |
-| Crown of Darkness | Night Vision, Darkness on hit | Sonic Boom | None | Sculk Cord |
+| Crown of Nether | Fire Resistance, Fire Aspect, Flame | Fire Charge | Blaze Flight | Nether Star |
+| Crown of Darkness | Night Vision, Darkness on hit | Sonic Boom | Darkness Pulse | Sculk Cord |
 | Crown of Sun | Swiftness II on sand | Wind Charge | Sun Cycle | Ankh Charm |
-| Crown of Wither | Wither immunity, Wither on hit | Wither Skull | None | Wither Skeleton Skull |
+| Crown of Wither | Wither immunity, Wither on hit | Wither Skull | Wither Flight | Wither Skeleton Skull |
 | Crown of Winter | Freeze on hit, freeze immunity, Swiftness and grip on snow and ice | Frost Walker (toggle) | None | Powder Snow Bucket |
 | Crown of Iron | +50% bow and crossbow damage | Arrow Volley | Glowing Arrows (toggle) | Totem of Undying |
 | Crown of Void | Teleport when hit, Swiftness on End blocks | Ender Pearl | Dragon's Breath | Dragon Egg |
@@ -274,10 +277,13 @@ other. Pressing **G** on a crown without a secondary ability says so.
 | Crown of Poseidon | R | Riptide | Press to launch | 4.5 seconds |
 | Crown of Poseidon | G | Lightning Strike | Press while looking at a target | 20 seconds |
 | Crown of Nether | R | Fire Charge | Press to shoot | 2 seconds |
+| Crown of Nether | G | Blaze Flight | Press to fly for 60 seconds | 2 minutes |
 | Crown of Darkness | R | Sonic Boom | Press while looking at a target | 15 seconds |
+| Crown of Darkness | G | Darkness Pulse | Press to darken every player within 30 blocks | 30 seconds |
 | Crown of Sun | R | Wind Charge | Press to throw (3 charges) | 6 seconds per charge |
 | Crown of Sun | G | Sun Cycle | Press to switch day and night | 20 seconds |
 | Crown of Wither | R | Wither Skull | Press to shoot (3 charges) | 3 seconds between shots, 6 seconds per charge |
+| Crown of Wither | G | Wither Flight | Press to fly for 60 seconds | 2 minutes |
 | Crown of Winter | R | Frost Walker | Toggle: press to switch on or off | None |
 | Crown of Iron | R | Arrow Volley | Press while looking at a target | 10 seconds |
 | Crown of Iron | G | Glowing Arrows | Toggle: press to switch on or off | None |

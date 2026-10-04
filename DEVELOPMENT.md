@@ -64,6 +64,7 @@ Shared helpers for common kinds of ability:
 |---|---|
 | `ToggleState` | On/off abilities (Vein Miner, Frost Walker, Glowing Arrows): handles the state, the green/red messages and resetting when the player leaves |
 | `ChargeTracker` | Abilities with several charges that recharge one at a time (Wind Charge, Wither Skull) |
+| `FlightAbility` | Timed flight at a mob's speed with its particles and a safe landing (Blaze Flight, Wither Flight); add a factory method like `blazeFlight` |
 | `AbilityTargeting.findLookTarget` | Abilities aimed at whatever the player is looking at (Sonic Boom, Arrow Volley, Lightning Strike) |
 | `CrownAbilities.CROWN_ABILITY_TAG` | Add this tag to every projectile, cloud or other entity an ability creates; damage from tagged entities never hurts the wearer's own pets |
 | `CrownAbilities.isHoldingAbilityKey` | Abilities that work while a key is held down |
