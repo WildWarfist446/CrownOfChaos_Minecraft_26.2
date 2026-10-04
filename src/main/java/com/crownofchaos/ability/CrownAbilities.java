@@ -87,12 +87,14 @@ public final class CrownAbilities {
 		register(ModItems.CROWN_OF_DARKNESS, new SonicBoomAbility());
 		register(ModItems.CROWN_OF_SUN, new WindChargeAbility());
 		register(ModItems.CROWN_OF_WITHER, new WitherSkullAbility());
+		register(ModItems.CROWN_OF_WINTER, new FrostWalkerAbility());
 
 		registerSecondary(ModItems.CROWN_OF_SUN, new SunCycleAbility());
 
 		VeinMinerAbility.initialize();
 		SonicBoomAbility.initialize();
 		FireChargeAbility.initialize();
+		FrostWalkerAbility.initialize();
 
 		PayloadTypeRegistry.serverboundPlay().register(CrownAbilityKeyPayload.TYPE, CrownAbilityKeyPayload.CODEC);
 		PayloadTypeRegistry.clientboundPlay().register(RiptidePayload.TYPE, RiptidePayload.CODEC);

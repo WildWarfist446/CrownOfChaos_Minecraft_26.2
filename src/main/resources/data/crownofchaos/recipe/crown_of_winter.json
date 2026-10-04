@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "I": "minecraft:ice",
+    "D": "minecraft:diamond_block",
+    "G": "minecraft:gold_block",
+    "H": "crownofchaos:golden_crown",
+    "S": "minecraft:snowball",
+    "P": "minecraft:powder_snow_bucket"
+  },
+  "pattern": [
+    "IDI",
+    "GHG",
+    "SPS"
+  ],
+  "result": {
+    "id": "crownofchaos:crown_of_winter"
+  }
+}

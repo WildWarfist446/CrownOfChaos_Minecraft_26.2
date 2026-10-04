@@ -70,6 +70,10 @@ public final class ModItems {
 			.humanoidArmor(ArmorMaterials.DIAMOND, ArmorType.HELMET)
 			.rarity(Rarity.EPIC)));
 
+	public static final Item CROWN_OF_WINTER = register("crown_of_winter", Item::new, withLore("crown_of_winter", new Item.Properties()
+			.humanoidArmor(ArmorMaterials.DIAMOND, ArmorType.HELMET)
+			.rarity(Rarity.EPIC)));
+
 	/** Dropped by Wardens; used to craft the Crown of Darkness. */
 	public static final Item SCULK_CORD = register("sculk_cord", Item::new, withLore("sculk_cord", new Item.Properties()
 			.rarity(Rarity.RARE)));
@@ -119,7 +123,7 @@ public final class ModItems {
 
 	public static void initialize() {
 		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.COMBAT)
-				.register(output -> output.insertAfter(Items.NETHERITE_BOOTS, GOLDEN_CROWN, UNDER_CROWN, CROWN_OF_POSEIDON, CROWN_OF_NETHER, CROWN_OF_DARKNESS, CROWN_OF_SUN, CROWN_OF_WITHER));
+				.register(output -> output.insertAfter(Items.NETHERITE_BOOTS, GOLDEN_CROWN, UNDER_CROWN, CROWN_OF_POSEIDON, CROWN_OF_NETHER, CROWN_OF_DARKNESS, CROWN_OF_SUN, CROWN_OF_WITHER, CROWN_OF_WINTER));
 		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.INGREDIENTS)
 				.register(output -> output.insertAfter(Items.ECHO_SHARD, SCULK_CORD, ANKH_CHARM));
 

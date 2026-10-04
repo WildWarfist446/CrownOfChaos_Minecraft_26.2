@@ -1,5 +1,6 @@
 package com.crownofchaos.item;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,14 +55,29 @@ public final class CrownEffects {
 	public static final TagKey<Block> SUN_CROWN_SPEED_BLOCKS =
 			TagKey.create(Registries.BLOCK, CrownOfChaos.id("crown_of_sun_speed_blocks"));
 
+	/** Blocks the Crown of Winter gives Swiftness on: snow, snow blocks, powder snow and every kind of ice. */
+	public static final TagKey<Block> WINTER_CROWN_SPEED_BLOCKS =
+			TagKey.create(Registries.BLOCK, CrownOfChaos.id("crown_of_winter_speed_blocks"));
+
+	/** Crowns that give Swiftness while standing on certain blocks. */
+	private static final Map<Item, TagKey<Block>> TERRAIN_SPEED_BLOCKS = Map.of(
+			ModItems.CROWN_OF_SUN, SUN_CROWN_SPEED_BLOCKS,
+			ModItems.CROWN_OF_WINTER, WINTER_CROWN_SPEED_BLOCKS);
+
 	/** Swiftness II, the strongest level potions and beacons give. */
-	private static final CrownEffect SUN_CROWN_SWIFTNESS = new CrownEffect(MobEffects.SPEED, 1);
+	private static final CrownEffect TERRAIN_SWIFTNESS = new CrownEffect(MobEffects.SPEED, 1);
 
-	/** Keeps Swiftness for 1 second after leaving sand, so it doesn't flicker off while jumping. */
-	private static final int SUN_CROWN_GRACE_TICKS = 20;
+	/** Keeps Swiftness for 1 second after stepping off, so it doesn't flicker off while jumping. */
+	private static final int TERRAIN_GRACE_TICKS = 20;
 
-	/** Last server tick each Crown of Sun wearer stood on sand. */
-	private static final Map<UUID, Integer> LAST_ON_SAND = new HashMap<>();
+	/** Last server tick each wearer stood on their crown's Swiftness blocks. */
+	private static final Map<UUID, Integer> LAST_ON_TERRAIN = new HashMap<>();
+
+	/**
+	 * Extra freezing a Crown of Winter hit adds on top of being fully frozen. Freezing thaws at
+	 * 2 per tick, so the target stays fully frozen for 3.5 seconds, then thaws over 3.5 more.
+	 */
+	public static final int WINTER_CROWN_EXTRA_FREEZE_TICKS = 140;
 
 	/** Crown of Wither melee hits give Wither I for 10 seconds, like a Wither Skeleton's. */
 	public static final int WITHER_CROWN_WITHER_TICKS = 200;
@@ -115,6 +131,19 @@ public final class CrownEffects {
 			}
 		});
 
+		// Crown of Winter: every hit (melee or projectiles the wearer fires) freezes the target,
+		// like being stuck in powder snow.
+		ServerLivingEntityEvents.AFTER_DAMAGE.register((target, source, baseDamage, damageTaken, blocked) -> {
+			if (!blocked && damageTaken > 0.0F
+					&& source.getEntity() instanceof LivingEntity attacker
+					&& attacker != target
+					&& target.canFreeze()
+					&& isWearing(attacker, ModItems.CROWN_OF_WINTER)) {
+				int frozen = target.getTicksRequiredToFreeze() + WINTER_CROWN_EXTRA_FREEZE_TICKS;
+				target.setTicksFrozen(Math.max(target.getTicksFrozen(), frozen));
+			}
+		});
+
 		// Crown of Nether, Flame: arrows the wearer fires are lit as they leave the bow, so they
 		// burn, set targets on fire and light TNT exactly like Flame arrows.
 		ServerEntityEvents.ENTITY_LOAD.register((entity, level) -> {
@@ -138,7 +167,7 @@ public final class CrownEffects {
 			}
 		});
 
-		ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> LAST_ON_SAND.remove(handler.getPlayer().getUUID()));
+		ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> LAST_ON_TERRAIN.remove(handler.getPlayer().getUUID()));
 
 		ServerTickEvents.END_SERVER_TICK.register(server -> {
 			if (server.getTickCount() % CHECK_INTERVAL_TICKS != 0) {
@@ -148,8 +177,10 @@ public final class CrownEffects {
 			for (ServerPlayer player : server.getPlayerList().getPlayers()) {
 				Item worn = player.getItemBySlot(EquipmentSlot.HEAD).getItem();
 				List<CrownEffect> active = EFFECTS.getOrDefault(worn, List.of());
-				if (worn == ModItems.CROWN_OF_SUN && isOnSand(player, server.getTickCount())) {
-					active = List.of(SUN_CROWN_SWIFTNESS);
+				TagKey<Block> speedBlocks = TERRAIN_SPEED_BLOCKS.get(worn);
+				if (speedBlocks != null && isOnTerrain(player, speedBlocks, server.getTickCount())) {
+					active = new ArrayList<>(active);
+					active.add(TERRAIN_SWIFTNESS);
 				}
 
 				// Remove effects from crowns that are no longer worn, e.g. after swapping crowns.
@@ -158,7 +189,7 @@ public final class CrownEffects {
 						removeCrownEffects(player, entry.getValue(), active);
 					}
 				}
-				removeCrownEffects(player, List.of(SUN_CROWN_SWIFTNESS), active);
+				removeCrownEffects(player, List.of(TERRAIN_SWIFTNESS), active);
 
 				apply(player, active);
 
@@ -170,13 +201,13 @@ public final class CrownEffects {
 		});
 	}
 
-	private static boolean isOnSand(ServerPlayer player, int tick) {
-		if (player.getBlockStateOn().is(SUN_CROWN_SPEED_BLOCKS)) {
-			LAST_ON_SAND.put(player.getUUID(), tick);
+	private static boolean isOnTerrain(ServerPlayer player, TagKey<Block> blocks, int tick) {
+		if (player.getBlockStateOn().is(blocks)) {
+			LAST_ON_TERRAIN.put(player.getUUID(), tick);
 			return true;
 		}
-		Integer last = LAST_ON_SAND.get(player.getUUID());
-		return last != null && tick - last <= SUN_CROWN_GRACE_TICKS;
+		Integer last = LAST_ON_TERRAIN.get(player.getUUID());
+		return last != null && tick - last <= TERRAIN_GRACE_TICKS;
 	}
 
 	private static void apply(ServerPlayer player, List<CrownEffect> effects) {

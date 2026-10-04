@@ -13,6 +13,8 @@
   "item.crownofchaos.crown_of_sun.lore": "The supreme sun god who traveled across the sky.",
   "item.crownofchaos.crown_of_wither": "Crown of Wither",
   "item.crownofchaos.crown_of_wither.lore": "I've seen this in a painting...",
+  "item.crownofchaos.crown_of_winter": "Crown of Winter",
+  "item.crownofchaos.crown_of_winter.lore": "Gunter, why did you gunt my fries?",
   "item.crownofchaos.sculk_cord": "Sculk Cord",
   "item.crownofchaos.sculk_cord.lore": "The screeching has finally ceased...",
   "item.crownofchaos.ankh_charm": "Ankh Charm",
@@ -37,6 +39,8 @@
   "message.crownofchaos.ability.sun_cycle.day": "The sun rises",
   "message.crownofchaos.ability.sun_cycle.night": "The sun sets",
   "message.crownofchaos.ability.sun_cycle.no_sky": "There is no sun here to command",
+  "message.crownofchaos.ability.frost_walker.enabled": "Frost Walker enabled",
+  "message.crownofchaos.ability.frost_walker.disabled": "Frost Walker disabled",
   "message.crownofchaos.ability.vein_miner.enabled": "Vein Miner enabled",
   "message.crownofchaos.ability.vein_miner.disabled": "Vein Miner disabled"
 }

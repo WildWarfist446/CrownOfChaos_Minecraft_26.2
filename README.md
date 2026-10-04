@@ -7,9 +7,21 @@ as it is worn.
 
 ## Crowns
 
+| Crown | Passive effects | Ability (R) | Recipe unlocked by |
+|---|---|---|---|
+| Golden Crown | None (base crown) | None | Gold Ingot |
+| Under Crown | Haste II, Night Vision, Hero of the Village, Fortune III | Vein Miner (toggle) | Golden Crown |
+| Crown of Poseidon | Water Breathing, Dolphin's Grace, Night Vision, +50% damage in water | Riptide | Heart of the Sea |
+| Crown of Nether | Fire Resistance, Fire Aspect, Flame | Fire Charge | Nether Star |
+| Crown of Darkness | Night Vision, Darkness on hit | Sonic Boom | Sculk Cord |
+| Crown of Sun | Swiftness II on sand | Wind Charge (G: Sun Cycle) | Ankh Charm |
+| Crown of Wither | Wither immunity, Wither on hit | Wither Skull | Wither Skeleton Skull |
+| Crown of Winter | Freeze on hit, freeze immunity, Swiftness and grip on snow and ice | Frost Walker (toggle) | Powder Snow Bucket |
+
 All crowns except the Golden Crown have the same armor, toughness, durability and
-enchantability as a diamond helmet and are repaired with diamonds. Their effects are applied while the crown is on
-your head and removed as soon as it comes off; potion and beacon effects you already have
+enchantability as a diamond helmet and are repaired with diamonds. Their effects are
+applied while the crown is on your head and removed as soon as it comes off; potion and
+beacon effects you already have
 are left untouched.
 
 ### Golden Crown
@@ -140,6 +152,25 @@ and keeps Piglins calm like other gold armor.
 | **Middle** | Soul Sand | Golden Crown | Soul Sand |
 | **Bottom** | Bone | Diamond Block | Bone |
 
+### Crown of Winter
+
+*"Gunter, why did you gunt my fries?"*
+
+| Ability | Details |
+|---|---|
+| Freeze on hit | Every hit you land, melee or with arrows and tridents you fire, freezes the target like powder snow: frosty and slowed, taking freeze damage, for about 7 seconds |
+| Freeze immunity | You never freeze, in powder snow or from other wearers' hits |
+| Snow and ice | Swiftness II on snow, snow blocks, powder snow and every kind of ice (lasts 1 second after stepping off), normal grip on ice instead of sliding, and you walk on top of powder snow |
+| **Ability: Frost Walker** | Press the crown ability key (default **R**) to toggle Frost Walker II on or off. While it's on, still water under you freezes into frosted ice like Frost Walker II boots, and magma blocks and campfires don't burn you. |
+
+**Recipe** (unlocked by picking up a Powder Snow Bucket):
+
+| | Left | Middle | Right |
+|---|---|---|---|
+| **Top** | Ice | Diamond Block | Ice |
+| **Middle** | Gold Block | Golden Crown | Gold Block |
+| **Bottom** | Snowball | Powder Snow Bucket | Snowball |
+
 ## Materials
 
 | Item | Source | Use |
@@ -169,6 +200,7 @@ other. Pressing **G** on a crown without a secondary ability says so.
 | Crown of Sun | R | Wind Charge | Press to throw (3 charges) | 6 seconds per charge |
 | Crown of Sun | G | Sun Cycle | Press to switch day and night | 20 seconds |
 | Crown of Wither | R | Wither Skull | Press to shoot (3 charges) | 3 seconds between shots, 6 seconds per charge |
+| Crown of Winter | R | Frost Walker | Toggle: press to switch on or off | None |
 
 - Primary abilities with a cooldown show it on the crown's icon, and pressing the key early
   shows the time remaining in the action bar. Secondary ability cooldowns show in the action
@@ -179,7 +211,7 @@ other. Pressing **G** on a crown without a secondary ability says so.
   the world or server.
 - Pressing the key without a crown on shows "Wear a crown to use its power".
 - Ability messages are shown in light purple to match the crowns' item names, except Vein
-  Miner's toggle messages, which are green (enabled) and red (disabled).
+  Miner's and Frost Walker's toggle messages, which are green (enabled) and red (disabled).
 
 ## Installation
 
@@ -210,6 +242,7 @@ In a Creative world with cheats on, crowns can also be found in the Combat tab o
 /give @s crownofchaos:crown_of_darkness
 /give @s crownofchaos:crown_of_sun
 /give @s crownofchaos:crown_of_wither
+/give @s crownofchaos:crown_of_winter
 /give @s crownofchaos:sculk_cord
 /give @s crownofchaos:ankh_charm
 ```
@@ -219,10 +252,10 @@ In a Creative world with cheats on, crowns can also be found in the Combat tab o
 | Path | Contents |
 |---|---|
 | `src/main/java/com/crownofchaos/item/ModItems.java` | Item registration |
-| `src/main/java/com/crownofchaos/item/CrownEffects.java` | Each crown's potion effects, passive bonuses (Darkness on hit, Fire Aspect, Flame, Wither on hit) and tuning values |
+| `src/main/java/com/crownofchaos/item/CrownEffects.java` | Each crown's potion effects, passive bonuses (Darkness on hit, Fire Aspect, Flame, Wither on hit, freeze on hit, Swiftness on sand, snow and ice) and tuning values |
 | `src/main/java/com/crownofchaos/ability/` | Crown abilities and the registry that links each crown to its ability |
 | `src/main/java/com/crownofchaos/network/` | Messages between the client and server (ability keys, Riptide launch) |
-| `src/main/java/com/crownofchaos/mixin/` | Changes that hook into Minecraft (Fortune, damage bonuses, crown fireball and wither skull explosions, Wither immunity) |
+| `src/main/java/com/crownofchaos/mixin/` | Changes that hook into Minecraft (Fortune, damage bonuses, crown fireball and wither skull explosions, Wither immunity, ice grip, walking on powder snow) |
 | `src/client/java/com/crownofchaos/client/` | Client-only code: the ability keybind and client-side ability effects |
 | `src/client/java/com/crownofchaos/client/model/` | Crown 3D models and the renderer that draws them on the head |
 | `src/main/resources/assets/crownofchaos/` | Textures, item models and names |
@@ -257,6 +290,7 @@ Crowns can have a custom 3D model when worn, made in Blockbench as a Modded Enti
 | Crown of Darkness | Diamond helmet (3D model planned) |
 | Crown of Sun | Diamond helmet (3D model planned) |
 | Crown of Wither | Custom 3D model |
+| Crown of Winter | Diamond helmet (3D model planned) |
 
 ### Adding a 3D model
 
