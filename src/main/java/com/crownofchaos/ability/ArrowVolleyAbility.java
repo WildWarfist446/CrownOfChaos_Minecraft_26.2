@@ -14,18 +14,11 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.entity.projectile.arrow.Arrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.ClipContext;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 /**
@@ -182,25 +175,7 @@ public final class ArrowVolleyAbility implements CrownAbility {
 
 	/** The living entity under the player's crosshair, if it's in sight and within range. */
 	private static LivingEntity findTarget(ServerPlayer player) {
-		Vec3 eye = player.getEyePosition();
-		Vec3 look = player.getLookAngle();
-		Vec3 end = eye.add(look.scale(RANGE));
-
-		BlockHitResult blockHit = player.level().clip(new ClipContext(eye, end, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player));
-		if (blockHit.getType() != HitResult.Type.MISS) {
-			end = blockHit.getLocation();
-		}
-
-		AABB searchArea = player.getBoundingBox().expandTowards(look.scale(RANGE)).inflate(1.0);
-		EntityHitResult entityHit = ProjectileUtil.getEntityHitResult(player, eye, end, searchArea,
-				entity -> entity instanceof LivingEntity && entity.isAlive() && !entity.isSpectator() && entity.isPickable(),
-				eye.distanceToSqr(end));
-		if (entityHit == null) {
-			return null;
-		}
-
-		Entity hit = entityHit.getEntity();
-		return hit instanceof LivingEntity living && player.distanceTo(living) <= RANGE ? living : null;
+		return AbilityTargeting.findLookTarget(player, RANGE);
 	}
 
 	private static final class Volley {

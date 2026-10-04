@@ -1,19 +1,12 @@
 package com.crownofchaos.ability;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
-
 import com.crownofchaos.item.CrownEffects;
 import com.crownofchaos.item.ModItems;
 
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
@@ -35,19 +28,11 @@ public final class FrostWalkerAbility implements CrownAbility {
 	/** Frost Walker's radius is 3 + 1 per level above I, so 4 at level II. */
 	private static final int RADIUS = 4;
 
-	/** Players who have Frost Walker switched on. Resets when they leave the server. */
-	private static final Set<UUID> ENABLED = new HashSet<>();
+	private static final ToggleState TOGGLE = new ToggleState("frost_walker");
 
 	@Override
 	public boolean activate(ServerPlayer player, ItemStack crown) {
-		boolean enabled = ENABLED.add(player.getUUID());
-		if (!enabled) {
-			ENABLED.remove(player.getUUID());
-		}
-
-		player.sendOverlayMessage(enabled
-				? Component.translatable("message.crownofchaos.ability.frost_walker.enabled").withStyle(ChatFormatting.GREEN)
-				: Component.translatable("message.crownofchaos.ability.frost_walker.disabled").withStyle(ChatFormatting.RED));
+		TOGGLE.toggle(player);
 		// Toggling isn't a use of the ability, so no cooldown.
 		return false;
 	}
@@ -58,11 +43,10 @@ public final class FrostWalkerAbility implements CrownAbility {
 	}
 
 	private static boolean isActive(ServerPlayer player) {
-		return ENABLED.contains(player.getUUID()) && CrownEffects.isWearing(player, ModItems.CROWN_OF_WINTER);
+		return TOGGLE.isEnabled(player) && CrownEffects.isWearing(player, ModItems.CROWN_OF_WINTER);
 	}
 
 	static void initialize() {
-		ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> ENABLED.remove(handler.getPlayer().getUUID()));
 
 		ServerTickEvents.END_SERVER_TICK.register(server -> {
 			for (ServerPlayer player : server.getPlayerList().getPlayers()) {

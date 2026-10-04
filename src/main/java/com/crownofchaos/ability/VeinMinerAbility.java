@@ -12,12 +12,9 @@ import com.crownofchaos.item.CrownEffects;
 import com.crownofchaos.item.ModItems;
 
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockItemTags;
 import net.minecraft.tags.TagKey;
@@ -54,19 +51,11 @@ public final class VeinMinerAbility implements CrownAbility {
 	/** Players whose vein mine is in progress, so the blocks it breaks don't start another. */
 	private static final Set<UUID> MINING = new HashSet<>();
 
-	/** Players who have Vein Miner switched on. Resets when they leave the server. */
-	private static final Set<UUID> ENABLED = new HashSet<>();
+	private static final ToggleState TOGGLE = new ToggleState("vein_miner");
 
 	@Override
 	public boolean activate(ServerPlayer player, ItemStack crown) {
-		boolean enabled = ENABLED.add(player.getUUID());
-		if (!enabled) {
-			ENABLED.remove(player.getUUID());
-		}
-
-		player.sendOverlayMessage(enabled
-				? Component.translatable("message.crownofchaos.ability.vein_miner.enabled").withStyle(ChatFormatting.GREEN)
-				: Component.translatable("message.crownofchaos.ability.vein_miner.disabled").withStyle(ChatFormatting.RED));
+		TOGGLE.toggle(player);
 		// Toggling isn't a use of the ability, so no cooldown.
 		return false;
 	}
@@ -78,7 +67,6 @@ public final class VeinMinerAbility implements CrownAbility {
 
 	static void initialize() {
 		PlayerBlockBreakEvents.AFTER.register(VeinMinerAbility::afterBlockBreak);
-		ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> ENABLED.remove(handler.getPlayer().getUUID()));
 	}
 
 	private static void afterBlockBreak(Level level, Player player, BlockPos pos, BlockState state, BlockEntity blockEntity) {
@@ -86,7 +74,7 @@ public final class VeinMinerAbility implements CrownAbility {
 				|| MINING.contains(player.getUUID())
 				|| !state.is(ConventionalBlockTags.ORES)
 				|| !CrownEffects.isWearing(serverPlayer, ModItems.UNDER_CROWN)
-				|| !ENABLED.contains(player.getUUID())
+				|| !TOGGLE.isEnabled(player)
 				|| !serverPlayer.hasCorrectToolForDrops(state)) {
 			return;
 		}

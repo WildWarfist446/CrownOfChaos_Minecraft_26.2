@@ -58,6 +58,9 @@
   "message.crownofchaos.ability.frost_walker.enabled": "Frost Walker enabled",
   "message.crownofchaos.ability.frost_walker.disabled": "Frost Walker disabled",
   "message.crownofchaos.ability.arrow_volley.no_target": "No target in range",
+  "message.crownofchaos.ability.lightning.no_target": "No target in range",
+  "message.crownofchaos.ability.glowing_arrows.enabled": "Glowing Arrows enabled",
+  "message.crownofchaos.ability.glowing_arrows.disabled": "Glowing Arrows disabled",
   "message.crownofchaos.ability.vein_miner.enabled": "Vein Miner enabled",
   "message.crownofchaos.ability.vein_miner.disabled": "Vein Miner disabled"
 }

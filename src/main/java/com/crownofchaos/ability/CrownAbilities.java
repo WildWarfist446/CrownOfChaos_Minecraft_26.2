@@ -99,7 +99,9 @@ public final class CrownAbilities {
 		register(ModItems.CROWN_OF_IRON, new ArrowVolleyAbility());
 		register(ModItems.CROWN_OF_VOID, new EnderPearlAbility());
 
+		registerSecondary(ModItems.CROWN_OF_POSEIDON, new LightningStrikeAbility());
 		registerSecondary(ModItems.CROWN_OF_SUN, new SunCycleAbility());
+		registerSecondary(ModItems.CROWN_OF_IRON, new GlowingArrowsAbility());
 		registerSecondary(ModItems.CROWN_OF_VOID, new DragonBreathAbility());
 
 		VeinMinerAbility.initialize();
@@ -108,6 +110,7 @@ public final class CrownAbilities {
 		FrostWalkerAbility.initialize();
 		ArrowVolleyAbility.initialize();
 		DragonBreathAbility.initialize();
+		GlowingArrowsAbility.initialize();
 
 		PayloadTypeRegistry.serverboundPlay().register(CrownAbilityKeyPayload.TYPE, CrownAbilityKeyPayload.CODEC);
 		PayloadTypeRegistry.clientboundPlay().register(RiptidePayload.TYPE, RiptidePayload.CODEC);

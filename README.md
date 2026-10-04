@@ -2,8 +2,14 @@
 
 A Fabric mod for Minecraft 26.2 by Warfist that adds powerful crowns. Craft a Golden
 Crown, then upgrade it into one of the magical crowns. Each is worn in the helmet slot,
-protects like a diamond helmet, and grants its own effects and active ability for as long
-as it is worn.
+protects like a diamond helmet, and grants its own effects and abilities for as long as it
+is worn. Every magical crown can also be upgraded to netherite.
+
+**Contents:** [Crowns](#crowns) · [Netherite crowns](#netherite-crowns) ·
+[Materials](#materials) · [Changes to vanilla](#changes-to-vanilla) ·
+[Crown abilities](#crown-abilities) · [Installation](#installation) ·
+[Finding the items](#finding-the-items) · [3D models](#3d-models) ·
+[Development](#development)
 
 ## Crowns
 
@@ -11,13 +17,13 @@ as it is worn.
 |---|---|---|---|
 | Golden Crown | None (base crown) | None | Gold Ingot |
 | Under Crown | Haste II, Night Vision, Hero of the Village, Fortune III | Vein Miner (toggle) | Golden Crown |
-| Crown of Poseidon | Water Breathing, Dolphin's Grace, Night Vision, +50% damage in water | Riptide | Heart of the Sea |
+| Crown of Poseidon | Water Breathing, Dolphin's Grace, Night Vision, +50% damage in water | Riptide (G: Lightning Strike) | Heart of the Sea |
 | Crown of Nether | Fire Resistance, Fire Aspect, Flame | Fire Charge | Nether Star |
 | Crown of Darkness | Night Vision, Darkness on hit | Sonic Boom | Sculk Cord |
 | Crown of Sun | Swiftness II on sand | Wind Charge (G: Sun Cycle) | Ankh Charm |
 | Crown of Wither | Wither immunity, Wither on hit | Wither Skull | Wither Skeleton Skull |
 | Crown of Winter | Freeze on hit, freeze immunity, Swiftness and grip on snow and ice | Frost Walker (toggle) | Powder Snow Bucket |
-| Crown of Iron | +50% bow and crossbow damage | Arrow Volley | Totem of Undying |
+| Crown of Iron | +50% bow and crossbow damage | Arrow Volley (G: Glowing Arrows) | Totem of Undying |
 | Crown of Void | Teleport when hit, Swiftness on End blocks | Ender Pearl (G: Dragon's Breath) | Dragon Egg |
 
 Every crown shimmers with the enchanted glint, in the inventory and when worn. All crowns
@@ -73,6 +79,7 @@ and keeps Piglins calm like other gold armor.
 | Night Vision | Permanent while worn |
 | Water damage bonus | Attacks deal 50% more damage while you are in water, including arrows and tridents you fire |
 | **Ability: Riptide** | Press the crown ability key (default **R**) to launch yourself exactly like a Riptide III trident. Works in water or rain, not while riding. 4.5 second cooldown. |
+| **Secondary ability: Lightning Strike** | Look at a mob or player within 30 blocks and press the secondary crown ability key (default **G**) to strike it with lightning. Slightly weaker than natural lightning: 4 damage and 4 seconds of fire to everything within 2 blocks (vanilla is 5 damage, 8 seconds, 3 blocks), and it never sets blocks on fire or transforms mobs (no charged creepers or witches). Never hurts you or your pets. 20 second cooldown. |
 
 **Recipe** (unlocked by picking up a Heart of the Sea):
 
@@ -182,6 +189,7 @@ and keeps Piglins calm like other gold armor.
 |---|---|
 | Bow and crossbow damage | Arrows you fire from a bow or crossbow deal 50% more damage |
 | **Ability: Arrow Volley** | Look at a mob or player within 20 blocks and press the crown ability key (default **R**). 24 arrows rain down from 3 blocks above its head over 1.5 seconds, ahead of a moving target: about half are aimed at its body and gently correct course, the rest scatter around it. A target that keeps moving can dodge some. Volley arrows deal 25% more damage than normal arrows, every one can land even right after another hit, and they can't be picked up. A raised shield blocks every volley arrow, whichever way the player faces. 10 second cooldown. |
+| **Secondary ability: Glowing Arrows** | Press the secondary crown ability key (default **G**) to toggle Glowing Arrows on or off. While it's on, anything hit by an arrow you fire from a bow or crossbow glows for 2 minutes, so you can see it through walls. Only arrows from your bow or crossbow count (not Arrow Volley), and your own pets never glow. |
 
 **Recipe** (unlocked by picking up a Totem of Undying):
 
@@ -257,6 +265,7 @@ other. Pressing **G** on a crown without a secondary ability says so.
 |---|---|---|---|---|
 | Under Crown | R | Vein Miner | Toggle: press to switch on or off | None |
 | Crown of Poseidon | R | Riptide | Press to launch | 4.5 seconds |
+| Crown of Poseidon | G | Lightning Strike | Press while looking at a target | 20 seconds |
 | Crown of Nether | R | Fire Charge | Press to shoot | 2 seconds |
 | Crown of Darkness | R | Sonic Boom | Press while looking at a target | 15 seconds |
 | Crown of Sun | R | Wind Charge | Press to throw (3 charges) | 6 seconds per charge |
@@ -264,6 +273,7 @@ other. Pressing **G** on a crown without a secondary ability says so.
 | Crown of Wither | R | Wither Skull | Press to shoot (3 charges) | 3 seconds between shots, 6 seconds per charge |
 | Crown of Winter | R | Frost Walker | Toggle: press to switch on or off | None |
 | Crown of Iron | R | Arrow Volley | Press while looking at a target | 10 seconds |
+| Crown of Iron | G | Glowing Arrows | Toggle: press to switch on or off | None |
 | Crown of Void | R | Ender Pearl | Press to throw | 3 seconds |
 | Crown of Void | G | Dragon's Breath | Press to surround yourself with dragon's breath | 30 seconds |
 
@@ -279,7 +289,7 @@ other. Pressing **G** on a crown without a secondary ability says so.
   and crown on-hit effects (Darkness, Wither, freezing, Fire Aspect) don't apply to them.
   Other players' pets can still be hit.
 - Ability messages are shown in light purple to match the crowns' item names, except Vein
-  Miner's and Frost Walker's toggle messages, which are green (enabled) and red (disabled).
+  Miner's, Frost Walker's and Glowing Arrows' toggle messages, which are green (enabled) and red (disabled).
 
 ## Installation
 
@@ -290,15 +300,7 @@ other. Pressing **G** on a crown without a secondary ability says so.
 
 The mod must be installed on both the client and the server.
 
-## Development
-
-Requires Java 25.
-
-| Command | What it does |
-|---|---|
-| `./gradlew runClient` | Starts Minecraft with the mod loaded |
-| `./gradlew build` | Builds the mod jar into `build/libs/` |
-| `./gradlew vscode` | Generates VS Code launch configurations |
+## Finding the items
 
 In Creative mode, every mod item is in the **Crown of Chaos** tab (crowns are also in the
 Combat tab and materials in the Ingredients tab). With cheats on, they can also be given with:
@@ -319,51 +321,10 @@ Combat tab and materials in the Ingredients tab). With cheats on, they can also 
 /give @s crownofchaos:ankh_charm
 ```
 
-### Project layout
-
-| Path | Contents |
-|---|---|
-| `src/main/java/com/crownofchaos/item/ModItems.java` | Items (crowns, netherite crowns, materials), the creative tab, and loot (Sculk Cord, Ankh Charm) |
-| `src/main/java/com/crownofchaos/item/CrownEffects.java` | Each crown's potion effects, passive bonuses (Darkness on hit, Fire Aspect, Flame, Wither on hit, freeze on hit, Swiftness on sand, snow, ice and End blocks, Crown of Void teleport) and tuning values |
-| `src/main/java/com/crownofchaos/ability/` | Crown abilities and the registry that links each crown to its ability |
-| `src/main/java/com/crownofchaos/network/` | Messages between the client and server (ability keys, Riptide launch) |
-| `src/main/java/com/crownofchaos/mixin/` | Changes that hook into Minecraft (Fortune, damage bonuses, a Dragon Egg on every dragon kill, volley arrows and shield blocking, crown fireball and wither skull explosions, Wither immunity, ice grip, walking on powder snow) |
-| `src/client/java/com/crownofchaos/client/` | Client-only code: the ability keybind and client-side ability effects |
-| `src/client/java/com/crownofchaos/client/model/` | Crown 3D models and the renderer that draws them on the head |
-| `src/main/resources/assets/crownofchaos/` | Textures, item models and names |
-| `src/main/resources/data/crownofchaos/` | Crafting and smithing recipes, recipe-book unlocks, and block tags |
-| `Sprites/` | Source artwork (Aseprite files and PNG exports) |
-| `3dmodels/` | Blockbench 3D model exports for the crowns |
-
-### Adding a crown
-
-1. Register it in `ModItems` with `registerCrown(...)` (gives it the enchanted glint and its
-   description line), plus `registerNetheriteCrown(...)` for its netherite version.
-2. Add both to the creative tab list in `ModItems.initialize()`.
-3. Add its effects to `CrownEffects` and its ability to `CrownAbilities`.
-4. Add the sprite to `assets/crownofchaos/textures/item/`, item model files for both
-   versions (the netherite one points at the crown's model), and names and description in
-   `lang/en_us.json`.
-5. Add its crafting recipe and a netherite smithing recipe in `data/crownofchaos/recipe/`,
-   each with a recipe-book unlock in `data/crownofchaos/advancement/recipes/combat/`.
-
-### Adding a crown ability
-
-1. Create a class in `ability/` that implements `CrownAbility`. `activate` runs on the
-   server when the key is pressed; return `true` to start the cooldown.
-2. Attach it to a crown in `CrownAbilities.initialize()`:
-   `register(ModItems.YOUR_CROWN, new YourAbility());` for the primary key (R), or
-   `registerSecondary(ModItems.YOUR_CROWN, new YourAbility());` for the secondary key (G).
-3. Add any action-bar messages to `assets/crownofchaos/lang/en_us.json`, styled with
-   `CrownAbilities.MESSAGE_COLOR` so they match the other crown messages.
-
-The server also tracks whether each key is held (`CrownAbilities.isHoldingAbilityKey`) for
-abilities that should work while the key is held down.
-
 ## 3D models
 
-Crowns can have a custom 3D model when worn, made in Blockbench as a Modded Entity export
-(Mojang mappings) and kept in `3dmodels/`.
+Some crowns have a custom 3D model when worn; the rest look like a helmet until theirs is
+made.
 
 | Crown | Worn model |
 |---|---|
@@ -378,11 +339,7 @@ Crowns can have a custom 3D model when worn, made in Blockbench as a Modded Enti
 | Crown of Iron | Diamond helmet (3D model planned) |
 | Crown of Void | Diamond helmet (3D model planned) |
 
-### Adding a 3D model
+## Development
 
-1. Export the model from Blockbench and put the `.java` file and its texture `.png` in
-   `3dmodels/`.
-2. Convert it into a model class in `client/model/` (see `UnderCrownModel`), with the crown
-   parts nested under a part named `head` so they follow the wearer's head.
-3. Copy the texture to `assets/crownofchaos/textures/entity/`.
-4. Register it in `CrownModels.initialize()`.
+Building the mod, the project layout, and how to add crowns, abilities and 3D models are
+covered in [DEVELOPMENT.md](DEVELOPMENT.md).
