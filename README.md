@@ -7,9 +7,8 @@ is worn. Every magical crown can also be upgraded to netherite.
 
 **Contents:** [Crowns](#crowns) · [Netherite crowns](#netherite-crowns) ·
 [Abilities](#abilities) · [Materials](#materials) · [Changes to vanilla](#changes-to-vanilla) ·
-[Ability keys and cooldowns](#ability-keys-and-cooldowns) · [Installation](#installation) ·
-[Finding the items](#finding-the-items) · [3D models](#3d-models) ·
-[Development](#development)
+[Installation](#installation) · [Finding the items](#finding-the-items) ·
+[3D models](#3d-models) · [Development](#development)
 
 ## Crowns
 
@@ -224,22 +223,41 @@ lava. The recipes unlock when you pick up a Netherite Ingot.
 
 Each crown grants passive effects for as long as it's worn, plus an active ability on the
 **Use Crown Ability** key (default **R**). Some crowns also have a secondary ability on the
-**Use Secondary Crown Ability** key (default **G**). The table below sums up every crown;
-see its section above for the details, and
-[Ability keys and cooldowns](#ability-keys-and-cooldowns) for how the keys work.
+**Use Secondary Crown Ability** key (default **G**). Both keys can be rebound under Options →
+Controls → Key Binds → Crown of Chaos. Primary and secondary abilities have separate
+cooldowns, so using one never blocks the other. See each crown's section above for the full
+details.
 
 | Crown | Passive effects | Ability (R) | Secondary ability (G) | Recipe unlocked by |
 |---|---|---|---|---|
 | Golden Crown | None (base crown) | None | None | Gold Ingot |
 | Under Crown | Haste II, Night Vision, Hero of the Village, Fortune III | Vein Miner (toggle) | None | Golden Crown |
-| Crown of Poseidon | Water Breathing, Dolphin's Grace, Night Vision, +50% damage in water | Riptide | Lightning Strike | Heart of the Sea |
-| Crown of Nether | Fire Resistance, Fire Aspect, Flame | Fire Charge | Blaze Flight | Nether Star |
-| Crown of Darkness | Night Vision, Darkness on hit | Sonic Boom | Darkness Pulse | Sculk Cord |
-| Crown of Sun | Swiftness II on sand | Wind Charge | Sun Cycle | Ankh Charm |
-| Crown of Wither | Wither immunity, Wither on hit | Wither Skull | Wither Flight | Wither Skeleton Skull |
+| Crown of Poseidon | Water Breathing, Dolphin's Grace, Night Vision, +50% damage in water | Riptide (4.5s) | Lightning Strike, aimed (20s) | Heart of the Sea |
+| Crown of Nether | Fire Resistance, Fire Aspect, Flame | Fire Charge (2s) | Blaze Flight, 60s of flight (2 min) | Nether Star |
+| Crown of Darkness | Night Vision, Darkness on hit | Sonic Boom, aimed (15s) | Darkness Pulse (30s) | Sculk Cord |
+| Crown of Sun | Swiftness II on sand | Wind Charge (3 charges, 6s each) | Sun Cycle (20s) | Ankh Charm |
+| Crown of Wither | Wither immunity, Wither on hit | Wither Skull (3 charges, 6s each, 3s between shots) | Wither Flight, 60s of flight (2 min) | Wither Skeleton Skull |
 | Crown of Winter | Freeze on hit, freeze immunity, Swiftness and grip on snow and ice | Frost Walker (toggle) | None | Powder Snow Bucket |
-| Crown of Iron | +50% bow and crossbow damage | Arrow Volley | Glowing Arrows (toggle) | Totem of Undying |
-| Crown of Void | Teleport when hit, Swiftness on End blocks | Ender Pearl | Dragon's Breath | Dragon Egg |
+| Crown of Iron | +50% bow and crossbow damage | Arrow Volley, aimed (10s) | Glowing Arrows (toggle) | Totem of Undying |
+| Crown of Void | Teleport when hit, Swiftness on End blocks | Ender Pearl (3s) | Dragon's Breath (30s) | Dragon Egg |
+
+Times in brackets are cooldowns. "Aimed" abilities hit whatever you're looking at.
+
+- Primary abilities with a cooldown show it on the crown's icon, and pressing the key early
+  shows the time remaining in the action bar. Secondary ability cooldowns show in the action
+  bar only.
+- Charge-based abilities (Wind Charge, Wither Skull) show the charges left after every use
+  instead of a cooldown.
+- Toggles show "enabled" or "disabled" in the action bar, and reset to off when you leave
+  the world or server.
+- Pressing a key without a crown on shows "Wear a crown to use its power", and pressing
+  **G** on a crown without a secondary ability says so.
+- Crown abilities never hurt animals you've tamed (wolves, cats, parrots, horses and so on),
+  and crown on-hit effects (Darkness, Wither, freezing, Fire Aspect) don't apply to them.
+  Other players' pets can still be hit.
+- Ability messages are shown in light purple to match the crowns' item names, except the
+  toggle messages (Vein Miner, Frost Walker, Glowing Arrows), which are green (enabled) and
+  red (disabled).
 
 ## Materials
 
@@ -260,49 +278,6 @@ These apply to everyone in a world with the mod, not just crown wearers:
   there.
 - Wardens drop a Sculk Cord, alongside their Sculk Catalyst.
 - Every desert pyramid has an Ankh Charm in one of its four chests.
-
-## Ability keys and cooldowns
-
-Every crown except the Golden Crown has an active ability, triggered with the **Use Crown
-Ability** key (default **R**) while the crown is worn. Crowns can also have a secondary
-ability on the **Use Secondary Crown Ability** key (default **G**). Both keys can be
-rebound under Options → Controls → Key Binds → Crown of Chaos.
-
-Primary and secondary abilities have separate cooldowns, so using one never blocks the
-other. Pressing **G** on a crown without a secondary ability says so.
-
-| Crown | Key | Ability | Type | Cooldown |
-|---|---|---|---|---|
-| Under Crown | R | Vein Miner | Toggle: press to switch on or off | None |
-| Crown of Poseidon | R | Riptide | Press to launch | 4.5 seconds |
-| Crown of Poseidon | G | Lightning Strike | Press while looking at a target | 20 seconds |
-| Crown of Nether | R | Fire Charge | Press to shoot | 2 seconds |
-| Crown of Nether | G | Blaze Flight | Press to fly for 60 seconds | 2 minutes |
-| Crown of Darkness | R | Sonic Boom | Press while looking at a target | 15 seconds |
-| Crown of Darkness | G | Darkness Pulse | Press to darken every player within 30 blocks | 30 seconds |
-| Crown of Sun | R | Wind Charge | Press to throw (3 charges) | 6 seconds per charge |
-| Crown of Sun | G | Sun Cycle | Press to switch day and night | 20 seconds |
-| Crown of Wither | R | Wither Skull | Press to shoot (3 charges) | 3 seconds between shots, 6 seconds per charge |
-| Crown of Wither | G | Wither Flight | Press to fly for 60 seconds | 2 minutes |
-| Crown of Winter | R | Frost Walker | Toggle: press to switch on or off | None |
-| Crown of Iron | R | Arrow Volley | Press while looking at a target | 10 seconds |
-| Crown of Iron | G | Glowing Arrows | Toggle: press to switch on or off | None |
-| Crown of Void | R | Ender Pearl | Press to throw | 3 seconds |
-| Crown of Void | G | Dragon's Breath | Press to surround yourself with dragon's breath | 30 seconds |
-
-- Primary abilities with a cooldown show it on the crown's icon, and pressing the key early
-  shows the time remaining in the action bar. Secondary ability cooldowns show in the action
-  bar only.
-- Charge-based abilities (Wind Charge, Wither Skull) show the charges left after every use
-  instead of a cooldown.
-- Toggles show "enabled" or "disabled" in the action bar, and reset to off when you leave
-  the world or server.
-- Pressing the key without a crown on shows "Wear a crown to use its power".
-- Crown abilities never hurt animals you've tamed (wolves, cats, parrots, horses and so on),
-  and crown on-hit effects (Darkness, Wither, freezing, Fire Aspect) don't apply to them.
-  Other players' pets can still be hit.
-- Ability messages are shown in light purple to match the crowns' item names, except Vein
-  Miner's, Frost Walker's and Glowing Arrows' toggle messages, which are green (enabled) and red (disabled).
 
 ## Installation
 
