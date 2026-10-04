@@ -1,17 +1,35 @@
 # The Crown of Chaos
 
-A Fabric mod for Minecraft 26.2 by Warfist that adds powerful crowns. Each crown is worn
-in the helmet slot, protects like a diamond helmet, and grants its own set of abilities
-for as long as it is worn.
+A Fabric mod for Minecraft 26.2 by Warfist that adds powerful crowns. Craft a Golden
+Crown, then upgrade it into one of four magical crowns. Each is worn in the helmet slot,
+protects like a diamond helmet, and grants its own effects and active ability for as long
+as it is worn.
 
 ## Crowns
 
-All crowns have the same armor, toughness, durability and enchantability as a diamond
-helmet and are repaired with diamonds. Their effects are applied while the crown is on
+All crowns except the Golden Crown have the same armor, toughness, durability and
+enchantability as a diamond helmet and are repaired with diamonds. Their effects are applied while the crown is on
 your head and removed as soon as it comes off; potion and beacon effects you already have
 are left untouched.
 
+### Golden Crown
+
+*"Fit for a King."*
+
+The base crown that every other crown is crafted from. It has the same stats as a golden
+helmet, has no effects or ability (the crown ability key does nothing while it's worn),
+and keeps Piglins calm like other gold armor.
+
+**Recipe** (unlocked by picking up a Gold Ingot):
+
+| | Left | Middle | Right |
+|---|---|---|---|
+| **Top** | Gold Ingot | Emerald | Gold Ingot |
+| **Middle** | Gold Ingot | Gold Ingot | Gold Ingot |
+
 ### Under Crown
+
+*"Diggy, Diggy Hole"*
 
 | Ability | Details |
 |---|---|
@@ -21,15 +39,17 @@ are left untouched.
 | Fortune III | Applies to block drops such as ores and crops. If your tool has higher Fortune, the tool's level is used. |
 | **Ability: Vein Miner** | Press the crown ability key (default **R**) to toggle Vein Miner on or off. While it's on, mining an ore breaks the whole connected vein, up to 64 extra blocks. Ores only. Each block costs normal tool durability, and mining stops before your tool would break. |
 
-**Recipe** (unlocked by picking up a Golden Helmet):
+**Recipe** (unlocked by picking up a Golden Crown):
 
 | | Left | Middle | Right |
 |---|---|---|---|
 | **Top** | Diamond Block | Emerald Block | Diamond Block |
-| **Middle** | Lapis Lazuli Block | Golden Helmet | Lapis Lazuli Block |
+| **Middle** | Lapis Lazuli Block | Golden Crown | Lapis Lazuli Block |
 | **Bottom** | Obsidian | Lantern | Obsidian |
 
 ### Crown of Poseidon
+
+*"A shame. I quite like blowfish. I am Poseidon."*
 
 | Ability | Details |
 |---|---|
@@ -44,10 +64,12 @@ are left untouched.
 | | Left | Middle | Right |
 |---|---|---|---|
 | **Top** | Nautilus Shell | Heart of the Sea | Nautilus Shell |
-| **Middle** | Prismarine Crystals | Golden Helmet | Prismarine Crystals |
+| **Middle** | Prismarine Crystals | Golden Crown | Prismarine Crystals |
 | **Bottom** | Prismarine Shard | Trident | Prismarine Shard |
 
 ### Crown of Nether
+
+*"The Fires of Avernus can't get you here.."*
 
 | Ability | Details |
 |---|---|
@@ -59,10 +81,12 @@ are left untouched.
 | | Left | Middle | Right |
 |---|---|---|---|
 | **Top** | Gold Block | Nether Star | Gold Block |
-| **Middle** | Blaze Rod | Golden Helmet | Blaze Rod |
+| **Middle** | Blaze Rod | Golden Crown | Blaze Rod |
 | **Bottom** | Ghast Tear | Netherrack | Ghast Tear |
 
 ### Crown of Darkness
+
+*"Screeches echo in the Darkness..."*
 
 | Ability | Details |
 |---|---|
@@ -75,7 +99,7 @@ are left untouched.
 | | Left | Middle | Right |
 |---|---|---|---|
 | **Top** | Echo Shard | Sculk Cord | Echo Shard |
-| **Middle** | Echo Shard | Golden Helmet | Echo Shard |
+| **Middle** | Echo Shard | Golden Crown | Echo Shard |
 | **Bottom** | Diamond Block | Sculk Shrieker | Diamond Block |
 
 ## Materials
@@ -88,7 +112,7 @@ The Sculk Cord's description reads *"The screeching has finally ceased..."*
 
 ## Crown abilities
 
-Every crown has an active ability, triggered with the **Use Crown Ability** key (default
+Every crown except the Golden Crown has an active ability, triggered with the **Use Crown Ability** key (default
 **R**, rebindable under Options → Controls → Key Binds → Crown of Chaos) while the crown
 is worn.
 
@@ -129,6 +153,7 @@ Requires Java 25.
 In a Creative world with cheats on, crowns can also be found in the Combat tab or given with:
 
 ```
+/give @s crownofchaos:golden_crown
 /give @s crownofchaos:under_crown
 /give @s crownofchaos:crown_of_poseidon
 /give @s crownofchaos:crown_of_nether
@@ -171,6 +196,7 @@ Crowns can have a custom 3D model when worn, made in Blockbench as a Modded Enti
 
 | Crown | Worn model |
 |---|---|
+| Golden Crown | Golden helmet (3D model planned) |
 | Under Crown | Custom 3D model |
 | Crown of Poseidon | Custom 3D model |
 | Crown of Nether | Diamond helmet (3D model planned) |

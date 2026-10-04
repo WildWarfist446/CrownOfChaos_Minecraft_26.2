@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_golden_helmet": {
+    "has_golden_crown": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:golden_helmet"
+            "items": "crownofchaos:golden_crown"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_golden_helmet"
+      "has_golden_crown"
     ]
   ],
   "rewards": {

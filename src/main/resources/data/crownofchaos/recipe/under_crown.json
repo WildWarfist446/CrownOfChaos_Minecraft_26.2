@@ -5,7 +5,7 @@
     "D": "minecraft:diamond_block",
     "E": "minecraft:emerald_block",
     "L": "minecraft:lapis_block",
-    "H": "minecraft:golden_helmet",
+    "H": "crownofchaos:golden_crown",
     "O": "minecraft:obsidian",
     "N": "minecraft:lantern"
   },

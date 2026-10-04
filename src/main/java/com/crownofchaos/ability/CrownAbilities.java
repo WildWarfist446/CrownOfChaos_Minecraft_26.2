@@ -79,6 +79,11 @@ public final class CrownAbilities {
 		}
 
 		ItemStack crown = player.getItemBySlot(EquipmentSlot.HEAD);
+		// The Golden Crown is the plain base crown: the key simply does nothing.
+		if (crown.getItem() == ModItems.GOLDEN_CROWN) {
+			return;
+		}
+
 		CrownAbility ability = ABILITIES.get(crown.getItem());
 		if (ability == null) {
 			player.sendOverlayMessage(Component.translatable(crown.isEmpty()

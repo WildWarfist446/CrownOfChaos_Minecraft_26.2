@@ -5,7 +5,7 @@
     "G": "minecraft:gold_block",
     "S": "minecraft:nether_star",
     "B": "minecraft:blaze_rod",
-    "H": "minecraft:golden_helmet",
+    "H": "crownofchaos:golden_crown",
     "T": "minecraft:ghast_tear",
     "N": "minecraft:netherrack"
   },

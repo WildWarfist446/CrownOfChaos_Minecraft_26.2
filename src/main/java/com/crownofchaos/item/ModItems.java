@@ -27,30 +27,40 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
 public final class ModItems {
+	/** The base crown every other crown is crafted from. Golden helmet stats. */
+	public static final Item GOLDEN_CROWN = register("golden_crown", Item::new, withLore("golden_crown", new Item.Properties()
+			.humanoidArmor(ArmorMaterials.GOLD, ArmorType.HELMET)
+			.rarity(Rarity.UNCOMMON)));
+
 	// Crowns have the same armor, toughness, durability and repair item as a diamond helmet, and they render
 	// as a diamond helmet when worn until the custom 3D model is ready.
-	public static final Item UNDER_CROWN = register("under_crown", Item::new, new Item.Properties()
+	public static final Item UNDER_CROWN = register("under_crown", Item::new, withLore("under_crown", new Item.Properties()
 			.humanoidArmor(ArmorMaterials.DIAMOND, ArmorType.HELMET)
-			.rarity(Rarity.EPIC));
+			.rarity(Rarity.EPIC)));
 
-	public static final Item CROWN_OF_POSEIDON = register("crown_of_poseidon", Item::new, new Item.Properties()
+	public static final Item CROWN_OF_POSEIDON = register("crown_of_poseidon", Item::new, withLore("crown_of_poseidon", new Item.Properties()
 			.humanoidArmor(ArmorMaterials.DIAMOND, ArmorType.HELMET)
-			.rarity(Rarity.EPIC));
+			.rarity(Rarity.EPIC)));
 
-	public static final Item CROWN_OF_NETHER = register("crown_of_nether", Item::new, new Item.Properties()
+	public static final Item CROWN_OF_NETHER = register("crown_of_nether", Item::new, withLore("crown_of_nether", new Item.Properties()
 			.humanoidArmor(ArmorMaterials.DIAMOND, ArmorType.HELMET)
-			.rarity(Rarity.EPIC));
+			.rarity(Rarity.EPIC)));
 
-	public static final Item CROWN_OF_DARKNESS = register("crown_of_darkness", Item::new, new Item.Properties()
+	public static final Item CROWN_OF_DARKNESS = register("crown_of_darkness", Item::new, withLore("crown_of_darkness", new Item.Properties()
 			.humanoidArmor(ArmorMaterials.DIAMOND, ArmorType.HELMET)
-			.rarity(Rarity.EPIC));
+			.rarity(Rarity.EPIC)));
 
 	/** Dropped by Wardens; used to craft the Crown of Darkness. */
-	public static final Item SCULK_CORD = register("sculk_cord", Item::new, new Item.Properties()
-			.rarity(Rarity.RARE)
-			.component(DataComponents.LORE, new ItemLore(List.of(Component.translatable("item.crownofchaos.sculk_cord.lore")))));
+	public static final Item SCULK_CORD = register("sculk_cord", Item::new, withLore("sculk_cord", new Item.Properties()
+			.rarity(Rarity.RARE)));
 
 	private ModItems() {
+	}
+
+	/** Adds the italic description line {@code item.crownofchaos.<name>.lore} from the language file. */
+	private static Item.Properties withLore(String name, Item.Properties properties) {
+		return properties.component(DataComponents.LORE,
+				new ItemLore(List.of(Component.translatable("item.crownofchaos." + name + ".lore"))));
 	}
 
 	private static Item register(String name, Function<Item.Properties, Item> factory, Item.Properties properties) {
@@ -60,7 +70,7 @@ public final class ModItems {
 
 	public static void initialize() {
 		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.COMBAT)
-				.register(output -> output.insertAfter(Items.NETHERITE_BOOTS, UNDER_CROWN, CROWN_OF_POSEIDON, CROWN_OF_NETHER, CROWN_OF_DARKNESS));
+				.register(output -> output.insertAfter(Items.NETHERITE_BOOTS, GOLDEN_CROWN, UNDER_CROWN, CROWN_OF_POSEIDON, CROWN_OF_NETHER, CROWN_OF_DARKNESS));
 		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.INGREDIENTS)
 				.register(output -> output.insertAfter(Items.ECHO_SHARD, SCULK_CORD));
 

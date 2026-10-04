@@ -1,8 +1,14 @@
 {
+  "item.crownofchaos.golden_crown": "Golden Crown",
+  "item.crownofchaos.golden_crown.lore": "Fit for a King.",
   "item.crownofchaos.under_crown": "Under Crown",
+  "item.crownofchaos.under_crown.lore": "Diggy, Diggy Hole",
   "item.crownofchaos.crown_of_poseidon": "Crown of Poseidon",
+  "item.crownofchaos.crown_of_poseidon.lore": "A shame. I quite like blowfish. I am Poseidon.",
   "item.crownofchaos.crown_of_nether": "Crown of Nether",
+  "item.crownofchaos.crown_of_nether.lore": "The Fires of Avernus can't get you here..",
   "item.crownofchaos.crown_of_darkness": "Crown of Darkness",
+  "item.crownofchaos.crown_of_darkness.lore": "Screeches echo in the Darkness...",
   "item.crownofchaos.sculk_cord": "Sculk Cord",
   "item.crownofchaos.sculk_cord.lore": "The screeching has finally ceased...",
 
