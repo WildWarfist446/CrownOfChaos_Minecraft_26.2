@@ -1,4 +1,6 @@
 {
+  "itemGroup.crownofchaos.crown_of_chaos": "Crown of Chaos",
+
   "item.crownofchaos.golden_crown": "Golden Crown",
   "item.crownofchaos.golden_crown.lore": "Fit for a King.",
   "item.crownofchaos.under_crown": "Under Crown",
@@ -15,6 +17,14 @@
   "item.crownofchaos.crown_of_wither.lore": "I've seen this in a painting...",
   "item.crownofchaos.crown_of_winter": "Crown of Winter",
   "item.crownofchaos.crown_of_winter.lore": "Gunter, why did you gunt my fries?",
+  "item.crownofchaos.netherite_under_crown": "Netherite Under Crown",
+  "item.crownofchaos.netherite_crown_of_poseidon": "Netherite Crown of Poseidon",
+  "item.crownofchaos.netherite_crown_of_nether": "Netherite Crown of Nether",
+  "item.crownofchaos.netherite_crown_of_darkness": "Netherite Crown of Darkness",
+  "item.crownofchaos.netherite_crown_of_sun": "Netherite Crown of Sun",
+  "item.crownofchaos.netherite_crown_of_wither": "Netherite Crown of Wither",
+  "item.crownofchaos.netherite_crown_of_winter": "Netherite Crown of Winter",
+
   "item.crownofchaos.sculk_cord": "Sculk Cord",
   "item.crownofchaos.sculk_cord.lore": "The screeching has finally ceased...",
   "item.crownofchaos.ankh_charm": "Ankh Charm",

@@ -103,7 +103,7 @@ public final class CrownEffects {
 	}
 
 	public static boolean isWearing(LivingEntity entity, Item crown) {
-		return entity.getItemBySlot(EquipmentSlot.HEAD).getItem() == crown;
+		return ModItems.baseCrown(entity.getItemBySlot(EquipmentSlot.HEAD).getItem()) == crown;
 	}
 
 	public static void initialize() {
@@ -175,7 +175,7 @@ public final class CrownEffects {
 			}
 
 			for (ServerPlayer player : server.getPlayerList().getPlayers()) {
-				Item worn = player.getItemBySlot(EquipmentSlot.HEAD).getItem();
+				Item worn = ModItems.baseCrown(player.getItemBySlot(EquipmentSlot.HEAD).getItem());
 				List<CrownEffect> active = EFFECTS.getOrDefault(worn, List.of());
 				TagKey<Block> speedBlocks = TERRAIN_SPEED_BLOCKS.get(worn);
 				if (speedBlocks != null && isOnTerrain(player, speedBlocks, server.getTickCount())) {

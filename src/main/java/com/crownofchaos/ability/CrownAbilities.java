@@ -121,12 +121,14 @@ public final class CrownAbilities {
 		}
 
 		ItemStack crown = player.getItemBySlot(EquipmentSlot.HEAD);
+		// Netherite crowns have the same abilities as the crown they were upgraded from.
+		Item baseCrown = ModItems.baseCrown(crown.getItem());
 		// The Golden Crown is the plain base crown: the keys simply do nothing.
-		if (crown.getItem() == ModItems.GOLDEN_CROWN) {
+		if (baseCrown == ModItems.GOLDEN_CROWN) {
 			return;
 		}
 
-		CrownAbility ability = ABILITIES.get(slot).get(crown.getItem());
+		CrownAbility ability = ABILITIES.get(slot).get(baseCrown);
 		if (ability == null) {
 			String message = crown.isEmpty() ? "message.crownofchaos.ability.no_crown"
 					: slot == AbilitySlot.PRIMARY ? "message.crownofchaos.ability.no_power"
@@ -158,7 +160,7 @@ public final class CrownAbilities {
 	private static void activateSecondary(ServerPlayer player, ItemStack crown, CrownAbility ability) {
 		int now = player.level().getServer().getTickCount();
 		Map<Item, Integer> readyAt = SECONDARY_READY_AT.computeIfAbsent(player.getUUID(), uuid -> new HashMap<>());
-		Integer ready = readyAt.get(crown.getItem());
+		Integer ready = readyAt.get(ModItems.baseCrown(crown.getItem()));
 		// Ignore stale entries from before a world reload, when the server's tick counter restarts.
 		if (ready != null && ready > now && ready - now <= ability.cooldownTicks()) {
 			int secondsLeft = Mth.ceil((ready - now) / 20.0F);
@@ -167,7 +169,7 @@ public final class CrownAbilities {
 		}
 
 		if (ability.activate(player, crown) && ability.cooldownTicks() > 0) {
-			readyAt.put(crown.getItem(), now + ability.cooldownTicks());
+			readyAt.put(ModItems.baseCrown(crown.getItem()), now + ability.cooldownTicks());
 		}
 	}
 }

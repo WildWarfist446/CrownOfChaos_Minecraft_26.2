@@ -18,7 +18,8 @@ as it is worn.
 | Crown of Wither | Wither immunity, Wither on hit | Wither Skull | Wither Skeleton Skull |
 | Crown of Winter | Freeze on hit, freeze immunity, Swiftness and grip on snow and ice | Frost Walker (toggle) | Powder Snow Bucket |
 
-All crowns except the Golden Crown have the same armor, toughness, durability and
+Every crown shimmers with the enchanted glint, in the inventory and when worn. All crowns
+except the Golden Crown have the same armor, toughness, durability and
 enchantability as a diamond helmet and are repaired with diamonds. Their effects are
 applied while the crown is on your head and removed as soon as it comes off; potion and
 beacon effects you already have
@@ -171,6 +172,15 @@ and keeps Piglins calm like other gold armor.
 | **Middle** | Gold Block | Golden Crown | Gold Block |
 | **Bottom** | Snowball | Powder Snow Bucket | Snowball |
 
+### Netherite crowns
+
+Every crown except the Golden Crown can be upgraded at a smithing table, just like a diamond
+helmet: a **Netherite Upgrade Smithing Template**, the crown, and a **Netherite Ingot**. The
+result is "Netherite" plus the crown's name (for example, Netherite Crown of Sun). It keeps
+the crown's enchantments, effects, abilities and look, and gets netherite helmet stats: more
+armor and toughness, knockback resistance, more durability, and it doesn't burn in fire or
+lava. The recipes unlock when you pick up a Netherite Ingot.
+
 ## Materials
 
 | Item | Source | Use |
@@ -232,7 +242,8 @@ Requires Java 25.
 | `./gradlew build` | Builds the mod jar into `build/libs/` |
 | `./gradlew vscode` | Generates VS Code launch configurations |
 
-In a Creative world with cheats on, crowns can also be found in the Combat tab or given with:
+In Creative mode, every mod item is in the **Crown of Chaos** tab (crowns are also in the
+Combat tab and materials in the Ingredients tab). With cheats on, they can also be given with:
 
 ```
 /give @s crownofchaos:golden_crown
@@ -243,6 +254,7 @@ In a Creative world with cheats on, crowns can also be found in the Combat tab o
 /give @s crownofchaos:crown_of_sun
 /give @s crownofchaos:crown_of_wither
 /give @s crownofchaos:crown_of_winter
+/give @s crownofchaos:netherite_crown_of_winter   (netherite_ + any crown's name)
 /give @s crownofchaos:sculk_cord
 /give @s crownofchaos:ankh_charm
 ```
@@ -251,7 +263,7 @@ In a Creative world with cheats on, crowns can also be found in the Combat tab o
 
 | Path | Contents |
 |---|---|
-| `src/main/java/com/crownofchaos/item/ModItems.java` | Item registration |
+| `src/main/java/com/crownofchaos/item/ModItems.java` | Items (crowns, netherite crowns, materials), the creative tab, and loot (Sculk Cord, Ankh Charm) |
 | `src/main/java/com/crownofchaos/item/CrownEffects.java` | Each crown's potion effects, passive bonuses (Darkness on hit, Fire Aspect, Flame, Wither on hit, freeze on hit, Swiftness on sand, snow and ice) and tuning values |
 | `src/main/java/com/crownofchaos/ability/` | Crown abilities and the registry that links each crown to its ability |
 | `src/main/java/com/crownofchaos/network/` | Messages between the client and server (ability keys, Riptide launch) |
@@ -259,9 +271,21 @@ In a Creative world with cheats on, crowns can also be found in the Combat tab o
 | `src/client/java/com/crownofchaos/client/` | Client-only code: the ability keybind and client-side ability effects |
 | `src/client/java/com/crownofchaos/client/model/` | Crown 3D models and the renderer that draws them on the head |
 | `src/main/resources/assets/crownofchaos/` | Textures, item models and names |
-| `src/main/resources/data/crownofchaos/` | Crafting recipes |
+| `src/main/resources/data/crownofchaos/` | Crafting and smithing recipes, recipe-book unlocks, and block tags |
 | `Sprites/` | Source artwork (Aseprite files and PNG exports) |
 | `3dmodels/` | Blockbench 3D model exports for the crowns |
+
+### Adding a crown
+
+1. Register it in `ModItems` with `registerCrown(...)` (gives it the enchanted glint and its
+   description line), plus `registerNetheriteCrown(...)` for its netherite version.
+2. Add both to the creative tab list in `ModItems.initialize()`.
+3. Add its effects to `CrownEffects` and its ability to `CrownAbilities`.
+4. Add the sprite to `assets/crownofchaos/textures/item/`, item model files for both
+   versions (the netherite one points at the crown's model), and names and description in
+   `lang/en_us.json`.
+5. Add its crafting recipe and a netherite smithing recipe in `data/crownofchaos/recipe/`,
+   each with a recipe-book unlock in `data/crownofchaos/advancement/recipes/combat/`.
 
 ### Adding a crown ability
 

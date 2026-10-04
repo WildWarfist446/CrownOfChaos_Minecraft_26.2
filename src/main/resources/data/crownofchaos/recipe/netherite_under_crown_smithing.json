@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "#minecraft:netherite_tool_materials",
+  "base": "crownofchaos:under_crown",
+  "result": {
+    "id": "crownofchaos:netherite_under_crown"
+  },
+  "template": "minecraft:netherite_upgrade_smithing_template"
+}

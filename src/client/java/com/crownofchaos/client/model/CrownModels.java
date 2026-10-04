@@ -17,21 +17,21 @@ public final class CrownModels {
 		ModelLayerRegistry.registerModelLayer(UnderCrownModel.LAYER, UnderCrownModel::createLayer);
 		ArmorRenderer.register(
 				context -> new CrownArmorRenderer(context.bakeLayer(UnderCrownModel.LAYER), UnderCrownModel.TEXTURE),
-				ModItems.UNDER_CROWN);
+				ModItems.UNDER_CROWN, ModItems.NETHERITE_UNDER_CROWN);
 
 		ModelLayerRegistry.registerModelLayer(CrownOfPoseidonModel.LAYER, CrownOfPoseidonModel::createLayer);
 		ArmorRenderer.register(
 				context -> new CrownArmorRenderer(context.bakeLayer(CrownOfPoseidonModel.LAYER), CrownOfPoseidonModel.TEXTURE),
-				ModItems.CROWN_OF_POSEIDON);
+				ModItems.CROWN_OF_POSEIDON, ModItems.NETHERITE_CROWN_OF_POSEIDON);
 
 		ModelLayerRegistry.registerModelLayer(CrownOfNetherModel.LAYER, CrownOfNetherModel::createLayer);
 		ArmorRenderer.register(
 				context -> new CrownArmorRenderer(context.bakeLayer(CrownOfNetherModel.LAYER), CrownOfNetherModel.TEXTURE),
-				ModItems.CROWN_OF_NETHER);
+				ModItems.CROWN_OF_NETHER, ModItems.NETHERITE_CROWN_OF_NETHER);
 
 		ModelLayerRegistry.registerModelLayer(CrownOfWitherModel.LAYER, CrownOfWitherModel::createLayer);
 		ArmorRenderer.register(
 				context -> new CrownArmorRenderer(context.bakeLayer(CrownOfWitherModel.LAYER), CrownOfWitherModel.TEXTURE),
-				ModItems.CROWN_OF_WITHER);
+				ModItems.CROWN_OF_WITHER, ModItems.NETHERITE_CROWN_OF_WITHER);
 	}
 }
