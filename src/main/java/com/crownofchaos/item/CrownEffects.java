@@ -82,6 +82,9 @@ public final class CrownEffects {
 	/** Crown of Wither melee hits give Wither I for 10 seconds, like a Wither Skeleton's. */
 	public static final int WITHER_CROWN_WITHER_TICKS = 200;
 
+	/** Damage multiplier for arrows a Crown of Iron wearer fires from a bow or crossbow. */
+	public static final float IRON_CROWN_ARROW_DAMAGE_MULTIPLIER = 1.5F;
+
 	// Amplifiers are zero-based: 0 = level I, 1 = level II.
 	private static final Map<Item, List<CrownEffect>> EFFECTS = Map.of(
 			ModItems.UNDER_CROWN, List.of(

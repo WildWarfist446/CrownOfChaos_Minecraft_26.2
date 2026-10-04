@@ -3,11 +3,13 @@
 	"package": "com.crownofchaos.mixin",
 	"compatibilityLevel": "JAVA_25",
 	"mixins": [
+		"AbstractArrowMixin",
 		"ApplyBonusCountMixin",
 		"LargeFireballMixin",
 		"LivingEntityEffectMixin",
 		"LivingEntityMixin",
 		"PowderSnowBlockMixin",
+		"ShieldBlockingMixin",
 		"WinterCrownMovementMixin",
 		"WitherSkullMixin"
 	],

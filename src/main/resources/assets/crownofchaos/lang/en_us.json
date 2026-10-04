@@ -17,6 +17,8 @@
   "item.crownofchaos.crown_of_wither.lore": "I've seen this in a painting...",
   "item.crownofchaos.crown_of_winter": "Crown of Winter",
   "item.crownofchaos.crown_of_winter.lore": "Gunter, why did you gunt my fries?",
+  "item.crownofchaos.crown_of_iron": "Crown of Iron",
+  "item.crownofchaos.crown_of_iron.lore": "HRMM!",
   "item.crownofchaos.netherite_under_crown": "Netherite Under Crown",
   "item.crownofchaos.netherite_crown_of_poseidon": "Netherite Crown of Poseidon",
   "item.crownofchaos.netherite_crown_of_nether": "Netherite Crown of Nether",
@@ -24,6 +26,7 @@
   "item.crownofchaos.netherite_crown_of_sun": "Netherite Crown of Sun",
   "item.crownofchaos.netherite_crown_of_wither": "Netherite Crown of Wither",
   "item.crownofchaos.netherite_crown_of_winter": "Netherite Crown of Winter",
+  "item.crownofchaos.netherite_crown_of_iron": "Netherite Crown of Iron",
 
   "item.crownofchaos.sculk_cord": "Sculk Cord",
   "item.crownofchaos.sculk_cord.lore": "The screeching has finally ceased...",
@@ -51,6 +54,7 @@
   "message.crownofchaos.ability.sun_cycle.no_sky": "There is no sun here to command",
   "message.crownofchaos.ability.frost_walker.enabled": "Frost Walker enabled",
   "message.crownofchaos.ability.frost_walker.disabled": "Frost Walker disabled",
+  "message.crownofchaos.ability.arrow_volley.no_target": "No target in range",
   "message.crownofchaos.ability.vein_miner.enabled": "Vein Miner enabled",
   "message.crownofchaos.ability.vein_miner.disabled": "Vein Miner disabled"
 }

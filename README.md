@@ -17,6 +17,7 @@ as it is worn.
 | Crown of Sun | Swiftness II on sand | Wind Charge (G: Sun Cycle) | Ankh Charm |
 | Crown of Wither | Wither immunity, Wither on hit | Wither Skull | Wither Skeleton Skull |
 | Crown of Winter | Freeze on hit, freeze immunity, Swiftness and grip on snow and ice | Frost Walker (toggle) | Powder Snow Bucket |
+| Crown of Iron | +50% bow and crossbow damage | Arrow Volley | Totem of Undying |
 
 Every crown shimmers with the enchanted glint, in the inventory and when worn. All crowns
 except the Golden Crown have the same armor, toughness, durability and
@@ -172,6 +173,23 @@ and keeps Piglins calm like other gold armor.
 | **Middle** | Gold Block | Golden Crown | Gold Block |
 | **Bottom** | Snowball | Powder Snow Bucket | Snowball |
 
+### Crown of Iron
+
+*"HRMM!"*
+
+| Ability | Details |
+|---|---|
+| Bow and crossbow damage | Arrows you fire from a bow or crossbow deal 50% more damage |
+| **Ability: Arrow Volley** | Look at a mob or player within 20 blocks and press the crown ability key (default **R**). 24 arrows rain down from 3 blocks above its head over 1.5 seconds, ahead of a moving target: about half are aimed at its body and gently correct course, the rest scatter around it. A target that keeps moving can dodge some. Volley arrows deal 25% more damage than normal arrows, every one can land even right after another hit, and they can't be picked up. A raised shield blocks every volley arrow, whichever way the player faces. 10 second cooldown. |
+
+**Recipe** (unlocked by picking up a Totem of Undying):
+
+| | Left | Middle | Right |
+|---|---|---|---|
+| **Top** | Bow | Totem of Undying | Bow |
+| **Middle** | Emerald | Golden Crown | Emerald |
+| **Bottom** | Emerald | Diamond Block | Emerald |
+
 ### Netherite crowns
 
 Every crown except the Golden Crown can be upgraded at a smithing table, just like a diamond
@@ -211,6 +229,7 @@ other. Pressing **G** on a crown without a secondary ability says so.
 | Crown of Sun | G | Sun Cycle | Press to switch day and night | 20 seconds |
 | Crown of Wither | R | Wither Skull | Press to shoot (3 charges) | 3 seconds between shots, 6 seconds per charge |
 | Crown of Winter | R | Frost Walker | Toggle: press to switch on or off | None |
+| Crown of Iron | R | Arrow Volley | Press while looking at a target | 10 seconds |
 
 - Primary abilities with a cooldown show it on the crown's icon, and pressing the key early
   shows the time remaining in the action bar. Secondary ability cooldowns show in the action
@@ -254,6 +273,7 @@ Combat tab and materials in the Ingredients tab). With cheats on, they can also 
 /give @s crownofchaos:crown_of_sun
 /give @s crownofchaos:crown_of_wither
 /give @s crownofchaos:crown_of_winter
+/give @s crownofchaos:crown_of_iron
 /give @s crownofchaos:netherite_crown_of_winter   (netherite_ + any crown's name)
 /give @s crownofchaos:sculk_cord
 /give @s crownofchaos:ankh_charm
@@ -267,7 +287,7 @@ Combat tab and materials in the Ingredients tab). With cheats on, they can also 
 | `src/main/java/com/crownofchaos/item/CrownEffects.java` | Each crown's potion effects, passive bonuses (Darkness on hit, Fire Aspect, Flame, Wither on hit, freeze on hit, Swiftness on sand, snow and ice) and tuning values |
 | `src/main/java/com/crownofchaos/ability/` | Crown abilities and the registry that links each crown to its ability |
 | `src/main/java/com/crownofchaos/network/` | Messages between the client and server (ability keys, Riptide launch) |
-| `src/main/java/com/crownofchaos/mixin/` | Changes that hook into Minecraft (Fortune, damage bonuses, crown fireball and wither skull explosions, Wither immunity, ice grip, walking on powder snow) |
+| `src/main/java/com/crownofchaos/mixin/` | Changes that hook into Minecraft (Fortune, damage bonuses, volley arrows and shield blocking, crown fireball and wither skull explosions, Wither immunity, ice grip, walking on powder snow) |
 | `src/client/java/com/crownofchaos/client/` | Client-only code: the ability keybind and client-side ability effects |
 | `src/client/java/com/crownofchaos/client/model/` | Crown 3D models and the renderer that draws them on the head |
 | `src/main/resources/assets/crownofchaos/` | Textures, item models and names |
@@ -315,6 +335,7 @@ Crowns can have a custom 3D model when worn, made in Blockbench as a Modded Enti
 | Crown of Sun | Diamond helmet (3D model planned) |
 | Crown of Wither | Custom 3D model |
 | Crown of Winter | Diamond helmet (3D model planned) |
+| Crown of Iron | Diamond helmet (3D model planned) |
 
 ### Adding a 3D model
 

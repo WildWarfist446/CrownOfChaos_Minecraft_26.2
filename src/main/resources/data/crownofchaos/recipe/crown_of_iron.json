@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": "minecraft:bow",
+    "T": "minecraft:totem_of_undying",
+    "E": "minecraft:emerald",
+    "H": "crownofchaos:golden_crown",
+    "D": "minecraft:diamond_block"
+  },
+  "pattern": [
+    "BTB",
+    "EHE",
+    "EDE"
+  ],
+  "result": {
+    "id": "crownofchaos:crown_of_iron"
+  }
+}
