@@ -38,33 +38,33 @@ Crafting Materials: 2 blocks of gold, 1 nether star, 2 blaze rods, 2 ghast tears
 Commander's Table: Used to craft the different army units
 
 
-##Notes: 
+## Notes: 
 
-###crowns;
+### crowns;
 
-**secondary crown of ice power; 3 icicles that drop on enemy and cause freeze
+** secondary crown of ice power; 3 icicles that drop on enemy and cause freeze
 
-###factions system; 
+### factions system; 
 
-**faction ui; keybound Ui menu with a medieval / magical theme that allows you to manage faction settings/below features
+** faction ui; keybound Ui menu with a medieval / magical theme that allows you to manage faction settings/below features
 
 ** create faction; players will be able to create a faction name with a specific color associated including Unicode emojis- colors cannot be shared between factions. Color of units will change based on the color of your faction, a way to easily differiate player's units. (factions you are in will display next to name in chat and above your player name tag). to join a faction already created, the owner will need to invite you or you can ask to join and the owner should be able to accept/decline.
 
-**create faction territory - when you enter territory of a faction you don't belong in, enemy units will attack if faction is in red alert or has targeted your current faction. you can manually allow specific factions to enter you territory unharmed or to be attacked. faction territory will be claimed via the faction flag item (to be created and will be placeable) in the surrounding 100 blocks. faction flags cannot be placed in already claimed territory. flags will be items crafted that are automatically assigned to the faction of the creator.
+** create faction territory - when you enter territory of a faction you don't belong in, enemy units will attack if faction is in red alert or has targeted your current faction. you can manually allow specific factions to enter you territory unharmed or to be attacked. faction territory will be claimed via the faction flag item (to be created and will be placeable) in the surrounding 100 blocks. faction flags cannot be placed in already claimed territory. flags will be items crafted that are automatically assigned to the faction of the creator.
 
-**units; units will be craftable items that spawn mobs based on what crown you have. these unit will act friendly towards owner and others in faction. when directly clicked on, they will enter sentry mode and cease moving until directed or agro'd. when a unit is killed, owner will receive a notification unless the unit is currently in sight line
+** units; units will be craftable items that spawn mobs based on what crown you have. these unit will act friendly towards owner and others in faction. when directly clicked on, they will enter sentry mode and cease moving until directed or agro'd. when a unit is killed, owner will receive a notification unless the unit is currently in sight line
 
-**sentry mode; when click, units will enter sentry mode and will only move if agro'd to an enemy. if enemy leaves agro range, unit will return to initial position
+** sentry mode; when click, units will enter sentry mode and will only move if agro'd to an enemy. if enemy leaves agro range, unit will return to initial position
 
-**declare war; declare war on a faction/player(s). units will attack anyone on factions that war is declared on (will ignore others if specified)
+** declare war; declare war on a faction/player(s). units will attack anyone on factions that war is declared on (will ignore others if specified)
 
-**unit follow; allows you to lead units to enemy territory, toggle button keybound
+** unit follow; allows you to lead units to enemy territory, toggle button keybound
 
-**unit attack; send units to attack enemies within range (overrides sentry and follow mechanics)
+** unit attack; send units to attack enemies within range (overrides sentry and follow mechanics)
 
-**reclaim units; allows for units to be reclaimed into their spawn items (requires declare war function to be off)
+** reclaim units; allows for units to be reclaimed into their spawn items (requires declare war function to be off)
 
-**Commander's table for crafting units; when a crown is place into a commander table, it will allow the creation of specific unit types. you are only able to control units that match the crown you are wearing at the time. there will be an item cost based on what unit you will create.
+** Commander's table for crafting units; when a crown is place into a commander table, it will allow the creation of specific unit types. you are only able to control units that match the crown you are wearing at the time. there will be an item cost based on what unit you will create.
 
 
 
