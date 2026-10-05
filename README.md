@@ -274,7 +274,7 @@ Times in brackets are cooldowns. "Aimed" abilities hit whatever you're looking a
 |---|---|---|
 | Sculk Cord | Every Warden drops one when killed, alongside its Sculk Catalyst | Crafting the Crown of Darkness |
 | Ankh Charm | Desert pyramids: every pyramid has exactly one, in one of its four chests | Crafting the Crown of Sun |
-| Faction Coin | Crafted from 8 Gold Ingots around 1 Emerald (unlocked by picking up an Emerald) | Crafting the Commander's Table |
+| Faction Coin | Crafted from 8 Gold Ingots around 1 Emerald (unlocked by picking up an Emerald) | Crafting the Commander's Table and Faction Flags |
 
 Descriptions: the Sculk Cord reads *"The screeching has finally ceased..."* and the Ankh
 Charm reads *"Ra would be proud."*
@@ -284,8 +284,7 @@ Charm reads *"Ra would be proud."*
 > **Alpha:** the faction system is still in early development. So far it has factions, the
 > faction menu, territory, and the Commander's Table for making army units. Units can't be
 > deployed as mobs yet, and sentry and follow commands and declaring war are planned but not
-> added. Unit costs are placeholders. Expect changes, and possibly resets of faction data,
-> between versions.
+> added. Expect changes, and possibly resets of faction data, between versions.
 
 Players can band together into factions, each with its own name and color, and claim land
 with faction flags.
@@ -311,14 +310,17 @@ Chaos).
 and above their heads.
 
 **Faction Flag:**
-- Crafted from any banner and a gold block, in any order. It belongs to the faction of
-  whoever crafts it, and shows as a banner in that faction's color.
+- Crafted from 8 wool of any color around a Faction Coin (unlocked by picking up a Faction
+  Coin). It belongs to the faction of whoever crafts it, and shows as a banner in that
+  faction's color.
 - Placing it claims everything within **100 blocks** of it, at any height. Only members can
   place their faction's flags.
 - Flags of different factions must be at least 200 blocks apart, so territories never
   overlap. Your own faction's flags can overlap to grow your land.
-- Anyone can break a flag: that removes the claim, and the flag drops for its faction to
-  place again.
+- The faction's name floats above each of its flags, in its color.
+- Flags are protected: only the faction's members can break a flag or the block it stands on
+  or hangs from (players in creative mode can too). Explosions and pistons can't destroy
+  them either. Breaking your own flag removes the claim, and the flag drops to place again.
 
 **Territory:** entering a faction's territory shows its name in large letters in its color,
 with "Faction Territory" (or "Your Faction's Territory") underneath. Leaving shows a short
@@ -345,20 +347,28 @@ It turns to face you when placed.
 | **Middle** | Diamond | Faction Coin | Diamond |
 | **Bottom** | Planks (any) | Planks (any) | Planks (any) |
 
-| Crown | Units |
-|---|---|
-| Crown of Wither | Wither Skeleton |
-| Crown of Winter | Stray, Polar Bear, Snow Golem |
-| Crown of Iron | Pillager, Vindicator, Ravager, Evoker |
-| Crown of Darkness | Warden |
-| Crown of Sun | Husk, Parched |
-| Crown of Poseidon | Guardian |
-| Crown of Nether | Piglin, Hoglin, Ghast |
+| Crown | Unit | Cost |
+|---|---|---|
+| Crown of Wither | Wither Skeleton | 20 Nether Wart + 1 Bow |
+| Crown of Winter | Stray | 15 Snow Blocks + 1 Bow |
+| | Polar Bear | 15 Wool (any color) + 3 Raw Cod |
+| | Snow Golem | 4 Snow Blocks + 1 Jack o'Lantern |
+| Crown of Iron | Pillager | 3 Emeralds + 1 Crossbow |
+| | Vindicator | 5 Emeralds + 1 Iron Axe |
+| | Ravager | 20 Emeralds + 1 Saddle |
+| | Evoker | 15 Emeralds + 4 Blaze Powder |
+| Crown of Darkness | Warden | 10 Diamonds + 1 Echo Shard |
+| Crown of Sun | Husk | 5 Rotten Flesh + 2 Gold Ingots |
+| | Parched | 10 Bones + 1 Bow |
+| Crown of Poseidon | Guardian | 30 Kelp + 2 Prismarine Shards |
+| Crown of Nether | Piglin | 5 Raw Porkchops + 3 Gold Ingots |
+| | Hoglin | 10 Raw Porkchops + 5 Gold Ingots |
+| | Ghast | 10 Blaze Powder + 5 Fire Charges |
+| Crown of Void | Enderman | 5 Ender Pearls + 5 End Stone |
+| | Shulker | 5 Purpur Blocks + 2 Diamonds |
 
-The Golden Crown, Under Crown and Crown of Void command no units. Unit items look like the
-mob's spawn egg and are named after it ("Pillager Unit"). For now every unit costs 1 Iron
-Ingot and 1 Gold Ingot (placeholders until the real recipes are set), and units can't be
-deployed yet.
+The Golden Crown and Under Crown command no units. Unit items look like the mob's spawn egg
+and are named after it ("Pillager Unit"). Units can't be deployed yet.
 
 ## Changes to vanilla
 
@@ -369,6 +379,7 @@ These apply to everyone in a world with the mod, not just crown wearers:
   there.
 - Wardens drop a Sculk Cord, alongside their Sculk Catalyst.
 - Every desert pyramid has an Ankh Charm in one of its four chests.
+- Explosions and pistons can't destroy faction flags or the blocks holding them up.
 
 ## Installation
 

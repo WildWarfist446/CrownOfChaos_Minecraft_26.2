@@ -12,6 +12,7 @@ import com.crownofchaos.item.UnitItem;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntityTypes;
@@ -20,41 +21,43 @@ import net.minecraft.world.item.Items;
 
 /**
  * Every army unit, from Warfist's plan, grouped by the crown that commands it. Each one costs
- * two items at a Commander's Table.
- *
- * <p>The costs are placeholders (1 Iron Ingot and 1 Gold Ingot) until Warfist sets the real
- * recipes; change them in the list below.
+ * two kinds of item at a Commander's Table, set by Warfist (see
+ * {@code developing plans/Unit Recipes.md}).
  */
 public final class ModUnits {
-	private static final UnitType.Cost PLACEHOLDER_A = new UnitType.Cost(Items.IRON_INGOT, 1);
-	private static final UnitType.Cost PLACEHOLDER_B = new UnitType.Cost(Items.GOLD_INGOT, 1);
-
 	private static final List<UnitType> ALL = new ArrayList<>();
 
 	// Crown of Wither
-	public static final UnitType WITHER_SKELETON = unit("wither_skeleton", ModItems.CROWN_OF_WITHER, EntityTypes.WITHER_SKELETON, PLACEHOLDER_A, PLACEHOLDER_B);
+	public static final UnitType WITHER_SKELETON = unit("wither_skeleton", ModItems.CROWN_OF_WITHER, EntityTypes.WITHER_SKELETON, cost(Items.NETHER_WART, 20), cost(Items.BOW, 1));
 	// Crown of Winter
-	public static final UnitType STRAY = unit("stray", ModItems.CROWN_OF_WINTER, EntityTypes.STRAY, PLACEHOLDER_A, PLACEHOLDER_B);
-	public static final UnitType POLAR_BEAR = unit("polar_bear", ModItems.CROWN_OF_WINTER, EntityTypes.POLAR_BEAR, PLACEHOLDER_A, PLACEHOLDER_B);
-	public static final UnitType SNOW_GOLEM = unit("snow_golem", ModItems.CROWN_OF_WINTER, EntityTypes.SNOW_GOLEM, PLACEHOLDER_A, PLACEHOLDER_B);
+	public static final UnitType STRAY = unit("stray", ModItems.CROWN_OF_WINTER, EntityTypes.STRAY, cost(Items.SNOW_BLOCK, 15), cost(Items.BOW, 1));
+	public static final UnitType POLAR_BEAR = unit("polar_bear", ModItems.CROWN_OF_WINTER, EntityTypes.POLAR_BEAR, UnitType.Cost.anyOf(ItemTags.WOOL, Items.WOOL.white(), 15), cost(Items.COD, 3));
+	public static final UnitType SNOW_GOLEM = unit("snow_golem", ModItems.CROWN_OF_WINTER, EntityTypes.SNOW_GOLEM, cost(Items.SNOW_BLOCK, 4), cost(Items.JACK_O_LANTERN, 1));
 	// Crown of Iron
-	public static final UnitType PILLAGER = unit("pillager", ModItems.CROWN_OF_IRON, EntityTypes.PILLAGER, PLACEHOLDER_A, PLACEHOLDER_B);
-	public static final UnitType VINDICATOR = unit("vindicator", ModItems.CROWN_OF_IRON, EntityTypes.VINDICATOR, PLACEHOLDER_A, PLACEHOLDER_B);
-	public static final UnitType RAVAGER = unit("ravager", ModItems.CROWN_OF_IRON, EntityTypes.RAVAGER, PLACEHOLDER_A, PLACEHOLDER_B);
-	public static final UnitType EVOKER = unit("evoker", ModItems.CROWN_OF_IRON, EntityTypes.EVOKER, PLACEHOLDER_A, PLACEHOLDER_B);
+	public static final UnitType PILLAGER = unit("pillager", ModItems.CROWN_OF_IRON, EntityTypes.PILLAGER, cost(Items.EMERALD, 3), cost(Items.CROSSBOW, 1));
+	public static final UnitType VINDICATOR = unit("vindicator", ModItems.CROWN_OF_IRON, EntityTypes.VINDICATOR, cost(Items.EMERALD, 5), cost(Items.IRON_AXE, 1));
+	public static final UnitType RAVAGER = unit("ravager", ModItems.CROWN_OF_IRON, EntityTypes.RAVAGER, cost(Items.EMERALD, 20), cost(Items.SADDLE, 1));
+	public static final UnitType EVOKER = unit("evoker", ModItems.CROWN_OF_IRON, EntityTypes.EVOKER, cost(Items.EMERALD, 15), cost(Items.BLAZE_POWDER, 4));
 	// Crown of Darkness
-	public static final UnitType WARDEN = unit("warden", ModItems.CROWN_OF_DARKNESS, EntityTypes.WARDEN, PLACEHOLDER_A, PLACEHOLDER_B);
+	public static final UnitType WARDEN = unit("warden", ModItems.CROWN_OF_DARKNESS, EntityTypes.WARDEN, cost(Items.DIAMOND, 10), cost(Items.ECHO_SHARD, 1));
 	// Crown of Sun
-	public static final UnitType HUSK = unit("husk", ModItems.CROWN_OF_SUN, EntityTypes.HUSK, PLACEHOLDER_A, PLACEHOLDER_B);
-	public static final UnitType PARCHED = unit("parched", ModItems.CROWN_OF_SUN, EntityTypes.PARCHED, PLACEHOLDER_A, PLACEHOLDER_B);
-	// Crown of Poseidon
-	public static final UnitType GUARDIAN = unit("guardian", ModItems.CROWN_OF_POSEIDON, EntityTypes.GUARDIAN, PLACEHOLDER_A, PLACEHOLDER_B);
+	public static final UnitType HUSK = unit("husk", ModItems.CROWN_OF_SUN, EntityTypes.HUSK, cost(Items.ROTTEN_FLESH, 5), cost(Items.GOLD_INGOT, 2));
+	public static final UnitType PARCHED = unit("parched", ModItems.CROWN_OF_SUN, EntityTypes.PARCHED, cost(Items.BONE, 10), cost(Items.BOW, 1));
+	// Crown of Poseidon ("30 seaweed": Kelp, the long seaweed)
+	public static final UnitType GUARDIAN = unit("guardian", ModItems.CROWN_OF_POSEIDON, EntityTypes.GUARDIAN, cost(Items.KELP, 30), cost(Items.PRISMARINE_SHARD, 2));
 	// Crown of Nether
-	public static final UnitType PIGLIN = unit("piglin", ModItems.CROWN_OF_NETHER, EntityTypes.PIGLIN, PLACEHOLDER_A, PLACEHOLDER_B);
-	public static final UnitType HOGLIN = unit("hoglin", ModItems.CROWN_OF_NETHER, EntityTypes.HOGLIN, PLACEHOLDER_A, PLACEHOLDER_B);
-	public static final UnitType GHAST = unit("ghast", ModItems.CROWN_OF_NETHER, EntityTypes.GHAST, PLACEHOLDER_A, PLACEHOLDER_B);
+	public static final UnitType PIGLIN = unit("piglin", ModItems.CROWN_OF_NETHER, EntityTypes.PIGLIN, cost(Items.PORKCHOP, 5), cost(Items.GOLD_INGOT, 3));
+	public static final UnitType HOGLIN = unit("hoglin", ModItems.CROWN_OF_NETHER, EntityTypes.HOGLIN, cost(Items.PORKCHOP, 10), cost(Items.GOLD_INGOT, 5));
+	public static final UnitType GHAST = unit("ghast", ModItems.CROWN_OF_NETHER, EntityTypes.GHAST, cost(Items.BLAZE_POWDER, 10), cost(Items.FIRE_CHARGE, 5));
+	// Crown of Void
+	public static final UnitType ENDERMAN = unit("enderman", ModItems.CROWN_OF_VOID, EntityTypes.ENDERMAN, cost(Items.ENDER_PEARL, 5), cost(Items.END_STONE, 5));
+	public static final UnitType SHULKER = unit("shulker", ModItems.CROWN_OF_VOID, EntityTypes.SHULKER, cost(Items.PURPUR_BLOCK, 5), cost(Items.DIAMOND, 2));
 
 	private ModUnits() {
+	}
+
+	private static UnitType.Cost cost(Item item, int count) {
+		return UnitType.Cost.of(item, count);
 	}
 
 	private static UnitType unit(String id, Item crown, EntityType<?> entity, UnitType.Cost costA, UnitType.Cost costB) {

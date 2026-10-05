@@ -9,7 +9,9 @@
 		"LargeFireballMixin",
 		"LivingEntityEffectMixin",
 		"LivingEntityMixin",
+		"PistonStructureResolverMixin",
 		"PowderSnowBlockMixin",
+		"ServerExplosionMixin",
 		"ShieldBlockingMixin",
 		"WinterCrownMovementMixin",
 		"WitherSkullMixin"

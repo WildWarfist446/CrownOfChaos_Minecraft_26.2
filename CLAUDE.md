@@ -161,9 +161,11 @@ from `3dmodels/Commander-table.json`, turns to face the placer) whose menu
 (`menu/CommanderTableMenu`, screen `client/menu/CommanderTableScreen`, written by a helper
 agent) works like a stonecutter: a crown slot, a list of that crown's units, two cost slots
 (either order) and a result slot. It keeps no items. Units are defined in `unit/ModUnits`:
-15 units for 7 crowns, from Warfist's plan (the Golden Crown, Under Crown and Crown of Void
-have none). **Unit costs are placeholders** (1 Iron Ingot + 1 Gold Ingot) until Warfist sends
-the real ones; each unit costs exactly two kinds of item. Unit items (`item/UnitItem`) use
+17 units for 8 crowns, from Warfist's plan plus Enderman and Shulker for the Crown of Void,
+which he added later (the Golden Crown and Under Crown have none). Warfist fills in the
+costs in `developing plans/Unit Recipes.md`; they're set in `ModUnits` (the README lists
+them). Each unit costs exactly two kinds of item; a cost can be any item with a tag (the Polar
+Bear takes any wool). Warfist's "seaweed" for the Guardian was read as Kelp. Unit items (`item/UnitItem`) use
 the vanilla spawn egg models and do nothing yet. The table's recipe is Warfist's (map,
 2 diamonds, Faction Coin, 3 planks); the Faction Coin is 8 gold ingots around an emerald.
 
@@ -190,14 +192,18 @@ the vanilla spawn egg models and do nothing yet. The table's recipe is Warfist's
   `[Name] ` in the faction's dye color, shown in chat and above heads. Player names stay
   white, because team colors are only the 16 chat colors.
 - **Faction Flag item:**
-  - Crafted shapeless from any banner and a gold block. It belongs to the crafter's faction
+  - Crafted from 8 wool (any color) around a Faction Coin. It belongs to the crafter's faction
     (data components `crownofchaos:flag_faction` and `crownofchaos:flag_color`; the item
     model picks the banner color from `flag_color`).
   - Placing it puts down a vanilla banner of the faction's color and records a claim. Only
     members can place it.
-  - Anyone can break a flag. That removes the claim and drops a Faction Flag of the same
-    faction. Every 5 seconds the server drops claims whose banner is gone (explosions and
-    pistons).
+  - Each flag has a floating name label (a vanilla text display, `faction/FlagLabels`),
+    kept in step every 5 seconds and on rename or recolor, and removed with the flag.
+  - Only members can break a flag or the block holding it up; creative mode can too
+    (`CREATIVE_BREAKS_ANY_FLAG`). Explosions skip flags (`mixin/ServerExplosionMixin`) and
+    pistons can't move them or their support (`mixin/PistonStructureResolverMixin`).
+    Breaking your own flag removes the claim and drops a Faction Flag of the same faction.
+    Every 5 seconds the server drops claims whose banner is gone (commands, other mods).
 - **Territory:** entering a faction's territory shows a title (the faction's name in its
   color, with "Faction Territory" or "Your Faction's Territory" underneath); leaving shows an
   action-bar note.
@@ -230,11 +236,11 @@ disbanding.
   Test these over LAN with a second account.
 - Pressing J to open the menu, and crafting a flag.
 
-**Known gaps:** a wall-mounted flag whose wall block is broken, or a flag destroyed by an
-explosion, drops a plain banner instead of a Faction Flag (the claim is still removed).
+**Known gaps:** a flag removed some other way (commands, other mods) drops a plain banner
+instead of a Faction Flag (the claim is still removed). Placed banners and flag items keep
+their old color if the faction changes color (labels and claims update).
 
-**Next parts** (implement only what Warfist asks for, in his order): the real unit costs,
-deploying unit items as mobs (friendly to the owner's faction, colored by faction, only
+**Next parts** (implement only what Warfist asks for, in his order): deploying unit items as mobs (friendly to the owner's faction, colored by faction, only
 controllable while wearing the matching crown, a notification when one dies out of sight),
 sentry mode, unit follow, unit attack, declaring war, and reclaiming units. Then make the
 red alert and stance settings drive what units attack. Before starting, read the full plan

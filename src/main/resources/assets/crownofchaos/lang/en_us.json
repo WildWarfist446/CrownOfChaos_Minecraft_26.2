@@ -120,6 +120,7 @@
   "message.crownofchaos.faction.flag_placed": "%s placed a faction flag at %s, %s, %s",
   "message.crownofchaos.faction.flag_broken": "%s broke your faction flag at %s, %s, %s",
   "message.crownofchaos.faction.flag_lost": "Your faction flag at %s, %s, %s is gone",
+  "message.crownofchaos.faction.flag_protected": "This flag belongs to %s: only its members can break it",
   "message.crownofchaos.faction.flag_no_faction": "Join a faction before placing a flag",
   "message.crownofchaos.faction.flag_not_yours": "This flag belongs to %s",
   "message.crownofchaos.faction.flag_too_close": "Too close to %s's territory: flags of different factions must be %s blocks apart",
@@ -210,6 +211,8 @@
   "item.crownofchaos.piglin_unit": "Piglin Unit",
   "item.crownofchaos.hoglin_unit": "Hoglin Unit",
   "item.crownofchaos.ghast_unit": "Ghast Unit",
+  "item.crownofchaos.enderman_unit": "Enderman Unit",
+  "item.crownofchaos.shulker_unit": "Shulker Unit",
 
   "gui.crownofchaos.commander_table.crown": "Crown",
   "gui.crownofchaos.commander_table.cost": "Cost",

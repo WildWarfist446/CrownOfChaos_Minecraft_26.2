@@ -12,6 +12,8 @@ import org.jspecify.annotations.Nullable;
 import com.crownofchaos.CrownOfChaos;
 import com.mojang.serialization.Codec;
 
+import net.minecraft.core.BlockPos;
+
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.datafix.DataFixTypes;
@@ -105,6 +107,18 @@ public final class FactionData extends SavedData {
 			}
 		}
 		return Optional.empty();
+	}
+
+	/** Whether any faction has a flag at or right next to this block (within 1 in every direction). */
+	public boolean hasFlagNear(ResourceKey<Level> dimension, BlockPos pos) {
+		for (Faction faction : this.factions.values()) {
+			for (FactionFlag flag : faction.flags()) {
+				if (flag.dimension() == dimension && flag.pos().distChessboard(pos) <= 1) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	/** The faction with a flag at exactly this spot, if any. */

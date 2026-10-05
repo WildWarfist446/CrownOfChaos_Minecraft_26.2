@@ -1,5 +1,8 @@
 package com.crownofchaos.unit;
 
+import java.util.Optional;
+
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -16,10 +19,26 @@ import net.minecraft.world.item.ItemStack;
  * @param costB  the second item it costs
  */
 public record UnitType(String id, Item crown, EntityType<?> entity, Item item, Cost costA, Cost costB) {
-	/** An item and how many of it. */
-	public record Cost(Item item, int count) {
+	/**
+	 * An item (or any item with a tag, such as any wool) and how many of it.
+	 *
+	 * @param item  the item, or for a tag the item the table shows as a hint
+	 * @param tag   if present, any item with this tag pays the cost
+	 * @param count how many
+	 */
+	public record Cost(Item item, Optional<TagKey<Item>> tag, int count) {
+		public static Cost of(Item item, int count) {
+			return new Cost(item, Optional.empty(), count);
+		}
+
+		/** Any item with the tag; {@code shown} is the one the table shows as a hint. */
+		public static Cost anyOf(TagKey<Item> tag, Item shown, int count) {
+			return new Cost(shown, Optional.of(tag), count);
+		}
+
 		public boolean isPaidBy(ItemStack stack) {
-			return stack.is(this.item) && stack.getCount() >= this.count;
+			boolean right = this.tag.map(stack::is).orElseGet(() -> stack.is(this.item));
+			return right && stack.getCount() >= this.count;
 		}
 
 		public ItemStack toStack() {

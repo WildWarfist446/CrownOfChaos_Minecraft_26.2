@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_banner": {
+    "has_faction_coin": {
       "conditions": {
         "items": [
           {
-            "items": "#minecraft:banners"
+            "items": "crownofchaos:faction_coin"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_banner"
+      "has_faction_coin"
     ]
   ],
   "rewards": {

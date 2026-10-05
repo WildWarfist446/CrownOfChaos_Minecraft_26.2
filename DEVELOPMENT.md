@@ -32,7 +32,7 @@ Test worlds and settings from `runClient` live in `run/`, which isn't committed.
 | `src/main/java/com/crownofchaos/entity/` | Entities the mod adds (`ModEntities`): the Crown of Winter's icicle |
 | `src/main/java/com/crownofchaos/ability/` | Crown abilities, the registry that links each crown to its abilities, and shared ability helpers |
 | `src/main/java/com/crownofchaos/network/` | Messages between the client and server (ability keys, Riptide launch, Ore Sense, faction menu actions and faction updates) |
-| `src/main/java/com/crownofchaos/mixin/` | Changes that hook into Minecraft (Fortune, damage bonuses, a Dragon Egg on every dragon kill, volley arrows and shield blocking, crown fireball and wither skull explosions, Wither immunity, ice grip, walking on powder snow) |
+| `src/main/java/com/crownofchaos/mixin/` | Changes that hook into Minecraft (Fortune, damage bonuses, a Dragon Egg on every dragon kill, volley arrows and shield blocking, crown fireball and wither skull explosions, Wither immunity, ice grip, walking on powder snow, explosions and pistons sparing faction flags) |
 | `src/client/java/com/crownofchaos/client/` | Client-only code: the ability keybinds and client-side ability effects |
 | `src/client/java/com/crownofchaos/client/model/` | Crown 3D models and the renderer that draws them on the head |
 | `src/client/java/com/crownofchaos/client/faction/` | The faction menu and the client's copy of the factions |
@@ -82,7 +82,8 @@ Shared helpers for common kinds of ability:
 ## Adding or changing a unit
 
 Units are listed in `ModUnits`, grouped by crown: `unit("pillager", ModItems.CROWN_OF_IRON,
-EntityTypes.PILLAGER, costA, costB)`. Each cost is a `UnitType.Cost(item, count)`. A new unit
+EntityTypes.PILLAGER, costA, costB)`. Each cost is `cost(item, count)`, or
+`UnitType.Cost.anyOf(tag, shownItem, count)` for any item with a tag (like any wool). A new unit
 also needs its item model in `assets/crownofchaos/items/<mob>_unit.json` (pointing at the
 mob's spawn egg model) and its name in `lang/en_us.json`. The Commander's Table picks up the
 change by itself.

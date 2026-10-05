@@ -23,6 +23,7 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.protocol.game.ClientboundSetSubtitleTextPacket;
@@ -37,6 +38,8 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractBannerBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.WallBannerBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.scores.PlayerTeam;
 
 /**
@@ -62,6 +65,9 @@ public final class FactionManager {
 	private static final int TITLE_STAY_TICKS = 50;
 	private static final int TITLE_FADE_OUT_TICKS = 15;
 
+	/** Whether players in creative mode (such as server admins) can break any faction's flags. */
+	private static final boolean CREATIVE_BREAKS_ANY_FLAG = true;
+
 	private static final ChatFormatting INFO = ChatFormatting.GOLD;
 	private static final ChatFormatting ERROR = ChatFormatting.RED;
 
@@ -74,6 +80,7 @@ public final class FactionManager {
 	}
 
 	public static void initialize() {
+		FlagLabels.initialize();
 		PayloadTypeRegistry.serverboundPlay().register(FactionActionPayload.TYPE, FactionActionPayload.CODEC);
 		PayloadTypeRegistry.clientboundPlay().register(FactionSyncPayload.TYPE, FactionSyncPayload.CODEC);
 		ServerPlayNetworking.registerGlobalReceiver(FactionActionPayload.TYPE, (payload, context) -> handle(context.player(), payload));
@@ -105,10 +112,17 @@ public final class FactionManager {
 		ServerPlayConnectionEvents.DISCONNECT.register((handler, stopped) -> LAST_TERRITORY.remove(handler.getPlayer().getUUID()));
 
 		PlayerBlockBreakEvents.BEFORE.register((level, player, pos, state, blockEntity) -> {
-			if (level instanceof ServerLevel serverLevel) {
-				return !breakFlag(serverLevel, pos, player instanceof ServerPlayer serverPlayer ? serverPlayer : null);
+			if (!(level instanceof ServerLevel serverLevel) || !(player instanceof ServerPlayer serverPlayer)) {
+				return true;
 			}
-			return true;
+			Optional<Faction> protector = protectingFaction(serverLevel, pos);
+			if (protector.isPresent() && !protector.get().isMember(serverPlayer.getUUID())
+					&& !(CREATIVE_BREAKS_ANY_FLAG && serverPlayer.isCreative())) {
+				serverPlayer.sendOverlayMessage(Component.translatable("message.crownofchaos.faction.flag_protected",
+						protector.get().displayName()).withStyle(ERROR));
+				return false;
+			}
+			return !breakFlag(serverLevel, pos, serverPlayer);
 		});
 
 		ServerTickEvents.END_SERVER_TICK.register(ticking -> {
@@ -250,6 +264,7 @@ public final class FactionManager {
 		if (name != null) {
 			faction.setName(name);
 			updateTeam(faction);
+			updateLabels(player.level().getServer(), faction);
 			broadcast(player.level().getServer(), faction, Component.translatable("message.crownofchaos.faction.renamed", faction.displayName()));
 		}
 	}
@@ -259,6 +274,7 @@ public final class FactionManager {
 		if (color != null) {
 			faction.setColor(color);
 			updateTeam(faction);
+			updateLabels(player.level().getServer(), faction);
 			broadcast(player.level().getServer(), faction, Component.translatable("message.crownofchaos.faction.recolored", faction.displayName()));
 		}
 	}
@@ -298,6 +314,8 @@ public final class FactionManager {
 
 	private static void disband(MinecraftServer server, FactionData data, Faction faction) {
 		broadcast(server, faction, Component.translatable("message.crownofchaos.faction.disbanded", faction.displayName()));
+		// The banners stay as decoration, but stop being flags.
+		faction.flags().forEach(flag -> removeLabel(server, flag));
 		ServerScoreboard scoreboard = server.getScoreboard();
 		PlayerTeam team = scoreboard.getPlayerTeam(teamName(faction));
 		if (team != null) {
@@ -497,6 +515,7 @@ public final class FactionManager {
 	public static void addFlag(ServerPlayer player, Faction faction, FactionFlag flag) {
 		FactionData data = FactionData.get(player.level().getServer());
 		faction.flags().add(flag);
+		FlagLabels.update((ServerLevel) player.level(), faction, flag);
 		data.setDirty();
 		broadcast(player.level().getServer(), faction, Component.translatable("message.crownofchaos.faction.flag_placed",
 				player.getScoreboardName(), flag.pos().getX(), flag.pos().getY(), flag.pos().getZ()));
@@ -504,8 +523,51 @@ public final class FactionManager {
 	}
 
 	/**
+	 * The faction whose flag is here, or whose flag stands on or hangs from the block here, if
+	 * any. Only that faction's members can break it, so other players can't knock a flag down by
+	 * breaking what holds it up.
+	 */
+	private static Optional<Faction> protectingFaction(ServerLevel level, BlockPos pos) {
+		FactionData data = FactionData.get(level.getServer());
+		// Quick check first, since explosions and pistons ask about many blocks.
+		if (!data.hasFlagNear(level.dimension(), pos)) {
+			return Optional.empty();
+		}
+		Optional<Faction> owner = data.flagOwner(new FactionFlag(level.dimension(), pos.immutable()));
+		if (owner.isPresent()) {
+			return owner;
+		}
+		for (Direction direction : Direction.values()) {
+			BlockPos flagPos = pos.relative(direction);
+			BlockState flagState = level.getBlockState(flagPos);
+			if (!(flagState.getBlock() instanceof AbstractBannerBlock)) {
+				continue;
+			}
+			BlockPos support = flagState.getBlock() instanceof WallBannerBlock
+					? flagPos.relative(flagState.getValue(WallBannerBlock.FACING).getOpposite())
+					: flagPos.below();
+			if (support.equals(pos)) {
+				Optional<Faction> flagOwner = data.flagOwner(new FactionFlag(level.dimension(), flagPos.immutable()));
+				if (flagOwner.isPresent()) {
+					return flagOwner;
+				}
+			}
+		}
+		return Optional.empty();
+	}
+
+	/**
+	 * Whether the block here is a faction flag or holds one up, so explosions and pistons must
+	 * leave it alone (see {@code ServerExplosionMixin} and {@code PistonStructureResolverMixin}).
+	 */
+	public static boolean isFlagProtected(ServerLevel level, BlockPos pos) {
+		return protectingFaction(level, pos).isPresent();
+	}
+
+	/**
 	 * If there's a faction flag here, removes its claim, breaks it and drops it as a Faction Flag
-	 * of the same faction (not in creative), and returns true. Anyone can break a flag.
+	 * of the same faction (not in creative), and returns true. Only members get this far (see
+	 * {@link #protectingFaction}).
 	 */
 	private static boolean breakFlag(ServerLevel level, BlockPos pos, @Nullable ServerPlayer breaker) {
 		FactionData data = FactionData.get(level.getServer());
@@ -525,6 +587,7 @@ public final class FactionManager {
 
 	private static void removeFlag(MinecraftServer server, Faction faction, FactionFlag flag, @Nullable String breaker) {
 		faction.flags().remove(flag);
+		removeLabel(server, flag);
 		FactionData.get(server).setDirty();
 		Component message = breaker == null
 				? Component.translatable("message.crownofchaos.faction.flag_lost", flag.pos().getX(), flag.pos().getY(), flag.pos().getZ())
@@ -533,9 +596,27 @@ public final class FactionManager {
 		sendAll();
 	}
 
+	/** Refreshes the name labels of the faction's flags in loaded chunks (the rest catch up when loaded). */
+	private static void updateLabels(MinecraftServer server, Faction faction) {
+		for (FactionFlag flag : faction.flags()) {
+			ServerLevel level = server.getLevel(flag.dimension());
+			if (level != null && level.isLoaded(flag.pos())) {
+				FlagLabels.update(level, faction, flag);
+			}
+		}
+	}
+
+	private static void removeLabel(MinecraftServer server, FactionFlag flag) {
+		ServerLevel level = server.getLevel(flag.dimension());
+		if (level != null && level.isLoaded(flag.pos())) {
+			FlagLabels.remove(level, flag);
+		}
+	}
+
 	/**
-	 * Removes the claim of any flag that's no longer there: blown up, pushed by a piston, or
-	 * dropped because the block it hung on was broken. Only checks flags in loaded chunks.
+	 * Removes the claim of any flag that's no longer there (removed by commands or other mods,
+	 * since players outside the faction, explosions and pistons can't break flags), and keeps
+	 * every remaining flag's name label up to date. Only checks flags in loaded chunks.
 	 */
 	private static void checkFlags(MinecraftServer server) {
 		FactionData data = FactionData.get(server);
@@ -544,8 +625,12 @@ public final class FactionManager {
 			while (flags.hasNext()) {
 				FactionFlag flag = flags.next();
 				ServerLevel level = server.getLevel(flag.dimension());
-				if (level != null && level.isLoaded(flag.pos())
-						&& !(level.getBlockState(flag.pos()).getBlock() instanceof AbstractBannerBlock)) {
+				if (level == null || !level.isLoaded(flag.pos())) {
+					continue;
+				}
+				if (level.getBlockState(flag.pos()).getBlock() instanceof AbstractBannerBlock) {
+					FlagLabels.update(level, faction, flag);
+				} else {
 					removeFlag(server, faction, flag, null);
 				}
 			}
