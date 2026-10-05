@@ -60,6 +60,8 @@
   "message.crownofchaos.ability.arrow_volley.no_target": "No target in range",
   "message.crownofchaos.ability.lightning.no_target": "No target in range",
   "message.crownofchaos.ability.icicle_drop.no_target": "No target in range",
+  "message.crownofchaos.ability.ore_sense.found": "Ore Sense: %s ores nearby",
+  "message.crownofchaos.ability.ore_sense.none": "Ore Sense: no ores nearby",
   "message.crownofchaos.ability.glowing_arrows.enabled": "Glowing Arrows enabled",
   "message.crownofchaos.ability.glowing_arrows.disabled": "Glowing Arrows disabled",
   "message.crownofchaos.ability.blaze_flight.time_left": "Blaze Flight: %ss",

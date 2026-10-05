@@ -12,6 +12,7 @@ public class CrownOfChaosClient implements ClientModInitializer {
 	public void onInitializeClient() {
 		CrownAbilityKeybind.initialize();
 		CrownAbilityClientHandlers.initialize();
+		OreSenseClient.initialize();
 		CrownModels.initialize();
 		EntityRendererRegistry.register(ModEntities.ICICLE, IcicleRenderer::new);
 	}

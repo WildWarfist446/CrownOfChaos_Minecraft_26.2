@@ -10,6 +10,7 @@ import java.util.UUID;
 import com.crownofchaos.item.CrownEffects;
 import com.crownofchaos.item.ModItems;
 import com.crownofchaos.network.CrownAbilityKeyPayload;
+import com.crownofchaos.network.OreSensePayload;
 import com.crownofchaos.network.RiptidePayload;
 
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
@@ -99,6 +100,7 @@ public final class CrownAbilities {
 		register(ModItems.CROWN_OF_IRON, new ArrowVolleyAbility());
 		register(ModItems.CROWN_OF_VOID, new EnderPearlAbility());
 
+		registerSecondary(ModItems.UNDER_CROWN, new OreSenseAbility());
 		registerSecondary(ModItems.CROWN_OF_POSEIDON, new LightningStrikeAbility());
 		registerSecondary(ModItems.CROWN_OF_NETHER, FlightAbility.blazeFlight(ModItems.CROWN_OF_NETHER));
 		registerSecondary(ModItems.CROWN_OF_WITHER, FlightAbility.witherFlight(ModItems.CROWN_OF_WITHER));
@@ -120,6 +122,7 @@ public final class CrownAbilities {
 
 		PayloadTypeRegistry.serverboundPlay().register(CrownAbilityKeyPayload.TYPE, CrownAbilityKeyPayload.CODEC);
 		PayloadTypeRegistry.clientboundPlay().register(RiptidePayload.TYPE, RiptidePayload.CODEC);
+		PayloadTypeRegistry.clientboundPlay().register(OreSensePayload.TYPE, OreSensePayload.CODEC);
 		ServerPlayNetworking.registerGlobalReceiver(CrownAbilityKeyPayload.TYPE, (payload, context) -> {
 			ServerPlayer player = context.player();
 			Set<UUID> holding = HOLDING_KEY.get(payload.slot());

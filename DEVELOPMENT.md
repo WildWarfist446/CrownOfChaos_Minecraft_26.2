@@ -26,7 +26,7 @@ Test worlds and settings from `runClient` live in `run/`, which isn't committed.
 | `src/main/java/com/crownofchaos/item/CrownEffects.java` | Each crown's potion effects, passive bonuses (Darkness on hit, Fire Aspect, Flame, Wither on hit, freeze on hit, Swiftness on sand, snow, ice and End blocks, Crown of Void teleport), the pet check, and tuning values |
 | `src/main/java/com/crownofchaos/entity/` | Entities the mod adds (`ModEntities`): the Crown of Winter's icicle |
 | `src/main/java/com/crownofchaos/ability/` | Crown abilities, the registry that links each crown to its abilities, and shared ability helpers |
-| `src/main/java/com/crownofchaos/network/` | Messages between the client and server (ability keys, Riptide launch) |
+| `src/main/java/com/crownofchaos/network/` | Messages between the client and server (ability keys, Riptide launch, Ore Sense) |
 | `src/main/java/com/crownofchaos/mixin/` | Changes that hook into Minecraft (Fortune, damage bonuses, a Dragon Egg on every dragon kill, volley arrows and shield blocking, crown fireball and wither skull explosions, Wither immunity, ice grip, walking on powder snow) |
 | `src/client/java/com/crownofchaos/client/` | Client-only code: the ability keybinds and client-side ability effects |
 | `src/client/java/com/crownofchaos/client/model/` | Crown 3D models and the renderer that draws them on the head |
