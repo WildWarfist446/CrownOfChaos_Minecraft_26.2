@@ -2,6 +2,14 @@
 
 What's left for The Crown of Chaos, as of 5 October 2026. Tick items off with `[x]`.
 
+## First thing next session
+
+- [ ] Unit command menu (V): don't lock the camera or movement while it's open, so players can
+      keep fighting. Changing the held item only by scroll wheel while it's open is fine.
+      (Today it's a normal menu screen, which takes over the mouse and keyboard; it likely needs
+      to become an on-screen overlay that keeps the game in control, with the number keys still
+      giving orders.)
+
 ## The Crown of Chaos (last crown in the plan)
 
 - [ ] Incomplete Crown of Chaos: crafted from all nine crowns; can't be worn or used

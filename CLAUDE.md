@@ -223,7 +223,9 @@ is 8 gold ingots around an emerald.
   outlines, no textures. Nothing of Mojang's is copied into the mod.
 
 **What part 1 does:**
-- **Menu** (key J, "Faction Menu" under Controls → Crown of Chaos):
+- **Menu** (key J, "Faction Menu" under Controls → "Crown of Chaos - Faction System", the
+  section for all faction keys, `FactionKeybind.CATEGORY`; crown ability keys stay under
+  "Crown of Chaos"):
   - Without a faction: Create (name with emoji, up to 24 characters, plus a color) and Join
     (accept or decline invites, ask to join).
   - In a faction: Overview (owner can rename, recolor, toggle red alert, disband), Members
@@ -291,6 +293,9 @@ one-sided (the target is told), makes units attack the target anywhere (`UnitMan
 the target's faction, or the player or a unit's owner; it overrides Allowed), and blocks
 Reclaim for the declaring faction's members. Disbanding a faction removes it from others'
 wars.
+
+**First thing next session:** make the unit command menu not lock the camera or movement
+(see the top of `developing plans/To Do.md`).
 
 **Next:** Warfist's faction plan is fully built (beta). Implement only what he asks
 for next; reread `Crown Ideas.md` first, it changes often.

@@ -36,9 +36,9 @@ import net.minecraft.world.entity.player.Player;
  */
 public final class UnitClient {
 	private static final KeyMapping COMMAND_KEY = KeyMappingHelper.registerKeyMapping(
-			new KeyMapping("key.crownofchaos.unit_commands", InputConstants.Type.KEYSYM, InputConstants.KEY_V, CrownAbilityKeybind.CATEGORY));
+			new KeyMapping("key.crownofchaos.unit_commands", InputConstants.Type.KEYSYM, InputConstants.KEY_V, FactionKeybind.CATEGORY));
 	private static final KeyMapping FOLLOW_KEY = KeyMappingHelper.registerKeyMapping(
-			new KeyMapping("key.crownofchaos.unit_follow", InputConstants.Type.KEYSYM, InputConstants.KEY_B, CrownAbilityKeybind.CATEGORY));
+			new KeyMapping("key.crownofchaos.unit_follow", InputConstants.Type.KEYSYM, InputConstants.KEY_B, FactionKeybind.CATEGORY));
 
 	/** Entity ids of the units this player has selected, as last sent by the server. */
 	private static final Set<Integer> SELECTED = new IntOpenHashSet();

@@ -20,8 +20,8 @@ import net.minecraft.client.KeyMapping;
  * pressed and released.
  */
 public final class CrownAbilityKeybind {
-	/** The "Crown of Chaos" section in Controls, shared with the faction menu key. */
-	static final KeyMapping.Category CATEGORY = KeyMapping.Category.register(CrownOfChaos.id("crowns"));
+	/** The "Crown of Chaos" section in Controls (faction keys have their own, see {@link FactionKeybind}). */
+	private static final KeyMapping.Category CATEGORY = KeyMapping.Category.register(CrownOfChaos.id("crowns"));
 
 	private static final Map<AbilitySlot, KeyMapping> KEYS = new EnumMap<>(Map.of(
 			AbilitySlot.PRIMARY, register("key.crownofchaos.use_crown_ability", InputConstants.KEY_R),

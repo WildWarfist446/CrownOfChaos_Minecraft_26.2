@@ -289,7 +289,7 @@ Players can band together into factions, each with its own name and color, and c
 with faction flags.
 
 **Faction menu:** press **J** (rebindable under Options → Controls → Key Binds → Crown of
-Chaos).
+Chaos - Faction System).
 
 - **Without a faction:**
   - **Create:** found a faction. Pick a name of up to 24 characters (emoji allowed, unique)
@@ -409,7 +409,8 @@ the Crown of Iron to command Pillagers, Vindicators, Ravagers and Evokers).
 - **Units: Follow / Stop Following** key (default **B**) toggles following.
 - If one of your units dies where you can't see it, you're told where.
 
-Both keys can be rebound under Options → Controls → Key Binds → Crown of Chaos.
+Both keys can be rebound under Options → Controls → Key Binds → Crown of Chaos - Faction
+System.
 
 **War:** the faction owner declares war in the faction menu's **War** tab.
 
