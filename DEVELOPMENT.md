@@ -25,7 +25,7 @@ Test worlds and settings from `runClient` live in `run/`, which isn't committed.
 | `src/main/java/com/crownofchaos/item/ModItems.java` | Items (crowns, netherite crowns, materials), the creative tab, and loot (Sculk Cord, Ankh Charm) |
 | `src/main/java/com/crownofchaos/item/FactionFlagItem.java`, `ModComponents.java` | The Faction Flag and the item data components that record its faction |
 | `src/main/java/com/crownofchaos/item/CrownEffects.java` | Each crown's potion effects, passive bonuses (Darkness on hit, Fire Aspect, Flame, Wither on hit, freeze on hit, Swiftness on sand, snow, ice and End blocks, Crown of Void teleport), the pet check, and tuning values |
-| `src/main/java/com/crownofchaos/faction/` | The faction system (alpha): faction data saved with the world (`FactionData`), and the server logic for menu actions, name tags, syncing, territory and flags (`FactionManager`) |
+| `src/main/java/com/crownofchaos/faction/` | The faction system (beta): faction data saved with the world (`FactionData`), and the server logic for menu actions, name tags, syncing, territory and flags (`FactionManager`) |
 | `src/main/java/com/crownofchaos/block/` | Blocks (`ModBlocks`): the Commander's Table |
 | `src/main/java/com/crownofchaos/menu/` | Menus (`ModMenus`): the Commander's Table menu, which makes units from a crown and two cost items |
 | `src/main/java/com/crownofchaos/unit/` | Army units (`ModUnits`): each unit's crown, mob, unit item and two costs |

@@ -149,11 +149,11 @@ often, so reread it, and implement only what Warfist asks for):
   sentry, follow and attack commands, declaring war, reclaiming units.
 - Remaining 3D models.
 
-## Faction system (in progress)
+## Faction system (beta)
 
 Warfist's full plan is under "factions system" in `developing plans/Crown Ideas.md`. It's
-being built in parts, and is labeled **alpha** in the README (keep that label until Warfist
-says otherwise). **Part 1 (factions, menu, flags and territory)** and **part 2 (the
+built in parts and is labeled **beta** in the README: Warfist moved it from alpha to beta on
+5 October 2026, once the main features were complete. Keep that label until he says otherwise. **Part 1 (factions, menu, flags and territory)** and **part 2 (the
 Commander's Table and unit items)** are done and committed (4 October 2026).
 
 **Part 2, the Commander's Table:** a block (`block/CommanderTableBlock`, Warfist's 3D model
@@ -244,7 +244,7 @@ is 8 gold ingots around an emerald.
 - **Territory:** entering a faction's territory shows a title (the faction's name in its
   color, with "Faction Territory" or "Your Faction's Territory" underneath); leaving shows an
   action-bar note.
-- **Red alert and stances** are saved and shown, but nothing acts on them yet. Units will.
+- **Red alert and stances** decide when units fight in their territory (see part 3).
 
 **Code:**
 - `faction/`:
@@ -277,6 +277,14 @@ disbanding.
 instead of a Faction Flag (the claim is still removed). Placed banners and flag items keep
 their old color if the faction changes color (labels and claims update).
 
-**Next parts** (implement only what Warfist asks for, in his order): declaring war (fill in
-`UnitManager.atWar`, and make Reclaim refuse while at war). Before starting, read the full plan
-in `Crown Ideas.md` again; it changes often.
+**Part 5, war** (done 5 October 2026): owners declare war in the faction menu's War tab
+(written by a helper agent) on whole factions (`Faction.warFactions`) or single players
+(`warPlayers`, resolved by online name or any faction's member list), and make peace there.
+Actions `DECLARE_WAR`, `END_WAR`, `DECLARE_WAR_ON_PLAYER`, `END_WAR_ON_PLAYER`. War is
+one-sided (the target is told), makes units attack the target anywhere (`UnitManager.atWar`:
+the target's faction, or the player or a unit's owner; it overrides Allowed), and blocks
+Reclaim for the declaring faction's members. Disbanding a faction removes it from others'
+wars.
+
+**Next:** Warfist's faction plan is fully built (beta). Implement only what he asks
+for next; reread `Crown Ideas.md` first, it changes often.

@@ -221,6 +221,26 @@ public final class FactionManager {
 					reply(player, Component.translatable("message.crownofchaos.faction.stance." + stance.getSerializedName(), other.displayName()), INFO);
 				}
 			}));
+			case DECLARE_WAR -> ifOwner(player, mine, faction -> target.map(data::get).ifPresent(other -> {
+				if (other != faction && faction.warFactions().add(other.id())) {
+					broadcast(server, faction, Component.translatable("message.crownofchaos.faction.war_declared", other.displayName()));
+					warn(server, other, Component.translatable("message.crownofchaos.faction.war_declared_on_you", faction.displayName()));
+				}
+			}));
+			case END_WAR -> ifOwner(player, mine, faction -> target.map(data::get).ifPresent(other -> {
+				if (faction.warFactions().remove(other.id())) {
+					broadcast(server, faction, Component.translatable("message.crownofchaos.faction.peace_made", other.displayName()));
+					broadcast(server, other, Component.translatable("message.crownofchaos.faction.peace_made_with_you", faction.displayName()));
+				}
+			}));
+			case DECLARE_WAR_ON_PLAYER -> ifOwner(player, mine, faction -> declareWarOnPlayer(player, server, data, faction, payload.text()));
+			case END_WAR_ON_PLAYER -> ifOwner(player, mine, faction -> target.ifPresent(id -> {
+				String name = faction.warPlayers().remove(id);
+				if (name != null) {
+					broadcast(server, faction, Component.translatable("message.crownofchaos.faction.peace_made", name));
+					tell(server, id, Component.translatable("message.crownofchaos.faction.peace_made_with_you", faction.displayName()), INFO);
+				}
+			}));
 		}
 
 		data.setDirty();
@@ -355,6 +375,38 @@ public final class FactionManager {
 		}
 	}
 
+	/**
+	 * Declares war on one player alone: an online player, or a known member of any faction. Your
+	 * units attack them and their units, but not the rest of their faction.
+	 */
+	private static void declareWarOnPlayer(ServerPlayer player, MinecraftServer server, FactionData data, Faction faction, String rawName) {
+		String name = rawName.strip();
+		UUID id = null;
+		String knownName = name;
+		ServerPlayer online = server.getPlayerList().getPlayerByName(name);
+		if (online != null) {
+			id = online.getUUID();
+			knownName = online.getScoreboardName();
+		} else {
+			for (Faction other : data.all()) {
+				for (Map.Entry<UUID, String> member : other.members().entrySet()) {
+					if (member.getValue().equalsIgnoreCase(name)) {
+						id = member.getKey();
+						knownName = member.getValue();
+					}
+				}
+			}
+		}
+		if (id == null) {
+			reply(player, Component.translatable("message.crownofchaos.faction.war_player_not_found", name), ERROR);
+		} else if (faction.isMember(id)) {
+			reply(player, Component.translatable("message.crownofchaos.faction.war_on_own_member"), ERROR);
+		} else if (faction.warPlayers().putIfAbsent(id, knownName) == null) {
+			broadcast(server, faction, Component.translatable("message.crownofchaos.faction.war_declared", knownName));
+			tell(server, id, Component.translatable("message.crownofchaos.faction.war_declared_on_you", faction.displayName()), ERROR);
+		}
+	}
+
 	private static void requestJoin(ServerPlayer player, MinecraftServer server, FactionData data, Optional<Faction> mine, Faction faction) {
 		if (mine.isPresent()) {
 			reply(player, Component.translatable("message.crownofchaos.faction.already_in_faction"), ERROR);
@@ -470,6 +522,13 @@ public final class FactionManager {
 	private static void broadcast(MinecraftServer server, Faction faction, MutableComponent message) {
 		for (UUID member : faction.members().keySet()) {
 			tell(server, member, message.copy(), INFO);
+		}
+	}
+
+	/** Tells every online member of the faction, in red. */
+	private static void warn(MinecraftServer server, Faction faction, MutableComponent message) {
+		for (UUID member : faction.members().keySet()) {
+			tell(server, member, message.copy(), ERROR);
 		}
 	}
 

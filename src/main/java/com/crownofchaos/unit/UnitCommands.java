@@ -209,8 +209,16 @@ public final class UnitCommands {
 		return data != null && data.order() == UnitOrder.FOLLOW && data.leader().filter(player.getUUID()::equals).isPresent();
 	}
 
-	/** Turns the units back into their items, into the player's inventory (or dropped if it's full). */
+	/**
+	 * Turns the units back into their items, into the player's inventory (or dropped if it's
+	 * full). Not while their faction is at war.
+	 */
 	private static void reclaim(ServerPlayer player, List<Mob> units) {
+		Optional<Faction> faction = FactionData.get(player.level().getServer()).factionOf(player.getUUID());
+		if (faction.isPresent() && faction.get().atWar()) {
+			player.sendOverlayMessage(Component.translatable("message.crownofchaos.unit.reclaim_at_war").withStyle(ERROR));
+			return;
+		}
 		int count = 0;
 		for (Mob mob : units) {
 			UnitData data = mob.getAttached(UnitManager.UNIT);

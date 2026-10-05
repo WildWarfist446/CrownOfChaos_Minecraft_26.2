@@ -16,10 +16,11 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
  * is allowed to, replies in chat, and sends everyone the updated factions.
  *
  * @param action what to do
- * @param text   a faction name (CREATE, RENAME) or player name (INVITE); otherwise empty
- * @param target the player (CANCEL_INVITE, ACCEPT_REQUEST, DECLINE_REQUEST, KICK, TRANSFER)
- *               or faction (ACCEPT_INVITE, DECLINE_INVITE, REQUEST_JOIN, CANCEL_REQUEST,
- *               SET_STANCE) acted on; otherwise empty
+ * @param text   a faction name (CREATE, RENAME) or player name (INVITE, DECLARE_WAR_ON_PLAYER);
+ *               otherwise empty
+ * @param target the player (CANCEL_INVITE, ACCEPT_REQUEST, DECLINE_REQUEST, KICK, TRANSFER,
+ *               END_WAR_ON_PLAYER) or faction (ACCEPT_INVITE, DECLINE_INVITE, REQUEST_JOIN,
+ *               CANCEL_REQUEST, SET_STANCE, DECLARE_WAR, END_WAR) acted on; otherwise empty
  * @param number a dye color id (CREATE, SET_COLOR), 1 or 0 (SET_RED_ALERT), or a
  *               {@link com.crownofchaos.faction.FactionStance} ordinal (SET_STANCE); otherwise 0
  */
@@ -58,7 +59,18 @@ public record FactionActionPayload(Action action, String text, Optional<UUID> ta
 		/** Owner: turn red alert on ({@code number} 1) or off (0). */
 		SET_RED_ALERT,
 		/** Owner: set the stance toward faction {@code target} to stance ordinal {@code number}. */
-		SET_STANCE
+		SET_STANCE,
+		/** Owner: declare war on faction {@code target}: your units attack its members and units, anywhere. */
+		DECLARE_WAR,
+		/** Owner: make peace with faction {@code target}. */
+		END_WAR,
+		/**
+		 * Owner: declare war on the player named {@code text} alone (online, or a known member of
+		 * any faction): your units attack them and their units, ignoring the rest of their faction.
+		 */
+		DECLARE_WAR_ON_PLAYER,
+		/** Owner: make peace with player {@code target}. */
+		END_WAR_ON_PLAYER
 	}
 
 	public static final CustomPacketPayload.Type<FactionActionPayload> TYPE =

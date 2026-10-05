@@ -62,6 +62,7 @@ public final class FactionData extends SavedData {
 		this.factions.remove(faction.id());
 		for (Faction other : this.factions.values()) {
 			other.setStance(faction.id(), FactionStance.NEUTRAL);
+			other.warFactions().remove(faction.id());
 		}
 		this.setDirty();
 	}

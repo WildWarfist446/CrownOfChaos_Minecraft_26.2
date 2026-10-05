@@ -3,9 +3,11 @@ package com.crownofchaos.faction;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 import com.mojang.serialization.Codec;
@@ -19,7 +21,7 @@ import net.minecraft.world.item.DyeColor;
 /**
  * A faction: its name (emoji allowed), its dye color (no two factions share one), its owner and
  * members, pending invites and join requests, its stance toward other factions, whether it's on
- * red alert, and its placed flags. Player names are remembered so they can be shown while the
+ * red alert, who it's at war with, and its placed flags. Player names are remembered so they can be shown while the
  * player is offline.
  */
 public final class Faction {
@@ -49,7 +51,9 @@ public final class Faction {
 			Codec.BOOL.optionalFieldOf("red_alert", false).forGetter(f -> f.redAlert),
 			StanceEntry.CODEC.listOf().optionalFieldOf("stances", List.of()).forGetter(Faction::stanceList),
 			FactionFlag.CODEC.listOf().optionalFieldOf("flags", List.of()).forGetter(f -> f.flags),
-			Codec.INT.optionalFieldOf("hidden_flag_count").forGetter(f -> f.hiddenFlagCount)
+			Codec.INT.optionalFieldOf("hidden_flag_count").forGetter(f -> f.hiddenFlagCount),
+			UUIDUtil.CODEC.listOf().optionalFieldOf("war_factions", List.of()).forGetter(f -> List.copyOf(f.warFactions)),
+			Member.CODEC.listOf().optionalFieldOf("war_players", List.of()).forGetter(f -> toList(f.warPlayers))
 	).apply(instance, Faction::new));
 
 	private final UUID id;
@@ -62,6 +66,13 @@ public final class Faction {
 	private boolean redAlert;
 	private final Map<UUID, FactionStance> stances = new HashMap<>();
 	private final List<FactionFlag> flags = new ArrayList<>();
+	/** Factions this faction is at war with: its units attack all their members and units, anywhere. */
+	private final Set<UUID> warFactions = new LinkedHashSet<>();
+	/**
+	 * Players this faction is at war with on their own (not their whole faction), and their names:
+	 * its units attack them and the units they own, anywhere.
+	 */
+	private final Map<UUID, String> warPlayers = new LinkedHashMap<>();
 	/** On players' copies, how many flags the faction has; they aren't sent where the flags are. */
 	private final Optional<Integer> hiddenFlagCount;
 
@@ -75,7 +86,8 @@ public final class Faction {
 	}
 
 	private Faction(UUID id, String name, DyeColor color, UUID owner, List<Member> members, List<Member> invites, List<Member> requests,
-			boolean redAlert, List<StanceEntry> stances, List<FactionFlag> flags, Optional<Integer> hiddenFlagCount) {
+			boolean redAlert, List<StanceEntry> stances, List<FactionFlag> flags, Optional<Integer> hiddenFlagCount,
+			List<UUID> warFactions, List<Member> warPlayers) {
 		this.id = id;
 		this.name = name;
 		this.color = color;
@@ -87,12 +99,14 @@ public final class Faction {
 		stances.forEach(s -> this.stances.put(s.faction(), s.stance()));
 		this.flags.addAll(flags);
 		this.hiddenFlagCount = hiddenFlagCount;
+		this.warFactions.addAll(warFactions);
+		warPlayers.forEach(m -> this.warPlayers.put(m.id(), m.name()));
 	}
 
 	/** A copy for sending to players: everything except where the flags are. */
 	public Faction withoutFlagPositions() {
 		return new Faction(this.id, this.name, this.color, this.owner, toList(this.members), toList(this.invites), toList(this.requests),
-				this.redAlert, this.stanceList(), List.of(), Optional.of(this.flags.size()));
+				this.redAlert, this.stanceList(), List.of(), Optional.of(this.flags.size()), List.copyOf(this.warFactions), toList(this.warPlayers));
 	}
 
 	private static List<Member> toList(Map<UUID, String> players) {
@@ -178,6 +192,21 @@ public final class Faction {
 		} else {
 			this.stances.put(otherFaction, stance);
 		}
+	}
+
+	/** Factions this faction is at war with (all their members and units are enemies, anywhere). */
+	public Set<UUID> warFactions() {
+		return this.warFactions;
+	}
+
+	/** Players this faction is at war with on their own, and their names (they and their units are enemies). */
+	public Map<UUID, String> warPlayers() {
+		return this.warPlayers;
+	}
+
+	/** Whether this faction is at war with anyone, which stops its members reclaiming units. */
+	public boolean atWar() {
+		return !this.warFactions.isEmpty() || !this.warPlayers.isEmpty();
 	}
 
 	/** Placed flags (server only; empty on players' copies). */

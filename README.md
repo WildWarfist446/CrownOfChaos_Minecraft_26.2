@@ -12,7 +12,7 @@ is worn. Every magical crown can also be upgraded to netherite.
 > hand by the mod's creators.
 
 **Contents:** [Crowns](#crowns) · [Netherite crowns](#netherite-crowns) ·
-[Abilities](#abilities) · [Materials](#materials) · [Factions (alpha)](#factions-alpha) ·
+[Abilities](#abilities) · [Materials](#materials) · [Factions (beta)](#factions-beta) ·
 [Changes to vanilla](#changes-to-vanilla) ·
 [Installation](#installation) · [Finding the items](#finding-the-items) ·
 [3D models](#3d-models) · [Development](#development) · [Credits](#credits)
@@ -279,12 +279,11 @@ Times in brackets are cooldowns. "Aimed" abilities hit whatever you're looking a
 Descriptions: the Sculk Cord reads *"The screeching has finally ceased..."* and the Ankh
 Charm reads *"Ra would be proud."*
 
-## Factions (alpha)
+## Factions (beta)
 
-> **Alpha:** the faction system is still in early development. So far it has factions, the
-> faction menu, territory, the Commander's Table, and army units you can summon and command.
-> Declaring war is planned but not added. Expect changes, and possibly resets of faction data,
-> between versions.
+> **Beta:** the faction system's main features are complete: factions, the faction menu,
+> territory, the Commander's Table, army units you can summon and command, and war. It's
+> still being tested and balanced, so details may change between versions.
 
 Players can band together into factions, each with its own name and color, and claim land
 with faction flags.
@@ -304,6 +303,7 @@ Chaos).
     without handing over ownership or disbanding first.
   - **Relations:** the owner sets each other faction to **Allowed** (may enter your territory
     unharmed), **Neutral** or **Targeted** (attacked in your territory).
+  - **War:** the owner declares war on factions or players, or makes peace (see **War** below).
   - **Factions:** every faction, with its owner, members and flags.
 
 **Name tags:** members' names show their faction as a colored `[Faction Name]` tag in chat
@@ -380,7 +380,7 @@ unit of your faction (you must be in one). Units:
   - inside your faction's territory, against players and units of factions you've set to
     **Targeted**, and while **red alert** is on, against everyone who isn't **Allowed**
     (players with no faction included);
-  - against factions you're at war with, once declaring war is added;
+  - anywhere, against factions and players you're at war with (see **War** below);
 - never attack your own faction's members or units.
 
 Piglins, Hoglins and Wardens choose their targets with their own AI, so in your territory
@@ -405,12 +405,25 @@ the Crown of Iron to command Pillagers, Vindicators, Ravagers and Evokers).
   - **Attack:** they hunt enemies within 24 blocks, anywhere: players and units of every
     faction you haven't set to Allowed. This overrides holding position and following.
   - **Free:** no orders; back to wandering, passive except for the territory rules above.
-  - **Reclaim:** they turn back into their unit items, in your inventory.
+  - **Reclaim:** they turn back into their unit items, in your inventory (not while your faction
+    is at war).
   - **Select Nearby** and **Clear Selection**.
 - **Units: Follow / Stop Following** key (default **B**) toggles following.
 - If one of your units dies where you can't see it, you're told where.
 
 Both keys can be rebound under Options → Controls → Key Binds → Crown of Chaos.
+
+**War:** the faction owner declares war in the faction menu's **War** tab.
+
+- **On a faction:** your units attack all its members and their units, anywhere, not just in
+  your territory. War overrides the Allowed stance.
+- **On a player:** type their name (online, or a member of any faction). Your units attack only
+  them and the units they own, ignoring the rest of their faction. Works on players with no
+  faction too.
+- War is one-sided: the other side is told, and their units only fight back if they declare
+  war too.
+- **Make Peace** ends it, per faction or per player.
+- While your faction is at war with anyone, its members can't reclaim units.
 
 ## Changes to vanilla
 

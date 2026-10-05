@@ -249,5 +249,25 @@
   "gui.crownofchaos.units.free": "Free",
   "gui.crownofchaos.units.reclaim": "Reclaim",
   "gui.crownofchaos.units.select_nearby": "Select Nearby",
-  "gui.crownofchaos.units.clear_selection": "Clear Selection"
+  "gui.crownofchaos.units.clear_selection": "Clear Selection",
+
+  "message.crownofchaos.faction.war_declared": "Your faction declared war on %s!",
+  "message.crownofchaos.faction.war_declared_on_you": "%s has declared war on you!",
+  "message.crownofchaos.faction.peace_made": "Your faction made peace with %s",
+  "message.crownofchaos.faction.peace_made_with_you": "%s has made peace with you",
+  "message.crownofchaos.faction.war_player_not_found": "No player called %s is online or in a faction",
+  "message.crownofchaos.faction.war_on_own_member": "You can't declare war on your own faction's members",
+  "message.crownofchaos.unit.reclaim_at_war": "Your faction is at war: units can't be reclaimed until you make peace",
+  "gui.crownofchaos.faction.tab.war": "War",
+
+  "gui.crownofchaos.faction.war.info": "Declaring war makes your units attack the target anywhere, not just in your territory. They are told and can declare war back. War on a player only targets them and their units. While at war, members can't reclaim units.",
+  "gui.crownofchaos.faction.war.player_hint": "Declare war on a player…",
+  "gui.crownofchaos.faction.war.declare": "Declare War",
+  "gui.crownofchaos.faction.war.make_peace": "Make Peace",
+  "gui.crownofchaos.faction.war.at_war": "At war",
+  "gui.crownofchaos.faction.war.at_war_with_you": "at war with you",
+  "gui.crownofchaos.faction.war.factions": "Factions",
+  "gui.crownofchaos.faction.war.players": "Players",
+  "gui.crownofchaos.faction.war.no_factions": "There are no other factions.",
+  "gui.crownofchaos.faction.war.no_players": "Not at war with any players."
 }

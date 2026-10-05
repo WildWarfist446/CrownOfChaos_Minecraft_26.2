@@ -36,7 +36,8 @@ import net.minecraft.world.phys.Vec3;
  * <ul>
  * <li>when told to attack: against players and units within {@link #ATTACK_RANGE} blocks of
  *     any faction it hasn't set to Allowed (including players with no faction),
- * <li>against a faction their faction is at war with (war isn't added yet; see {@link #atWar}),
+ * <li>against factions, or single players, their faction is at war with, anywhere (see
+ *     {@link #atWar}); war overrides the Allowed stance,
  * <li>inside their own faction's territory, against players and units of a faction it has set
  *     to Targeted, or, while it's on red alert, of any faction it hasn't set to Allowed
  *     (including players with no faction).
@@ -140,7 +141,7 @@ public final class UnitManager {
 				&& target.position().distanceTo(Vec3.atBottomCenterOf(data.post().get())) > UnitGoals.SENTRY_LEASH) {
 			return false;
 		}
-		if (targetFaction != null && atWar(faction, targetFaction)) {
+		if (atWar(faction, target, targetFaction)) {
 			return true;
 		}
 		boolean playerOrUnit = target instanceof Player || target.hasAttached(UNIT);
@@ -170,8 +171,16 @@ public final class UnitManager {
 		return null;
 	}
 
-	/** Whether the two factions are at war. Declaring war comes in a later part of the faction system. */
-	private static boolean atWar(Faction faction, UUID other) {
-		return false;
+	/**
+	 * Whether the faction is at war with the target: with its whole faction, or with the player
+	 * (or, for a unit, its owner) on their own. War overrides the Allowed stance.
+	 */
+	private static boolean atWar(Faction faction, LivingEntity target, @Nullable UUID targetFaction) {
+		if (targetFaction != null && faction.warFactions().contains(targetFaction)) {
+			return true;
+		}
+		UnitData unit = target.getAttached(UNIT);
+		UUID player = unit != null ? unit.owner() : target instanceof Player ? target.getUUID() : null;
+		return player != null && faction.warPlayers().containsKey(player);
 	}
 }

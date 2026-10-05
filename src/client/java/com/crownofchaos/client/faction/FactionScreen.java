@@ -70,6 +70,7 @@ public class FactionScreen extends Screen {
 		OVERVIEW("overview", true),
 		MEMBERS("members", true),
 		RELATIONS("relations", true),
+		WAR("war", true),
 		FACTIONS("factions", true);
 
 		final String key;
@@ -105,6 +106,7 @@ public class FactionScreen extends Screen {
 	private String createName = "";
 	private String renameText = "";
 	private String inviteText = "";
+	private String warText = "";
 	private DyeColor selectedColor;
 	private String pendingConfirm;
 
@@ -116,9 +118,11 @@ public class FactionScreen extends Screen {
 	private EditBox nameBox;
 	private EditBox renameBox;
 	private EditBox inviteBox;
+	private EditBox warBox;
 	private FactionButton createButton;
 	private FactionButton renameButton;
 	private FactionButton inviteButton;
+	private FactionButton warButton;
 	private final List<PlacedRow> placedRows = new ArrayList<>();
 	private int rowHeight;
 	private boolean twoLineRows;
@@ -207,9 +211,11 @@ public class FactionScreen extends Screen {
 		this.nameBox = null;
 		this.renameBox = null;
 		this.inviteBox = null;
+		this.warBox = null;
 		this.createButton = null;
 		this.renameButton = null;
 		this.inviteButton = null;
+		this.warButton = null;
 		this.placedRows.clear();
 		this.pageCount = 1;
 		this.emptyText = null;
@@ -232,6 +238,7 @@ public class FactionScreen extends Screen {
 			case OVERVIEW -> this.initOverview(mine.get());
 			case MEMBERS -> this.initMembers(mine.get());
 			case RELATIONS -> this.initRelations(mine.get());
+			case WAR -> this.initWar(mine.get());
 			case FACTIONS -> this.initFactions();
 		}
 	}
@@ -407,6 +414,10 @@ public class FactionScreen extends Screen {
 		if (this.inviteButton != null) {
 			String name = this.inviteText.trim();
 			this.inviteButton.setActive(!name.isEmpty() && name.length() <= MAX_PLAYER_NAME);
+		}
+		if (this.warButton != null) {
+			String name = this.warText.trim();
+			this.warButton.setActive(!name.isEmpty() && name.length() <= MAX_PLAYER_NAME);
 		}
 	}
 
@@ -585,17 +596,97 @@ public class FactionScreen extends Screen {
 			FactionStance stance = faction.stanceToward(other.id());
 			FactionStance theirs = other.stanceToward(faction.id());
 			Component theirsText = stanceName(theirs).copy().withColor(stanceColor(theirs));
+			Component name = faction.warFactions().contains(other.id())
+					? other.displayName().append(Component.literal(" ")).append(tr("war.at_war").copy().withColor(RED))
+					: other.displayName();
 			if (owner) {
 				FactionStance next = stance.next();
 				RowButton button = new RowButton(stanceName(stance), 70, stanceColor(stance), true,
 						() -> send(new FactionActionPayload(Action.SET_STANCE, "", Optional.of(other.id()), next.ordinal())));
-				rows.add(Row.entry(other.displayName(), tr("relations.their_stance", theirsText), TEXT_DIM, List.of(button)));
+				rows.add(Row.entry(name, tr("relations.their_stance", theirsText), TEXT_DIM, List.of(button)));
 			} else {
 				Component oursText = stanceName(stance).copy().withColor(stanceColor(stance));
-				rows.add(Row.entry(other.displayName(), tr("relations.both_stances", oursText, theirsText), TEXT_DIM, List.of()));
+				rows.add(Row.entry(name, tr("relations.both_stances", oursText, theirsText), TEXT_DIM, List.of()));
 			}
 		}
 		this.layoutRows(rows, listStart, 22, true, tr("relations.empty"));
+	}
+
+	// ---- War
+
+	private void initWar(Faction faction) {
+		boolean owner = faction.isOwner(this.me());
+		int x0 = this.contentLeft();
+		int width = this.contentRight() - x0;
+		this.infoLines = this.font.split(tr("war.info"), width);
+		int listStart = this.contentTop() + this.infoLines.size() * 10 + 4;
+		if (owner) {
+			int buttonWidth = 80;
+			this.warBox = new EditBox(this.font, x0, listStart, width - buttonWidth - 4, 16, tr("war.player_hint"));
+			this.warBox.setMaxLength(MAX_PLAYER_NAME);
+			this.warBox.setHint(tr("war.player_hint"));
+			this.warBox.setValue(this.warText);
+			this.warBox.setResponder(value -> {
+				this.warText = value;
+				this.updateButtons();
+			});
+			this.addRenderableWidget(this.warBox);
+			this.warButton = this.addRenderableWidget(new FactionButton(x0 + width - buttonWidth, listStart, buttonWidth, 16,
+					tr("war.declare"), RED, this::sendWarOnPlayer));
+			listStart += 20;
+		}
+
+		List<Row> rows = new ArrayList<>();
+		rows.add(Row.header(tr("war.factions")));
+		boolean anyFaction = false;
+		for (Faction other : FactionClientState.all()) {
+			if (other.id().equals(faction.id())) {
+				continue;
+			}
+			anyFaction = true;
+			boolean ours = faction.warFactions().contains(other.id());
+			boolean theirs = other.warFactions().contains(faction.id());
+			Component name = ours
+					? other.displayName().append(Component.literal(" ")).append(tr("war.at_war").copy().withColor(RED))
+					: other.displayName();
+			Component detail = theirs ? tr("war.at_war_with_you") : null;
+			List<RowButton> buttons = List.of();
+			if (owner) {
+				buttons = List.of(ours
+						? new RowButton(tr("war.make_peace"), 80, GREEN, true,
+								() -> send(FactionActionPayload.withTarget(Action.END_WAR, other.id())))
+						: this.confirmRowButton("war:" + other.id(), tr("war.declare"), 80, RED,
+								() -> send(FactionActionPayload.withTarget(Action.DECLARE_WAR, other.id()))));
+			}
+			rows.add(Row.entry(name, detail, TEXT_DIM, buttons));
+		}
+		if (!anyFaction) {
+			rows.add(Row.entry(tr("war.no_factions").copy().withColor(TEXT_DIM), null, 0, List.of()));
+		}
+
+		rows.add(Row.header(tr("war.players")));
+		if (faction.warPlayers().isEmpty()) {
+			rows.add(Row.entry(tr("war.no_players").copy().withColor(TEXT_DIM), null, 0, List.of()));
+		}
+		for (Map.Entry<UUID, String> enemy : faction.warPlayers().entrySet()) {
+			UUID id = enemy.getKey();
+			List<RowButton> buttons = owner
+					? List.of(new RowButton(tr("war.make_peace"), 80, GREEN, true,
+							() -> send(FactionActionPayload.withTarget(Action.END_WAR_ON_PLAYER, id))))
+					: List.of();
+			rows.add(Row.entry(Component.literal(enemy.getValue()).withColor(RED), null, 0, buttons));
+		}
+		this.layoutRows(rows, listStart, 16, false, null);
+		this.updateButtons();
+	}
+
+	private void sendWarOnPlayer() {
+		String name = this.warText.trim();
+		if (!name.isEmpty() && name.length() <= MAX_PLAYER_NAME) {
+			send(FactionActionPayload.withText(Action.DECLARE_WAR_ON_PLAYER, name));
+			this.warText = "";
+			this.needsRebuild = true;
+		}
 	}
 
 	// ---- Factions
@@ -665,12 +756,14 @@ public class FactionScreen extends Screen {
 	private void rebuildKeepingFocus() {
 		this.needsRebuild = false;
 		GuiEventListener focused = this.getFocused();
-		int focusedBox = focused == null ? -1 : focused == this.nameBox ? 0 : focused == this.renameBox ? 1 : focused == this.inviteBox ? 2 : -1;
+		int focusedBox = focused == null ? -1 : focused == this.nameBox ? 0 : focused == this.renameBox ? 1 : focused == this.inviteBox ? 2
+				: focused == this.warBox ? 3 : -1;
 		this.rebuildWidgets();
 		EditBox box = switch (focusedBox) {
 			case 0 -> this.nameBox;
 			case 1 -> this.renameBox;
 			case 2 -> this.inviteBox;
+			case 3 -> this.warBox;
 			default -> null;
 		};
 		if (box != null) {
@@ -699,6 +792,11 @@ public class FactionScreen extends Screen {
 			GuiEventListener focused = this.getFocused();
 			if (focused != null && focused == this.inviteBox && this.inviteButton != null && this.inviteButton.active) {
 				this.sendInvite();
+				this.rebuildKeepingFocus();
+				return true;
+			}
+			if (focused != null && focused == this.warBox && this.warButton != null && this.warButton.active) {
+				this.sendWarOnPlayer();
 				this.rebuildKeepingFocus();
 				return true;
 			}
@@ -762,7 +860,7 @@ public class FactionScreen extends Screen {
 		switch (this.tab) {
 			case CREATE -> this.drawCreate(graphics);
 			case OVERVIEW -> mine.ifPresent(f -> this.drawOverview(graphics, f));
-			case RELATIONS -> this.drawInfoLines(graphics, this.contentTop());
+			case RELATIONS, WAR -> this.drawInfoLines(graphics, this.contentTop());
 			default -> {
 			}
 		}
