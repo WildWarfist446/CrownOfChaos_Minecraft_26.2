@@ -373,12 +373,15 @@ and are named after it ("Pillager Unit").
 **Summoning units:** use a unit item on a block, like a spawn egg, to summon the mob as a
 unit of your faction (you must be in one). Units:
 
-- are tinted in your faction's color, so anyone can tell whose they are, and change color
-  with the faction;
+- are tinted in a bright, vivid version of your faction's color and outlined in it (up to 64 blocks away,
+  only while you can see them), so anyone can tell whose they are at a glance; they change color
+  with the faction (white factions are only outlined, as white leaves the mob unchanged);
 - never despawn, don't burn in daylight, and Piglins and Hoglins don't turn into zombies
   outside the Nether;
 - Warden units stay above ground (they never dig away) and don't give anyone Darkness;
-- are **passive**: they don't attack anyone, and don't fight back, except
+- are **passive** toward players and other units: they don't attack them, and don't fight back, except
+  - against **wild hostile mobs** (zombies, skeletons, creepers and the like) that are attacking
+    you (their owner), or, when told to **Attack**, any within 24 blocks;
   - inside your faction's territory, against players and units of factions you've set to
     **Targeted**, and while **red alert** is on, against everyone who isn't **Allowed**
     (players with no faction included);
@@ -388,8 +391,8 @@ unit of your faction (you must be in one). Units:
 **Commanding units:** you can command your faction's units whose crown you're wearing (wear
 the Crown of Iron to command Pillagers, Vindicators, Ravagers and Evokers).
 
-- **Right-click** a unit to make it hold its position (sentry); right-click again to free it.
-- **Sneak and right-click** a unit to select it, or deselect it. Selected units glow, for you
+- **Right-click** a unit to make it a sentry; right-click again to free it.
+- **Sneak and right-click** a unit to select it, or deselect it. Selected units get a white outline, for you
   only.
 - Orders go to your **selected units**, or, with none selected, to **all your units within
   32 blocks**.
@@ -399,14 +402,17 @@ the Crown of Iron to command Pillagers, Vindicators, Ravagers and Evokers).
   V then 3 orders an attack without aiming; V again closes it:
   - **Follow Me:** they follow you, teleporting to you if they fall 24 blocks behind, so you
     can lead them into enemy territory.
-  - **Hold Position:** they stand guard where they are and only move to fight, chasing
-    enemies at most 16 blocks from their post before walking back.
+  - **Sentry:** they stand guard where they are. Any hostile mob, or enemy by the faction rules,
+    that comes into their aggro range makes them move to fight it, chasing at most 16 blocks from
+    their post; once it's dead or gone they walk back to their post.
   - **Attack:** they hunt enemies within 24 blocks, anywhere: players and units of every
-    faction you haven't set to Allowed. This overrides holding position and following.
+    faction you haven't set to Allowed. This overrides sentry and following.
   - **Free:** no orders; back to wandering, passive except for the territory rules above.
   - **Reclaim:** they turn back into their unit items, in your inventory (not while your faction
     is at war).
-  - **Select Nearby** and **Clear Selection**.
+  - **Select:** selects the unit you're looking at; hold **Sneak** to select every unit of that
+    type nearby instead. With no unit in your crosshair, it selects all your units nearby.
+  - **Clear Selection**.
 - **Units: Follow / Stop Following** key (default **B**) toggles following.
 - If one of your units dies where you can't see it, you're told where.
 

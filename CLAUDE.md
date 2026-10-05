@@ -66,6 +66,13 @@ screenshots, and set the option back to `true`.
 compiled classes and crashes his launch. Only stop game processes you started. VS Code's run
 settings (`.vscode/`, not in Git) come from `./gradlew vscode`.
 
+**The dev client's player name is fixed** to `Warfist` (`--username` in `build.gradle`).
+Without it, Minecraft picks a random `PlayerNNN` on every launch; offline player IDs come from
+the name, so each relog was a different player and lost its faction membership and unit
+ownership (units stopped responding to commands). Worlds made before this fix still hold
+factions and units owned by old random IDs. For VS Code, run `./gradlew vscode` again so its
+run settings pick up the name.
+
 Ignore these harmless log lines: Windows `PerfCounterQuery`/`oshi` stack traces (including
 `CrashReport.preload`), "Could not authorize you against Realms", and "Failed to retrieve
 profile key pair" (the dev client plays offline).
@@ -173,7 +180,9 @@ the mob as a unit of the player's faction (they must be in one). `unit/UnitManag
 - the `crownofchaos:unit` data attachment (`UnitData`: owner, faction, unit id, faction
   color), saved with the mob and synced to every player;
 - the fighting rules, decided by Warfist: units are **passive** (don't attack, don't fight
-  back) except against factions at war with theirs (`atWar`, a stub until war exists) and,
+  back) except against wild hostile mobs (anything that is an `Enemy`) that are attacking their owner
+  (targeting them or hurt them in the last 5 seconds), or any within range while on the Attack order
+  (added 5 October 2026 at Warfist's request), against factions at war with theirs (`atWar`, a stub until war exists) and,
   inside their own territory, against players and units of Targeted factions or, on red
   alert, anyone not Allowed. They never fight their own faction. This is applied by making
   units count everyone else as allied (`mixin/EntityAlliesMixin` on `Entity.isAlliedTo`,
@@ -182,8 +191,12 @@ the mob as a unit of the player's faction (they must be in one). `unit/UnitManag
   finds enemies for them and hands them over: Wardens through their anger (`increaseAngerAt`),
   Piglins through `ANGRY_AT` plus `ATTACK_TARGET` (they drop any target they wouldn't pick
   themselves), Hoglins through `ATTACK_TARGET`.
-- The faction tint is client-side: `client/mixin/LivingEntityRendererMixin` multiplies the
-  model color by white blended 80% toward the faction's dye color; layers aren't tinted.
+- The faction color is client-side and deliberately loud (Warfist: clarity over looking like the
+  dye): `client/mixin/LivingEntityRendererMixin` multiplies the model color by a vivid color from
+  `client/UnitColors` (hand-picked per dye color; white leaves the mob unchanged), layers aren't
+  tinted, and `client/mixin/UnitOutlineMixin` plus `MinecraftGlowMixin` give every unit within 64
+  blocks (`UnitClient.OUTLINE_RANGE`) an outline in that color while the player has line of sight (`hasLineOfSight`, cached per tick;
+  outlines otherwise show through walls); selected units are outlined white, through walls too. Dark mob textures stay dark under a tint, which is why the outline exists.
 - Units never despawn and don't burn in daylight (`mixin/MobSunMixin`); Piglin and Hoglin units
   don't zombify. Warden units never give Darkness (`mixin/WardenDarknessMixin`) and always keep
   a dig cooldown, because a Warden with none digs into the ground and is removed (Warfist:

@@ -41,7 +41,9 @@ import net.minecraft.world.phys.Vec3;
 /**
  * Commanding units. A player can command their faction's units whose crown they're wearing.
  * <ul>
- * <li>Right-click a unit: it holds its position (sentry), or is freed again.
+ * <li>Right-click a unit: it becomes a sentry (guards the spot it's on), or is freed again.
+ * <li>Select key in the command menu: the unit in the crosshair, or with sneak held, every nearby
+ *     unit of its type; with none in the crosshair, every unit nearby.
  * <li>Sneak and right-click a unit: add it to the selection, or remove it. Selected units glow
  *     for that player.
  * <li>The command menu and the follow key send an order (see {@link UnitCommandPayload}) to the
@@ -159,10 +161,26 @@ public final class UnitCommands {
 			}
 			case SELECT_NEARBY -> {
 				List<Mob> nearby = nearbyUnits(player);
+				Mob facing = facingUnit(player, nearby);
 				Set<UUID> selected = SELECTION.computeIfAbsent(player.getUUID(), id -> new LinkedHashSet<>());
-				nearby.forEach(mob -> selected.add(mob.getUUID()));
-				sendSelection(player);
-				player.sendOverlayMessage(Component.translatable("message.crownofchaos.unit.selected_nearby", nearby.size(), selected.size()).withStyle(INFO));
+				if (facing == null) {
+					// Nothing in the crosshair: every unit nearby.
+					nearby.forEach(mob -> selected.add(mob.getUUID()));
+					sendSelection(player);
+					player.sendOverlayMessage(Component.translatable("message.crownofchaos.unit.selected_nearby", nearby.size(), selected.size()).withStyle(INFO));
+				} else if (player.isShiftKeyDown()) {
+					// Sneaking, looking at a unit: every nearby unit of that type.
+					String type = facing.getAttached(UnitManager.UNIT).unit();
+					List<Mob> sameType = nearby.stream().filter(mob -> mob.getAttached(UnitManager.UNIT).unit().equals(type)).toList();
+					sameType.forEach(mob -> selected.add(mob.getUUID()));
+					sendSelection(player);
+					player.sendOverlayMessage(Component.translatable("message.crownofchaos.unit.selected_type", sameType.size(), facing.getType().getDescription(), selected.size()).withStyle(INFO));
+				} else {
+					// Looking at a unit: just that one.
+					selected.add(facing.getUUID());
+					sendSelection(player);
+					player.sendOverlayMessage(Component.translatable("message.crownofchaos.unit.selected", facing.getName(), selected.size()).withStyle(INFO));
+				}
 				return;
 			}
 			default -> {
@@ -247,6 +265,22 @@ public final class UnitCommands {
 	private static List<Mob> nearbyUnits(ServerPlayer player) {
 		return player.level().getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(COMMAND_RANGE),
 				mob -> mob.isAlive() && canCommand(player, mob) && mob.distanceTo(player) <= COMMAND_RANGE);
+	}
+
+	/** The closest of these units the player's crosshair is on, if any (within command range, ignoring blocks). */
+	private static @Nullable Mob facingUnit(ServerPlayer player, List<Mob> units) {
+		Vec3 from = player.getEyePosition();
+		Vec3 to = from.add(player.getLookAngle().scale(COMMAND_RANGE));
+		Mob closest = null;
+		double closestDistance = Double.MAX_VALUE;
+		for (Mob mob : units) {
+			Optional<Vec3> hit = mob.getBoundingBox().inflate(0.2).clip(from, to);
+			if (hit.isPresent() && from.distanceToSqr(hit.get()) < closestDistance) {
+				closestDistance = from.distanceToSqr(hit.get());
+				closest = mob;
+			}
+		}
+		return closest;
 	}
 
 	/** The player's selected units that are alive, loaded, nearby enough to see, and still theirs to command. */

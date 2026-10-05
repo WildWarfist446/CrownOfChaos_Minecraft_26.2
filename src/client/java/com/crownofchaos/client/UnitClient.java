@@ -1,6 +1,8 @@
 package com.crownofchaos.client;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.crownofchaos.client.faction.FactionClientState;
@@ -41,6 +43,14 @@ public final class UnitClient {
 	private static final KeyMapping FOLLOW_KEY = KeyMappingHelper.registerKeyMapping(
 			new KeyMapping("key.crownofchaos.unit_follow", InputConstants.Type.KEYSYM, InputConstants.KEY_B, FactionKeybind.CATEGORY));
 
+	/** Whether units always show an outline in their faction's color (only for units in view, see {@link #showsOutline}). */
+	private static final boolean OUTLINE_ALL_UNITS = true;
+	/** Units farther than this many blocks show no outline. */
+	private static final double OUTLINE_RANGE = 64.0;
+
+	/** Per unit entity id: the game tick it was last checked, and whether the player could see it then (1) or not (0). */
+	private static final Map<Integer, long[]> LINE_OF_SIGHT = new HashMap<>();
+
 	/** Entity ids of the units this player has selected, as last sent by the server. */
 	private static final Set<Integer> SELECTED = new IntOpenHashSet();
 
@@ -52,7 +62,10 @@ public final class UnitClient {
 			SELECTED.clear();
 			SELECTED.addAll(payload.entityIds());
 		});
-		ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> SELECTED.clear());
+		ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> {
+			SELECTED.clear();
+			LINE_OF_SIGHT.clear();
+		});
 
 		HudElementRegistry.addLast(Identifier.fromNamespaceAndPath("crownofchaos", "unit_commands"), new UnitCommandOverlay());
 
@@ -98,6 +111,24 @@ public final class UnitClient {
 	/** Whether the selected-unit glow should show on this entity. */
 	public static boolean isSelected(Entity entity) {
 		return SELECTED.contains(entity.getId());
+	}
+
+	/** Whether the entity is a unit in view and close enough to show its faction-colored outline. */
+	public static boolean showsOutline(Entity entity) {
+		Minecraft client = Minecraft.getInstance();
+		if (!OUTLINE_ALL_UNITS || client.player == null || client.level == null || !entity.hasAttached(UnitManager.UNIT)
+				|| entity.distanceToSqr(client.player) > OUTLINE_RANGE * OUTLINE_RANGE) {
+			return false;
+		}
+		// Outlines show through walls, so only draw them for units the player has a clear line to.
+		// Checked once per tick per unit, not every frame.
+		long now = client.level.getGameTime();
+		long[] cached = LINE_OF_SIGHT.get(entity.getId());
+		if (cached == null || cached[0] != now) {
+			cached = new long[] {now, client.player.hasLineOfSight(entity) ? 1 : 0};
+			LINE_OF_SIGHT.put(entity.getId(), cached);
+		}
+		return cached[1] == 1;
 	}
 
 	/** The client's view of {@link UnitCommands#canCommand}: your faction's unit, and you wear its crown. */

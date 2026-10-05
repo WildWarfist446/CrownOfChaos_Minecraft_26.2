@@ -10,12 +10,15 @@ import com.crownofchaos.client.UnitClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 
-/** Selected army units glow for the player who selected them (only they see it). */
+/**
+ * Army units glow (an outline through walls, in their faction's color, see {@link UnitOutlineMixin})
+ * for the player seeing them; selected ones glow white. Only that player sees it.
+ */
 @Mixin(Minecraft.class)
 public abstract class MinecraftGlowMixin {
 	@Inject(method = "shouldEntityAppearGlowing", at = @At("HEAD"), cancellable = true)
 	private void crownofchaos$glowSelectedUnits(Entity entity, CallbackInfoReturnable<Boolean> cir) {
-		if (UnitClient.isSelected(entity)) {
+		if (UnitClient.isSelected(entity) || UnitClient.showsOutline(entity)) {
 			cir.setReturnValue(true);
 		}
 	}

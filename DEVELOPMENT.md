@@ -33,7 +33,7 @@ Test worlds and settings from `runClient` live in `run/`, which isn't committed.
 | `src/main/java/com/crownofchaos/ability/` | Crown abilities, the registry that links each crown to its abilities, and shared ability helpers |
 | `src/main/java/com/crownofchaos/network/` | Messages between the client and server (ability keys, Riptide launch, Ore Sense, faction menu actions and faction updates) |
 | `src/main/java/com/crownofchaos/mixin/` | Changes that hook into Minecraft (Fortune, damage bonuses, a Dragon Egg on every dragon kill, volley arrows and shield blocking, crown fireball and wither skull explosions, Wither immunity, ice grip, walking on powder snow, explosions and pistons sparing faction flags) |
-| `src/client/java/com/crownofchaos/client/` | Client-only code: the ability keybinds and client-side ability effects |
+| `src/client/java/com/crownofchaos/client/` | Client-only code: the ability keybinds, client-side ability effects, and unit commands and colors (`UnitClient`, `UnitColors`, with the unit tint and outline mixins in `mixin/`) |
 | `src/client/java/com/crownofchaos/client/model/` | Crown 3D models and the renderer that draws them on the head |
 | `src/client/java/com/crownofchaos/client/faction/` | The faction menu, the unit command overlay (a HUD strip, not a screen) and the client's copy of the factions |
 | `src/client/java/com/crownofchaos/client/menu/` | The Commander's Table screen |

@@ -5,7 +5,8 @@
 	"client": [
 		"ExampleClientMixin",
 		"LivingEntityRendererMixin",
-		"MinecraftGlowMixin"
+		"MinecraftGlowMixin",
+		"UnitOutlineMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

@@ -14,6 +14,14 @@ repositories {
 loom {
 	splitEnvironmentSourceSets()
 
+	runs {
+		client {
+			// A fixed name, so the dev client keeps the same player ID between launches. Without it
+			// Minecraft picks a random "PlayerNNN" each time, and you lose your faction and units.
+			programArgs "--username", "Warfist"
+		}
+	}
+
 	mods {
 		"crownofchaos" {
 			sourceSet sourceSets.main

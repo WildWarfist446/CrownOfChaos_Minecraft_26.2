@@ -16,7 +16,7 @@ public record UnitCommandPayload(Command command) implements CustomPacketPayload
 	public enum Command {
 		/** Follow the player. */
 		FOLLOW,
-		/** Hold position where they stand now. */
+		/** Stand guard where they are now, fighting enemies that come near and then returning. */
 		SENTRY,
 		/** Hunt enemies nearby. */
 		ATTACK,
