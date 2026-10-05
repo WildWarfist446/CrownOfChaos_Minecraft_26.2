@@ -375,17 +375,15 @@ unit of your faction (you must be in one). Units:
 
 - are tinted in your faction's color, so anyone can tell whose they are, and change color
   with the faction;
-- never despawn, and Piglins and Hoglins don't turn into zombies outside the Nether;
+- never despawn, don't burn in daylight, and Piglins and Hoglins don't turn into zombies
+  outside the Nether;
+- Warden units stay above ground (they never dig away) and don't give anyone Darkness;
 - are **passive**: they don't attack anyone, and don't fight back, except
   - inside your faction's territory, against players and units of factions you've set to
     **Targeted**, and while **red alert** is on, against everyone who isn't **Allowed**
     (players with no faction included);
   - anywhere, against factions and players you're at war with (see **War** below);
 - never attack your own faction's members or units.
-
-Piglins, Hoglins and Wardens choose their targets with their own AI, so in your territory
-they only go after enemies their AI picks out (for example, players for Piglins); other units
-go after any enemy.
 
 **Commanding units:** you can command your faction's units whose crown you're wearing (wear
 the Crown of Iron to command Pillagers, Vindicators, Ravagers and Evokers).

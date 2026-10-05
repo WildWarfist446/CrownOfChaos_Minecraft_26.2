@@ -23,6 +23,8 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -38,6 +40,7 @@ import net.minecraft.util.StringUtil;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractBannerBlock;
+import net.minecraft.world.level.block.BannerBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.WallBannerBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -657,14 +660,37 @@ public final class FactionManager {
 		sendAll();
 	}
 
-	/** Refreshes the name labels of the faction's flags in loaded chunks (the rest catch up when loaded). */
+	/**
+	 * Refreshes the faction's flags in loaded chunks after a rename or recolor: their banner color
+	 * and name labels (the rest catch up when loaded, in {@link #checkFlags}).
+	 */
 	private static void updateLabels(MinecraftServer server, Faction faction) {
 		for (FactionFlag flag : faction.flags()) {
 			ServerLevel level = server.getLevel(flag.dimension());
 			if (level != null && level.isLoaded(flag.pos())) {
+				repaintFlag(level, flag, faction.color());
 				FlagLabels.update(level, faction, flag);
 			}
 		}
+	}
+
+	/** Swaps a placed flag's banner for one in the faction's current color, keeping its angle or wall. */
+	private static void repaintFlag(ServerLevel level, FactionFlag flag, DyeColor color) {
+		BlockState state = level.getBlockState(flag.pos());
+		if (!(state.getBlock() instanceof AbstractBannerBlock banner) || banner.getColor() == color) {
+			return;
+		}
+		BlockState repainted;
+		if (state.getBlock() instanceof WallBannerBlock) {
+			repainted = bannerBlock(color, "_wall_banner").defaultBlockState().setValue(WallBannerBlock.FACING, state.getValue(WallBannerBlock.FACING));
+		} else {
+			repainted = bannerBlock(color, "_banner").defaultBlockState().setValue(BannerBlock.ROTATION, state.getValue(BannerBlock.ROTATION));
+		}
+		level.setBlockAndUpdate(flag.pos(), repainted);
+	}
+
+	private static Block bannerBlock(DyeColor color, String suffix) {
+		return BuiltInRegistries.BLOCK.getValue(Identifier.withDefaultNamespace(color.getSerializedName() + suffix));
 	}
 
 	private static void removeLabel(MinecraftServer server, FactionFlag flag) {
@@ -690,6 +716,7 @@ public final class FactionManager {
 					continue;
 				}
 				if (level.getBlockState(flag.pos()).getBlock() instanceof AbstractBannerBlock) {
+					repaintFlag(level, flag, faction.color());
 					FlagLabels.update(level, faction, flag);
 				} else {
 					removeFlag(server, faction, flag, null);

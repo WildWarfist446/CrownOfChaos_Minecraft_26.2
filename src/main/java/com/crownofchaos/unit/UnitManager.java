@@ -98,6 +98,7 @@ public final class UnitManager {
 				(target, level) -> isHostile(mob, target)));
 		goals.crownofchaos$goalSelector().addGoal(0, new UnitGoals.WatchGoal(mob));
 		goals.crownofchaos$goalSelector().addGoal(1, new UnitGoals.OrdersGoal(mob));
+		UnitGoals.keepWardenFromDigging(mob);
 	}
 
 	/** When a faction changes color, recolors its units in loaded chunks (the rest catch up when they load). */

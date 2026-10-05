@@ -3,6 +3,8 @@ package com.crownofchaos.item;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import org.jspecify.annotations.Nullable;
+
 import com.crownofchaos.faction.Faction;
 import com.crownofchaos.faction.FactionData;
 import com.crownofchaos.faction.FactionFlag;
@@ -13,7 +15,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
@@ -55,6 +60,19 @@ public final class FactionFlagItem extends Item {
 		super.onCraftedBy(stack, player);
 		if (player instanceof ServerPlayer serverPlayer) {
 			FactionData.get(serverPlayer.level().getServer()).factionOf(player.getUUID()).ifPresent(faction -> assign(stack, faction));
+		}
+	}
+
+	/** Keeps the flag's color and name in step with its faction, if the faction is renamed or recolored. */
+	@Override
+	public void inventoryTick(ItemStack stack, ServerLevel level, Entity owner, @Nullable EquipmentSlot slot) {
+		ModComponents.FlagFaction belongsTo = stack.get(ModComponents.FLAG_FACTION);
+		if (belongsTo == null) {
+			return;
+		}
+		Faction faction = FactionData.get(level.getServer()).get(belongsTo.id());
+		if (faction != null && (faction.color() != stack.get(ModComponents.FLAG_COLOR) || !faction.name().equals(belongsTo.name()))) {
+			assign(stack, faction);
 		}
 	}
 

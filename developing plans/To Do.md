@@ -1,0 +1,63 @@
+# To Do
+
+What's left for The Crown of Chaos, as of 5 October 2026. Tick items off with `[x]`.
+
+## The Crown of Chaos (last crown in the plan)
+
+- [ ] Incomplete Crown of Chaos: crafted from all nine crowns; can't be worn or used
+- [ ] Boss fight (to be designed) that drops an item and a smithing template
+- [ ] Smithing recipe: Incomplete Crown of Chaos + boss item + template = Crown of Chaos
+- [ ] All the crowns' immunities, plus the Crown of Void's teleport dodge
+- [ ] Netherite helmet stats from the start; no netherite upgrade
+- [ ] Primary ability "The pain of death": Arrow Volley, Wither Skull, Fire Charge and Lightning Strike at once
+- [ ] Secondary ability "Death's door": Darkness Pulse lasting 300% longer
+- [ ] Can command every unit type
+- [ ] Art: "glitched" sprite combining all the crown sprites
+- [ ] Art: 3D model (optional)
+
+## Art and 3D models
+
+- [ ] 3D model: Golden Crown
+- [ ] 3D model: Crown of Darkness
+- [ ] 3D model: Crown of Sun
+- [ ] 3D model: Crown of Winter
+- [ ] 3D model: Crown of Iron
+- [ ] 3D model: Crown of Void
+- [ ] Faction Flag art (it's a vanilla banner for now)
+- [ ] Menu art for the faction, unit command and Commander's Table menus (optional; they're drawn in a flat style now)
+- [ ] Icicle: switch to the vanilla icicle once the mod moves to Minecraft 26.4 (it's a Packed Ice shard now)
+
+## Testing
+
+Two players (LAN with a second account):
+- [ ] Faction invites and join requests
+- [ ] Kicking a member, and handing over ownership
+- [ ] Flags of different factions must be 200 blocks apart
+- [ ] Another faction's territory title ("Faction Territory")
+- [ ] War between two real factions, and units fighting each other
+
+One player:
+- [ ] Pressing J opens the faction menu
+- [ ] Crafting a Faction Flag
+- [ ] Unit command menu: number keys 1-7, and V to close it
+- [ ] Every unit recipe at the Commander's Table (Polar Bear, Ravager, Enderman and Shulker have been tried)
+- [ ] The Targeted stance on its own (without red alert)
+- [ ] Changing a faction's color while its units are out
+- [ ] Units after reloading the world
+
+## Gameplay issues
+
+- [x] Units don't burn in daylight anymore (wild mobs still do)
+- [x] Warden units never give Darkness, and always stay above ground (they used to dig away and vanish)
+- [x] Piglin and Warden units now fight the enemies the faction rules pick (red alert, Targeted, war, Attack orders)
+- [ ] Check that Hoglin units do too (same fix, not tried in game yet)
+- [x] Placed flags and Faction Flag items repaint when a faction changes color
+- Left as is: flags removed by commands or other mods drop a plain banner (the claim is still removed)
+- Not an issue after all: units already spot targets as far up and down as sideways (only line of sight blocks them)
+
+## Housekeeping
+
+- [ ] Crown Ideas.md: cross off the Crown of Iron and fill in its crafting materials
+- [ ] Crown Ideas.md: add the Crown of Void
+- [ ] Crown Ideas.md: mark the icicle idea as done (it's Icicle Drop)
+- [ ] Bump the version number (gradle.properties) before sharing builds

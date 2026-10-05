@@ -178,10 +178,16 @@ the mob as a unit of the player's faction (they must be in one). `unit/UnitManag
   alert, anyone not Allowed. They never fight their own faction. This is applied by making
   units count everyone else as allied (`mixin/EntityAlliesMixin` on `Entity.isAlliedTo`,
   which all vanilla targeting checks), plus an extra target goal so goal-based units attack
-  enemies (brain-based Piglins, Hoglins and Wardens only fight what their AI picks).
+  enemies. Brain-based units (Piglins, Hoglins, Wardens) ignore goals, so `UnitGoals.WatchGoal`
+  finds enemies for them and hands them over: Wardens through their anger (`increaseAngerAt`),
+  Piglins through `ANGRY_AT` plus `ATTACK_TARGET` (they drop any target they wouldn't pick
+  themselves), Hoglins through `ATTACK_TARGET`.
 - The faction tint is client-side: `client/mixin/LivingEntityRendererMixin` multiplies the
   model color by white blended 80% toward the faction's dye color; layers aren't tinted.
-- Units never despawn; Piglin and Hoglin units don't zombify.
+- Units never despawn and don't burn in daylight (`mixin/MobSunMixin`); Piglin and Hoglin units
+  don't zombify. Warden units never give Darkness (`mixin/WardenDarknessMixin`) and always keep
+  a dig cooldown, because a Warden with none digs into the ground and is removed (Warfist:
+  Warden units always stay above ground).
 
 **Part 4, unit commands** (done 5 October 2026), in `unit/UnitCommands` with orders in
 `UnitOrder` (FREE, SENTRY, FOLLOW, ATTACK) saved in `UnitData` (with the sentry post and the

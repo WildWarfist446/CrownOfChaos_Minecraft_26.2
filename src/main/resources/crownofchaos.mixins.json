@@ -11,10 +11,12 @@
 		"LivingEntityEffectMixin",
 		"LivingEntityMixin",
 		"MobAccessor",
+		"MobSunMixin",
 		"PistonStructureResolverMixin",
 		"PowderSnowBlockMixin",
 		"ServerExplosionMixin",
 		"ShieldBlockingMixin",
+		"WardenDarknessMixin",
 		"WinterCrownMovementMixin",
 		"WitherSkullMixin"
 	],

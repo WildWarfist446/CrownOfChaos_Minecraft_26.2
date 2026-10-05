@@ -13,6 +13,12 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.ai.memory.WalkTarget;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.monster.warden.AngerLevel;
+import net.minecraft.world.entity.monster.warden.Warden;
+import net.minecraft.util.Unit;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 
@@ -30,6 +36,10 @@ final class UnitGoals {
 	private static final double FOLLOW_STOP_DISTANCE = 3.5;
 	private static final double WALK_SPEED = 1.0;
 	private static final double FOLLOW_SPEED = 1.2;
+	/** How long a Piglin unit stays angry at an enemy it was handed (30 seconds, like a provoked Piglin). */
+	private static final long ANGER_TICKS = 600L;
+	/** How long each refresh of a Warden unit's dig cooldown lasts (refreshed every half second). */
+	private static final long WARDEN_DIG_COOLDOWN_TICKS = 1200L;
 
 	private UnitGoals() {
 	}
@@ -52,6 +62,16 @@ final class UnitGoals {
 	/** Whether the mob's brain has this memory at all; asking one that doesn't for it is an error. */
 	private static boolean hasMemory(Mob mob, MemoryModuleType<?> memory) {
 		return mob.getBrain().checkMemory(memory, MemoryStatus.REGISTERED);
+	}
+
+	/**
+	 * Keeps a Warden unit from burrowing into the ground, which removes it: wild Wardens dig away
+	 * whenever they have no dig cooldown, so units always get one.
+	 */
+	static void keepWardenFromDigging(Mob mob) {
+		if (mob instanceof Warden) {
+			mob.getBrain().setMemoryWithExpiry(MemoryModuleType.DIG_COOLDOWN, Unit.INSTANCE, WARDEN_DIG_COOLDOWN_TICKS);
+		}
 	}
 
 	/** Walks the unit toward a spot, by path finding or, for brain mobs, by setting its walk target. */
@@ -155,8 +175,9 @@ final class UnitGoals {
 
 	/**
 	 * Drops a target the unit shouldn't be fighting (it left the territory, is now allowed, or a
-	 * sentry's enemy ran too far from its post), so the unit goes back to its orders. Runs
-	 * alongside everything else.
+	 * sentry's enemy ran too far from its post), so the unit goes back to its orders. For mobs
+	 * run by a "brain" (Piglins, Hoglins, Wardens), which ignore target goals, it also finds
+	 * enemies the faction rules say to fight and hands them over. Runs alongside everything else.
 	 */
 	static final class WatchGoal extends Goal {
 		private final Mob mob;
@@ -177,9 +198,35 @@ final class UnitGoals {
 			if (++this.ticks % 10 != 0 || !(this.mob.level() instanceof ServerLevel)) {
 				return;
 			}
+			keepWardenFromDigging(this.mob);
 			LivingEntity target = targetOf(this.mob);
 			if (target != null && !UnitManager.isHostile(this.mob, target)) {
 				clearTarget(this.mob);
+			} else if (target == null && hasMemory(this.mob, MemoryModuleType.ATTACK_TARGET)) {
+				this.findTargetForBrain();
+			}
+		}
+
+		/** The nearest enemy it can see, within its follow range, given to its brain to fight. */
+		private void findTargetForBrain() {
+			double range = this.mob.getAttributeValue(Attributes.FOLLOW_RANGE);
+			// A fresh copy: the shared vanilla conditions mustn't be changed.
+			LivingEntity enemy = ((ServerLevel) this.mob.level()).getNearestEntity(LivingEntity.class, TargetingConditions.forCombat().range(range)
+					.selector((candidate, level) -> EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(candidate) && UnitManager.isHostile(this.mob, candidate)),
+					this.mob, this.mob.getX(), this.mob.getEyeY(), this.mob.getZ(), this.mob.getBoundingBox().inflate(range));
+			if (enemy == null || !this.mob.hasLineOfSight(enemy)) {
+				return;
+			}
+			if (this.mob instanceof Warden warden) {
+				// Wardens fight whoever they're angriest at; make this enemy that.
+				warden.increaseAngerAt(enemy, AngerLevel.ANGRY.getMinimumAnger() + 20, false);
+			} else {
+				// Piglins drop any target that isn't the one they'd pick themselves, and they pick
+				// whoever they're angry at first, so make them angry at it too.
+				if (hasMemory(this.mob, MemoryModuleType.ANGRY_AT)) {
+					this.mob.getBrain().setMemoryWithExpiry(MemoryModuleType.ANGRY_AT, enemy.getUUID(), ANGER_TICKS);
+				}
+				this.mob.getBrain().setMemory(MemoryModuleType.ATTACK_TARGET, enemy);
 			}
 		}
 	}
