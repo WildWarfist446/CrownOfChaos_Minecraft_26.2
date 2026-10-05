@@ -12,7 +12,8 @@ is worn. Every magical crown can also be upgraded to netherite.
 > hand by the mod's creators.
 
 **Contents:** [Crowns](#crowns) · [Netherite crowns](#netherite-crowns) ·
-[Abilities](#abilities) · [Materials](#materials) · [Changes to vanilla](#changes-to-vanilla) ·
+[Abilities](#abilities) · [Materials](#materials) · [Factions (alpha)](#factions-alpha) ·
+[Changes to vanilla](#changes-to-vanilla) ·
 [Installation](#installation) · [Finding the items](#finding-the-items) ·
 [3D models](#3d-models) · [Development](#development) · [Credits](#credits)
 
@@ -277,6 +278,54 @@ Times in brackets are cooldowns. "Aimed" abilities hit whatever you're looking a
 Descriptions: the Sculk Cord reads *"The screeching has finally ceased..."* and the Ankh
 Charm reads *"Ra would be proud."*
 
+## Factions (alpha)
+
+> **Alpha:** the faction system is still in early development. This is the first part:
+> factions, the faction menu and territory. Army units, the Commander's Table, sentry and
+> follow commands, and declaring war are planned but not added yet. Expect changes, and
+> possibly resets of faction data, between versions.
+
+Players can band together into factions, each with its own name and color, and claim land
+with faction flags.
+
+**Faction menu:** press **J** (rebindable under Options → Controls → Key Binds → Crown of
+Chaos).
+
+- **Without a faction:**
+  - **Create:** found a faction. Pick a name of up to 24 characters (emoji allowed, unique)
+    and one of the 16 dye colors. No two factions can share a color.
+  - **Join:** accept or decline invitations, or ask to join any faction.
+- **In a faction:**
+  - **Overview:** your faction's details. The owner can rename it, change its color, turn red
+    alert on or off, and disband it.
+  - **Members:** the member list. The owner can invite online players by name, accept or
+    decline join requests, remove members and hand over ownership. The owner can't leave
+    without handing over ownership or disbanding first.
+  - **Relations:** the owner sets each other faction to **Allowed** (may enter your territory
+    unharmed), **Neutral** or **Targeted** (attacked in your territory).
+  - **Factions:** every faction, with its owner, members and flags.
+
+**Name tags:** members' names show their faction as a colored `[Faction Name]` tag in chat
+and above their heads.
+
+**Faction Flag:**
+- Crafted from any banner and a gold block, in any order. It belongs to the faction of
+  whoever crafts it, and shows as a banner in that faction's color.
+- Placing it claims everything within **100 blocks** of it, at any height. Only members can
+  place their faction's flags.
+- Flags of different factions must be at least 200 blocks apart, so territories never
+  overlap. Your own faction's flags can overlap to grow your land.
+- Anyone can break a flag: that removes the claim, and the flag drops for its faction to
+  place again.
+
+**Territory:** entering a faction's territory shows its name in large letters in its color,
+with "Faction Territory" (or "Your Faction's Territory") underneath. Leaving shows a short
+note above the hotbar.
+
+**Red alert and relations** are saved now, but they take effect once army units are added:
+units will attack targeted factions in your territory, and on red alert everyone who isn't
+allowed.
+
 ## Changes to vanilla
 
 These apply to everyone in a world with the mod, not just crown wearers:
@@ -315,6 +364,7 @@ Combat tab and materials in the Ingredients tab). With cheats on, they can also 
 /give @s crownofchaos:netherite_crown_of_winter   (netherite_ + any crown's name)
 /give @s crownofchaos:sculk_cord
 /give @s crownofchaos:ankh_charm
+/give @s crownofchaos:faction_flag   (belongs to whoever places it first)
 ```
 
 ## 3D models

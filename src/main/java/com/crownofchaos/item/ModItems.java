@@ -84,6 +84,10 @@ public final class ModItems {
 	public static final Item ANKH_CHARM = register("ankh_charm", Item::new, withLore("ankh_charm", new Item.Properties()
 			.rarity(Rarity.RARE)));
 
+	/** Claims land for the crafter's faction when placed (see {@link FactionFlagItem}). */
+	public static final Item FACTION_FLAG = register("faction_flag", FactionFlagItem::new, new Item.Properties()
+			.stacksTo(16));
+
 	/** The mod's own creative tab, holding every Crown of Chaos item. */
 	public static final ResourceKey<CreativeModeTab> CREATIVE_TAB =
 			ResourceKey.create(Registries.CREATIVE_MODE_TAB, CrownOfChaos.id("crown_of_chaos"));
@@ -192,6 +196,7 @@ public final class ModItems {
 					output.accept(NETHERITE_CROWN_OF_VOID);
 					output.accept(SCULK_CORD);
 					output.accept(ANKH_CHARM);
+					output.accept(FACTION_FLAG);
 				})
 				.build());
 

@@ -53,6 +53,19 @@ errors. Mixin mistakes only show up at runtime, and some only when a world loads
 `EnderDragonFight` mixin once crashed world loading). To test inside a world, launch with
 `--args="--quickPlaySingleplayer=New World"`.
 
+**Testing without pressing keys:** a session can't press keys in the game. To check
+something visually, add a temporary debug class registered from `CrownOfChaosClient`. It can
+run steps on client ticks, run server steps through `client.getSingleplayerServer().execute`,
+open screens, and save screenshots with `net.minecraft.client.Screenshot.grab(client, false)`
+to `run/screenshots/`, which you then view. Set `pauseOnLostFocus:false` in `run/options.txt`
+while testing, because the game window isn't focused. Afterward, delete the debug class and the
+screenshots, and set the option back to `true`.
+
+**Warfist tests from VS Code too,** using the same `build/` and `run/` folders. Don't run
+`./gradlew build` or `runClient` while his game is open: a rebuild briefly deletes the
+compiled classes and crashes his launch. Only stop game processes you started. VS Code's run
+settings (`.vscode/`, not in Git) come from `./gradlew vscode`.
+
 Ignore these harmless log lines: Windows `PerfCounterQuery`/`oshi` stack traces (including
 `CrashReport.preload`), "Could not authorize you against Realms", and "Failed to retrieve
 profile key pair" (the dev client plays offline).
@@ -116,7 +129,8 @@ classes can be inspected with `javap` from the jars in `~/.gradle/caches/modules
 
 Done: the Golden Crown plus nine magical crowns (Under, Poseidon, Nether, Darkness, Sun,
 Wither, Winter, Iron, Void), each with a netherite version, description, recipe and
-abilities (the Under Crown's secondary is Ore Sense, the Crown of Winter's is Icicle Drop); materials (Sculk Cord from Wardens, Ankh Charm in desert pyramids); a Dragon Egg
+abilities (the Under Crown's secondary is Ore Sense, the Crown of Winter's is Icicle
+Drop); materials (Sculk Cord from Wardens, Ankh Charm in desert pyramids); a Dragon Egg
 on every dragon kill; the Crown of Chaos creative tab. Custom 3D models exist for the Under
 Crown, Poseidon, Nether and Wither crowns; the others render as helmets.
 
@@ -131,7 +145,85 @@ often, so reread it, and implement only what Warfist asks for):
   teleport dodge; abilities "The pain of death" (volley, wither skull, fire charge and
   lightning at once) and "Death's door" (Darkness Pulse lasting 300% longer); netherite
   stats from the start and no netherite upgrade; "glitched" combined texture.
-- A **faction system**: faction UI, territories claimed with faction flags, craftable army
-  units per crown (made at a Commander's Table), sentry, follow and attack commands, and
-  declaring war.
+- The rest of the **faction system** (see the next section): units, the Commander's Table,
+  sentry, follow and attack commands, declaring war, reclaiming units.
 - Remaining 3D models.
+
+## Faction system (in progress)
+
+Warfist's full plan is under "factions system" in `developing plans/Crown Ideas.md`. It's
+being built in parts, and is labeled **alpha** in the README (keep that label until Warfist
+says otherwise). **Part 1 (factions, menu, flags and territory) is done and committed** (4
+October 2026).
+
+**Decisions Warfist made** (don't revisit without asking):
+- Faction colors are the **16 dye colors**, one faction per color (so at most 16 factions).
+  Units and flags use the faction's dye color.
+- **No overlapping territory:** a flag claims a circle of `FactionManager.CLAIM_RADIUS`
+  (100) blocks across the ground at every height. Another faction's flag must be at least
+  200 blocks away. A faction's own flags may overlap.
+- **Vanilla stand-ins for art** until Warfist or Ted draw it: the flag is a vanilla banner in
+  the faction's color (item and placed block), and the menu is drawn with flat fills and gold
+  outlines, no textures. Nothing of Mojang's is copied into the mod.
+
+**What part 1 does:**
+- **Menu** (key J, "Faction Menu" under Controls → Crown of Chaos):
+  - Without a faction: Create (name with emoji, up to 24 characters, plus a color) and Join
+    (accept or decline invites, ask to join).
+  - In a faction: Overview (owner can rename, recolor, toggle red alert, disband), Members
+    (owner can invite by name, accept or decline requests, kick, make someone else owner),
+    Relations (owner sets each other faction to Allowed, Neutral or Targeted), and Factions
+    (a list of all of them).
+  - The owner can't leave without making someone else owner or disbanding.
+- **Name tags:** each faction is a scoreboard team named `coc_faction_<id>`, whose prefix is
+  `[Name] ` in the faction's dye color, shown in chat and above heads. Player names stay
+  white, because team colors are only the 16 chat colors.
+- **Faction Flag item:**
+  - Crafted shapeless from any banner and a gold block. It belongs to the crafter's faction
+    (data components `crownofchaos:flag_faction` and `crownofchaos:flag_color`; the item
+    model picks the banner color from `flag_color`).
+  - Placing it puts down a vanilla banner of the faction's color and records a claim. Only
+    members can place it.
+  - Anyone can break a flag. That removes the claim and drops a Faction Flag of the same
+    faction. Every 5 seconds the server drops claims whose banner is gone (explosions and
+    pistons).
+- **Territory:** entering a faction's territory shows a title (the faction's name in its
+  color, with "Faction Territory" or "Your Faction's Territory" underneath); leaving shows an
+  action-bar note.
+- **Red alert and stances** are saved and shown, but nothing acts on them yet. Units will.
+
+**Code:**
+- `faction/`:
+  - `Faction`: the data and its codec. Players' copies omit flag positions.
+  - `FactionData`: SavedData, saved as `data/crownofchaos/factions.dat`, with territory
+    lookups.
+  - `FactionManager`: all server logic. It handles menu actions with validation and chat
+    replies, keeps teams in step, syncs to clients, shows territory titles and tracks flags.
+  - `FactionStance` and `FactionFlag`.
+- `network/FactionActionPayload`: one message per menu action; the javadoc lists each
+  action's parameters. `network/FactionSyncPayload`: every faction, sent to every player
+  whenever anything changes.
+- `item/FactionFlagItem` and `item/ModComponents`.
+- Client: `client/faction/FactionScreen`, the menu, with `FactionButton` and `ColorSwatch`
+  (written by a helper agent), `FactionClientState` for the last synced factions, and
+  `client/FactionKeybind`.
+- Units should call `FactionManager.territoryAt(level, x, z)` and read
+  `Faction.redAlert()` and `stanceToward(...)` to decide whom to attack.
+
+**Tested in game** with a temporary debug hook and screenshots: creating a faction with an
+emoji name; every menu tab; the chat tag; placing and breaking a flag; the territory title;
+disbanding.
+**Not tested yet:**
+- Anything that needs two players: invites, join requests, kick, handing over ownership,
+  the 200-block spacing between factions, and seeing another faction's territory title.
+  Test these over LAN with a second account.
+- Pressing J to open the menu, and crafting a flag.
+
+**Known gaps:** a wall-mounted flag whose wall block is broken, or a flag destroyed by an
+explosion, drops a plain banner instead of a Faction Flag (the claim is still removed).
+
+**Next parts** (implement only what Warfist asks for, in his order): units (craftable unit
+items per crown, friendly to the faction, colored by faction), the Commander's Table,
+sentry mode, unit follow, unit attack, declaring war, and reclaiming units. Then make the
+red alert and stance settings drive what units attack. Before starting, read the full plan
+in `Crown Ideas.md` again; it changes often.

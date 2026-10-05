@@ -4,6 +4,8 @@ import com.crownofchaos.item.ModItems;
 import com.crownofchaos.ability.CrownAbilities;
 import com.crownofchaos.item.CrownEffects;
 import com.crownofchaos.entity.ModEntities;
+import com.crownofchaos.faction.FactionManager;
+import com.crownofchaos.item.ModComponents;
 
 import net.fabricmc.api.ModInitializer;
 
@@ -28,10 +30,12 @@ public class CrownOfChaos implements ModInitializer {
 
 		LOGGER.info("The Crown of Chaos is loading...");
 
+		ModComponents.initialize();
 		ModItems.initialize();
 		ModEntities.initialize();
 		CrownEffects.initialize();
 		CrownAbilities.initialize();
+		FactionManager.initialize();
 	}
 
 	public static Identifier id(String path) {

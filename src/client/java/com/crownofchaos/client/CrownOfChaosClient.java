@@ -1,5 +1,6 @@
 package com.crownofchaos.client;
 
+import com.crownofchaos.client.faction.FactionClientState;
 import com.crownofchaos.client.model.CrownModels;
 import com.crownofchaos.client.render.IcicleRenderer;
 import com.crownofchaos.entity.ModEntities;
@@ -13,6 +14,8 @@ public class CrownOfChaosClient implements ClientModInitializer {
 		CrownAbilityKeybind.initialize();
 		CrownAbilityClientHandlers.initialize();
 		OreSenseClient.initialize();
+		FactionKeybind.initialize();
+		FactionClientState.initialize();
 		CrownModels.initialize();
 		EntityRendererRegistry.register(ModEntities.ICICLE, IcicleRenderer::new);
 	}

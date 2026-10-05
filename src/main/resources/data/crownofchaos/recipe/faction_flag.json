@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#minecraft:banners",
+    "minecraft:gold_block"
+  ],
+  "result": {
+    "id": "crownofchaos:faction_flag"
+  }
+}
