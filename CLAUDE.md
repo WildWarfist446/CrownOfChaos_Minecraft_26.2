@@ -28,6 +28,12 @@ secondary ability (G key), plus a netherite upgrade.
   `C:\Program Files\Eclipse Adoptium\jdk-25.0.4.101-hotspot`, project at
   `C:\Users\19dev\OneDrive\Desktop\CrownOfChaosMod`. On another machine, find the local
   JDK 25 and repo path instead of assuming these.
+- A second Windows machine has the repo at `C:\GIT REPO\CrownOfChaos_Minecraft_26.2` (not in
+  OneDrive). Its default Java is 27, which Gradle can't run on, so Gradle is pointed at the
+  Temurin JDK 25 by `org.gradle.java.home` in `~/.gradle/gradle.properties`, and VS Code by
+  `jdk.jdkhome` in its user settings. Python is installed there per user, and may need
+  calling by its full path (`~/AppData/Local/Programs/Python/Python314/python.exe`) until
+  the shell restarts.
 - The project lives in OneDrive, which Gradle warns about; it works, but file locks are
   possible.
 - Shell quirk: on Windows, bash heredocs break on apostrophes in text (for example, item
@@ -110,15 +116,17 @@ classes can be inspected with `javap` from the jars in `~/.gradle/caches/modules
 
 Done: the Golden Crown plus nine magical crowns (Under, Poseidon, Nether, Darkness, Sun,
 Wither, Winter, Iron, Void), each with a netherite version, description, recipe and
-abilities; materials (Sculk Cord from Wardens, Ankh Charm in desert pyramids); a Dragon Egg
+abilities (the Crown of Winter's secondary is Icicle Drop); materials (Sculk Cord from Wardens, Ankh Charm in desert pyramids); a Dragon Egg
 on every dragon kill; the Crown of Chaos creative tab. Custom 3D models exist for the Under
 Crown, Poseidon, Nether and Wither crowns; the others render as helmets.
 
 Open ideas from `developing plans/Crown Ideas.md` (Warfist's planning file; it changes
 often, so reread it, and implement only what Warfist asks for):
 
-- Secondary abilities for the Under Crown and the Crown of Winter (idea: three icicles that
-  fall on an enemy and freeze it).
+- A secondary ability for the Under Crown.
+- The icicle looks like a thin shard of Packed Ice (`IcicleEntity.LOOKS_LIKE`) as a stand-in.
+  When the mod moves to Minecraft 26.4, which adds a vanilla icicle block, point it at that
+  block; never copy Mojang's model or texture into the mod.
 - The **Crown of Chaos**: crafted from all nine crowns into an unusable "incomplete" crown,
   completed with a boss drop and a smithing template; combines the immunities and the
   teleport dodge; abilities "The pain of death" (volley, wither skull, fire charge and

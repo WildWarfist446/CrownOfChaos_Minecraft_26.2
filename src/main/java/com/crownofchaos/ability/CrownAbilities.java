@@ -104,6 +104,7 @@ public final class CrownAbilities {
 		registerSecondary(ModItems.CROWN_OF_WITHER, FlightAbility.witherFlight(ModItems.CROWN_OF_WITHER));
 		registerSecondary(ModItems.CROWN_OF_DARKNESS, new DarknessPulseAbility());
 		registerSecondary(ModItems.CROWN_OF_SUN, new SunCycleAbility());
+		registerSecondary(ModItems.CROWN_OF_WINTER, new IcicleDropAbility());
 		registerSecondary(ModItems.CROWN_OF_IRON, new GlowingArrowsAbility());
 		registerSecondary(ModItems.CROWN_OF_VOID, new DragonBreathAbility());
 
@@ -115,6 +116,7 @@ public final class CrownAbilities {
 		DragonBreathAbility.initialize();
 		GlowingArrowsAbility.initialize();
 		FlightAbility.initialize();
+		IcicleDropAbility.initialize();
 
 		PayloadTypeRegistry.serverboundPlay().register(CrownAbilityKeyPayload.TYPE, CrownAbilityKeyPayload.CODEC);
 		PayloadTypeRegistry.clientboundPlay().register(RiptidePayload.TYPE, RiptidePayload.CODEC);

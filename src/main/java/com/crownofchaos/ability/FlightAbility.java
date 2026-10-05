@@ -52,11 +52,10 @@ public final class FlightAbility implements CrownAbility {
 	}
 
 	/**
-	 * 60% of creative flight speed (0.05), 1.5 times Blaze Flight's: quicker than a Blaze, like
-	 * the Wither, but well short of full creative speed.
+	 * 40% of creative flight speed (0.05), the same as Blaze Flight.
 	 */
 	public static FlightAbility witherFlight(Item crown) {
-		return new FlightAbility("wither_flight", crown, 0.03F, SoundEvents.WITHER_AMBIENT, FlightAbility::emitWitherEffects);
+		return new FlightAbility("wither_flight", crown, 0.02F, SoundEvents.WITHER_AMBIENT, FlightAbility::emitWitherEffects);
 	}
 
 	/** Players currently flying, and with which ability until when. Only touched on the server thread. */

@@ -3,6 +3,7 @@ package com.crownofchaos;
 import com.crownofchaos.item.ModItems;
 import com.crownofchaos.ability.CrownAbilities;
 import com.crownofchaos.item.CrownEffects;
+import com.crownofchaos.entity.ModEntities;
 
 import net.fabricmc.api.ModInitializer;
 
@@ -28,6 +29,7 @@ public class CrownOfChaos implements ModInitializer {
 		LOGGER.info("The Crown of Chaos is loading...");
 
 		ModItems.initialize();
+		ModEntities.initialize();
 		CrownEffects.initialize();
 		CrownAbilities.initialize();
 	}

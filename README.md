@@ -146,7 +146,7 @@ and keeps Piglins calm like other gold armor.
 | Wither immunity | Immune to the Wither effect from any source: Wither Skeletons, the Wither, wither roses and potions |
 | Wither on hit | Your melee hits give the target Wither I for 10 seconds, like a Wither Skeleton's |
 | **Ability: Wither Skull** | Press the crown ability key (default **R**) to shoot a wither skull where you're looking, like the Wither: 8 damage and Wither II on a hit (10 seconds on Normal, 40 on Hard, none on Easy), and you heal 2.5 hearts if it kills. The small explosion never breaks blocks. Holds 3 skulls, each taking 6 seconds to recharge, with 3 seconds between shots. |
-| **Secondary ability: Wither Flight** | Press the secondary crown ability key (default **G**) to fly for 60 seconds at 60% of creative flight speed (1.5 times Blaze Flight), trailing smoke from your head like the Wither does. It works like creative flight (double-tap jump; jump and sneak to rise and sink), with a countdown in the action bar for the last 10 seconds. When it ends you get Slow Falling until you land (up to 30 seconds), so you can't take fall damage. Ends early if you take the crown off. 2 minute cooldown, counted from takeoff. |
+| **Secondary ability: Wither Flight** | Press the secondary crown ability key (default **G**) to fly for 60 seconds at 40% of creative flight speed (the same as Blaze Flight), trailing smoke from your head like the Wither does. It works like creative flight (double-tap jump; jump and sneak to rise and sink), with a countdown in the action bar for the last 10 seconds. When it ends you get Slow Falling until you land (up to 30 seconds), so you can't take fall damage. Ends early if you take the crown off. 2 minute cooldown, counted from takeoff. |
 
 **Recipe** (unlocked by picking up a Wither Skeleton Skull):
 
@@ -166,6 +166,7 @@ and keeps Piglins calm like other gold armor.
 | Freeze immunity | You never freeze, in powder snow or from other wearers' hits |
 | Snow and ice | Swiftness II on snow, snow blocks, powder snow and every kind of ice (lasts 1 second after stepping off), normal grip on ice instead of sliding, and you walk on top of powder snow |
 | **Ability: Frost Walker** | Press the crown ability key (default **R**) to toggle Frost Walker II on or off. While it's on, still water under you freezes into frosted ice like Frost Walker II boots, and magma blocks and campfires don't burn you. |
+| **Secondary ability: Icicle Drop** | Look at a mob or player within 30 blocks and press the secondary crown ability key (default **G**) to drop 5 icicles on it, 0.35 seconds apart. Each icicle appears 5 blocks above its head (lower under a ceiling), hangs for a moment and then falls fast. Every icicle that hits deals 4 freeze damage (2 hearts) and freezes the target for about 10 seconds: fully frozen for 7, then thawing. Blazes, Magma Cubes and Striders take 5 times the damage, as with any freezing. Icicles shatter when they land and never place blocks. Never hurts you or your pets. 6 second cooldown. |
 
 **Recipe** (unlocked by picking up a Powder Snow Bucket):
 
@@ -243,7 +244,7 @@ details.
 | Crown of Darkness | Night Vision, Darkness on hit | Sonic Boom, aimed (15s) | Darkness Pulse (30s) | Sculk Cord |
 | Crown of Sun | Swiftness II on sand | Wind Charge (3 charges, 6s each) | Sun Cycle (20s) | Ankh Charm |
 | Crown of Wither | Wither immunity, Wither on hit | Wither Skull (3 charges, 6s each, 3s between shots) | Wither Flight, 60s of flight (2 min) | Wither Skeleton Skull |
-| Crown of Winter | Freeze on hit, freeze immunity, Swiftness and grip on snow and ice | Frost Walker (toggle) | None | Powder Snow Bucket |
+| Crown of Winter | Freeze on hit, freeze immunity, Swiftness and grip on snow and ice | Frost Walker (toggle) | Icicle Drop, 5 icicles, aimed (6s) | Powder Snow Bucket |
 | Crown of Iron | +50% bow and crossbow damage | Arrow Volley, aimed (10s) | Glowing Arrows (toggle) | Totem of Undying |
 | Crown of Void | Teleport when hit, Swiftness on End blocks | Ender Pearl (3s) | Dragon's Breath (30s) | Dragon Egg |
 
