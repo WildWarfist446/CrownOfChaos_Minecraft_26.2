@@ -11,6 +11,7 @@ import java.util.UUID;
 import org.jspecify.annotations.Nullable;
 
 import com.crownofchaos.item.FactionFlagItem;
+import com.crownofchaos.unit.UnitManager;
 import com.crownofchaos.network.FactionActionPayload;
 import com.crownofchaos.network.FactionSyncPayload;
 
@@ -275,6 +276,7 @@ public final class FactionManager {
 			faction.setColor(color);
 			updateTeam(faction);
 			updateLabels(player.level().getServer(), faction);
+			UnitManager.recolor(player.level().getServer(), faction);
 			broadcast(player.level().getServer(), faction, Component.translatable("message.crownofchaos.faction.recolored", faction.displayName()));
 		}
 	}

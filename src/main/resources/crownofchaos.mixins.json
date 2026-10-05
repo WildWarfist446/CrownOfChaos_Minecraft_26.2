@@ -5,10 +5,12 @@
 	"mixins": [
 		"AbstractArrowMixin",
 		"EnderDragonFightMixin",
+		"EntityAlliesMixin",
 		"ApplyBonusCountMixin",
 		"LargeFireballMixin",
 		"LivingEntityEffectMixin",
 		"LivingEntityMixin",
+		"MobAccessor",
 		"PistonStructureResolverMixin",
 		"PowderSnowBlockMixin",
 		"ServerExplosionMixin",

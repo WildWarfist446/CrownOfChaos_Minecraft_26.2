@@ -282,9 +282,9 @@ Charm reads *"Ra would be proud."*
 ## Factions (alpha)
 
 > **Alpha:** the faction system is still in early development. So far it has factions, the
-> faction menu, territory, and the Commander's Table for making army units. Units can't be
-> deployed as mobs yet, and sentry and follow commands and declaring war are planned but not
-> added. Expect changes, and possibly resets of faction data, between versions.
+> faction menu, territory, the Commander's Table, and army units you can summon and command.
+> Declaring war is planned but not added. Expect changes, and possibly resets of faction data,
+> between versions.
 
 Players can band together into factions, each with its own name and color, and claim land
 with faction flags.
@@ -326,9 +326,9 @@ and above their heads.
 with "Faction Territory" (or "Your Faction's Territory") underneath. Leaving shows a short
 note above the hotbar.
 
-**Red alert and relations** are saved now, but they take effect once army units are added:
-units will attack targeted factions in your territory, and on red alert everyone who isn't
-allowed.
+**Red alert and relations** decide when your army units fight in your territory: they
+attack Targeted factions there, and on red alert everyone who isn't Allowed (see Summoning
+units below).
 
 ### Commander's Table and units
 
@@ -368,7 +368,49 @@ It turns to face you when placed.
 | | Shulker | 5 Purpur Blocks + 2 Diamonds |
 
 The Golden Crown and Under Crown command no units. Unit items look like the mob's spawn egg
-and are named after it ("Pillager Unit"). Units can't be deployed yet.
+and are named after it ("Pillager Unit").
+
+**Summoning units:** use a unit item on a block, like a spawn egg, to summon the mob as a
+unit of your faction (you must be in one). Units:
+
+- are tinted in your faction's color, so anyone can tell whose they are, and change color
+  with the faction;
+- never despawn, and Piglins and Hoglins don't turn into zombies outside the Nether;
+- are **passive**: they don't attack anyone, and don't fight back, except
+  - inside your faction's territory, against players and units of factions you've set to
+    **Targeted**, and while **red alert** is on, against everyone who isn't **Allowed**
+    (players with no faction included);
+  - against factions you're at war with, once declaring war is added;
+- never attack your own faction's members or units.
+
+Piglins, Hoglins and Wardens choose their targets with their own AI, so in your territory
+they only go after enemies their AI picks out (for example, players for Piglins); other units
+go after any enemy.
+
+**Commanding units:** you can command your faction's units whose crown you're wearing (wear
+the Crown of Iron to command Pillagers, Vindicators, Ravagers and Evokers).
+
+- **Right-click** a unit to make it hold its position (sentry); right-click again to free it.
+- **Sneak and right-click** a unit to select it, or deselect it. Selected units glow, for you
+  only.
+- Orders go to your **selected units**, or, with none selected, to **all your units within
+  32 blocks**.
+- **Unit Commands** key (default **V**) opens the command menu, a slim see-through strip on the
+  right edge of the screen so the fight stays in view. Each order has a number key (1-7), so
+  V then 3 orders an attack without aiming; V again closes it:
+  - **Follow Me:** they follow you, teleporting to you if they fall 24 blocks behind, so you
+    can lead them into enemy territory.
+  - **Hold Position:** they stand guard where they are and only move to fight, chasing
+    enemies at most 16 blocks from their post before walking back.
+  - **Attack:** they hunt enemies within 24 blocks, anywhere: players and units of every
+    faction you haven't set to Allowed. This overrides holding position and following.
+  - **Free:** no orders; back to wandering, passive except for the territory rules above.
+  - **Reclaim:** they turn back into their unit items, in your inventory.
+  - **Select Nearby** and **Clear Selection**.
+- **Units: Follow / Stop Following** key (default **B**) toggles following.
+- If one of your units dies where you can't see it, you're told where.
+
+Both keys can be rebound under Options → Controls → Key Binds → Crown of Chaos.
 
 ## Changes to vanilla
 

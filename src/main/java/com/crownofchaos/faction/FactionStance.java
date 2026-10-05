@@ -5,9 +5,9 @@ import com.mojang.serialization.Codec;
 import net.minecraft.util.StringRepresentable;
 
 /**
- * How a faction treats another faction in its territory. Units (not added yet) will use this:
- * allowed factions may enter unharmed, targeted ones are attacked, and neutral ones are only
- * attacked while the faction is on red alert.
+ * How a faction treats another faction in its territory. Its units use this (see
+ * {@code UnitManager}): allowed factions may enter unharmed, targeted ones are attacked, and
+ * neutral ones are only attacked while the faction is on red alert.
  */
 public enum FactionStance implements StringRepresentable {
 	ALLOWED("allowed"),

@@ -20,6 +20,7 @@ public class CrownOfChaosClient implements ClientModInitializer {
 		OreSenseClient.initialize();
 		FactionKeybind.initialize();
 		FactionClientState.initialize();
+		UnitClient.initialize();
 		CrownModels.initialize();
 		EntityRendererRegistry.register(ModEntities.ICICLE, IcicleRenderer::new);
 		MenuScreens.register(ModMenus.COMMANDER_TABLE, CommanderTableScreen::new);

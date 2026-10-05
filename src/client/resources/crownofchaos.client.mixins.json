@@ -3,7 +3,9 @@
 	"package": "com.crownofchaos.client.mixin",
 	"compatibilityLevel": "JAVA_25",
 	"client": [
-		"ExampleClientMixin"
+		"ExampleClientMixin",
+		"LivingEntityRendererMixin",
+		"MinecraftGlowMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

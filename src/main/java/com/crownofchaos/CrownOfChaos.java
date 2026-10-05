@@ -9,6 +9,8 @@ import com.crownofchaos.item.ModComponents;
 import com.crownofchaos.block.ModBlocks;
 import com.crownofchaos.menu.ModMenus;
 import com.crownofchaos.unit.ModUnits;
+import com.crownofchaos.unit.UnitCommands;
+import com.crownofchaos.unit.UnitManager;
 
 import net.fabricmc.api.ModInitializer;
 
@@ -42,6 +44,8 @@ public class CrownOfChaos implements ModInitializer {
 		CrownEffects.initialize();
 		CrownAbilities.initialize();
 		FactionManager.initialize();
+		UnitManager.initialize();
+		UnitCommands.initialize();
 	}
 
 	public static Identifier id(String path) {

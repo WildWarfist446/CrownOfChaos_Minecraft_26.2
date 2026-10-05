@@ -19,9 +19,13 @@ public class FactionButton extends AbstractButton {
 	private static final int FILL_INACTIVE = 0xFF33241A;
 	private static final int TEXT_INACTIVE = 0xFF7A6A55;
 
+	/** Background opacity for see-through buttons (used by the unit command menu during fights). */
+	private static final int TRANSLUCENT_ALPHA = 0xA0;
+
 	private final Runnable onPress;
 	private final int textColor;
 	private boolean selected;
+	private boolean translucent;
 
 	public FactionButton(int x, int y, int width, int height, Component message, int textColor, Runnable onPress) {
 		super(x, y, width, height, message);
@@ -32,6 +36,12 @@ public class FactionButton extends AbstractButton {
 	/** Marks a tab as the open one: it's drawn highlighted and ignores clicks. */
 	public FactionButton setSelected(boolean selected) {
 		this.selected = selected;
+		return this;
+	}
+
+	/** Draws the button's background see-through, so the world shows behind it. */
+	public FactionButton setTranslucent(boolean translucent) {
+		this.translucent = translucent;
 		return this;
 	}
 
@@ -57,6 +67,9 @@ public class FactionButton extends AbstractButton {
 		int fill = !this.active ? FILL_INACTIVE : this.selected ? FILL_SELECTED : hovered ? FILL_HOVER : FILL;
 		int border = !this.active ? FactionScreen.GOLD_DARK & 0x80FFFFFF
 				: this.selected || hovered ? FactionScreen.GOLD : FactionScreen.GOLD_DARK;
+		if (this.translucent) {
+			fill = fill & 0x00FFFFFF | TRANSLUCENT_ALPHA << 24;
+		}
 		graphics.fill(x, y, x + w, y + h, fill);
 		graphics.outline(x, y, w, h, border);
 

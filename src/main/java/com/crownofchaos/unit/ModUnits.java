@@ -78,6 +78,10 @@ public final class ModUnits {
 		return ALL.stream().filter(unit -> unit.crown() == base).toList();
 	}
 
+	public static @Nullable UnitType byId(String id) {
+		return ALL.stream().filter(unit -> unit.id().equals(id)).findFirst().orElse(null);
+	}
+
 	public static @Nullable UnitType byItem(Item item) {
 		return ALL.stream().filter(unit -> unit.item() == item).findFirst().orElse(null);
 	}

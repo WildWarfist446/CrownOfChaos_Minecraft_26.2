@@ -165,9 +165,46 @@ agent) works like a stonecutter: a crown slot, a list of that crown's units, two
 which he added later (the Golden Crown and Under Crown have none). Warfist fills in the
 costs in `developing plans/Unit Recipes.md`; they're set in `ModUnits` (the README lists
 them). Each unit costs exactly two kinds of item; a cost can be any item with a tag (the Polar
-Bear takes any wool). Warfist's "seaweed" for the Guardian was read as Kelp. Unit items (`item/UnitItem`) use
-the vanilla spawn egg models and do nothing yet. The table's recipe is Warfist's (map,
-2 diamonds, Faction Coin, 3 planks); the Faction Coin is 8 gold ingots around an emerald.
+Bear takes any wool). Warfist's "seaweed" for the Guardian was read as Kelp. Unit items
+(`item/UnitItem`) use the vanilla spawn egg models.
+
+**Part 3, summoning units** (done 4-5 October 2026): using a unit item on a block summons
+the mob as a unit of the player's faction (they must be in one). `unit/UnitManager` holds:
+- the `crownofchaos:unit` data attachment (`UnitData`: owner, faction, unit id, faction
+  color), saved with the mob and synced to every player;
+- the fighting rules, decided by Warfist: units are **passive** (don't attack, don't fight
+  back) except against factions at war with theirs (`atWar`, a stub until war exists) and,
+  inside their own territory, against players and units of Targeted factions or, on red
+  alert, anyone not Allowed. They never fight their own faction. This is applied by making
+  units count everyone else as allied (`mixin/EntityAlliesMixin` on `Entity.isAlliedTo`,
+  which all vanilla targeting checks), plus an extra target goal so goal-based units attack
+  enemies (brain-based Piglins, Hoglins and Wardens only fight what their AI picks).
+- The faction tint is client-side: `client/mixin/LivingEntityRendererMixin` multiplies the
+  model color by white blended 80% toward the faction's dye color; layers aren't tinted.
+- Units never despawn; Piglin and Hoglin units don't zombify.
+
+**Part 4, unit commands** (done 5 October 2026), in `unit/UnitCommands` with orders in
+`UnitOrder` (FREE, SENTRY, FOLLOW, ATTACK) saved in `UnitData` (with the sentry post and the
+follow leader). The selection scheme was Claude's suggestion, accepted by Warfist:
+- Players command their faction's units whose crown they wear (netherite counts).
+  Right-click toggles sentry; sneak + right-click toggles selection (selected units glow for
+  that player only: `UnitSelectionPayload` and `client/mixin/MinecraftGlowMixin`).
+- Orders (`UnitCommandPayload`) go to the selection, or with none, to all commandable units
+  within 32 blocks. Keys: V opens `client/faction/UnitCommandScreen` (a slim see-through strip on the
+  right, no background dimming, number keys 1-7 for the orders), B toggles follow
+  (`client/UnitClient`).
+- `UnitGoals.OrdersGoal` moves units for sentry and follow (brain mobs via their walk
+  target, flying mobs via move control); `UnitGoals.WatchGoal` drops targets the rules no
+  longer allow. Attack makes other factions' players and units within 24 blocks hostile
+  anywhere (not Allowed ones).
+- Reclaim turns units back into items (the plan's "war off" condition is moot until war
+  exists). Owners are told when a unit dies out of sight (within 64 blocks, 70 degrees of
+  their view, and not blocked).
+- Brain memories must be checked with `checkMemory(..., REGISTERED)` before reading or
+  erasing: most mobs don't have them, and reading one throws (this crashed a test once).
+
+The table's recipe is Warfist's (map, 2 diamonds, Faction Coin, 3 planks); the Faction Coin
+is 8 gold ingots around an emerald.
 
 **Decisions Warfist made** (don't revisit without asking):
 - Faction colors are the **16 dye colors**, one faction per color (so at most 16 factions).
@@ -240,8 +277,6 @@ disbanding.
 instead of a Faction Flag (the claim is still removed). Placed banners and flag items keep
 their old color if the faction changes color (labels and claims update).
 
-**Next parts** (implement only what Warfist asks for, in his order): deploying unit items as mobs (friendly to the owner's faction, colored by faction, only
-controllable while wearing the matching crown, a notification when one dies out of sight),
-sentry mode, unit follow, unit attack, declaring war, and reclaiming units. Then make the
-red alert and stance settings drive what units attack. Before starting, read the full plan
+**Next parts** (implement only what Warfist asks for, in his order): declaring war (fill in
+`UnitManager.atWar`, and make Reclaim refuse while at war). Before starting, read the full plan
 in `Crown Ideas.md` again; it changes often.
