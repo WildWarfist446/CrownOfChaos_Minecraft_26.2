@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.crownofchaos.client.faction.FactionClientState;
-import com.crownofchaos.client.faction.UnitCommandScreen;
+import com.crownofchaos.client.faction.UnitCommandOverlay;
 import com.crownofchaos.network.UnitCommandPayload;
 import com.crownofchaos.network.UnitSelectionPayload;
 import com.crownofchaos.unit.UnitCommands;
@@ -17,11 +17,12 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 
 import net.minecraft.client.KeyMapping;
-import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.Minecraft;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -29,7 +30,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 
 /**
- * Client side of unit commands: the "Unit Commands" key (default V) opens the command menu, the
+ * Client side of unit commands: the "Unit Commands" key (default V) toggles the command overlay (the number keys give its orders), the
  * "Units: Follow / Stop Following" key (default B) toggles follow, selected units glow, and
  * right-clicking one of your units is handed to the server instead of the mob's usual
  * interaction (see {@link UnitCommands}).
@@ -53,10 +54,32 @@ public final class UnitClient {
 		});
 		ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> SELECTED.clear());
 
+		HudElementRegistry.addLast(Identifier.fromNamespaceAndPath("crownofchaos", "unit_commands"), new UnitCommandOverlay());
+
+		// Before vanilla reads the keys this tick, so the number keys give orders instead of switching the hotbar.
+		ClientTickEvents.START_CLIENT_TICK.register(client -> {
+			if (UnitCommandOverlay.isOpen() && (client.player == null || client.gui.screen() != null)) {
+				UnitCommandOverlay.setOpen(false);
+			}
+			if (!UnitCommandOverlay.isOpen()) {
+				return;
+			}
+			KeyMapping[] hotbar = client.options.keyHotbarSlots;
+			for (int i = 0; i < UnitCommandOverlay.orderCount() && i < hotbar.length; i++) {
+				boolean pressed = false;
+				while (hotbar[i].consumeClick()) {
+					pressed = true;
+				}
+				if (pressed && UnitCommandOverlay.isOpen()) {
+					UnitCommandOverlay.give(i);
+				}
+			}
+		});
+
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			while (COMMAND_KEY.consumeClick()) {
 				if (client.player != null && client.gui.screen() == null) {
-					client.gui.setScreen(new UnitCommandScreen());
+					UnitCommandOverlay.setOpen(!UnitCommandOverlay.isOpen());
 				}
 			}
 			while (FOLLOW_KEY.consumeClick()) {
@@ -70,11 +93,6 @@ public final class UnitClient {
 		UseEntityCallback.EVENT.register((player, level, hand, entity, hitResult) ->
 				level.isClientSide() && hand == InteractionHand.MAIN_HAND && canCommand(player, entity)
 						? InteractionResult.SUCCESS : InteractionResult.PASS);
-	}
-
-	/** Whether the key is the Unit Commands key (so the command menu can close on it too). */
-	public static boolean isCommandKey(KeyEvent event) {
-		return COMMAND_KEY.matches(event);
 	}
 
 	/** Whether the selected-unit glow should show on this entity. */

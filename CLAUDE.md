@@ -196,9 +196,9 @@ follow leader). The selection scheme was Claude's suggestion, accepted by Warfis
   Right-click toggles sentry; sneak + right-click toggles selection (selected units glow for
   that player only: `UnitSelectionPayload` and `client/mixin/MinecraftGlowMixin`).
 - Orders (`UnitCommandPayload`) go to the selection, or with none, to all commandable units
-  within 32 blocks. Keys: V opens `client/faction/UnitCommandScreen` (a slim see-through strip on the
-  right, no background dimming, number keys 1-7 for the orders), B toggles follow
-  (`client/UnitClient`).
+  within 32 blocks. Keys: V toggles `client/faction/UnitCommandOverlay` (a slim see-through HUD strip on the
+  right, not a screen, so camera and movement stay free; `UnitClient` takes the number keys 1-7
+  before vanilla's hotbar does and gives the orders), B toggles follow (`client/UnitClient`).
 - `UnitGoals.OrdersGoal` moves units for sentry and follow (brain mobs via their walk
   target, flying mobs via move control); `UnitGoals.WatchGoal` drops targets the rules no
   longer allow. Attack makes other factions' players and units within 24 blocks hostile
@@ -293,9 +293,6 @@ one-sided (the target is told), makes units attack the target anywhere (`UnitMan
 the target's faction, or the player or a unit's owner; it overrides Allowed), and blocks
 Reclaim for the declaring faction's members. Disbanding a faction removes it from others'
 wars.
-
-**First thing next session:** make the unit command menu not lock the camera or movement
-(see the top of `developing plans/To Do.md`).
 
 **Next:** Warfist's faction plan is fully built (beta). Implement only what he asks
 for next; reread `Crown Ideas.md` first, it changes often.

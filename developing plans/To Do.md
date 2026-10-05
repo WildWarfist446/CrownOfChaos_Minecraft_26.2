@@ -4,7 +4,7 @@ What's left for The Crown of Chaos, as of 5 October 2026. Tick items off with `[
 
 ## First thing next session
 
-- [ ] Unit command menu (V): don't lock the camera or movement while it's open, so players can
+- [x] Unit command menu (V): don't lock the camera or movement while it's open, so players can
       keep fighting. Changing the held item only by scroll wheel while it's open is fine.
       (Today it's a normal menu screen, which takes over the mouse and keyboard; it likely needs
       to become an on-screen overlay that keeps the game in control, with the number keys still
@@ -47,7 +47,7 @@ Two players (LAN with a second account):
 One player:
 - [ ] Pressing J opens the faction menu
 - [ ] Crafting a Faction Flag
-- [ ] Unit command menu: number keys 1-7, and V to close it
+- [ ] Unit command menu (now a HUD overlay): number keys 1-7 give orders without switching the hotbar, V closes it, camera and movement stay free
 - [ ] Every unit recipe at the Commander's Table (Polar Bear, Ravager, Enderman and Shulker have been tried)
 - [ ] The Targeted stance on its own (without red alert)
 - [ ] Changing a faction's color while its units are out
