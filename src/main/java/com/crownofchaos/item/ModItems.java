@@ -1,12 +1,16 @@
 package com.crownofchaos.item;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.Function;
 
 import com.crownofchaos.CrownOfChaos;
+import com.crownofchaos.block.ModBlocks;
+import com.crownofchaos.unit.ModUnits;
 
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
 import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab;
@@ -46,6 +50,9 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.phys.Vec3;
 
 public final class ModItems {
+	/** Every crown and netherite crown. Declared first, since the crowns below add themselves as they're registered. */
+	private static final Set<Item> CROWNS = new HashSet<>();
+
 	/** The base crown every other crown is crafted from. Golden helmet stats. */
 	public static final Item GOLDEN_CROWN = registerCrown("golden_crown", ArmorMaterials.GOLD, Rarity.UNCOMMON);
 
@@ -84,6 +91,10 @@ public final class ModItems {
 	public static final Item ANKH_CHARM = register("ankh_charm", Item::new, withLore("ankh_charm", new Item.Properties()
 			.rarity(Rarity.RARE)));
 
+	/** Crafted from 8 gold ingots around an emerald; a material for faction recipes. */
+	public static final Item FACTION_COIN = register("faction_coin", Item::new, new Item.Properties()
+			.rarity(Rarity.UNCOMMON));
+
 	/** Claims land for the crafter's faction when placed (see {@link FactionFlagItem}). */
 	public static final Item FACTION_FLAG = register("faction_flag", FactionFlagItem::new, new Item.Properties()
 			.stacksTo(16));
@@ -100,10 +111,12 @@ public final class ModItems {
 	 * enchanted glint, which every crown has whether or not it's enchanted.
 	 */
 	private static Item registerCrown(String name, ArmorMaterial material, Rarity rarity) {
-		return register(name, Item::new, withLore(name, new Item.Properties()
+		Item crown = register(name, Item::new, withLore(name, new Item.Properties()
 				.humanoidArmor(material, ArmorType.HELMET)
 				.rarity(rarity)
 				.component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)));
+		CROWNS.add(crown);
+		return crown;
 	}
 
 	/**
@@ -123,7 +136,13 @@ public final class ModItems {
 				.component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
 				.component(DataComponents.LORE, new ItemLore(List.of(Component.translatableWithFallback("item.crownofchaos." + baseName + ".lore", "")))));
 		NETHERITE_TO_BASE.put(netherite, base);
+		CROWNS.add(netherite);
 		return netherite;
+	}
+
+	/** Whether the item is one of the mod's crowns, including netherite crowns. */
+	public static boolean isCrown(Item item) {
+		return CROWNS.contains(item);
 	}
 
 	/**
@@ -196,7 +215,10 @@ public final class ModItems {
 					output.accept(NETHERITE_CROWN_OF_VOID);
 					output.accept(SCULK_CORD);
 					output.accept(ANKH_CHARM);
+					output.accept(FACTION_COIN);
 					output.accept(FACTION_FLAG);
+					output.accept(ModBlocks.COMMANDER_TABLE);
+					ModUnits.all().forEach(unit -> output.accept(unit.item()));
 				})
 				.build());
 
@@ -205,7 +227,7 @@ public final class ModItems {
 				.register(output -> output.insertAfter(Items.NETHERITE_BOOTS, GOLDEN_CROWN, UNDER_CROWN, CROWN_OF_POSEIDON, CROWN_OF_NETHER, CROWN_OF_DARKNESS, CROWN_OF_SUN, CROWN_OF_WITHER, CROWN_OF_WINTER, CROWN_OF_IRON, CROWN_OF_VOID,
 						NETHERITE_UNDER_CROWN, NETHERITE_CROWN_OF_POSEIDON, NETHERITE_CROWN_OF_NETHER, NETHERITE_CROWN_OF_DARKNESS, NETHERITE_CROWN_OF_SUN, NETHERITE_CROWN_OF_WITHER, NETHERITE_CROWN_OF_WINTER, NETHERITE_CROWN_OF_IRON, NETHERITE_CROWN_OF_VOID));
 		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.INGREDIENTS)
-				.register(output -> output.insertAfter(Items.ECHO_SHARD, SCULK_CORD, ANKH_CHARM));
+				.register(output -> output.insertAfter(Items.ECHO_SHARD, SCULK_CORD, ANKH_CHARM, FACTION_COIN));
 
 		ResourceKey<LootTable> wardenLoot = EntityTypes.WARDEN.getDefaultLootTable().orElseThrow();
 		LootTableEvents.MODIFY.register((key, tableBuilder, source, registries) -> {

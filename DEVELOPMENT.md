@@ -26,6 +26,9 @@ Test worlds and settings from `runClient` live in `run/`, which isn't committed.
 | `src/main/java/com/crownofchaos/item/FactionFlagItem.java`, `ModComponents.java` | The Faction Flag and the item data components that record its faction |
 | `src/main/java/com/crownofchaos/item/CrownEffects.java` | Each crown's potion effects, passive bonuses (Darkness on hit, Fire Aspect, Flame, Wither on hit, freeze on hit, Swiftness on sand, snow, ice and End blocks, Crown of Void teleport), the pet check, and tuning values |
 | `src/main/java/com/crownofchaos/faction/` | The faction system (alpha): faction data saved with the world (`FactionData`), and the server logic for menu actions, name tags, syncing, territory and flags (`FactionManager`) |
+| `src/main/java/com/crownofchaos/block/` | Blocks (`ModBlocks`): the Commander's Table |
+| `src/main/java/com/crownofchaos/menu/` | Menus (`ModMenus`): the Commander's Table menu, which makes units from a crown and two cost items |
+| `src/main/java/com/crownofchaos/unit/` | Army units (`ModUnits`): each unit's crown, mob, unit item and two costs |
 | `src/main/java/com/crownofchaos/entity/` | Entities the mod adds (`ModEntities`): the Crown of Winter's icicle |
 | `src/main/java/com/crownofchaos/ability/` | Crown abilities, the registry that links each crown to its abilities, and shared ability helpers |
 | `src/main/java/com/crownofchaos/network/` | Messages between the client and server (ability keys, Riptide launch, Ore Sense, faction menu actions and faction updates) |
@@ -33,6 +36,7 @@ Test worlds and settings from `runClient` live in `run/`, which isn't committed.
 | `src/client/java/com/crownofchaos/client/` | Client-only code: the ability keybinds and client-side ability effects |
 | `src/client/java/com/crownofchaos/client/model/` | Crown 3D models and the renderer that draws them on the head |
 | `src/client/java/com/crownofchaos/client/faction/` | The faction menu and the client's copy of the factions |
+| `src/client/java/com/crownofchaos/client/menu/` | The Commander's Table screen |
 | `src/client/java/com/crownofchaos/client/render/` | Renderers for the mod's entities (the icicle) |
 | `src/main/resources/assets/crownofchaos/` | Textures, item models, names and descriptions |
 | `src/main/resources/data/crownofchaos/` | Crafting and smithing recipes, recipe-book unlocks, and block tags |
@@ -74,6 +78,14 @@ Shared helpers for common kinds of ability:
 | `AbilityTargeting.findLookTarget` | Abilities aimed at whatever the player is looking at (Sonic Boom, Arrow Volley, Lightning Strike) |
 | `CrownAbilities.CROWN_ABILITY_TAG` | Add this tag to every projectile, cloud or other entity an ability creates; damage from tagged entities never hurts the wearer's own pets |
 | `CrownAbilities.isHoldingAbilityKey` | Abilities that work while a key is held down |
+
+## Adding or changing a unit
+
+Units are listed in `ModUnits`, grouped by crown: `unit("pillager", ModItems.CROWN_OF_IRON,
+EntityTypes.PILLAGER, costA, costB)`. Each cost is a `UnitType.Cost(item, count)`. A new unit
+also needs its item model in `assets/crownofchaos/items/<mob>_unit.json` (pointing at the
+mob's spawn egg model) and its name in `lang/en_us.json`. The Commander's Table picks up the
+change by itself.
 
 ## Adding a 3D model
 

@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": {"model": "crownofchaos:block/commander_table"},
+    "facing=east": {"model": "crownofchaos:block/commander_table", "y": 90},
+    "facing=south": {"model": "crownofchaos:block/commander_table", "y": 180},
+    "facing=west": {"model": "crownofchaos:block/commander_table", "y": 270}
+  }
+}

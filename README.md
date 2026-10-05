@@ -274,16 +274,18 @@ Times in brackets are cooldowns. "Aimed" abilities hit whatever you're looking a
 |---|---|---|
 | Sculk Cord | Every Warden drops one when killed, alongside its Sculk Catalyst | Crafting the Crown of Darkness |
 | Ankh Charm | Desert pyramids: every pyramid has exactly one, in one of its four chests | Crafting the Crown of Sun |
+| Faction Coin | Crafted from 8 Gold Ingots around 1 Emerald (unlocked by picking up an Emerald) | Crafting the Commander's Table |
 
 Descriptions: the Sculk Cord reads *"The screeching has finally ceased..."* and the Ankh
 Charm reads *"Ra would be proud."*
 
 ## Factions (alpha)
 
-> **Alpha:** the faction system is still in early development. This is the first part:
-> factions, the faction menu and territory. Army units, the Commander's Table, sentry and
-> follow commands, and declaring war are planned but not added yet. Expect changes, and
-> possibly resets of faction data, between versions.
+> **Alpha:** the faction system is still in early development. So far it has factions, the
+> faction menu, territory, and the Commander's Table for making army units. Units can't be
+> deployed as mobs yet, and sentry and follow commands and declaring war are planned but not
+> added. Unit costs are placeholders. Expect changes, and possibly resets of faction data,
+> between versions.
 
 Players can band together into factions, each with its own name and color, and claim land
 with faction flags.
@@ -326,6 +328,38 @@ note above the hotbar.
 units will attack targeted factions in your territory, and on red alert everyone who isn't
 allowed.
 
+### Commander's Table and units
+
+The Commander's Table makes army units. Put a crown in its crown slot to see the units that
+crown commands, pick one, and put the unit's two cost items in the cost slots (in either
+order). The unit item appears on the right; taking it uses up the cost items, and the crown
+stays. Shift-click makes as many as the cost items allow. Netherite crowns command the same
+units as their crown. Like a crafting table, it keeps no items: closing it gives them back.
+It turns to face you when placed.
+
+**Recipe** (unlocked by picking up a Faction Coin):
+
+| | Left | Middle | Right |
+|---|---|---|---|
+| **Top** | | Empty Map | |
+| **Middle** | Diamond | Faction Coin | Diamond |
+| **Bottom** | Planks (any) | Planks (any) | Planks (any) |
+
+| Crown | Units |
+|---|---|
+| Crown of Wither | Wither Skeleton |
+| Crown of Winter | Stray, Polar Bear, Snow Golem |
+| Crown of Iron | Pillager, Vindicator, Ravager, Evoker |
+| Crown of Darkness | Warden |
+| Crown of Sun | Husk, Parched |
+| Crown of Poseidon | Guardian |
+| Crown of Nether | Piglin, Hoglin, Ghast |
+
+The Golden Crown, Under Crown and Crown of Void command no units. Unit items look like the
+mob's spawn egg and are named after it ("Pillager Unit"). For now every unit costs 1 Iron
+Ingot and 1 Gold Ingot (placeholders until the real recipes are set), and units can't be
+deployed yet.
+
 ## Changes to vanilla
 
 These apply to everyone in a world with the mod, not just crown wearers:
@@ -365,6 +399,9 @@ Combat tab and materials in the Ingredients tab). With cheats on, they can also 
 /give @s crownofchaos:sculk_cord
 /give @s crownofchaos:ankh_charm
 /give @s crownofchaos:faction_flag   (belongs to whoever places it first)
+/give @s crownofchaos:faction_coin
+/give @s crownofchaos:commander_table
+/give @s crownofchaos:pillager_unit   (any unit's mob name + _unit)
 ```
 
 ## 3D models
@@ -384,6 +421,8 @@ made.
 | Crown of Winter | Diamond helmet (3D model planned) |
 | Crown of Iron | Diamond helmet (3D model planned) |
 | Crown of Void | Diamond helmet (3D model planned) |
+
+The Commander's Table also has its own custom 3D model.
 
 ## Development
 

@@ -35,6 +35,7 @@
   "item.crownofchaos.sculk_cord.lore": "The screeching has finally ceased...",
   "item.crownofchaos.ankh_charm": "Ankh Charm",
   "item.crownofchaos.ankh_charm.lore": "Ra would be proud.",
+  "item.crownofchaos.faction_coin": "Faction Coin",
 
   "key.category.crownofchaos.crowns": "Crown of Chaos",
   "key.crownofchaos.use_crown_ability": "Use Crown Ability",
@@ -188,5 +189,32 @@
   "gui.crownofchaos.faction.factions.empty": "No factions exist yet.",
   "gui.crownofchaos.faction.page": "Page %s of %s",
   "gui.crownofchaos.faction.page.previous": "◀",
-  "gui.crownofchaos.faction.page.next": "▶"
+  "gui.crownofchaos.faction.page.next": "▶",
+
+  "block.crownofchaos.commander_table": "Commander's Table",
+  "container.crownofchaos.commander_table": "Commander's Table",
+  "item.crownofchaos.unit.commanded_by": "Commanded by the %s",
+  "item.crownofchaos.unit.coming_soon": "Deploying units comes in a later update",
+  "item.crownofchaos.wither_skeleton_unit": "Wither Skeleton Unit",
+  "item.crownofchaos.stray_unit": "Stray Unit",
+  "item.crownofchaos.polar_bear_unit": "Polar Bear Unit",
+  "item.crownofchaos.snow_golem_unit": "Snow Golem Unit",
+  "item.crownofchaos.pillager_unit": "Pillager Unit",
+  "item.crownofchaos.vindicator_unit": "Vindicator Unit",
+  "item.crownofchaos.ravager_unit": "Ravager Unit",
+  "item.crownofchaos.evoker_unit": "Evoker Unit",
+  "item.crownofchaos.warden_unit": "Warden Unit",
+  "item.crownofchaos.husk_unit": "Husk Unit",
+  "item.crownofchaos.parched_unit": "Parched Unit",
+  "item.crownofchaos.guardian_unit": "Guardian Unit",
+  "item.crownofchaos.piglin_unit": "Piglin Unit",
+  "item.crownofchaos.hoglin_unit": "Hoglin Unit",
+  "item.crownofchaos.ghast_unit": "Ghast Unit",
+
+  "gui.crownofchaos.commander_table.crown": "Crown",
+  "gui.crownofchaos.commander_table.cost": "Cost",
+  "gui.crownofchaos.commander_table.place_crown": "Place a crown to see the units it commands",
+  "gui.crownofchaos.commander_table.no_units": "This crown commands no units",
+  "gui.crownofchaos.commander_table.pick_unit": "Pick a unit to make",
+  "gui.crownofchaos.commander_table.add_cost": "Add the cost items"
 }

@@ -6,6 +6,9 @@ import com.crownofchaos.item.CrownEffects;
 import com.crownofchaos.entity.ModEntities;
 import com.crownofchaos.faction.FactionManager;
 import com.crownofchaos.item.ModComponents;
+import com.crownofchaos.block.ModBlocks;
+import com.crownofchaos.menu.ModMenus;
+import com.crownofchaos.unit.ModUnits;
 
 import net.fabricmc.api.ModInitializer;
 
@@ -32,6 +35,9 @@ public class CrownOfChaos implements ModInitializer {
 
 		ModComponents.initialize();
 		ModItems.initialize();
+		ModBlocks.initialize();
+		ModUnits.initialize();
+		ModMenus.initialize();
 		ModEntities.initialize();
 		CrownEffects.initialize();
 		CrownAbilities.initialize();

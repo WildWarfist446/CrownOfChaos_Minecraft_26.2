@@ -153,8 +153,19 @@ often, so reread it, and implement only what Warfist asks for):
 
 Warfist's full plan is under "factions system" in `developing plans/Crown Ideas.md`. It's
 being built in parts, and is labeled **alpha** in the README (keep that label until Warfist
-says otherwise). **Part 1 (factions, menu, flags and territory) is done and committed** (4
-October 2026).
+says otherwise). **Part 1 (factions, menu, flags and territory)** and **part 2 (the
+Commander's Table and unit items)** are done and committed (4 October 2026).
+
+**Part 2, the Commander's Table:** a block (`block/CommanderTableBlock`, Warfist's 3D model
+from `3dmodels/Commander-table.json`, turns to face the placer) whose menu
+(`menu/CommanderTableMenu`, screen `client/menu/CommanderTableScreen`, written by a helper
+agent) works like a stonecutter: a crown slot, a list of that crown's units, two cost slots
+(either order) and a result slot. It keeps no items. Units are defined in `unit/ModUnits`:
+15 units for 7 crowns, from Warfist's plan (the Golden Crown, Under Crown and Crown of Void
+have none). **Unit costs are placeholders** (1 Iron Ingot + 1 Gold Ingot) until Warfist sends
+the real ones; each unit costs exactly two kinds of item. Unit items (`item/UnitItem`) use
+the vanilla spawn egg models and do nothing yet. The table's recipe is Warfist's (map,
+2 diamonds, Faction Coin, 3 planks); the Faction Coin is 8 gold ingots around an emerald.
 
 **Decisions Warfist made** (don't revisit without asking):
 - Faction colors are the **16 dye colors**, one faction per color (so at most 16 factions).
@@ -222,8 +233,9 @@ disbanding.
 **Known gaps:** a wall-mounted flag whose wall block is broken, or a flag destroyed by an
 explosion, drops a plain banner instead of a Faction Flag (the claim is still removed).
 
-**Next parts** (implement only what Warfist asks for, in his order): units (craftable unit
-items per crown, friendly to the faction, colored by faction), the Commander's Table,
+**Next parts** (implement only what Warfist asks for, in his order): the real unit costs,
+deploying unit items as mobs (friendly to the owner's faction, colored by faction, only
+controllable while wearing the matching crown, a notification when one dies out of sight),
 sentry mode, unit follow, unit attack, declaring war, and reclaiming units. Then make the
 red alert and stance settings drive what units attack. Before starting, read the full plan
 in `Crown Ideas.md` again; it changes often.

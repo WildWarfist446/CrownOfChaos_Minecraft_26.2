@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "M": "minecraft:map",
+    "D": "minecraft:diamond",
+    "C": "crownofchaos:faction_coin",
+    "P": "#minecraft:planks"
+  },
+  "pattern": [
+    " M ",
+    "DCD",
+    "PPP"
+  ],
+  "result": {
+    "id": "crownofchaos:commander_table"
+  }
+}
