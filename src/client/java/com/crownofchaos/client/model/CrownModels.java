@@ -1,5 +1,6 @@
 package com.crownofchaos.client.model;
 
+import com.crownofchaos.CrownOfChaos;
 import com.crownofchaos.item.ModItems;
 
 import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer;
@@ -33,5 +34,10 @@ public final class CrownModels {
 		ArmorRenderer.register(
 				context -> new CrownArmorRenderer(context.bakeLayer(CrownOfWitherModel.LAYER), CrownOfWitherModel.TEXTURE),
 				ModItems.CROWN_OF_WITHER, ModItems.NETHERITE_CROWN_OF_WITHER);
+
+		// The Crown of Darkness uses an item model JSON rather than an entity model.
+		ArmorRenderer.register(
+				context -> new CrownItemModelArmorRenderer(CrownOfChaos.id("crown_of_darkness_worn")),
+				ModItems.CROWN_OF_DARKNESS, ModItems.NETHERITE_CROWN_OF_DARKNESS);
 	}
 }

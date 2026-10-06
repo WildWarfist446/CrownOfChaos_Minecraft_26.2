@@ -489,7 +489,7 @@ made.
 | Under Crown | Custom 3D model |
 | Crown of Poseidon | Custom 3D model |
 | Crown of Nether | Custom 3D model |
-| Crown of Darkness | Diamond helmet (3D model planned) |
+| Crown of Darkness | Custom 3D model |
 | Crown of Sun | Diamond helmet (3D model planned) |
 | Crown of Wither | Custom 3D model |
 | Crown of Winter | Diamond helmet (3D model planned) |

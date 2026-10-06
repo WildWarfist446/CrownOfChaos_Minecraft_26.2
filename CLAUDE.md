@@ -139,7 +139,12 @@ Wither, Winter, Iron, Void), each with a netherite version, description, recipe 
 abilities (the Under Crown's secondary is Ore Sense, the Crown of Winter's is Icicle
 Drop); materials (Sculk Cord from Wardens, Ankh Charm in desert pyramids); a Dragon Egg
 on every dragon kill; the Crown of Chaos creative tab. Custom 3D models exist for the Under
-Crown, Poseidon, Nether and Wither crowns; the others render as helmets.
+Crown, Poseidon, Nether, Darkness and Wither crowns; the others render as helmets. The Crown of
+Darkness's is a Blockbench *Java Item* model (`3dmodels/CrownOfDarkness.json`, own texture), not a
+Modded Entity export: `client/model/CrownItemModelArmorRenderer` draws it on the head through a
+stand-in item (`items/crown_of_darkness_worn.json`, `models/item/crown_of_darkness_worn.json`,
+`textures/item/crown_of_darkness_model.png`); its `display.head` entry lines it up. Its inventory
+icon is still the sprite.
 
 Open ideas from `developing plans/Crown Ideas.md` (Warfist's planning file; it changes
 often, so reread it, and implement only what Warfist asks for):
