@@ -50,6 +50,7 @@ public final class UnitClient {
 
 	/** Per unit entity id: the game tick it was last checked, and whether the player could see it then (1) or not (0). */
 	private static final Map<Integer, long[]> LINE_OF_SIGHT = new HashMap<>();
+	private static final int LINE_OF_SIGHT_CACHE_LIMIT = 512;
 
 	/** Entity ids of the units this player has selected, as last sent by the server. */
 	private static final Set<Integer> SELECTED = new IntOpenHashSet();
@@ -123,6 +124,10 @@ public final class UnitClient {
 		// Outlines show through walls, so only draw them for units the player has a clear line to.
 		// Checked once per tick per unit, not every frame.
 		long now = client.level.getGameTime();
+		if (LINE_OF_SIGHT.size() > LINE_OF_SIGHT_CACHE_LIMIT) {
+			// Entries for removed entities are never looked up again; start over rather than track them.
+			LINE_OF_SIGHT.clear();
+		}
 		long[] cached = LINE_OF_SIGHT.get(entity.getId());
 		if (cached == null || cached[0] != now) {
 			cached = new long[] {now, client.player.hasLineOfSight(entity) ? 1 : 0};

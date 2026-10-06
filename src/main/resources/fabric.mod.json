@@ -3,7 +3,12 @@
 	"id": "crownofchaos",
 	"version": "${version}",
 	"name": "The Crown of Chaos",
-	"description": "A Fabric mod for Minecraft 26.2.",
+	"description": "Craft a Golden Crown and upgrade it into magical crowns with passive effects and abilities, then raise a faction with flags, territory and an army of mob units.",
+	"contact": {
+		"homepage": "https://github.com/WildWarfist446/CrownOfChaos_Minecraft_26.2",
+		"sources": "https://github.com/WildWarfist446/CrownOfChaos_Minecraft_26.2",
+		"issues": "https://github.com/WildWarfist446/CrownOfChaos_Minecraft_26.2/issues"
+	},
 	"authors": [
 		"Warfist"
 	],

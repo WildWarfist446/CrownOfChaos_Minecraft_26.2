@@ -451,7 +451,9 @@ These apply to everyone in a world with the mod, not just crown wearers:
    `mods` folder.
 3. Put the Crown of Chaos jar in your `mods` folder.
 
-The mod must be installed on both the client and the server.
+The mod must be installed on both the client and the server, and players can't join without it.
+Minecraft 26.2 needs Java 25 (the server needs it too). On a server, use the Fabric API version built
+for 26.2 (0.161.0 or newer).
 
 ## Finding the items
 
