@@ -349,7 +349,7 @@ It turns to face you when placed.
 
 | Crown | Unit | Cost |
 |---|---|---|
-| Crown of Wither | Wither Skeleton | 20 Nether Wart + 1 Bow |
+| Crown of Wither | Wither Skeleton | 20 Nether Wart + 1 Iron Sword |
 | Crown of Winter | Stray | 15 Snow Blocks + 1 Bow |
 | | Polar Bear | 15 Wool (any color) + 3 Raw Cod |
 | | Snow Golem | 4 Snow Blocks + 1 Jack o'Lantern |
@@ -363,7 +363,7 @@ It turns to face you when placed.
 | Crown of Poseidon | Guardian | 30 Kelp + 2 Prismarine Shards |
 | Crown of Nether | Piglin | 5 Raw Porkchops + 3 Gold Ingots |
 | | Hoglin | 10 Raw Porkchops + 5 Gold Ingots |
-| | Ghast | 10 Blaze Powder + 5 Fire Charges |
+| | Ghast | 10 Blaze Powder + 1 Ghast Tear |
 | Crown of Void | Enderman | 5 Ender Pearls + 5 End Stone |
 | | Shulker | 5 Purpur Blocks + 2 Diamonds |
 
@@ -381,7 +381,7 @@ unit of your faction (you must be in one). Units:
 - Warden units stay above ground (they never dig away) and don't give anyone Darkness;
 - are **passive** toward players and other units: they don't attack them, and don't fight back, except
   - against **wild hostile mobs** (zombies, skeletons, creepers and the like) that are attacking
-    you (their owner), or, when told to **Attack**, any within 24 blocks;
+    you (their owner) or your faction's units, or, when told to **Attack**, any within 24 blocks;
   - inside your faction's territory, against players and units of factions you've set to
     **Targeted**, and while **red alert** is on, against everyone who isn't **Allowed**
     (players with no faction included);
@@ -399,9 +399,10 @@ the Crown of Iron to command Pillagers, Vindicators, Ravagers and Evokers).
 - **Unit Commands** key (default **V**) toggles the command menu, a slim see-through strip on the
   right edge of the screen. It doesn't take over the mouse, camera or movement, so you can keep
   fighting with it open. Each order has a number key (1-7), so
-  V then 3 orders an attack without aiming; V again closes it:
+  V then 3 orders an attack without aiming. The menu stays open after an order, until you press V again:
   - **Follow Me:** they follow you, teleporting to you if they fall 24 blocks behind, so you
-    can lead them into enemy territory.
+    can lead them into enemy territory. They still fight mobs that attack you or your units, and
+    come back to you if they end up more than 40 blocks away.
   - **Sentry:** they stand guard where they are. Any hostile mob, or enemy by the faction rules,
     that comes into their aggro range makes them move to fight it, chasing at most 16 blocks from
     their post; once it's dead or gone they walk back to their post.

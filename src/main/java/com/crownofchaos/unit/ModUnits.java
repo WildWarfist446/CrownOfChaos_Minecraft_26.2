@@ -28,7 +28,7 @@ public final class ModUnits {
 	private static final List<UnitType> ALL = new ArrayList<>();
 
 	// Crown of Wither
-	public static final UnitType WITHER_SKELETON = unit("wither_skeleton", ModItems.CROWN_OF_WITHER, EntityTypes.WITHER_SKELETON, cost(Items.NETHER_WART, 20), cost(Items.BOW, 1));
+	public static final UnitType WITHER_SKELETON = unit("wither_skeleton", ModItems.CROWN_OF_WITHER, EntityTypes.WITHER_SKELETON, cost(Items.NETHER_WART, 20), cost(Items.IRON_SWORD, 1));
 	// Crown of Winter
 	public static final UnitType STRAY = unit("stray", ModItems.CROWN_OF_WINTER, EntityTypes.STRAY, cost(Items.SNOW_BLOCK, 15), cost(Items.BOW, 1));
 	public static final UnitType POLAR_BEAR = unit("polar_bear", ModItems.CROWN_OF_WINTER, EntityTypes.POLAR_BEAR, UnitType.Cost.anyOf(ItemTags.WOOL, Items.WOOL.white(), 15), cost(Items.COD, 3));
@@ -48,7 +48,7 @@ public final class ModUnits {
 	// Crown of Nether
 	public static final UnitType PIGLIN = unit("piglin", ModItems.CROWN_OF_NETHER, EntityTypes.PIGLIN, cost(Items.PORKCHOP, 5), cost(Items.GOLD_INGOT, 3));
 	public static final UnitType HOGLIN = unit("hoglin", ModItems.CROWN_OF_NETHER, EntityTypes.HOGLIN, cost(Items.PORKCHOP, 10), cost(Items.GOLD_INGOT, 5));
-	public static final UnitType GHAST = unit("ghast", ModItems.CROWN_OF_NETHER, EntityTypes.GHAST, cost(Items.BLAZE_POWDER, 10), cost(Items.FIRE_CHARGE, 5));
+	public static final UnitType GHAST = unit("ghast", ModItems.CROWN_OF_NETHER, EntityTypes.GHAST, cost(Items.BLAZE_POWDER, 10), cost(Items.GHAST_TEAR, 1));
 	// Crown of Void
 	public static final UnitType ENDERMAN = unit("enderman", ModItems.CROWN_OF_VOID, EntityTypes.ENDERMAN, cost(Items.ENDER_PEARL, 5), cost(Items.END_STONE, 5));
 	public static final UnitType SHULKER = unit("shulker", ModItems.CROWN_OF_VOID, EntityTypes.SHULKER, cost(Items.PURPUR_BLOCK, 5), cost(Items.DIAMOND, 2));

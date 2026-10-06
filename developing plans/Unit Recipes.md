@@ -10,7 +10,7 @@ These are the recipes in the mod now. Change any of them here and tell Claude to
 
 | Unit | Item 1 | Amount | Item 2 | Amount |
 |---|---|---|---|---|
-| Wither Skeleton Unit | Nether Wart | 20 | Bow | 1 |
+| Wither Skeleton Unit | Nether Wart | 20 | Iron Sword | 1 |
 
 ## Crown of Winter
 
@@ -54,7 +54,7 @@ These are the recipes in the mod now. Change any of them here and tell Claude to
 |---|---|---|---|---|
 | Piglin Unit | Raw Porkchop | 5 | Gold Ingot | 3 |
 | Hoglin Unit | Raw Porkchop | 10 | Gold Ingot | 5 |
-| Ghast Unit | Blaze Powder | 10 | Fire Charge | 5 |
+| Ghast Unit | Blaze Powder | 10 | Ghast Tear | 1 |
 
 ## Crown of Void
 

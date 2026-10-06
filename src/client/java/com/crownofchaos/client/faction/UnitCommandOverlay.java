@@ -20,7 +20,7 @@ import net.minecraft.util.FormattedCharSequence;
  * screen, drawn as part of the HUD rather than as a screen. The game keeps control of the mouse,
  * camera and movement while it's open, so you can keep fighting. Each order has a number key
  * (1-7), which gives it instead of switching the hotbar (see {@link UnitClient}); the scroll
- * wheel still changes the held item. Pressing V again closes it, and so does giving an order.
+ * wheel still changes the held item. It stays open until you press V again.
  * Orders go to the selected units, or with none selected, every unit nearby you can command.
  */
 public final class UnitCommandOverlay implements HudElement {
@@ -63,12 +63,11 @@ public final class UnitCommandOverlay implements HudElement {
 		open = value;
 	}
 
-	/** Gives the order on number key {@code index} (0-based) and closes the overlay. */
+	/** Gives the order on number key {@code index} (0-based). The overlay stays open for the next one. */
 	public static void give(int index) {
 		if (ClientPlayNetworking.canSend(UnitCommandPayload.TYPE)) {
 			ClientPlayNetworking.send(new UnitCommandPayload(ORDERS.get(index).command()));
 		}
-		open = false;
 	}
 
 	@Override

@@ -180,8 +180,9 @@ the mob as a unit of the player's faction (they must be in one). `unit/UnitManag
 - the `crownofchaos:unit` data attachment (`UnitData`: owner, faction, unit id, faction
   color), saved with the mob and synced to every player;
 - the fighting rules, decided by Warfist: units are **passive** (don't attack, don't fight
-  back) except against wild hostile mobs (anything that is an `Enemy`) that are attacking their owner
-  (targeting them or hurt them in the last 5 seconds), or any within range while on the Attack order
+  back) except against wild hostile mobs (anything that is an `Enemy`) that are attacking their owner or their faction's units
+  (targeting them, or hurt the owner in the last 5 seconds; this holds while following, until the follower is
+  `FOLLOW_FIGHT_RANGE` (40) blocks from its leader), or any within range while on the Attack order
   (added 5 October 2026 at Warfist's request), against factions at war with theirs (`atWar`, a stub until war exists) and,
   inside their own territory, against players and units of Targeted factions or, on red
   alert, anyone not Allowed. They never fight their own faction. This is applied by making
@@ -209,7 +210,7 @@ follow leader). The selection scheme was Claude's suggestion, accepted by Warfis
   Right-click toggles sentry; sneak + right-click toggles selection (selected units glow for
   that player only: `UnitSelectionPayload` and `client/mixin/MinecraftGlowMixin`).
 - Orders (`UnitCommandPayload`) go to the selection, or with none, to all commandable units
-  within 32 blocks. Keys: V toggles `client/faction/UnitCommandOverlay` (a slim see-through HUD strip on the
+  within 32 blocks. Keys: V toggles `client/faction/UnitCommandOverlay` (it stays open after an order) (a slim see-through HUD strip on the
   right, not a screen, so camera and movement stay free; `UnitClient` takes the number keys 1-7
   before vanilla's hotbar does and gives the orders), B toggles follow (`client/UnitClient`).
 - `UnitGoals.OrdersGoal` moves units for sentry and follow (brain mobs via their walk

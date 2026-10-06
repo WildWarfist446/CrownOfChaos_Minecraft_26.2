@@ -37,7 +37,8 @@ import net.minecraft.world.phys.Vec3;
  * fight back when hit, except
  * <ul>
  * <li>against wild hostile mobs (anything that is an {@code Enemy}, such as zombies, skeletons
- *     and creepers) that are attacking their owner, that come into a sentry's aggro range, or,
+ *     and creepers) that are attacking their owner or their faction's units (even while following,
+ *     unless the follower is more than {@link #FOLLOW_FIGHT_RANGE} blocks from its leader), that come into a sentry's aggro range, or,
  *     when told to attack, are within {@link #ATTACK_RANGE} blocks,
  * <li>when told to attack: against players and units within {@link #ATTACK_RANGE} blocks of
  *     any faction it hasn't set to Allowed (including players with no faction),
@@ -59,6 +60,8 @@ public final class UnitManager {
 
 	/** Units told to attack go after enemies up to this many blocks away. */
 	public static final double ATTACK_RANGE = 24.0;
+	/** A following unit stops fighting and rejoins its leader once it is this many blocks from them. */
+	public static final double FOLLOW_FIGHT_RANGE = 40.0;
 	/** A mob that hurt the owner this recently (5 seconds) still counts as attacking them. */
 	private static final int OWNER_HURT_TICKS = 100;
 
@@ -152,11 +155,16 @@ public final class UnitManager {
 		if (atWar(faction, target, targetFaction)) {
 			return true;
 		}
+		// A follower drops any fight once it is way out of range of its leader, and rejoins them.
+		if (data.order() == UnitOrder.FOLLOW && isFarFromLeader(unit, data)) {
+			return false;
+		}
 		// Wild hostile mobs (not other units, even hostile-type ones): fought by a sentry (inside its leash, checked
-		// above) when they come into its aggro range, when told to attack, or when they're after the owner.
+		// above) when they come into its aggro range, when told to attack, or, whatever the order (following
+		// included), when they're after the owner or their faction's units.
 		if (target instanceof Enemy && !target.hasAttached(UNIT)
 				&& (data.order() == UnitOrder.SENTRY || data.order() == UnitOrder.ATTACK && unit.distanceTo(target) <= ATTACK_RANGE
-						|| isAttackingOwner(unit, data, target))) {
+						|| isAggroOnUs(unit, data, target))) {
 			return true;
 		}
 		boolean playerOrUnit = target instanceof Player || target.hasAttached(UNIT);
@@ -174,14 +182,27 @@ public final class UnitManager {
 		return stance == FactionStance.TARGETED || faction.redAlert() && stance != FactionStance.ALLOWED;
 	}
 
-	/** Whether the mob is going after the unit's owner, or hurt them within the last {@link #OWNER_HURT_TICKS}. */
-	private static boolean isAttackingOwner(Entity unit, UnitData data, LivingEntity target) {
-		Player owner = unit.level().getPlayerByUUID(data.owner());
-		if (owner == null || !owner.isAlive()) {
-			return false;
+	/** Whether a following unit has strayed further than {@link #FOLLOW_FIGHT_RANGE} from the player it follows. */
+	private static boolean isFarFromLeader(Entity unit, UnitData data) {
+		Player leader = data.leader().map(id -> unit.level().getPlayerByUUID(id)).orElse(null);
+		return leader != null && unit.distanceTo(leader) > FOLLOW_FIGHT_RANGE;
+	}
+
+	/**
+	 * Whether the mob is aggro'd on us: going after the unit's owner or any unit of its faction,
+	 * or it hurt the owner within the last {@link #OWNER_HURT_TICKS}.
+	 */
+	private static boolean isAggroOnUs(Entity unit, UnitData data, LivingEntity target) {
+		if (target instanceof Mob mob && mob.getTarget() != null) {
+			LivingEntity aimedAt = mob.getTarget();
+			UnitData aimedUnit = aimedAt.getAttached(UNIT);
+			if (aimedUnit != null && aimedUnit.faction().equals(data.faction()) || aimedAt.getUUID().equals(data.owner())) {
+				return true;
+			}
 		}
-		return target instanceof Mob mob && mob.getTarget() == owner
-				|| owner.getLastHurtByMob() == target && owner.tickCount - owner.getLastHurtByMobTimestamp() <= OWNER_HURT_TICKS;
+		Player owner = unit.level().getPlayerByUUID(data.owner());
+		return owner != null && owner.isAlive() && owner.getLastHurtByMob() == target
+				&& owner.tickCount - owner.getLastHurtByMobTimestamp() <= OWNER_HURT_TICKS;
 	}
 
 	/** The faction an entity fights for: a player's faction, or a unit's. */
