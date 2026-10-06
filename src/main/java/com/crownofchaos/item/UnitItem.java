@@ -53,6 +53,11 @@ public final class UnitItem extends Item {
 			return InteractionResult.FAIL;
 		}
 
+		if (UnitManager.countUnits(level.getServer(), player.getUUID()) >= UnitManager.MAX_UNITS_PER_PLAYER) {
+			player.sendOverlayMessage(Component.translatable("message.crownofchaos.unit.limit_reached", UnitManager.MAX_UNITS_PER_PLAYER).withStyle(ChatFormatting.RED));
+			return InteractionResult.FAIL;
+		}
+
 		// Where to put it, as a spawn egg does: in the clicked block if it's open, otherwise beside it.
 		BlockPos clicked = context.getClickedPos();
 		Direction face = context.getClickedFace();

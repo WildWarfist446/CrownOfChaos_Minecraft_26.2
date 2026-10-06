@@ -203,6 +203,8 @@ the mob as a unit of the player's faction (they must be in one). `unit/UnitManag
   tinted, and `client/mixin/UnitOutlineMixin` plus `MinecraftGlowMixin` give every unit within 64
   blocks (`UnitClient.OUTLINE_RANGE`) an outline in that color while the player has line of sight (`hasLineOfSight`, cached per tick;
   outlines otherwise show through walls); selected units are outlined white, through walls too. Dark mob textures stay dark under a tint, which is why the outline exists.
+- Each player can have at most `UnitManager.MAX_UNITS_PER_PLAYER` (40, set by Warfist) units; `UnitItem` refuses
+  to summon past it (counted over loaded chunks by `UnitManager.countUnits`).
 - Units never despawn and don't burn in daylight (`mixin/MobSunMixin`); Piglin and Hoglin units
   don't zombify. Warden units never give Darkness (`mixin/WardenDarknessMixin`) and always keep
   a dig cooldown, because a Warden with none digs into the ground and is removed (Warfist:

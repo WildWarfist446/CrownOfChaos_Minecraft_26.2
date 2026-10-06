@@ -60,6 +60,8 @@ public final class UnitManager {
 
 	/** Units told to attack go after enemies up to this many blocks away. */
 	public static final double ATTACK_RANGE = 24.0;
+	/** The most units one player can have summoned at once; reclaiming or losing units frees slots. */
+	public static final int MAX_UNITS_PER_PLAYER = 40;
 	/** A following unit stops fighting and rejoins its leader once it is this many blocks from them. */
 	public static final double FOLLOW_FIGHT_RANGE = 40.0;
 	/** A mob that hurt the owner this recently (5 seconds) still counts as attacking them. */
@@ -80,6 +82,23 @@ public final class UnitManager {
 				}
 			}
 		});
+	}
+
+	/**
+	 * How many units the player has summoned that are in loaded chunks (units in unloaded chunks
+	 * count again once they load).
+	 */
+	public static int countUnits(MinecraftServer server, UUID owner) {
+		int count = 0;
+		for (ServerLevel level : server.getAllLevels()) {
+			for (Entity entity : level.getAllEntities()) {
+				UnitData data = entity.getAttached(UNIT);
+				if (data != null && data.owner().equals(owner) && entity.isAlive()) {
+					count++;
+				}
+			}
+		}
+		return count;
 	}
 
 	/** Turns a newly created mob, before it's added to the world, into a unit of the player's faction. */

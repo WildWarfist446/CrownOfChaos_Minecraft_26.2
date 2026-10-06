@@ -197,6 +197,7 @@
   "container.crownofchaos.commander_table": "Commander's Table",
   "item.crownofchaos.unit.commanded_by": "Commanded by the %s",
   "item.crownofchaos.unit.how_to_use": "Use on a block to summon it for your faction",
+  "message.crownofchaos.unit.limit_reached": "Unit limit reached: you can have up to %s units at once",
   "message.crownofchaos.unit.no_faction": "Join a faction to summon units",
   "item.crownofchaos.wither_skeleton_unit": "Wither Skeleton Unit",
   "item.crownofchaos.stray_unit": "Stray Unit",

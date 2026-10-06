@@ -376,6 +376,7 @@ unit of your faction (you must be in one). Units:
 - are tinted in a bright, vivid version of your faction's color and outlined in it (up to 64 blocks away,
   only while you can see them), so anyone can tell whose they are at a glance; they change color
   with the faction (white factions are only outlined, as white leaves the mob unchanged);
+- are limited to **40 per player** at once (reclaim or lose some to summon more);
 - never despawn, don't burn in daylight, and Piglins and Hoglins don't turn into zombies
   outside the Nether;
 - Warden units stay above ground (they never dig away) and don't give anyone Darkness;
