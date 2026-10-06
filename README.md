@@ -279,7 +279,7 @@ Times in brackets are cooldowns. "Aimed" abilities hit whatever you're looking a
 Descriptions: the Sculk Cord reads *"The screeching has finally ceased..."* and the Ankh
 Charm reads *"Ra would be proud."*
 
-## Factions (beta)
+## Factions & Units (beta)
 
 > **Beta:** the faction system's main features are complete: factions, the faction menu,
 > territory, the Commander's Table, army units you can summon and command, and war. It's
