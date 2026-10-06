@@ -396,8 +396,9 @@ the Crown of Iron to command Pillagers, Vindicators, Ravagers and Evokers).
   only.
 - Orders go to your **selected units**, or, with none selected, to **all your units within
   32 blocks**.
-- **Unit Commands** key (default **V**) toggles the command menu, a slim see-through strip on the
-  right edge of the screen. It doesn't take over the mouse, camera or movement, so you can keep
+- **Unit Commands** key (default **V**) toggles the command menu, a slim see-through row above
+  your hotbar and status bars (so it never covers your items), with a small status line and, when you
+  have nothing to command, a tiny "Sneak + Click to select one unit" hint above it, away from the crosshair. It doesn't take over the mouse, camera or movement, so you can keep
   fighting with it open. Each order has a number key (1-7), so
   V then 3 orders an attack without aiming. The menu stays open after an order, until you press V again:
   - **Follow Me:** they follow you, teleporting to you if they fall 24 blocks behind, so you

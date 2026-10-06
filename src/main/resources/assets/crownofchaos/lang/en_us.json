@@ -244,7 +244,7 @@
   "gui.crownofchaos.units.selected": "Selected: %s",
   "gui.crownofchaos.units.nearby": "Nearby: %s",
   "gui.crownofchaos.units.none": "No units to command",
-  "gui.crownofchaos.units.crown_hint": "Select units with sneak + right-click, or stand near your units. You can command your faction's units whose crown you're wearing.",
+  "gui.crownofchaos.units.crown_hint": "Sneak + Click to select one unit",
   "gui.crownofchaos.units.follow": "Follow Me",
   "gui.crownofchaos.units.sentry": "Sentry",
   "gui.crownofchaos.units.attack": "Attack",

@@ -210,8 +210,8 @@ follow leader). The selection scheme was Claude's suggestion, accepted by Warfis
   Right-click toggles sentry; sneak + right-click toggles selection (selected units glow for
   that player only: `UnitSelectionPayload` and `client/mixin/MinecraftGlowMixin`).
 - Orders (`UnitCommandPayload`) go to the selection, or with none, to all commandable units
-  within 32 blocks. Keys: V toggles `client/faction/UnitCommandOverlay` (it stays open after an order) (a slim see-through HUD strip on the
-  right, not a screen, so camera and movement stay free; `UnitClient` takes the number keys 1-7
+  within 32 blocks. Keys: V toggles `client/faction/UnitCommandOverlay` (it stays open after an order; a slim see-through HUD row above the hotbar and
+  status bars, with small status and hint text above it, shrunk to fit narrow screens; not a screen, so camera and movement stay free; `UnitClient` takes the number keys 1-7
   before vanilla's hotbar does and gives the orders), B toggles follow (`client/UnitClient`).
 - `UnitGoals.OrdersGoal` moves units for sentry and follow (brain mobs via their walk
   target, flying mobs via move control); `UnitGoals.WatchGoal` drops targets the rules no
