@@ -127,37 +127,67 @@ classes can be inspected with `javap` from the jars in `~/.gradle/caches/modules
   versions (see DEVELOPMENT.md).
 - **Player data:** anything that changes saved player state (like flight) must be undone
   on disconnect and cleaned up on join, in case of a crash.
-- **3D models:** convert Blockbench "Modded Entity" exports (Mojang mappings) from
-  `3dmodels/` into `client/model/`, nesting the crown under a `head` part. Player-head
-  template exports sit 24 pixels too low and include template head cubes to remove. Register
-  the model for both the crown and its netherite version.
+- **3D models:** every crown shows its 3D model both worn and as the item (not the sprite).
+  Blockbench "Java Item" exports become `models/item/<crown>_worn.json` (see "Crown 3D
+  models" below). Older "Modded Entity" exports (Mojang mappings) become classes in
+  `client/model/`, nesting the crown under a `head` part (player-head template exports sit 24
+  pixels too low and include template head cubes to remove) and are added to
+  `CrownSpecialRenderer` for the item. Register each model for both the crown and its
+  netherite version, and check it in game from the front.
 
-## Current state (October 2026)
+## Current state (6 October 2026)
 
 Done: the Golden Crown plus nine magical crowns (Under, Poseidon, Nether, Darkness, Sun,
 Wither, Winter, Iron, Void), each with a netherite version, description, recipe and
 abilities (the Under Crown's secondary is Ore Sense, the Crown of Winter's is Icicle
 Drop); materials (Sculk Cord from Wardens, Ankh Charm in desert pyramids); a Dragon Egg
-on every dragon kill; the Crown of Chaos creative tab. Custom 3D models exist for the Golden
-Crown and all nine magical crowns, used worn and as the items (Warfist chose 3D items over the
-sprites, like the Commander's Table). The Crown of Winter's two-color texture is deliberate
-(cartoony, like the Ice King), not a placeholder. The Golden Crown's and the Crowns of Darkness's,
-Sun's, Winter's, Iron's and Void's are Blockbench *Java Item* models
-(`3dmodels/GoldenCrown.json`, `CrownOfDarkness.json`, `CrownOfSun.json`, `CrownOfWinter.json`, `CrownOfIron.json`, `CrownOfVoid.json`, each with its own texture, taken
-from the `.bbmodel`), not Modded Entity exports: `client/model/CrownItemModelArmorRenderer` draws
-each on the head through a stand-in item (`items/<crown>_worn.json`, `models/item/<crown>_worn.json`,
-`textures/item/<crown>_model.png`); its `display.head` entry lines it up. To update one, copy
-the export's elements into the worn model, keeping its textures and display, and drop the
-untextured `reference head` cube (its `#missing` faces stop the model from loading). That cube
-(9 pixels, from 3.5 to 12.5, starting at y=0) stands for the head with its hat layer, so
-`display.head` (translation 0, 5.6, 0; scale 1.6) lines it up with the player's head, one
-Blockbench pixel to one skin pixel; keep the crown drawn around it (the Golden Crown is shrunk to scale 1.44, translation 5.28, keeping its base in place; the Crown of Iron, whose band hangs down the sides, to 1.3 and 5.9, keeping its top on the head; the Crown of Void the same, plus a `[0, 180, 0]` rotation because it was drawn facing backward, with its Enderman eyes on the back). The Crown of Void uses three textures (`crown_of_void_model`, `_tines`, `_frame`, taken from the `.bbmodel` in order); the export's UVs are right for all three. Bands drawn 12 pixels across look too wide at full size, so shrink crowns that hug the head. Blockbench exports 90 and 180 degree turns as `x`/`y`/`z` rotations, which 26.2 reads fine. As items, these
-use the same `_worn` model (`items/<crown>.json` points at it), whose parent
-`models/item/crown_display.json` holds the inventory, hand, ground and frame transforms; the
-Crown of Void overrides them turned 180 degrees. The entity-model crowns (Under, Poseidon,
-Nether, Wither) are drawn as items by `client/model/CrownSpecialRenderer`, registered as the
-special item model type `crownofchaos:crown` (`items/<crown>.json`, base model
-`models/item/<crown>_3d.json`). The sprite PNGs stay in `textures/item/` as artwork.
+on every dragon kill; the Crown of Chaos creative tab; the faction system (beta, see below).
+Every crown now has a custom 3D model, used both worn and as the item (last commit
+`edbbefa`). Only the magical crowns always shimmer: the Golden Crown has no forced glint
+(it shimmers only when enchanted), and worn models copy the real item's glint.
+
+### Crown 3D models
+
+Warfist (and Ted) draw them in Blockbench and save them to `3dmodels/`; Warfist often
+re-saves a model several times in a row, so after "I updated the model" diff the new export
+against the worn model and bring in only what changed (pieces and texture).
+
+- **Entity models** (Under, Poseidon, Nether, Wither): Blockbench "Modded Entity" exports
+  converted to classes in `client/model/` (`UnderCrownModel` and so on), worn through
+  `CrownArmorRenderer`, and drawn as items by `CrownSpecialRenderer`, registered as the
+  special item model type `crownofchaos:crown` (`items/<crown>.json`, base model
+  `models/item/<crown>_3d.json` for the display transforms).
+- **Java Item models** (Golden, Darkness, Sun, Winter, Iron, Void): `3dmodels/<Name>.json`
+  plus `.bbmodel`. Each becomes `models/item/<crown>_worn.json` (the export's elements with
+  `groups` dropped, textures renamed to `crownofchaos:item/<crown>_model`, taken from the
+  `.bbmodel` in order) and is worn through `CrownItemModelArmorRenderer` via the stand-in item
+  `items/<crown>_worn.json`. As items, `items/<crown>.json` (and the netherite one) point at
+  the same worn model, whose parent `models/item/crown_display.json` holds the inventory,
+  hand, ground and frame transforms.
+- **Converting an export:** drop the untextured `reference head` cube (its `#missing` faces
+  stop the model from loading). That cube (9 pixels, 3.5 to 12.5, from y=0) is the head with
+  its hat layer, so `display.head` translation `[0, 5.6, 0]`, scale `1.6` puts the crown on
+  the head exactly as drawn. Blockbench exports 90 and 180 degree turns as `x`/`y`/`z`
+  rotations, which 26.2 reads fine; the export's UVs are right even with several textures of
+  different sizes.
+- **Per-crown head transforms** (bands drawn 12 pixels across look too wide at full size, so
+  shrink crowns that hug the head, keeping the part that rests on the head in place):
+  Darkness, Sun: 1.6 / 5.6. Golden, Winter (sit on top): 1.44 / 5.28 (Warfist asked for the
+  Golden Crown smaller). Iron, Void (band hangs down the sides): 1.3 / 5.9. Void also has a
+  `[0, 180, 0]` rotation in every display entry because it was drawn facing backward (Enderman
+  eyes on the back).
+- The Crown of Void uses three textures (`crown_of_void_model`, `_tines`, `_frame`). The
+  Crown of Winter's two-color yellow and red texture is deliberate (cartoony, like the Ice
+  King from Adventure Time), not a placeholder.
+- The hand-drawn sprites stay in `Sprites/` and `textures/item/` as artwork; nothing uses
+  them as item icons now.
+
+**Seen in game:** every crown worn (front view), all ten in the inventory (Winter still as a
+sprite at the time), the Crown of Sun held in third person. **Not seen yet:** the
+entity-model crowns (Under, Poseidon, Nether, Wither) held in hand, the Winter crown's 3D
+inventory icon, crowns in item frames, on shelves and dropped on the ground. The
+`crown_display` transforms (gui scale 0.8, rotation 30/225) are a first pass; tweak them if
+Warfist asks.
 
 Open ideas from `developing plans/Crown Ideas.md` (Warfist's planning file; it changes
 often, so reread it, and implement only what Warfist asks for):
@@ -170,9 +200,7 @@ often, so reread it, and implement only what Warfist asks for):
   teleport dodge; abilities "The pain of death" (volley, wither skull, fire charge and
   lightning at once) and "Death's door" (Darkness Pulse lasting 300% longer); netherite
   stats from the start and no netherite upgrade; "glitched" combined texture.
-- The rest of the **faction system** (see the next section): units, the Commander's Table,
-  sentry, follow and attack commands, declaring war, reclaiming units.
-- Remaining 3D models.
+- Faction system testing that needs two players (see below).
 
 ## Faction system (beta)
 
