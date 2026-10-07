@@ -139,9 +139,9 @@ Wither, Winter, Iron, Void), each with a netherite version, description, recipe 
 abilities (the Under Crown's secondary is Ore Sense, the Crown of Winter's is Icicle
 Drop); materials (Sculk Cord from Wardens, Ankh Charm in desert pyramids); a Dragon Egg
 on every dragon kill; the Crown of Chaos creative tab. Custom 3D models exist for the Golden
-Crown, Under Crown, Poseidon, Nether, Darkness and Wither crowns; the others render as helmets. The
-Golden Crown's and the Crown of Darkness's are Blockbench *Java Item* models
-(`3dmodels/GoldenCrown.json`, `3dmodels/CrownOfDarkness.json`, each with its own texture, taken
+Crown, Under Crown, Poseidon, Nether, Darkness, Sun and Wither crowns; the others render as helmets. The
+Golden Crown's and the Crowns of Darkness's and Sun's are Blockbench *Java Item* models
+(`3dmodels/GoldenCrown.json`, `CrownOfDarkness.json`, `CrownOfSun.json`, each with its own texture, taken
 from the `.bbmodel`), not Modded Entity exports: `client/model/CrownItemModelArmorRenderer` draws
 each on the head through a stand-in item (`items/<crown>_worn.json`, `models/item/<crown>_worn.json`,
 `textures/item/<crown>_model.png`); its `display.head` entry lines it up. To update one, copy

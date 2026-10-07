@@ -35,12 +35,15 @@ public final class CrownModels {
 				context -> new CrownArmorRenderer(context.bakeLayer(CrownOfWitherModel.LAYER), CrownOfWitherModel.TEXTURE),
 				ModItems.CROWN_OF_WITHER, ModItems.NETHERITE_CROWN_OF_WITHER);
 
-		// The Golden Crown and the Crown of Darkness use item model JSONs rather than entity models.
+		// The Golden Crown and the Crowns of Darkness and Sun use item model JSONs rather than entity models.
 		ArmorRenderer.register(
 				context -> new CrownItemModelArmorRenderer(CrownOfChaos.id("golden_crown_worn")),
 				ModItems.GOLDEN_CROWN);
 		ArmorRenderer.register(
 				context -> new CrownItemModelArmorRenderer(CrownOfChaos.id("crown_of_darkness_worn")),
 				ModItems.CROWN_OF_DARKNESS, ModItems.NETHERITE_CROWN_OF_DARKNESS);
+		ArmorRenderer.register(
+				context -> new CrownItemModelArmorRenderer(CrownOfChaos.id("crown_of_sun_worn")),
+				ModItems.CROWN_OF_SUN, ModItems.NETHERITE_CROWN_OF_SUN);
 	}
 }
