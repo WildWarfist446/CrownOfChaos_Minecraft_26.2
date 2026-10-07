@@ -99,7 +99,7 @@ change by itself.
 3. Copy the texture to `assets/crownofchaos/textures/entity/`.
 4. Register it in `CrownModels.initialize()` for both the crown and its netherite version.
 
-A model exported as a **Java Item** (an item model JSON, like the Golden Crown and the Crowns of Darkness, Sun and Iron) can be worn
+A model exported as a **Java Item** (an item model JSON, like the Golden Crown and the Crowns of Darkness, Sun, Iron and Void) can be worn
 instead: copy its JSON to `models/item/<crown>_worn.json` with your own texture, add
 `items/<crown>_worn.json`, add a `display.head` transform to line it up, and register a
 `CrownItemModelArmorRenderer` for the crown and its netherite version. Draw the crown around a
