@@ -44,8 +44,9 @@ public final class CrownItemModelArmorRenderer implements ArmorRenderer {
 		if (this.wornStack == null) {
 			this.wornStack = new ItemStack(Items.STICK);
 			this.wornStack.set(DataComponents.ITEM_MODEL, this.itemModel);
-			this.wornStack.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
 		}
+		// Shimmer only if the worn crown does (the Golden Crown doesn't unless it's enchanted).
+		this.wornStack.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, stack.hasFoil());
 		Minecraft client = Minecraft.getInstance();
 		client.getItemModelResolver().updateForTopItem(this.renderState, this.wornStack, ItemDisplayContext.HEAD, client.level, null, 0);
 		poseStack.pushPose();

@@ -106,7 +106,7 @@ classes can be inspected with `javap` from the jars in `~/.gradle/caches/modules
 
 ## Standing rules for the mod
 
-- **New crowns:** create them with `ModItems.registerCrown(...)` (adds the enchanted glint,
+- **New crowns:** create them with `ModItems.registerCrown(...)` (adds the enchanted glint (not on the Golden Crown),
   description line and helmet stats) and give every crown except the Golden Crown a
   netherite version with `registerNetheriteCrown(...)`, a smithing recipe and an unlock
   advancement. Follow the "Adding a crown" checklist in DEVELOPMENT.md, and add the crown to
@@ -138,18 +138,19 @@ Done: the Golden Crown plus nine magical crowns (Under, Poseidon, Nether, Darkne
 Wither, Winter, Iron, Void), each with a netherite version, description, recipe and
 abilities (the Under Crown's secondary is Ore Sense, the Crown of Winter's is Icicle
 Drop); materials (Sculk Cord from Wardens, Ankh Charm in desert pyramids); a Dragon Egg
-on every dragon kill; the Crown of Chaos creative tab. Custom 3D models exist for the Under
-Crown, Poseidon, Nether, Darkness and Wither crowns; the others render as helmets. The Crown of
-Darkness's is a Blockbench *Java Item* model (`3dmodels/CrownOfDarkness.json`, own texture), not a
-Modded Entity export: `client/model/CrownItemModelArmorRenderer` draws it on the head through a
-stand-in item (`items/crown_of_darkness_worn.json`, `models/item/crown_of_darkness_worn.json`,
-`textures/item/crown_of_darkness_model.png`); its `display.head` entry lines it up. To update it, copy
+on every dragon kill; the Crown of Chaos creative tab. Custom 3D models exist for the Golden
+Crown, Under Crown, Poseidon, Nether, Darkness and Wither crowns; the others render as helmets. The
+Golden Crown's and the Crown of Darkness's are Blockbench *Java Item* models
+(`3dmodels/GoldenCrown.json`, `3dmodels/CrownOfDarkness.json`, each with its own texture, taken
+from the `.bbmodel`), not Modded Entity exports: `client/model/CrownItemModelArmorRenderer` draws
+each on the head through a stand-in item (`items/<crown>_worn.json`, `models/item/<crown>_worn.json`,
+`textures/item/<crown>_model.png`); its `display.head` entry lines it up. To update one, copy
 the export's elements into the worn model, keeping its textures and display, and drop the
 untextured `reference head` cube (its `#missing` faces stop the model from loading). That cube
 (9 pixels, from 3.5 to 12.5, starting at y=0) stands for the head with its hat layer, so
 `display.head` (translation 0, 5.6, 0; scale 1.6) lines it up with the player's head, one
-Blockbench pixel to one skin pixel; keep the crown drawn around it. Its inventory
-icon is still the sprite.
+Blockbench pixel to one skin pixel; keep the crown drawn around it (the Golden Crown is shrunk to scale 1.44, translation 5.28, keeping its base in place). Their inventory
+icons are still the sprites.
 
 Open ideas from `developing plans/Crown Ideas.md` (Warfist's planning file; it changes
 often, so reread it, and implement only what Warfist asks for):

@@ -19,7 +19,8 @@ is worn. Every magical crown can also be upgraded to netherite.
 
 ## Crowns
 
-Every crown shimmers with the enchanted glint, in the inventory and when worn. All crowns
+Every magical crown shimmers with the enchanted glint, in the inventory and when worn; the
+Golden Crown only does once enchanted, like normal gear. All crowns
 except the Golden Crown have the same armor, toughness, durability and enchantability as a
 diamond helmet and are repaired with diamonds. Their effects are applied while the crown is
 on your head and removed as soon as it comes off; potion and beacon effects you already
@@ -31,7 +32,8 @@ have are left untouched.
 
 The base crown that every other crown is crafted from. It has the same stats as a golden
 helmet, has no effects or ability (the crown ability key does nothing while it's worn),
-and keeps Piglins calm like other gold armor.
+and keeps Piglins calm like other gold armor. It has its own 3D model when worn and, not being
+magical, no enchanted shimmer unless it is enchanted.
 
 **Recipe** (unlocked by picking up a Gold Ingot):
 
@@ -488,7 +490,7 @@ made.
 
 | Crown | Worn model |
 |---|---|
-| Golden Crown | Golden helmet (3D model planned) |
+| Golden Crown | Custom 3D model |
 | Under Crown | Custom 3D model |
 | Crown of Poseidon | Custom 3D model |
 | Crown of Nether | Custom 3D model |

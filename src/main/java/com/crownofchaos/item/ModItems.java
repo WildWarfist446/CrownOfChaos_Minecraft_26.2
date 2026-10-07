@@ -54,7 +54,7 @@ public final class ModItems {
 	private static final Set<Item> CROWNS = new HashSet<>();
 
 	/** The base crown every other crown is crafted from. Golden helmet stats. */
-	public static final Item GOLDEN_CROWN = registerCrown("golden_crown", ArmorMaterials.GOLD, Rarity.UNCOMMON);
+	public static final Item GOLDEN_CROWN = registerCrown("golden_crown", ArmorMaterials.GOLD, Rarity.UNCOMMON, false);
 
 	// The magical crowns have the same armor, toughness, durability and repair item as a diamond
 	// helmet, and render as a diamond helmet when worn until their custom 3D model is ready.
@@ -107,14 +107,25 @@ public final class ModItems {
 	}
 
 	/**
-	 * Registers a crown: a helmet of the given armor material with its description line and the
-	 * enchanted glint, which every crown has whether or not it's enchanted.
+	 * Registers a magical crown: a helmet of the given armor material with its description line
+	 * and the enchanted glint, which every magical crown has whether or not it's enchanted.
 	 */
 	private static Item registerCrown(String name, ArmorMaterial material, Rarity rarity) {
-		Item crown = register(name, Item::new, withLore(name, new Item.Properties()
+		return registerCrown(name, material, rarity, true);
+	}
+
+	/**
+	 * Registers a crown, with the enchanted glint always on if {@code glint}, or, like normal
+	 * gear, only when enchanted (the Golden Crown, which isn't magical).
+	 */
+	private static Item registerCrown(String name, ArmorMaterial material, Rarity rarity, boolean glint) {
+		Item.Properties properties = new Item.Properties()
 				.humanoidArmor(material, ArmorType.HELMET)
-				.rarity(rarity)
-				.component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)));
+				.rarity(rarity);
+		if (glint) {
+			properties.component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
+		}
+		Item crown = register(name, Item::new, withLore(name, properties));
 		CROWNS.add(crown);
 		return crown;
 	}

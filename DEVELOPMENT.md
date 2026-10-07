@@ -45,7 +45,7 @@ Test worlds and settings from `runClient` live in `run/`, which isn't committed.
 
 ## Adding a crown
 
-1. Register it in `ModItems` with `registerCrown(...)` (gives it the enchanted glint and its
+1. Register it in `ModItems` with `registerCrown(...)` (gives it the enchanted glint, which the Golden Crown skips, and its
    description line), plus `registerNetheriteCrown(...)` for its netherite version.
 2. Add both to the creative tab list in `ModItems.initialize()`.
 3. Add its effects to `CrownEffects` and its abilities to `CrownAbilities`.
@@ -99,7 +99,7 @@ change by itself.
 3. Copy the texture to `assets/crownofchaos/textures/entity/`.
 4. Register it in `CrownModels.initialize()` for both the crown and its netherite version.
 
-A model exported as a **Java Item** (an item model JSON, like the Crown of Darkness) can be worn
+A model exported as a **Java Item** (an item model JSON, like the Golden Crown and the Crown of Darkness) can be worn
 instead: copy its JSON to `models/item/<crown>_worn.json` with your own texture, add
 `items/<crown>_worn.json`, add a `display.head` transform to line it up, and register a
 `CrownItemModelArmorRenderer` for the crown and its netherite version. Draw the crown around a
