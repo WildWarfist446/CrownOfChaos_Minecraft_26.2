@@ -1,0 +1,45 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    [
+      "crownofchaos:under_crown",
+      "crownofchaos:netherite_under_crown"
+    ],
+    [
+      "crownofchaos:crown_of_poseidon",
+      "crownofchaos:netherite_crown_of_poseidon"
+    ],
+    [
+      "crownofchaos:crown_of_nether",
+      "crownofchaos:netherite_crown_of_nether"
+    ],
+    [
+      "crownofchaos:crown_of_darkness",
+      "crownofchaos:netherite_crown_of_darkness"
+    ],
+    [
+      "crownofchaos:crown_of_sun",
+      "crownofchaos:netherite_crown_of_sun"
+    ],
+    [
+      "crownofchaos:crown_of_wither",
+      "crownofchaos:netherite_crown_of_wither"
+    ],
+    [
+      "crownofchaos:crown_of_winter",
+      "crownofchaos:netherite_crown_of_winter"
+    ],
+    [
+      "crownofchaos:crown_of_iron",
+      "crownofchaos:netherite_crown_of_iron"
+    ],
+    [
+      "crownofchaos:crown_of_void",
+      "crownofchaos:netherite_crown_of_void"
+    ]
+  ],
+  "result": {
+    "id": "crownofchaos:incomplete_crown_of_chaos"
+  }
+}

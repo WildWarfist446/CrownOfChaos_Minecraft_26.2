@@ -142,6 +142,15 @@ Wither, Winter, Iron, Void), each with a netherite version, description, recipe 
 abilities (the Under Crown's secondary is Ore Sense, the Crown of Winter's is Icicle
 Drop); materials (Sculk Cord from Wardens, Ankh Charm in desert pyramids); a Dragon Egg
 on every dragon kill; the Crown of Chaos creative tab; the faction system (beta, see below).
+**Crown of Chaos, started:** the Incomplete Crown of Chaos material (`ModItems.INCOMPLETE_CROWN_OF_CHAOS`):
+a shapeless recipe of the nine magical crowns, each slot taking the crown or its netherite
+version; epic, stacks to 1, fire-resistant; unlocked by picking up a Crown of Void. Its sprite
+is Warfist's 2048x2048 glitched collage (`Sprites/Incomplete CrownOfChaos.png`), scaled to
+128x128 for `textures/item/incomplete_crown_of_chaos.png` (a 2048 item sprite would make a
+huge in-hand model). Its description (Warfist's) is "ERROR ERROR ERR" plus six letters
+(`ModItems.INCOMPLETE_CROWN_GLYPHS`, "awaken", Claude's pick) in the Standard Galactic Alphabet
+(vanilla's `minecraft:alt` font), scrambled like `§k` (obfuscated) so they keep changing, built in code because a language file can't set a font. Next per `developing plans/To Do.md`: the boss, the smithing step and the
+finished crown.
 Every crown now has a custom 3D model, used both worn and as the item (last commit
 `edbbefa`). Only the magical crowns always shimmer: the Golden Crown has no forced glint
 (it shimmers only when enchanted), and worn models copy the real item's glint.

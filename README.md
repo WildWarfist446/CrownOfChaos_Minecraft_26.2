@@ -15,7 +15,7 @@ is worn. Every magical crown can also be upgraded to netherite.
 [Abilities](#abilities) · [Materials](#materials) · [Factions (beta)](#factions-beta) ·
 [Changes to vanilla](#changes-to-vanilla) ·
 [Installation](#installation) · [Finding the items](#finding-the-items) ·
-[3D models](#3d-models) · [Development](#development) · [Credits](#credits)
+[Development](#development) · [Credits](#credits)
 
 ## Crowns
 
@@ -277,9 +277,12 @@ Times in brackets are cooldowns. "Aimed" abilities hit whatever you're looking a
 | Sculk Cord | Every Warden drops one when killed, alongside its Sculk Catalyst | Crafting the Crown of Darkness |
 | Ankh Charm | Desert pyramids: every pyramid has exactly one, in one of its four chests | Crafting the Crown of Sun |
 | Faction Coin | Crafted from 8 Gold Ingots around 1 Emerald (unlocked by picking up an Emerald) | Crafting the Commander's Table and Faction Flags |
+| Incomplete Crown of Chaos | Crafted from all nine magical crowns, in any order; each can be its netherite version (unlocked by picking up a Crown of Void) | Completing the Crown of Chaos (in progress). It can't be worn or used, doesn't stack, and survives fire and lava |
 
-Descriptions: the Sculk Cord reads *"The screeching has finally ceased..."* and the Ankh
-Charm reads *"Ra would be proud."*
+Descriptions: the Sculk Cord reads *"The screeching has finally ceased..."*, the Ankh
+Charm reads *"Ra would be proud."* and the Incomplete Crown of Chaos reads *"ERROR ERROR ERR"*
+followed by six scrambled, ever-changing letters in the Standard Galactic Alphabet (the
+enchanting table's script).
 
 ## Factions & Units (beta)
 
@@ -477,6 +480,7 @@ Combat tab and materials in the Ingredients tab). With cheats on, they can also 
 /give @s crownofchaos:netherite_crown_of_winter   (netherite_ + any crown's name)
 /give @s crownofchaos:sculk_cord
 /give @s crownofchaos:ankh_charm
+/give @s crownofchaos:incomplete_crown_of_chaos
 /give @s crownofchaos:faction_flag   (belongs to whoever places it first)
 /give @s crownofchaos:faction_coin
 /give @s crownofchaos:commander_table

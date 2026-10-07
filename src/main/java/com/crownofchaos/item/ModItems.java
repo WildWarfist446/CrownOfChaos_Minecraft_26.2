@@ -22,6 +22,9 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FontDescription;
+import net.minecraft.network.chat.Style;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityTypes;
@@ -90,6 +93,31 @@ public final class ModItems {
 	/** Found in desert pyramid chests; used to craft the Crown of Sun. */
 	public static final Item ANKH_CHARM = register("ankh_charm", Item::new, withLore("ankh_charm", new Item.Properties()
 			.rarity(Rarity.RARE)));
+
+	/**
+	 * Minecraft's Standard Galactic Alphabet font (the one the enchanting table uses), scrambled
+	 * like the {@code §k} formatting code so the letters keep changing.
+	 */
+	private static final Style GALACTIC = Style.EMPTY
+			.withFont(new FontDescription.Resource(Identifier.withDefaultNamespace("alt")))
+			.withObfuscated(true);
+	/** The six letters shown, scrambled, in the Standard Galactic Alphabet after "ERROR ERROR ERR". */
+	private static final String INCOMPLETE_CROWN_GLYPHS = "awaken";
+
+	/**
+	 * Crafted from all nine magical crowns (each slot takes the crown or its netherite version);
+	 * can't be worn or used, and is completed into the Crown of Chaos. Kept safe from fire and
+	 * lava, since it holds nine crowns' worth of work.
+	 */
+	public static final Item INCOMPLETE_CROWN_OF_CHAOS = register("incomplete_crown_of_chaos", Item::new,
+			new Item.Properties()
+					.rarity(Rarity.EPIC)
+					.stacksTo(1)
+					.fireResistant()
+					.component(DataComponents.LORE, new ItemLore(List.of(Component
+							.translatableWithFallback("item.crownofchaos.incomplete_crown_of_chaos.lore", "ERROR ERROR ERR")
+							.append(" ")
+							.append(Component.literal(INCOMPLETE_CROWN_GLYPHS).withStyle(GALACTIC))))));
 
 	/** Crafted from 8 gold ingots around an emerald; a material for faction recipes. */
 	public static final Item FACTION_COIN = register("faction_coin", Item::new, new Item.Properties()
@@ -226,6 +254,7 @@ public final class ModItems {
 					output.accept(NETHERITE_CROWN_OF_VOID);
 					output.accept(SCULK_CORD);
 					output.accept(ANKH_CHARM);
+					output.accept(INCOMPLETE_CROWN_OF_CHAOS);
 					output.accept(FACTION_COIN);
 					output.accept(FACTION_FLAG);
 					output.accept(ModBlocks.COMMANDER_TABLE);
@@ -238,7 +267,7 @@ public final class ModItems {
 				.register(output -> output.insertAfter(Items.NETHERITE_BOOTS, GOLDEN_CROWN, UNDER_CROWN, CROWN_OF_POSEIDON, CROWN_OF_NETHER, CROWN_OF_DARKNESS, CROWN_OF_SUN, CROWN_OF_WITHER, CROWN_OF_WINTER, CROWN_OF_IRON, CROWN_OF_VOID,
 						NETHERITE_UNDER_CROWN, NETHERITE_CROWN_OF_POSEIDON, NETHERITE_CROWN_OF_NETHER, NETHERITE_CROWN_OF_DARKNESS, NETHERITE_CROWN_OF_SUN, NETHERITE_CROWN_OF_WITHER, NETHERITE_CROWN_OF_WINTER, NETHERITE_CROWN_OF_IRON, NETHERITE_CROWN_OF_VOID));
 		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.INGREDIENTS)
-				.register(output -> output.insertAfter(Items.ECHO_SHARD, SCULK_CORD, ANKH_CHARM, FACTION_COIN));
+				.register(output -> output.insertAfter(Items.ECHO_SHARD, SCULK_CORD, ANKH_CHARM, INCOMPLETE_CROWN_OF_CHAOS, FACTION_COIN));
 
 		ResourceKey<LootTable> wardenLoot = EntityTypes.WARDEN.getDefaultLootTable().orElseThrow();
 		LootTableEvents.MODIFY.register((key, tableBuilder, source, registries) -> {

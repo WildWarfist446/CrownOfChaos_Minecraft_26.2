@@ -12,7 +12,7 @@ What's left for The Crown of Chaos, as of 6 October 2026. Tick items off with `[
 
 ## The Crown of Chaos (last crown in the plan)
 
-- [ ] Incomplete Crown of Chaos: crafted from all nine crowns; can't be worn or used
+- [x] Incomplete Crown of Chaos: crafted from all nine crowns; can't be worn or used
 - [ ] Boss fight (to be designed) that drops an item and a smithing template
 - [ ] Smithing recipe: Incomplete Crown of Chaos + boss item + template = Crown of Chaos
 - [ ] All the crowns' immunities, plus the Crown of Void's teleport dodge
