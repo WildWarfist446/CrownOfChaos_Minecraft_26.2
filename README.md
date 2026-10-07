@@ -498,7 +498,7 @@ made.
 | Crown of Sun | Custom 3D model |
 | Crown of Wither | Custom 3D model |
 | Crown of Winter | Diamond helmet (3D model planned) |
-| Crown of Iron | Diamond helmet (3D model planned) |
+| Crown of Iron | Custom 3D model |
 | Crown of Void | Diamond helmet (3D model planned) |
 
 The Commander's Table also has its own custom 3D model.
