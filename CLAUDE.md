@@ -143,7 +143,12 @@ Crown, Poseidon, Nether, Darkness and Wither crowns; the others render as helmet
 Darkness's is a Blockbench *Java Item* model (`3dmodels/CrownOfDarkness.json`, own texture), not a
 Modded Entity export: `client/model/CrownItemModelArmorRenderer` draws it on the head through a
 stand-in item (`items/crown_of_darkness_worn.json`, `models/item/crown_of_darkness_worn.json`,
-`textures/item/crown_of_darkness_model.png`); its `display.head` entry lines it up. Its inventory
+`textures/item/crown_of_darkness_model.png`); its `display.head` entry lines it up. To update it, copy
+the export's elements into the worn model, keeping its textures and display, and drop the
+untextured `reference head` cube (its `#missing` faces stop the model from loading). That cube
+(9 pixels, from 3.5 to 12.5, starting at y=0) stands for the head with its hat layer, so
+`display.head` (translation 0, 5.6, 0; scale 1.6) lines it up with the player's head, one
+Blockbench pixel to one skin pixel; keep the crown drawn around it. Its inventory
 icon is still the sprite.
 
 Open ideas from `developing plans/Crown Ideas.md` (Warfist's planning file; it changes

@@ -102,4 +102,8 @@ change by itself.
 A model exported as a **Java Item** (an item model JSON, like the Crown of Darkness) can be worn
 instead: copy its JSON to `models/item/<crown>_worn.json` with your own texture, add
 `items/<crown>_worn.json`, add a `display.head` transform to line it up, and register a
-`CrownItemModelArmorRenderer` for the crown and its netherite version.
+`CrownItemModelArmorRenderer` for the crown and its netherite version. Draw the crown around a
+9-pixel "reference head" cube (3.5 to 12.5 across, starting at y=0, the head with its hat
+layer); then `display.head` of translation `[0, 5.6, 0]` and scale `1.6` puts it on the head
+exactly as drawn. Leave the reference cube out of the worn model: its untextured (`#missing`)
+faces stop the model from loading.
