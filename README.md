@@ -485,10 +485,12 @@ Combat tab and materials in the Ingredients tab). With cheats on, they can also 
 
 ## 3D models
 
-Some crowns have a custom 3D model when worn; the rest look like a helmet until theirs is
-made.
+Every crown has a custom 3D model, used both when worn and as the item (in the inventory,
+in hand, on the ground and in item frames). The hand-drawn item sprites in `Sprites/` are
+kept as artwork. The Crown of Winter's two-color look is deliberate: it is meant to look
+cartoony.
 
-| Crown | Worn model |
+| Crown | 3D model |
 |---|---|
 | Golden Crown | Custom 3D model |
 | Under Crown | Custom 3D model |
@@ -497,7 +499,7 @@ made.
 | Crown of Darkness | Custom 3D model |
 | Crown of Sun | Custom 3D model |
 | Crown of Wither | Custom 3D model |
-| Crown of Winter | Diamond helmet (3D model planned) |
+| Crown of Winter | Custom 3D model |
 | Crown of Iron | Custom 3D model |
 | Crown of Void | Custom 3D model |
 

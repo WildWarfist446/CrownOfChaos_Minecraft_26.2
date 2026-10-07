@@ -1,6 +1,34 @@
 {
-  "model": {
-    "type": "minecraft:model",
-    "model": "crownofchaos:item/under_crown"
-  }
+	"model": {
+		"type": "minecraft:special",
+		"base": "crownofchaos:item/under_crown_3d",
+		"model": {
+			"type": "crownofchaos:crown",
+			"crown": "under_crown"
+		},
+		"transformation": {
+			"translation": [
+				0.5,
+				0.1875,
+				0.5
+			],
+			"left_rotation": [
+				0,
+				0,
+				1,
+				0
+			],
+			"right_rotation": [
+				0,
+				0,
+				0,
+				1
+			],
+			"scale": [
+				1.2,
+				1.2,
+				1.2
+			]
+		}
+	}
 }

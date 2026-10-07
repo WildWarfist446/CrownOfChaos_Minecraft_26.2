@@ -1,6 +1,6 @@
 {
-  "model": {
-    "type": "minecraft:model",
-    "model": "crownofchaos:item/crown_of_sun"
-  }
+	"model": {
+		"type": "minecraft:model",
+		"model": "crownofchaos:item/crown_of_sun_worn"
+	}
 }

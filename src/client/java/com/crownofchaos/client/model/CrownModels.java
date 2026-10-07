@@ -7,14 +7,17 @@ import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer;
 import net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry;
 
 /**
- * Registers the crowns' custom 3D models. Crowns without one still render as a diamond
- * helmet via their equipment asset.
+ * Registers the crowns' custom 3D models, worn and as items. Crowns without one still render
+ * as a diamond helmet via their equipment asset.
  */
 public final class CrownModels {
 	private CrownModels() {
 	}
 
 	public static void initialize() {
+		// The entity-model crowns' items are drawn by this; the item-model crowns' items use their JSON.
+		CrownSpecialRenderer.register();
+
 		ModelLayerRegistry.registerModelLayer(UnderCrownModel.LAYER, UnderCrownModel::createLayer);
 		ArmorRenderer.register(
 				context -> new CrownArmorRenderer(context.bakeLayer(UnderCrownModel.LAYER), UnderCrownModel.TEXTURE),
@@ -35,7 +38,7 @@ public final class CrownModels {
 				context -> new CrownArmorRenderer(context.bakeLayer(CrownOfWitherModel.LAYER), CrownOfWitherModel.TEXTURE),
 				ModItems.CROWN_OF_WITHER, ModItems.NETHERITE_CROWN_OF_WITHER);
 
-		// The Golden Crown and the Crowns of Darkness, Sun, Iron and Void use item model JSONs rather than entity models.
+		// The Golden Crown and the Crowns of Darkness, Sun, Winter, Iron and Void use item model JSONs rather than entity models.
 		ArmorRenderer.register(
 				context -> new CrownItemModelArmorRenderer(CrownOfChaos.id("golden_crown_worn")),
 				ModItems.GOLDEN_CROWN);
@@ -45,6 +48,9 @@ public final class CrownModels {
 		ArmorRenderer.register(
 				context -> new CrownItemModelArmorRenderer(CrownOfChaos.id("crown_of_sun_worn")),
 				ModItems.CROWN_OF_SUN, ModItems.NETHERITE_CROWN_OF_SUN);
+		ArmorRenderer.register(
+				context -> new CrownItemModelArmorRenderer(CrownOfChaos.id("crown_of_winter_worn")),
+				ModItems.CROWN_OF_WINTER, ModItems.NETHERITE_CROWN_OF_WINTER);
 		ArmorRenderer.register(
 				context -> new CrownItemModelArmorRenderer(CrownOfChaos.id("crown_of_iron_worn")),
 				ModItems.CROWN_OF_IRON, ModItems.NETHERITE_CROWN_OF_IRON);

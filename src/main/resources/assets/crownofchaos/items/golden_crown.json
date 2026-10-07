@@ -1,6 +1,6 @@
 {
-  "model": {
-    "type": "minecraft:model",
-    "model": "crownofchaos:item/golden_crown"
-  }
+	"model": {
+		"type": "minecraft:model",
+		"model": "crownofchaos:item/golden_crown_worn"
+	}
 }

@@ -49,9 +49,9 @@ Test worlds and settings from `runClient` live in `run/`, which isn't committed.
    description line), plus `registerNetheriteCrown(...)` for its netherite version.
 2. Add both to the creative tab list in `ModItems.initialize()`.
 3. Add its effects to `CrownEffects` and its abilities to `CrownAbilities`.
-4. Add the sprite to `assets/crownofchaos/textures/item/`, item model files for both
-   versions (the netherite one points at the crown's model), and names and description in
-   `lang/en_us.json`.
+4. Add its 3D model (see "Adding a 3D model"); the crown's item and its netherite version
+   both show it, through `items/<crown>.json` and `items/netherite_<crown>.json`. Add its
+   name and description in `lang/en_us.json`.
 5. Add its crafting recipe and a netherite smithing recipe in `data/crownofchaos/recipe/`,
    each with a recipe-book unlock in `data/crownofchaos/advancement/recipes/combat/`.
 
@@ -98,12 +98,17 @@ change by itself.
    shift the crown up and leave those cubes out.
 3. Copy the texture to `assets/crownofchaos/textures/entity/`.
 4. Register it in `CrownModels.initialize()` for both the crown and its netherite version.
+5. To show it as the item too, add it to `CrownSpecialRenderer.CROWNS` and point both item
+   definitions at it (`"type": "minecraft:special"` with model type `crownofchaos:crown`;
+   copy `items/under_crown.json`), with a base model like `models/item/under_crown_3d.json`.
 
-A model exported as a **Java Item** (an item model JSON, like the Golden Crown and the Crowns of Darkness, Sun, Iron and Void) can be worn
+A model exported as a **Java Item** (an item model JSON, like the Golden Crown and the Crowns of Darkness, Sun, Winter, Iron and Void) can be worn
 instead: copy its JSON to `models/item/<crown>_worn.json` with your own texture, add
 `items/<crown>_worn.json`, add a `display.head` transform to line it up, and register a
 `CrownItemModelArmorRenderer` for the crown and its netherite version. Draw the crown around a
 9-pixel "reference head" cube (3.5 to 12.5 across, starting at y=0, the head with its hat
 layer); then `display.head` of translation `[0, 5.6, 0]` and scale `1.6` puts it on the head
 exactly as drawn. Leave the reference cube out of the worn model: its untextured (`#missing`)
-faces stop the model from loading.
+faces stop the model from loading. Give the worn model the parent
+`crownofchaos:item/crown_display` and point `items/<crown>.json` (and the netherite one) at it,
+so the item shows the same 3D model.

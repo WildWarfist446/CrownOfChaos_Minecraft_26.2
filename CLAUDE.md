@@ -139,9 +139,11 @@ Wither, Winter, Iron, Void), each with a netherite version, description, recipe 
 abilities (the Under Crown's secondary is Ore Sense, the Crown of Winter's is Icicle
 Drop); materials (Sculk Cord from Wardens, Ankh Charm in desert pyramids); a Dragon Egg
 on every dragon kill; the Crown of Chaos creative tab. Custom 3D models exist for the Golden
-Crown, Under Crown, Poseidon, Nether, Darkness, Sun, Wither, Iron and Void crowns; the Crown of Winter renders as a helmet. The
-Golden Crown's and the Crowns of Darkness's, Sun's, Iron's and Void's are Blockbench *Java Item* models
-(`3dmodels/GoldenCrown.json`, `CrownOfDarkness.json`, `CrownOfSun.json`, `CrownOfIron.json`, `CrownOfVoid.json`, each with its own texture, taken
+Crown and all nine magical crowns, used worn and as the items (Warfist chose 3D items over the
+sprites, like the Commander's Table). The Crown of Winter's two-color texture is deliberate
+(cartoony, like the Ice King), not a placeholder. The Golden Crown's and the Crowns of Darkness's,
+Sun's, Winter's, Iron's and Void's are Blockbench *Java Item* models
+(`3dmodels/GoldenCrown.json`, `CrownOfDarkness.json`, `CrownOfSun.json`, `CrownOfWinter.json`, `CrownOfIron.json`, `CrownOfVoid.json`, each with its own texture, taken
 from the `.bbmodel`), not Modded Entity exports: `client/model/CrownItemModelArmorRenderer` draws
 each on the head through a stand-in item (`items/<crown>_worn.json`, `models/item/<crown>_worn.json`,
 `textures/item/<crown>_model.png`); its `display.head` entry lines it up. To update one, copy
@@ -149,8 +151,13 @@ the export's elements into the worn model, keeping its textures and display, and
 untextured `reference head` cube (its `#missing` faces stop the model from loading). That cube
 (9 pixels, from 3.5 to 12.5, starting at y=0) stands for the head with its hat layer, so
 `display.head` (translation 0, 5.6, 0; scale 1.6) lines it up with the player's head, one
-Blockbench pixel to one skin pixel; keep the crown drawn around it (the Golden Crown is shrunk to scale 1.44, translation 5.28, keeping its base in place; the Crown of Iron, whose band hangs down the sides, to 1.3 and 5.9, keeping its top on the head; the Crown of Void the same, plus a `[0, 180, 0]` rotation because it was drawn facing backward, with its Enderman eyes on the back). The Crown of Void uses three textures (`crown_of_void_model`, `_tines`, `_frame`, taken from the `.bbmodel` in order); the export's UVs are right for all three. Bands drawn 12 pixels across look too wide at full size, so shrink crowns that hug the head. Blockbench exports 90 and 180 degree turns as `x`/`y`/`z` rotations, which 26.2 reads fine. Their inventory
-icons are still the sprites.
+Blockbench pixel to one skin pixel; keep the crown drawn around it (the Golden Crown is shrunk to scale 1.44, translation 5.28, keeping its base in place; the Crown of Iron, whose band hangs down the sides, to 1.3 and 5.9, keeping its top on the head; the Crown of Void the same, plus a `[0, 180, 0]` rotation because it was drawn facing backward, with its Enderman eyes on the back). The Crown of Void uses three textures (`crown_of_void_model`, `_tines`, `_frame`, taken from the `.bbmodel` in order); the export's UVs are right for all three. Bands drawn 12 pixels across look too wide at full size, so shrink crowns that hug the head. Blockbench exports 90 and 180 degree turns as `x`/`y`/`z` rotations, which 26.2 reads fine. As items, these
+use the same `_worn` model (`items/<crown>.json` points at it), whose parent
+`models/item/crown_display.json` holds the inventory, hand, ground and frame transforms; the
+Crown of Void overrides them turned 180 degrees. The entity-model crowns (Under, Poseidon,
+Nether, Wither) are drawn as items by `client/model/CrownSpecialRenderer`, registered as the
+special item model type `crownofchaos:crown` (`items/<crown>.json`, base model
+`models/item/<crown>_3d.json`). The sprite PNGs stay in `textures/item/` as artwork.
 
 Open ideas from `developing plans/Crown Ideas.md` (Warfist's planning file; it changes
 often, so reread it, and implement only what Warfist asks for):

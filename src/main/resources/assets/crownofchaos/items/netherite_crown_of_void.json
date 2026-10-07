@@ -1,6 +1,6 @@
 {
-  "model": {
-    "type": "minecraft:model",
-    "model": "crownofchaos:item/crown_of_void"
-  }
+	"model": {
+		"type": "minecraft:model",
+		"model": "crownofchaos:item/crown_of_void_worn"
+	}
 }

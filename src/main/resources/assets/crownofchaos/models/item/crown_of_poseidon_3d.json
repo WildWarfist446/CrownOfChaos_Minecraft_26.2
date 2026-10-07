@@ -1,0 +1,6 @@
+{
+	"parent": "crownofchaos:item/crown_display",
+	"textures": {
+		"particle": "crownofchaos:item/crown_of_poseidon"
+	}
+}
