@@ -483,28 +483,6 @@ Combat tab and materials in the Ingredients tab). With cheats on, they can also 
 /give @s crownofchaos:pillager_unit   (any unit's mob name + _unit)
 ```
 
-## 3D models
-
-Every crown has a custom 3D model, used both when worn and as the item (in the inventory,
-in hand, on the ground and in item frames). The hand-drawn item sprites in `Sprites/` are
-kept as artwork. The Crown of Winter's two-color look is deliberate: it is meant to look
-cartoony.
-
-| Crown | 3D model |
-|---|---|
-| Golden Crown | Custom 3D model |
-| Under Crown | Custom 3D model |
-| Crown of Poseidon | Custom 3D model |
-| Crown of Nether | Custom 3D model |
-| Crown of Darkness | Custom 3D model |
-| Crown of Sun | Custom 3D model |
-| Crown of Wither | Custom 3D model |
-| Crown of Winter | Custom 3D model |
-| Crown of Iron | Custom 3D model |
-| Crown of Void | Custom 3D model |
-
-The Commander's Table also has its own custom 3D model.
-
 ## Development
 
 Building the mod, the project layout, and how to add crowns, abilities and 3D models are
