@@ -1,6 +1,6 @@
 # To Do
 
-What's left for The Crown of Chaos, as of 5 October 2026. Tick items off with `[x]`.
+What's left for The Crown of Chaos, as of 6 October 2026. Tick items off with `[x]`.
 
 ## First thing next session
 
@@ -25,12 +25,12 @@ What's left for The Crown of Chaos, as of 5 October 2026. Tick items off with `[
 
 ## Art and 3D models
 
-- [ ] 3D model: Golden Crown
-- [ ] 3D model: Crown of Darkness
-- [ ] 3D model: Crown of Sun
-- [ ] 3D model: Crown of Winter
-- [ ] 3D model: Crown of Iron
-- [ ] 3D model: Crown of Void
+- [x] 3D model: Golden Crown
+- [x] 3D model: Crown of Darkness
+- [x] 3D model: Crown of Sun
+- [x] 3D model: Crown of Winter
+- [x] 3D model: Crown of Iron
+- [x] 3D model: Crown of Void
 - [ ] Faction Flag art (it's a vanilla banner for now)
 - [ ] Menu art for the faction, unit command and Commander's Table menus (optional; they're drawn in a flat style now)
 - [ ] Icicle: switch to the vanilla icicle once the mod moves to Minecraft 26.4 (it's a Packed Ice shard now)
