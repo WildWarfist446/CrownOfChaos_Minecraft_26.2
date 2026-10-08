@@ -129,7 +129,7 @@ magical, no enchanted shimmer unless it is enchanted.
 
 | Ability | Details |
 |---|---|
-| Swiftness II | While standing on sand, red sand, or any sandstone block, slab, stair or wall. Lasts 1 second after stepping off, so it doesn't drop out while jumping. |
+| Swiftness II | While standing on sand, red sand, terracotta (plain or any color, as in badlands), or any sandstone block, slab, stair or wall. Lasts 1 second after stepping off, so it doesn't drop out while jumping. |
 | **Ability: Wind Charge** | Press the crown ability key (default **R**) to throw a wind charge, exactly like the item, no wind charge needed. The crown holds 3 charges; spent charges come back one at a time, 6 seconds each. The action bar shows charges left after every throw. |
 | **Secondary ability: Sun Cycle** | Press the secondary crown ability key (default **G**) to switch between day and night, like `/time set day` or `/time set night`. Changes the time for everyone in that dimension. Only works where there's a day cycle (not the Nether or the End). 20 second cooldown. |
 
@@ -246,7 +246,7 @@ details.
 | Crown of Poseidon | Water Breathing, Dolphin's Grace, Night Vision, +50% damage in water | Riptide (4.5s) | Lightning Strike, aimed (20s) | Heart of the Sea |
 | Crown of Nether | Fire Resistance, Fire Aspect, Flame | Fire Charge (2s) | Blaze Flight, 60s of flight (2 min) | Nether Star |
 | Crown of Darkness | Night Vision, Darkness on hit | Sonic Boom, aimed (15s) | Darkness Pulse (30s) | Sculk Cord |
-| Crown of Sun | Swiftness II on sand | Wind Charge (3 charges, 6s each) | Sun Cycle (20s) | Ankh Charm |
+| Crown of Sun | Swiftness II on sand and terracotta | Wind Charge (3 charges, 6s each) | Sun Cycle (20s) | Ankh Charm |
 | Crown of Wither | Wither immunity, Wither on hit | Wither Skull (3 charges, 6s each, 3s between shots) | Wither Flight, 60s of flight (2 min) | Wither Skeleton Skull |
 | Crown of Winter | Freeze on hit, freeze immunity, Swiftness and grip on snow and ice | Frost Walker (toggle) | Icicle Drop, 5 icicles, aimed (6s) | Powder Snow Bucket |
 | Crown of Iron | +50% bow and crossbow damage | Arrow Volley, aimed (10s) | Glowing Arrows (toggle) | Totem of Undying |
@@ -275,7 +275,7 @@ Times in brackets are cooldowns. "Aimed" abilities hit whatever you're looking a
 | Item | Source | Use |
 |---|---|---|
 | Sculk Cord | Every Warden drops one when killed, alongside its Sculk Catalyst | Crafting the Crown of Darkness |
-| Ankh Charm | Desert pyramids: every pyramid has exactly one, in one of its four chests | Crafting the Crown of Sun |
+| Ankh Charm | Desert pyramids: every pyramid has exactly one, in one of its four chests (also with Lootr, where each player finds it in that same chest) | Crafting the Crown of Sun |
 | Faction Coin | Crafted from 8 Gold Ingots around 1 Emerald (unlocked by picking up an Emerald) | Crafting the Commander's Table and Faction Flags |
 | Incomplete Crown of Chaos | Crafted from all nine magical crowns, in any order; each can be its netherite version (unlocked by picking up a Crown of Void) | Completing the Crown of Chaos (in progress). It can't be worn or used, doesn't stack, and survives fire and lava |
 

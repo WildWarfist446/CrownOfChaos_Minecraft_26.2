@@ -1,6 +1,7 @@
 {
   "values": [
     "#minecraft:sand",
+    "#minecraft:terracotta",
     { "id": "#c:sandstone/blocks", "required": false },
     { "id": "#c:sandstone/slabs", "required": false },
     { "id": "#c:sandstone/stairs", "required": false },
