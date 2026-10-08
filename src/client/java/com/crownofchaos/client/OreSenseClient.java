@@ -6,11 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.joml.Vector3f;
-
 import com.crownofchaos.ability.CrownAbilities;
 import com.crownofchaos.network.OreSensePayload;
-import com.mojang.math.Transformation;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
@@ -22,23 +19,26 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.entity.Display;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityTypes;
+import net.minecraft.world.entity.monster.Shulker;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
  * Client half of the Under Crown's Ore Sense: finds the ores around the player and outlines
- * each in its ore's color, through walls, using glowing block displays that exist only on this
- * client. They're removed when the time runs out or the player changes world.
+ * each in its ore's color, through walls, using invisible glowing shulkers (a full-block outline)
+ * that exist only on this client. They're removed when the time runs out or the player changes
+ * world.
+ *
+ * <p>The markers used to be glowing block displays, but Create's renderer (with Flywheel) drops
+ * the glowing outline of block displays, so in packs with Create no ores showed. Mob outlines,
+ * like the shulker's, are drawn the vanilla way there too.
  */
 public final class OreSenseClient {
 	/** Most ores shown at once, nearest first, to keep the outlines readable. */
 	private static final int MAX_MARKERS = 512;
-	/** Markers are drawn slightly inside their block, so the real block hides them and only the outline shows. */
-	private static final float MARKER_SCALE = 0.96F;
 
 	/** Outline color for each kind of ore. Ores from other mods in {@code c:ores} are white. */
 	private static final Map<TagKey<Block>, Integer> ORE_COLORS = Map.of(
@@ -105,14 +105,9 @@ public final class OreSenseClient {
 		ores.sort(Comparator.comparingDouble(pos -> pos.distSqr(center)));
 
 		for (BlockPos pos : ores.subList(0, Math.min(ores.size(), MAX_MARKERS))) {
-			BlockState state = level.getBlockState(pos);
-			OreMarker marker = new OreMarker(level);
+			OreMarker marker = new OreMarker(level, colorOf(level.getBlockState(pos)));
 			marker.setId(nextMarkerId--);
-			marker.setPos(pos.getX(), pos.getY(), pos.getZ());
-			marker.setBlockState(state);
-			marker.setGlowColorOverride(colorOf(state));
-			float inset = (1.0F - MARKER_SCALE) / 2.0F;
-			marker.setTransformation(new Transformation(new Vector3f(inset), null, new Vector3f(MARKER_SCALE), null));
+			marker.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 			level.addEntity(marker);
 			MARKERS.add(marker);
 		}
@@ -145,17 +140,45 @@ public final class OreSenseClient {
 	}
 
 	/**
-	 * A block display that always glows. The glowing flag normally comes from the server, which
-	 * never hears of these client-only markers.
+	 * An invisible shulker that always glows in its ore's color, so only its full-block outline
+	 * shows. The glowing flag and team color normally come from the server, which never hears of
+	 * these client-only markers. It can't be hit or bumped into, so it never gets in the way of
+	 * mining the ore it marks.
 	 */
-	private static final class OreMarker extends Display.BlockDisplay {
-		private OreMarker(Level level) {
-			super(EntityTypes.BLOCK_DISPLAY, level);
+	private static final class OreMarker extends Shulker {
+		private final int color;
+
+		private OreMarker(Level level, int color) {
+			super(EntityTypes.SHULKER, level);
+			this.color = color;
+			setInvisible(true);
+			setNoAi(true);
+			setSilent(true);
 		}
 
 		@Override
 		public boolean isCurrentlyGlowing() {
 			return true;
+		}
+
+		@Override
+		public int getTeamColor() {
+			return this.color;
+		}
+
+		@Override
+		public boolean isPickable() {
+			return false;
+		}
+
+		@Override
+		public boolean canBeCollidedWith(Entity other) {
+			return false;
+		}
+
+		@Override
+		public boolean isPushable() {
+			return false;
 		}
 	}
 }

@@ -198,6 +198,24 @@ inventory icon, crowns in item frames, on shelves and dropped on the ground. The
 `crown_display` transforms (gui scale 0.8, rotation 30/225) are a first pass; tweak them if
 Warfist asks.
 
+### Mod compatibility
+
+Warfist tests the built jar in a Modrinth profile, "Riley & Alexys Pack 1.0.0"
+(`~/AppData/Roaming/ModrinthApp/profiles/`, ~85 mods including Create, Sodium, Iris, Entity
+Culling). Findings (7 October 2026):
+- **Create** (`create-fly`, with Flywheel) drops the glowing outline of block displays, even
+  server-side ones; mob outlines still draw. Ore Sense's markers were glowing block displays,
+  so no ores showed there; they are now invisible glowing client-only shulkers
+  (`OreSenseClient.OreMarker`: not pickable, not collidable, color from `getTeamColor`).
+  Don't go back to block displays for glow effects.
+- To reproduce a pack problem, copy the profile's mod jars into `run/mods` and narrow them down
+  by halves (keep each mod's dependencies). In the dev client, Forge Config API Port and
+  Traveler's Backpack crash on a night-config version clash that the real launcher doesn't
+  have; leave them out. Remove `run/mods` and the configs the mods write to `run/config`
+  afterward.
+- When testing ore outlines, stand in a sealed pocket in solid rock (not spectator mode, which
+  turns off culling), so hidden-block culling is exercised.
+
 Open ideas from `developing plans/Crown Ideas.md` (Warfist's planning file; it changes
 often, so reread it, and implement only what Warfist asks for):
 

@@ -461,6 +461,10 @@ The mod must be installed on both the client and the server, and players can't j
 Minecraft 26.2 needs Java 25 (the server needs it too). On a server, use the Fabric API version built
 for 26.2 (0.161.0 or newer).
 
+**Compatibility:** tested in a large Fabric modpack (about 85 mods, including Create, Sodium,
+Iris, Entity Culling, Lithium and ImmediatelyFast). Ore Sense's outlines are drawn in a way
+that also works with Create, whose renderer hides the glowing outline of display blocks.
+
 ## Finding the items
 
 In Creative mode, every mod item is in the **Crown of Chaos** tab (crowns are also in the
