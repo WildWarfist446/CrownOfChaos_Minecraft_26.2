@@ -12,6 +12,8 @@ import com.crownofchaos.CrownOfChaos;
 import com.crownofchaos.block.ModBlocks;
 import com.crownofchaos.unit.ModUnits;
 
+import org.jspecify.annotations.Nullable;
+
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
 import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
@@ -42,6 +44,9 @@ import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.levelgen.structure.BuiltinStructures;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -203,6 +208,25 @@ public final class ModItems {
 		return Registry.register(BuiltInRegistries.ITEM, key, factory.apply(properties.setId(key)));
 	}
 
+	/**
+	 * The desert pyramid whose footprint holds this spot, ignoring height: the hidden chambers with
+	 * the chests sit about 11 blocks below the pyramid's recorded bounding box, so a plain
+	 * "piece at this position" lookup never finds them.
+	 */
+	private static @Nullable StructureStart pyramidAround(ServerLevel level, BlockPos pos) {
+		Registry<Structure> structures = level.registryAccess().lookupOrThrow(Registries.STRUCTURE);
+		for (StructureStart start : level.structureManager().startsForStructure(ChunkPos.containing(pos),
+				structure -> structures.getResourceKey(structure).filter(BuiltinStructures.DESERT_PYRAMID::equals).isPresent())) {
+			for (StructurePiece piece : start.getPieces()) {
+				BoundingBox box = piece.getBoundingBox();
+				if (box.isInside(pos.getX(), box.minY(), pos.getZ())) {
+					return start;
+				}
+			}
+		}
+		return null;
+	}
+
 	private static boolean isAnkhCharmChest(LootContext context) {
 		Vec3 origin = context.getOptionalParameter(LootContextParams.ORIGIN);
 		if (origin == null) {
@@ -211,9 +235,8 @@ public final class ModItems {
 
 		ServerLevel level = context.getLevel();
 		BlockPos chestPos = BlockPos.containing(origin);
-		StructureStart pyramid = level.structureManager()
-				.getStructureWithPieceAt(chestPos, structure -> structure.is(BuiltinStructures.DESERT_PYRAMID));
-		if (!pyramid.isValid()) {
+		StructureStart pyramid = pyramidAround(level, chestPos);
+		if (pyramid == null) {
 			return false;
 		}
 

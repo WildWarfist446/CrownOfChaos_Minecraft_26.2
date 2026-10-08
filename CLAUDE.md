@@ -217,6 +217,16 @@ Culling). Findings (7 October 2026):
   show the crown. Checked in game with the library loaded (the flag hides it, normal renders
   don't); Warfist confirmed in his pack that swinging no longer covers the screen (7 October
   2026). A test can't drive a real swing (the window isn't focused).
+- **Lootr** (loot chests that give each player their own loot) turned out not to be the culprit
+  for a missing Ankh Charm: the real bug was in `ModItems.isAnkhCharmChest`, which asked for a
+  pyramid *piece* at the chest, but the hidden chambers sit about 11 blocks below the pyramid's
+  recorded bounding box, so no Ankh Charm ever generated (vanilla chests too). It now matches the
+  pyramid by its footprint, ignoring height (`pyramidAround`). Checked in a world made at the
+  time (seed 12345, a real pyramid found with `findNearestMapStructure`): one of the four chests
+  gets the charm, with and without Lootr 26.2's chests (Lootr fills chests through
+  `LootTable.fill`, so the loot event still fires). `/place structure` pyramids don't register
+  as structures, so they can't test this. Not played through with a real Lootr chest opened by a
+  player.
 - To reproduce a pack problem, copy the profile's mod jars into `run/mods` and narrow them down
   by halves (keep each mod's dependencies). In the dev client, Forge Config API Port and
   Traveler's Backpack crash on a night-config version clash that the real launcher doesn't
