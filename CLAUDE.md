@@ -208,6 +208,14 @@ Culling). Findings (7 October 2026):
   so no ores showed there; they are now invisible glowing client-only shulkers
   (`OreSenseClient.OreMarker`: not pickable, not collidable, color from `getTeamColor`).
   Don't go back to block displays for glow effects.
+- **Better Combat** (through PlayerAnimationLib) draws your own body in first person during
+  attacks and hides vanilla helmets then, but not the crowns, which have their own renderers,
+  so they covered the screen. `client/model/FirstPersonCrowns.hide` skips a worn crown while
+  PlayerAnimationLib's `playerAnimLib$isFirstPersonPass` flag is set on the render state (read
+  by reflection, no dependency) or the wearer's head part is hidden; both crown renderers call
+  it. Third person, other players and the inventory preview are separate renders and still
+  show the crown. Checked in game with the library loaded (the flag hides it, normal renders
+  don't); an actual swing couldn't be driven from a test (the window isn't focused).
 - To reproduce a pack problem, copy the profile's mod jars into `run/mods` and narrow them down
   by halves (keep each mod's dependencies). In the dev client, Forge Config API Port and
   Traveler's Backpack crash on a night-config version clash that the real launcher doesn't

@@ -32,7 +32,7 @@ public final class CrownArmorRenderer implements ArmorRenderer {
 	@Override
 	public void render(PoseStack poseStack, SubmitNodeCollector collector, ItemStack stack, HumanoidRenderState state,
 			EquipmentSlot slot, int light, HumanoidModel<HumanoidRenderState> contextModel) {
-		if (slot != EquipmentSlot.HEAD) {
+		if (slot != EquipmentSlot.HEAD || FirstPersonCrowns.hide(state, contextModel)) {
 			return;
 		}
 

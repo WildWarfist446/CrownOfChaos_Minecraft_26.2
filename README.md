@@ -462,8 +462,11 @@ Minecraft 26.2 needs Java 25 (the server needs it too). On a server, use the Fab
 for 26.2 (0.161.0 or newer).
 
 **Compatibility:** tested in a large Fabric modpack (about 85 mods, including Create, Sodium,
-Iris, Entity Culling, Lithium and ImmediatelyFast). Ore Sense's outlines are drawn in a way
-that also works with Create, whose renderer hides the glowing outline of display blocks.
+Iris, Entity Culling, Lithium, ImmediatelyFast and Better Combat). Ore Sense's outlines are
+drawn in a way that also works with Create, whose renderer hides the glowing outline of
+display blocks. With Better Combat (or other mods that show your body in first person), your
+own crown is hidden from your first-person view so it doesn't cover the screen; it still shows
+in third person, in the inventory and to other players.
 
 ## Finding the items
 
