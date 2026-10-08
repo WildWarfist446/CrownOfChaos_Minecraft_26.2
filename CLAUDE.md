@@ -215,7 +215,8 @@ Culling). Findings (7 October 2026):
   by reflection, no dependency) or the wearer's head part is hidden; both crown renderers call
   it. Third person, other players and the inventory preview are separate renders and still
   show the crown. Checked in game with the library loaded (the flag hides it, normal renders
-  don't); an actual swing couldn't be driven from a test (the window isn't focused).
+  don't); Warfist confirmed in his pack that swinging no longer covers the screen (7 October
+  2026). A test can't drive a real swing (the window isn't focused).
 - To reproduce a pack problem, copy the profile's mod jars into `run/mods` and narrow them down
   by halves (keep each mod's dependencies). In the dev client, Forge Config API Port and
   Traveler's Backpack crash on a night-config version clash that the real launcher doesn't
