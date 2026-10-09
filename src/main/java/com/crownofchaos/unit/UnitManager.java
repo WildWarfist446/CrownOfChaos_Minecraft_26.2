@@ -9,6 +9,7 @@ import com.crownofchaos.CrownOfChaos;
 import com.crownofchaos.faction.Faction;
 import com.crownofchaos.faction.FactionData;
 import com.crownofchaos.faction.FactionStance;
+import com.crownofchaos.item.CrownEffects;
 import com.crownofchaos.mixin.MobAccessor;
 
 import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry;
@@ -26,6 +27,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.hoglin.Hoglin;
 import net.minecraft.world.entity.monster.piglin.AbstractPiglin;
 import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 
@@ -60,10 +62,14 @@ public final class UnitManager {
 
 	/** Units told to attack go after enemies up to this many blocks away. */
 	public static final double ATTACK_RANGE = 24.0;
+	/** The unit id of units that are summoned by units (Evoker vexes): not in {@link ModUnits}. */
+	public static final String MINION_ID = "minion";
 	/** The most units one player can have summoned at once; reclaiming or losing units frees slots. */
 	public static final int MAX_UNITS_PER_PLAYER = 40;
 	/** A following unit stops fighting and rejoins its leader once it is this many blocks from them. */
 	public static final double FOLLOW_FIGHT_RANGE = 40.0;
+	/** A mob the owner hit this recently (10 seconds) is still the owner's target, so their units go for it. */
+	private static final int OWNER_ATTACK_TICKS = 200;
 	/** A mob that hurt the owner this recently (5 seconds) still counts as attacking them. */
 	private static final int OWNER_HURT_TICKS = 100;
 
@@ -72,6 +78,7 @@ public final class UnitManager {
 
 	public static void initialize() {
 		ServerEntityEvents.ENTITY_LOAD.register((entity, level) -> {
+			adoptSummons(entity);
 			UnitData data = entity.getAttached(UNIT);
 			if (data != null && entity instanceof Mob mob) {
 				setUpUnit(mob);
@@ -93,12 +100,28 @@ public final class UnitManager {
 		for (ServerLevel level : server.getAllLevels()) {
 			for (Entity entity : level.getAllEntities()) {
 				UnitData data = entity.getAttached(UNIT);
-				if (data != null && data.owner().equals(owner) && entity.isAlive()) {
+				if (data != null && data.owner().equals(owner) && entity.isAlive() && ModUnits.byId(data.unit()) != null) {
 					count++;
 				}
 			}
 		}
 		return count;
+	}
+
+	/**
+	 * Vexes called up by an Evoker unit join its faction as minions, so they fight for it instead
+	 * of being wild vexes. Minions aren't a unit type: they can't be commanded or reclaimed and
+	 * don't count toward the unit limit. They carry the owner and faction, so they get the faction
+	 * color, the fighting rules and the unit goals. The Evoker sets the vex's owner before adding
+	 * it, so this sees it on load.
+	 */
+	private static void adoptSummons(Entity entity) {
+		if (entity instanceof Vex vex && !vex.hasAttached(UNIT) && vex.getOwner() != null) {
+			UnitData summoner = vex.getOwner().getAttached(UNIT);
+			if (summoner != null) {
+				vex.setAttached(UNIT, new UnitData(summoner.owner(), summoner.faction(), MINION_ID, summoner.color()));
+			}
+		}
 	}
 
 	/** Turns a newly created mob, before it's added to the world, into a unit of the player's faction. */
@@ -188,6 +211,10 @@ public final class UnitManager {
 		}
 		boolean playerOrUnit = target instanceof Player || target.hasAttached(UNIT);
 		FactionStance stance = targetFaction == null ? FactionStance.NEUTRAL : faction.stanceToward(targetFaction);
+		// Whatever the owner is fighting, so units join in and then go back to their orders.
+		if (stance != FactionStance.ALLOWED && isOwnerTarget(unit, data, target)) {
+			return true;
+		}
 		// Told to attack: any player or unit nearby that isn't allowed, wherever they are.
 		if (data.order() == UnitOrder.ATTACK && playerOrUnit && stance != FactionStance.ALLOWED
 				&& unit.distanceTo(target) <= ATTACK_RANGE) {
@@ -199,6 +226,20 @@ public final class UnitManager {
 			return false;
 		}
 		return stance == FactionStance.TARGETED || faction.redAlert() && stance != FactionStance.ALLOWED;
+	}
+
+	/**
+	 * Whether the mob is what the owner attacked within the last {@link #OWNER_ATTACK_TICKS}.
+	 * Only mobs, not players (those follow the stances and war), and never the owner's own pets.
+	 */
+	private static boolean isOwnerTarget(Entity unit, UnitData data, LivingEntity target) {
+		if (!(target instanceof Mob) || target.hasAttached(UNIT) && target.getAttached(UNIT).faction().equals(data.faction())) {
+			return false;
+		}
+		Player owner = unit.level().getPlayerByUUID(data.owner());
+		return owner != null && owner.isAlive() && owner.getLastHurtMob() == target
+				&& owner.tickCount - owner.getLastHurtMobTimestamp() <= OWNER_ATTACK_TICKS
+				&& !CrownEffects.isPetOf(target, owner);
 	}
 
 	/** Whether a following unit has strayed further than {@link #FOLLOW_FIGHT_RANGE} from the player it follows. */

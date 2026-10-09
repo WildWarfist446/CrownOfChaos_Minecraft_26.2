@@ -381,6 +381,8 @@ unit of your faction (you must be in one). Units:
 - are tinted in a bright, vivid version of your faction's color and outlined in it (up to 64 blocks away,
   only while you can see them), so anyone can tell whose they are at a glance; they change color
   with the faction (white factions are only outlined, as white leaves the mob unchanged);
+- bring their allies along: the vexes an **Evoker** unit calls up fight for your faction too (tinted
+  and outlined like your other units, but they can't be commanded and don't count toward the limit);
 - are limited to **40 per player** at once (reclaim or lose some to summon more);
 - never despawn, don't burn in daylight, and Piglins and Hoglins don't turn into zombies
   outside the Nether;
@@ -388,6 +390,9 @@ unit of your faction (you must be in one). Units:
 - are **passive** toward players and other units: they don't attack them, and don't fight back, except
   - against **wild hostile mobs** (zombies, skeletons, creepers and the like) that are attacking
     you (their owner) or your faction's units, or, when told to **Attack**, any within 24 blocks;
+  - against any **mob you attack**, for 10 seconds after your last hit (not players, and never your
+    own pets), then they go straight back to what they were doing: following, holding a post as a
+    sentry, or wandering;
   - inside your faction's territory, against players and units of factions you've set to
     **Targeted**, and while **red alert** is on, against everyone who isn't **Allowed**
     (players with no faction included);

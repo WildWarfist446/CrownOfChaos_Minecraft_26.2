@@ -290,6 +290,13 @@ the mob as a unit of the player's faction (they must be in one). `unit/UnitManag
   tinted, and `client/mixin/UnitOutlineMixin` plus `MinecraftGlowMixin` give every unit within 64
   blocks (`UnitClient.OUTLINE_RANGE`) an outline in that color while the player has line of sight (`hasLineOfSight`, cached per tick;
   outlines otherwise show through walls); selected units are outlined white, through walls too. Dark mob textures stay dark under a tint, which is why the outline exists.
+- Units also fight any mob their owner hit in the last `OWNER_ATTACK_TICKS` (200, not players,
+  not the owner's pets, not Allowed factions' units; `UnitManager.isOwnerTarget`), then the old
+  order resumes by itself (target dropped by `WatchGoal`, `OrdersGoal` takes over). Warfist
+  asked for this 8 October 2026; a unit and a mob in line of sight tested in game.
+- Vexes summoned by an Evoker unit become minions (`UnitManager.adoptSummons`, unit id
+  `minion`, not in `ModUnits`): faction tint, fighting rules and unit goals, but not commandable,
+  not reclaimable and not counted by `countUnits`.
 - Each player can have at most `UnitManager.MAX_UNITS_PER_PLAYER` (40, set by Warfist) units; `UnitItem` refuses
   to summon past it (counted over loaded chunks by `UnitManager.countUnits`).
 - Units never despawn and don't burn in daylight (`mixin/MobSunMixin`); Piglin and Hoglin units
