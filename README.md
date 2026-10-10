@@ -366,6 +366,7 @@ It turns to face you when placed.
 | Crown of Sun | Husk | 5 Rotten Flesh + 2 Gold Ingots |
 | | Parched | 10 Bones + 1 Bow |
 | Crown of Poseidon | Guardian | 30 Kelp + 2 Prismarine Shards |
+| | Drowned (always holds a trident to throw) | 10 Rotten Flesh + 1 Water Bucket |
 | Crown of Nether | Piglin | 5 Raw Porkchops + 3 Gold Ingots |
 | | Hoglin | 10 Raw Porkchops + 5 Gold Ingots |
 | | Ghast | 10 Blaze Powder + 1 Ghast Tear |

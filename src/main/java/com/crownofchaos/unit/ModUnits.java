@@ -45,6 +45,8 @@ public final class ModUnits {
 	public static final UnitType PARCHED = unit("parched", ModItems.CROWN_OF_SUN, EntityTypes.PARCHED, cost(Items.BONE, 10), cost(Items.BOW, 1));
 	// Crown of Poseidon ("30 seaweed": Kelp, the long seaweed)
 	public static final UnitType GUARDIAN = unit("guardian", ModItems.CROWN_OF_POSEIDON, EntityTypes.GUARDIAN, cost(Items.KELP, 30), cost(Items.PRISMARINE_SHARD, 2));
+	/** Always summoned holding a trident, for long-range attacks (see {@link UnitManager#makeUnit}). */
+	public static final UnitType DROWNED = unit("drowned", ModItems.CROWN_OF_POSEIDON, EntityTypes.DROWNED, cost(Items.ROTTEN_FLESH, 10), cost(Items.WATER_BUCKET, 1));
 	// Crown of Nether
 	public static final UnitType PIGLIN = unit("piglin", ModItems.CROWN_OF_NETHER, EntityTypes.PIGLIN, cost(Items.PORKCHOP, 5), cost(Items.GOLD_INGOT, 3));
 	public static final UnitType HOGLIN = unit("hoglin", ModItems.CROWN_OF_NETHER, EntityTypes.HOGLIN, cost(Items.PORKCHOP, 10), cost(Items.GOLD_INGOT, 5));

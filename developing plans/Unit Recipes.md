@@ -47,6 +47,7 @@ These are the recipes in the mod now. Change any of them here and tell Claude to
 | Unit | Item 1 | Amount | Item 2 | Amount |
 |---|---|---|---|---|
 | Guardian Unit | Kelp ("seaweed") | 30 | Prismarine Shard | 2 |
+| Drowned Unit | Rotten Flesh | 10 | Water Bucket | 1 |
 
 ## Crown of Nether
 

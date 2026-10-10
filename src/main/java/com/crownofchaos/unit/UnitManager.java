@@ -21,14 +21,18 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.hoglin.Hoglin;
 import net.minecraft.world.entity.monster.piglin.AbstractPiglin;
+import net.minecraft.world.entity.monster.zombie.Drowned;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.Vec3;
 
 /**
@@ -134,6 +138,12 @@ public final class UnitManager {
 		}
 		if (mob instanceof Hoglin hoglin) {
 			hoglin.setImmuneToZombification(true);
+		}
+		// Drowned units always carry a trident to throw (a wild one rarely does). It never drops,
+		// so summoning Drowned can't be used to farm tridents; thrown ones can't be picked up.
+		if (mob instanceof Drowned) {
+			mob.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.TRIDENT));
+			mob.setDropChance(EquipmentSlot.MAINHAND, 0.0F);
 		}
 		// Its targeting is set up by the load event once it's added to the world.
 	}

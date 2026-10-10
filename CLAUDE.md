@@ -260,7 +260,7 @@ from `3dmodels/Commander-table.json`, turns to face the placer) whose menu
 (`menu/CommanderTableMenu`, screen `client/menu/CommanderTableScreen`, written by a helper
 agent) works like a stonecutter: a crown slot, a list of that crown's units, two cost slots
 (either order) and a result slot. It keeps no items. Units are defined in `unit/ModUnits`:
-17 units for 8 crowns, from Warfist's plan plus Enderman and Shulker for the Crown of Void,
+18 units for 8 crowns, from Warfist's plan plus Enderman and Shulker for the Crown of Void and the Drowned (always summoned with a trident that never drops, `UnitManager.makeUnit`) for Poseidon,
 which he added later (the Golden Crown and Under Crown have none). Warfist fills in the
 costs in `developing plans/Unit Recipes.md`; they're set in `ModUnits` (the README lists
 them). Each unit costs exactly two kinds of item; a cost can be any item with a tag (the Polar
