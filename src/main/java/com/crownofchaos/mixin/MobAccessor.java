@@ -5,6 +5,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.GoalSelector;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 
 /** Gives army units their extra goals (see {@code UnitManager}). */
 @Mixin(Mob.class)
@@ -14,4 +15,7 @@ public interface MobAccessor {
 
 	@Accessor("goalSelector")
 	GoalSelector crownofchaos$goalSelector();
+
+	@Accessor("navigation")
+	void crownofchaos$setNavigation(PathNavigation navigation);
 }

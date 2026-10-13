@@ -275,6 +275,7 @@ Times in brackets are cooldowns. "Aimed" abilities hit whatever you're looking a
 | Item | Source | Use |
 |---|---|---|
 | Sculk Cord | Every Warden drops one when killed, alongside its Sculk Catalyst | Crafting the Crown of Darkness |
+| Heart of the Sea | Every Elder Guardian drops one when killed, on top of its usual drops (vanilla has no guaranteed source) | Crafting the Crown of Poseidon |
 | Ankh Charm | Desert pyramids: every pyramid has exactly one, in one of its four chests (also with Lootr, where each player finds it in that same chest) | Crafting the Crown of Sun |
 | Faction Coin | Crafted from 8 Gold Ingots around 1 Emerald (unlocked by picking up an Emerald) | Crafting the Commander's Table and Faction Flags |
 | Incomplete Crown of Chaos | Crafted from all nine magical crowns, in any order; each can be its netherite version (unlocked by picking up a Crown of Void) | Completing the Crown of Chaos (in progress). It can't be worn or used, doesn't stack, and survives fire and lava |
@@ -387,6 +388,8 @@ unit of your faction (you must be in one). Units:
 - are limited to **40 per player** at once (reclaim or lose some to summon more);
 - never despawn, don't burn in daylight, and Piglins and Hoglins don't turn into zombies
   outside the Nether;
+- Guardian units treat air as water: they float and fight on land instead of flopping on the ground, and
+  follow and sentry orders work out of the sea;
 - Warden units stay above ground (they never dig away) and don't give anyone Darkness;
 - are **passive** toward players and other units: they don't attack them, and don't fight back, except
   - against **wild hostile mobs** (zombies, skeletons, creepers and the like) that are attacking
@@ -453,6 +456,8 @@ These apply to everyone in a world with the mod, not just crown wearers:
   dragons (vanilla only does this the first time). No extra egg is added if one is already
   there.
 - Wardens drop a Sculk Cord, alongside their Sculk Catalyst.
+- Elder Guardians always drop a Heart of the Sea.
+- Nautilus mobs drop a Nautilus Shell 50% of the time when a player kills them (vanilla: 5%). Looting adds 1% per level above the first, like vanilla.
 - Every desert pyramid has an Ankh Charm in one of its four chests.
 - Explosions and pistons can't destroy faction flags or the blocks holding them up.
 

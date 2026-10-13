@@ -293,6 +293,7 @@ public final class ModItems {
 				.register(output -> output.insertAfter(Items.ECHO_SHARD, SCULK_CORD, ANKH_CHARM, INCOMPLETE_CROWN_OF_CHAOS, FACTION_COIN));
 
 		ResourceKey<LootTable> wardenLoot = EntityTypes.WARDEN.getDefaultLootTable().orElseThrow();
+		ResourceKey<LootTable> elderGuardianLoot = EntityTypes.ELDER_GUARDIAN.getDefaultLootTable().orElseThrow();
 		LootTableEvents.MODIFY.register((key, tableBuilder, source, registries) -> {
 			if (!source.isBuiltin()) {
 				return;
@@ -303,6 +304,14 @@ public final class ModItems {
 				tableBuilder.withPool(LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(LootItem.lootTableItem(SCULK_CORD)));
+			}
+
+			// Elder Guardians always drop a Heart of the Sea (the Crown of Poseidon's key ingredient),
+			// whoever lands the kill, on top of their usual drops.
+			if (key.equals(elderGuardianLoot)) {
+				tableBuilder.withPool(LootPool.lootPool()
+						.setRolls(ConstantValue.exactly(1.0F))
+						.add(LootItem.lootTableItem(Items.HEART_OF_THE_SEA)));
 			}
 
 		});

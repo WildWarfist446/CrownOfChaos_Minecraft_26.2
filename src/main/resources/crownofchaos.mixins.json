@@ -16,6 +16,7 @@
 		"PowderSnowBlockMixin",
 		"ServerExplosionMixin",
 		"ShieldBlockingMixin",
+		"UnitWaterMixin",
 		"WardenDarknessMixin",
 		"WinterCrownMovementMixin",
 		"WitherSkullMixin"

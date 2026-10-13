@@ -28,7 +28,9 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.hoglin.Hoglin;
 import net.minecraft.world.entity.monster.piglin.AbstractPiglin;
 import net.minecraft.world.entity.monster.zombie.Drowned;
+import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.monster.Guardian;
 import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -158,6 +160,13 @@ public final class UnitManager {
 		MobAccessor goals = (MobAccessor) mob;
 		goals.crownofchaos$targetSelector().addGoal(1, new NearestAttackableTargetGoal<>(mob, LivingEntity.class, true,
 				(target, level) -> isHostile(mob, target)));
+		if (mob instanceof Guardian) {
+			// Guardians path find only through water; units treat air as water (see UnitWaterMixin), so
+			// give them a navigation that works through both.
+			FlyingPathNavigation navigation = new FlyingPathNavigation(mob, mob.level());
+			navigation.setCanFloat(true);
+			goals.crownofchaos$setNavigation(navigation);
+		}
 		goals.crownofchaos$goalSelector().addGoal(0, new UnitGoals.WatchGoal(mob));
 		goals.crownofchaos$goalSelector().addGoal(1, new UnitGoals.OrdersGoal(mob));
 		UnitGoals.keepWardenFromDigging(mob);

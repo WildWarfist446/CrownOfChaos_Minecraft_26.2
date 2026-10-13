@@ -299,6 +299,14 @@ the mob as a unit of the player's faction (they must be in one). `unit/UnitManag
   not reclaimable and not counted by `countUnits`.
 - Each player can have at most `UnitManager.MAX_UNITS_PER_PLAYER` (40, set by Warfist) units; `UnitItem` refuses
   to summon past it (counted over loaded chunks by `UnitManager.countUnits`).
+- Guardian units treat air as water (`mixin/UnitWaterMixin` makes `Entity.isInWater` true for them, so
+  they use their underwater movement, don't flop and don't change sounds; `UnitManager.setUpUnit` swaps their
+  water-only navigation for a `FlyingPathNavigation`, since a Guardian's own one finds no path through air).
+  Tested in game on dry land: they follow, and shoot their beam at a target; they float a little off the
+  ground while moving and settle on it when idle.
+- **No crown passivity** (Warfist, 12 October 2026): wearing a crown does *not* make its own kinds of
+  mobs (Wither Skeletons for the Crown of Wither, and so on) ignore you. He tried it and removed it: you
+  should have to fight for the mobs you make units from. Don't add it back without asking.
 - Units never despawn and don't burn in daylight (`mixin/MobSunMixin`); Piglin and Hoglin units
   don't zombify. Warden units never give Darkness (`mixin/WardenDarknessMixin`) and always keep
   a dig cooldown, because a Warden with none digs into the ground and is removed (Warfist:
