@@ -385,6 +385,8 @@ unit of your faction (you must be in one). Units:
   with the faction (white factions are only outlined, as white leaves the mob unchanged);
 - bring their allies along: the vexes an **Evoker** unit calls up fight for your faction too (tinted
   and outlined like your other units, but they can't be commanded and don't count toward the limit);
+- never get in the way of your Riptide dash (the Crown of Poseidon's ability, or a Riptide trident):
+  you pass straight through your own and your faction's units instead of stopping and bouncing;
 - are limited to **40 per player** at once (reclaim or lose some to summon more);
 - never despawn, don't burn in daylight, and Piglins and Hoglins don't turn into zombies
   outside the Nether;

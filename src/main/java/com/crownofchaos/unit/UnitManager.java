@@ -72,6 +72,35 @@ public final class UnitManager {
 	public static final String MINION_ID = "minion";
 	/** The most units one player can have summoned at once; reclaiming or losing units frees slots. */
 	public static final int MAX_UNITS_PER_PLAYER = 40;
+	/**
+	 * On a client, which faction the local player is in (set by the client code, which has the
+	 * synced factions); on the server the saved factions are used.
+	 */
+	public static java.util.function.Supplier<@Nullable UUID> clientFaction = () -> null;
+
+	/**
+	 * Whether the entity is a unit (or minion) of the player or of the player's faction. Used to keep
+	 * their own units out of the way of their Riptide spin attack, which stops dead on the first thing it
+	 * touches. Works on both sides.
+	 */
+	public static boolean isOwnFactionUnit(Player player, Entity entity) {
+		UnitData data = entity.getAttached(UNIT);
+		if (data == null) {
+			return false;
+		}
+		if (data.owner().equals(player.getUUID())) {
+			return true;
+		}
+		UUID faction;
+		if (player.level().isClientSide()) {
+			faction = clientFaction.get();
+		} else {
+			faction = player.level().getServer() == null ? null
+					: FactionData.get(player.level().getServer()).factionOf(player.getUUID()).map(Faction::id).orElse(null);
+		}
+		return data.faction().equals(faction);
+	}
+
 	/** A following unit stops fighting and rejoins its leader once it is this many blocks from them. */
 	public static final double FOLLOW_FIGHT_RANGE = 40.0;
 	/** A mob the owner hit this recently (10 seconds) is still the owner's target, so their units go for it. */

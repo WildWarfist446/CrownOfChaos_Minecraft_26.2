@@ -15,6 +15,7 @@
 		"PistonStructureResolverMixin",
 		"PowderSnowBlockMixin",
 		"ServerExplosionMixin",
+		"SpinAttackMixin",
 		"ShieldBlockingMixin",
 		"UnitWaterMixin",
 		"WardenDarknessMixin",

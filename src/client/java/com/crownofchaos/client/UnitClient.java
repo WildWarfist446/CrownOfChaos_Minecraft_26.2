@@ -59,6 +59,7 @@ public final class UnitClient {
 	}
 
 	public static void initialize() {
+		UnitManager.clientFaction = () -> FactionClientState.mine().map(com.crownofchaos.faction.Faction::id).orElse(null);
 		ClientPlayNetworking.registerGlobalReceiver(UnitSelectionPayload.TYPE, (payload, context) -> {
 			SELECTED.clear();
 			SELECTED.addAll(payload.entityIds());

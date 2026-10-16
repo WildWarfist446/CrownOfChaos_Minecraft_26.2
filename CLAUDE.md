@@ -297,6 +297,14 @@ the mob as a unit of the player's faction (they must be in one). `unit/UnitManag
 - Vexes summoned by an Evoker unit become minions (`UnitManager.adoptSummons`, unit id
   `minion`, not in `ModUnits`): faction tint, fighting rules and unit goals, but not commandable,
   not reclaimable and not counted by `countUnits`.
+- A Riptide spin attack (the Crown of Poseidon's ability, or a trident) stops dead and bounces back on
+  the first living thing it touches, and Follow teleports units right onto their owner, so units
+  blocked the dash (Warfist, 16 October 2026). `mixin/SpinAttackMixin` drops the player's own and
+  faction's units from the list of things the spin attack touches (`UnitManager.isOwnFactionUnit`,
+  on both sides; the client gets the player's faction from `UnitManager.clientFaction`, set in
+  `UnitClient`). It doesn't stop other players hitting those units, and a player can still hit their own
+  units any other way. Tested on the server by calling the spin attack check: own unit passes, wild cow
+  stops it. Not tested: a real dash in water.
 - Each player can have at most `UnitManager.MAX_UNITS_PER_PLAYER` (40, set by Warfist) units; `UnitItem` refuses
   to summon past it (counted over loaded chunks by `UnitManager.countUnits`).
 - Guardian units treat air as water (`mixin/UnitWaterMixin` makes `Entity.isInWater` true for them, so
