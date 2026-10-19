@@ -45,6 +45,9 @@ public final class CrownAbilities {
 	/** Color for crown ability messages; matches the crowns' epic (purple) item names. */
 	public static final ChatFormatting MESSAGE_COLOR = ChatFormatting.LIGHT_PURPLE;
 
+	/** "Death's door" (the Crown of Chaos's secondary): the Darkness Pulse lasts 300% longer, so 4 times as long. */
+	private static final float DEATHS_DOOR_DURATION_MULTIPLIER = 4.0F;
+
 	private static final Map<AbilitySlot, Map<Item, CrownAbility>> ABILITIES = new EnumMap<>(AbilitySlot.class);
 
 	/** Players currently holding each ability key. Only touched on the server thread. */
@@ -99,6 +102,7 @@ public final class CrownAbilities {
 		register(ModItems.CROWN_OF_WINTER, new FrostWalkerAbility());
 		register(ModItems.CROWN_OF_IRON, new ArrowVolleyAbility());
 		register(ModItems.CROWN_OF_VOID, new EnderPearlAbility());
+		register(ModItems.CROWN_OF_CHAOS, new PainOfDeathAbility());
 
 		registerSecondary(ModItems.UNDER_CROWN, new OreSenseAbility());
 		registerSecondary(ModItems.CROWN_OF_POSEIDON, new LightningStrikeAbility());
@@ -109,6 +113,8 @@ public final class CrownAbilities {
 		registerSecondary(ModItems.CROWN_OF_WINTER, new IcicleDropAbility());
 		registerSecondary(ModItems.CROWN_OF_IRON, new GlowingArrowsAbility());
 		registerSecondary(ModItems.CROWN_OF_VOID, new DragonBreathAbility());
+		// "Death's door": the Darkness Pulse, lasting 300% longer (4 times as long).
+		registerSecondary(ModItems.CROWN_OF_CHAOS, new DarknessPulseAbility(DEATHS_DOOR_DURATION_MULTIPLIER));
 
 		VeinMinerAbility.initialize();
 		SonicBoomAbility.initialize();

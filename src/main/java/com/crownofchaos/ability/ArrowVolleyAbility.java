@@ -68,8 +68,18 @@ public final class ArrowVolleyAbility implements CrownAbility {
 			return false;
 		}
 
-		VOLLEYS.add(new Volley(player, target));
+		begin(player, target);
 		return true;
+	}
+
+	/** How far away a target can be for a volley, in blocks. */
+	static double range() {
+		return RANGE;
+	}
+
+	/** Starts a volley on the target (the caller has checked it's in range and in sight). */
+	static void begin(ServerPlayer player, LivingEntity target) {
+		VOLLEYS.add(new Volley(player, target));
 	}
 
 	@Override

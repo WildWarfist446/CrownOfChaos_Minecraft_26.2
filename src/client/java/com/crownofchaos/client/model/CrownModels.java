@@ -57,5 +57,8 @@ public final class CrownModels {
 		ArmorRenderer.register(
 				context -> new CrownItemModelArmorRenderer(CrownOfChaos.id("crown_of_void_worn")),
 				ModItems.CROWN_OF_VOID, ModItems.NETHERITE_CROWN_OF_VOID);
+		ArmorRenderer.register(
+				context -> new CrownItemModelArmorRenderer(CrownOfChaos.id("crown_of_chaos_worn")),
+				ModItems.CROWN_OF_CHAOS);
 	}
 }

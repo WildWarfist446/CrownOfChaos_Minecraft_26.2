@@ -121,6 +121,9 @@ public final class CrownEffects {
 					new CrownEffect(MobEffects.NIGHT_VISION, 0)),
 			ModItems.CROWN_OF_NETHER, List.of(
 					new CrownEffect(MobEffects.FIRE_RESISTANCE, 0)),
+			// The Crown of Chaos's one potion-style power: the Crown of Nether's fire and lava immunity.
+			ModItems.CROWN_OF_CHAOS, List.of(
+					new CrownEffect(MobEffects.FIRE_RESISTANCE, 0)),
 			ModItems.CROWN_OF_DARKNESS, List.of(
 					new CrownEffect(MobEffects.NIGHT_VISION, 0)));
 
@@ -136,6 +139,15 @@ public final class CrownEffects {
 
 	public static boolean isWearing(LivingEntity entity, Item crown) {
 		return ModItems.baseCrown(entity.getItemBySlot(EquipmentSlot.HEAD).getItem()) == crown;
+	}
+
+	/**
+	 * Whether the entity wears the crown, or the Crown of Chaos, which has every crown's immunities
+	 * and the Crown of Void's teleport dodge. Use this for those powers only; the other powers
+	 * (on-hit effects, abilities) belong to their own crown.
+	 */
+	public static boolean isWearingOrChaos(LivingEntity entity, Item crown) {
+		return isWearing(entity, crown) || isWearing(entity, ModItems.CROWN_OF_CHAOS);
 	}
 
 	public static void initialize() {
@@ -188,7 +200,7 @@ public final class CrownEffects {
 					// Not from landing an ender pearl, which would undo every throw, or from the void.
 					&& !source.is(DamageTypes.ENDER_PEARL)
 					&& !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)
-					&& isWearing(player, ModItems.CROWN_OF_VOID)) {
+					&& isWearingOrChaos(player, ModItems.CROWN_OF_VOID)) {
 				// The one who hit them: for arrows and other projectiles, whoever fired them.
 				Entity attacker = source.getEntity() != null ? source.getEntity() : source.getDirectEntity();
 				voidCrownTeleport(player, attacker == player ? null : attacker);
@@ -249,7 +261,7 @@ public final class CrownEffects {
 				apply(player, active);
 
 				// Crown of Wither immunity also clears Wither the wearer already had.
-				if (worn == ModItems.CROWN_OF_WITHER && player.hasEffect(MobEffects.WITHER)) {
+				if ((worn == ModItems.CROWN_OF_WITHER || worn == ModItems.CROWN_OF_CHAOS) && player.hasEffect(MobEffects.WITHER)) {
 					player.removeEffect(MobEffects.WITHER);
 				}
 			}

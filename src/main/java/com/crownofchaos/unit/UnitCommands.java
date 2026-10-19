@@ -35,6 +35,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
@@ -104,10 +105,15 @@ public final class UnitCommands {
 		return faction.isPresent() && faction.get().id().equals(data.faction()) && wearsCrownFor(player, data);
 	}
 
-	/** Whether the player wears the crown (or its netherite version) that commands the unit. */
+	/** Whether the player wears the crown (or its netherite version) that commands the unit, or the Crown of Chaos. */
 	public static boolean wearsCrownFor(Player player, UnitData data) {
 		UnitType type = ModUnits.byId(data.unit());
-		return type != null && ModItems.baseCrown(player.getItemBySlot(EquipmentSlot.HEAD).getItem()) == type.crown();
+		if (type == null) {
+			return false;
+		}
+		Item worn = ModItems.baseCrown(player.getItemBySlot(EquipmentSlot.HEAD).getItem());
+		// The Crown of Chaos commands every unit type.
+		return worn == type.crown() || worn == ModItems.CROWN_OF_CHAOS;
 	}
 
 	// Clicking units

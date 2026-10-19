@@ -81,6 +81,13 @@ public final class ModItems {
 
 	// Netherite helmet stats and they don't burn; otherwise identical to the crown they came from,
 	// including its effects, abilities, sprite and 3D model.
+	/**
+	 * The finished Crown of Chaos: netherite helmet stats from the start, fire-proof, and no
+	 * netherite upgrade. For now it's only in the creative tab (no smithing recipe or boss yet), and it
+	 * has no abilities or description yet.
+	 */
+	public static final Item CROWN_OF_CHAOS = registerChaosCrown();
+
 	public static final Item NETHERITE_UNDER_CROWN = registerNetheriteCrown("under_crown", UNDER_CROWN);
 	public static final Item NETHERITE_CROWN_OF_POSEIDON = registerNetheriteCrown("crown_of_poseidon", CROWN_OF_POSEIDON);
 	public static final Item NETHERITE_CROWN_OF_NETHER = registerNetheriteCrown("crown_of_nether", CROWN_OF_NETHER);
@@ -114,6 +121,14 @@ public final class ModItems {
 	 * can't be worn or used, and is completed into the Crown of Chaos. Kept safe from fire and
 	 * lava, since it holds nine crowns' worth of work.
 	 */
+	/**
+	 * The boss drop (the boss isn't in the game yet): smithed with the Incomplete Crown of Chaos to
+	 * make the Crown of Chaos. A material with no other use.
+	 */
+	public static final Item SOUL_OF_CHAOS = register("soul_of_chaos", Item::new, new Item.Properties()
+			.rarity(Rarity.EPIC)
+			.fireResistant());
+
 	public static final Item INCOMPLETE_CROWN_OF_CHAOS = register("incomplete_crown_of_chaos", Item::new,
 			new Item.Properties()
 					.rarity(Rarity.EPIC)
@@ -159,6 +174,21 @@ public final class ModItems {
 			properties.component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
 		}
 		Item crown = register(name, Item::new, withLore(name, properties));
+		CROWNS.add(crown);
+		return crown;
+	}
+
+	private static Item registerChaosCrown() {
+		Item crown = register("crown_of_chaos", Item::new, new Item.Properties()
+				.humanoidArmor(ArmorMaterials.NETHERITE, ArmorType.HELMET)
+				.rarity(Rarity.EPIC)
+				.fireResistant()
+				// Keep the diamond helmet look when worn (its 3D model draws instead).
+				.component(DataComponents.EQUIPPABLE, Equippable.builder(EquipmentSlot.HEAD)
+						.setEquipSound(ArmorMaterials.NETHERITE.equipSound())
+						.setAsset(ArmorMaterials.DIAMOND.assetId())
+						.build())
+				.component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true));
 		CROWNS.add(crown);
 		return crown;
 	}
@@ -275,9 +305,11 @@ public final class ModItems {
 					output.accept(NETHERITE_CROWN_OF_WINTER);
 					output.accept(NETHERITE_CROWN_OF_IRON);
 					output.accept(NETHERITE_CROWN_OF_VOID);
+					output.accept(CROWN_OF_CHAOS);
 					output.accept(SCULK_CORD);
 					output.accept(ANKH_CHARM);
 					output.accept(INCOMPLETE_CROWN_OF_CHAOS);
+					output.accept(SOUL_OF_CHAOS);
 					output.accept(FACTION_COIN);
 					output.accept(FACTION_FLAG);
 					output.accept(ModBlocks.COMMANDER_TABLE);
@@ -290,7 +322,7 @@ public final class ModItems {
 				.register(output -> output.insertAfter(Items.NETHERITE_BOOTS, GOLDEN_CROWN, UNDER_CROWN, CROWN_OF_POSEIDON, CROWN_OF_NETHER, CROWN_OF_DARKNESS, CROWN_OF_SUN, CROWN_OF_WITHER, CROWN_OF_WINTER, CROWN_OF_IRON, CROWN_OF_VOID,
 						NETHERITE_UNDER_CROWN, NETHERITE_CROWN_OF_POSEIDON, NETHERITE_CROWN_OF_NETHER, NETHERITE_CROWN_OF_DARKNESS, NETHERITE_CROWN_OF_SUN, NETHERITE_CROWN_OF_WITHER, NETHERITE_CROWN_OF_WINTER, NETHERITE_CROWN_OF_IRON, NETHERITE_CROWN_OF_VOID));
 		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.INGREDIENTS)
-				.register(output -> output.insertAfter(Items.ECHO_SHARD, SCULK_CORD, ANKH_CHARM, INCOMPLETE_CROWN_OF_CHAOS, FACTION_COIN));
+				.register(output -> output.insertAfter(Items.ECHO_SHARD, SCULK_CORD, ANKH_CHARM, INCOMPLETE_CROWN_OF_CHAOS, SOUL_OF_CHAOS, FACTION_COIN));
 
 		ResourceKey<LootTable> wardenLoot = EntityTypes.WARDEN.getDefaultLootTable().orElseThrow();
 		ResourceKey<LootTable> elderGuardianLoot = EntityTypes.ELDER_GUARDIAN.getDefaultLootTable().orElseThrow();

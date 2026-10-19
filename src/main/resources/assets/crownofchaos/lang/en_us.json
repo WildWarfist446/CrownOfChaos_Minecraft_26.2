@@ -20,6 +20,7 @@
   "item.crownofchaos.crown_of_iron": "Crown of Iron",
   "item.crownofchaos.crown_of_iron.lore": "HRMM!",
   "item.crownofchaos.crown_of_void": "Crown of Void",
+  "item.crownofchaos.crown_of_chaos": "Crown of Chaos",
   "item.crownofchaos.crown_of_void.lore": "Congratulations, you killed the dragon.",
   "item.crownofchaos.netherite_under_crown": "Netherite Under Crown",
   "item.crownofchaos.netherite_crown_of_poseidon": "Netherite Crown of Poseidon",
@@ -37,6 +38,7 @@
   "item.crownofchaos.ankh_charm.lore": "Ra would be proud.",
   "item.crownofchaos.incomplete_crown_of_chaos": "Incomplete Crown of Chaos",
   "item.crownofchaos.incomplete_crown_of_chaos.lore": "ERROR ERROR ERR",
+  "item.crownofchaos.soul_of_chaos": "Soul of Chaos",
   "item.crownofchaos.faction_coin": "Faction Coin",
 
   "key.category.crownofchaos.crowns": "Crown of Chaos",

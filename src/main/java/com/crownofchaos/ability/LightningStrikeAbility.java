@@ -40,12 +40,18 @@ public final class LightningStrikeAbility implements CrownAbility {
 			return false;
 		}
 
+		strike(player, target);
+		return true;
+	}
+
+	/** Calls a bolt down on the target (the caller has checked it's in range and in sight). */
+	static void strike(ServerPlayer player, LivingEntity target) {
 		ServerLevel level = (ServerLevel) player.level();
 		// A visual-only bolt gives the real look and sound without vanilla's damage, fire and
 		// mob transformations; the damage is dealt below instead.
 		LightningBolt bolt = EntityTypes.LIGHTNING_BOLT.create(level, EntitySpawnReason.TRIGGERED);
 		if (bolt == null) {
-			return false;
+			return;
 		}
 		bolt.snapTo(target.getX(), target.getY(), target.getZ());
 		bolt.setVisualOnly(true);
@@ -63,7 +69,6 @@ public final class LightningStrikeAbility implements CrownAbility {
 				entity.igniteForSeconds(BURN_SECONDS);
 			}
 		}
-		return true;
 	}
 
 	@Override

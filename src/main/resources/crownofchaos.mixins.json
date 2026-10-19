@@ -14,6 +14,7 @@
 		"MobSunMixin",
 		"PistonStructureResolverMixin",
 		"PowderSnowBlockMixin",
+		"ProjectileMixin",
 		"ServerExplosionMixin",
 		"SpinAttackMixin",
 		"ShieldBlockingMixin",

@@ -13,15 +13,16 @@ What's left for The Crown of Chaos, as of 6 October 2026. Tick items off with `[
 ## The Crown of Chaos (last crown in the plan)
 
 - [x] Incomplete Crown of Chaos: crafted from all nine crowns; can't be worn or used
-- [ ] Boss fight (to be designed) that drops an item and a smithing template
+- [x] Soul of Chaos: the boss's item drop, a material used only for the Crown of Chaos
+- [ ] Boss fight (to be designed) that drops the Soul of Chaos and a smithing template
 - [ ] Smithing recipe: Incomplete Crown of Chaos + boss item + template = Crown of Chaos
-- [ ] All the crowns' immunities, plus the Crown of Void's teleport dodge
-- [ ] Netherite helmet stats from the start; no netherite upgrade
-- [ ] Primary ability "The pain of death": Arrow Volley, Wither Skull, Fire Charge and Lightning Strike at once
-- [ ] Secondary ability "Death's door": Darkness Pulse lasting 300% longer
-- [ ] Can command every unit type
+- [x] All the crowns' immunities, plus the Crown of Void's teleport dodge
+- [x] Netherite helmet stats from the start; no netherite upgrade (the item exists, creative tab only)
+- [x] Primary ability "The pain of death": Arrow Volley, Wither Skull, Fire Charge and Lightning Strike at once
+- [x] Secondary ability "Death's door": Darkness Pulse lasting 300% longer
+- [x] Can command every unit type
 - [ ] Art: "glitched" sprite combining all the crown sprites
-- [ ] Art: 3D model (optional)
+- [x] Art: 3D model
 
 ## Art and 3D models
 

@@ -20,7 +20,7 @@ import net.minecraft.world.entity.LivingEntity;
 public abstract class LivingEntityEffectMixin {
 	@Inject(method = "canBeAffected", at = @At("HEAD"), cancellable = true)
 	private void crownofchaos$witherCrownImmunity(MobEffectInstance effect, CallbackInfoReturnable<Boolean> cir) {
-		if (effect.is(MobEffects.WITHER) && CrownEffects.isWearing((LivingEntity) (Object) this, ModItems.CROWN_OF_WITHER)) {
+		if (effect.is(MobEffects.WITHER) && CrownEffects.isWearingOrChaos((LivingEntity) (Object) this, ModItems.CROWN_OF_WITHER)) {
 			cir.setReturnValue(false);
 		}
 	}

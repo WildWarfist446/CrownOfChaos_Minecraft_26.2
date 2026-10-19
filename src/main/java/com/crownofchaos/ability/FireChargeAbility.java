@@ -40,6 +40,12 @@ public final class FireChargeAbility implements CrownAbility {
 
 	@Override
 	public boolean activate(ServerPlayer player, ItemStack crown) {
+		shoot(player);
+		return true;
+	}
+
+	/** Shoots one fireball where the player is looking. */
+	static void shoot(ServerPlayer player) {
 		Vec3 look = player.getLookAngle();
 		LargeFireball fireball = new LargeFireball(player.level(), player, look, EXPLOSION_POWER);
 		// Spawn just in front of the player's eyes, like a thrown projectile.
@@ -53,7 +59,6 @@ public final class FireChargeAbility implements CrownAbility {
 
 		player.level().playSound(null, player, SoundEvents.GHAST_SHOOT, SoundSource.PLAYERS, 1.0F,
 				(player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.2F + 1.0F);
-		return true;
 	}
 
 	@Override

@@ -251,8 +251,17 @@ details.
 | Crown of Winter | Freeze on hit, freeze immunity, Swiftness and grip on snow and ice | Frost Walker (toggle) | Icicle Drop, 5 icicles, aimed (6s) | Powder Snow Bucket |
 | Crown of Iron | +50% bow and crossbow damage | Arrow Volley, aimed (10s) | Glowing Arrows (toggle) | Totem of Undying |
 | Crown of Void | Teleport when hit, Swiftness on End blocks | Ender Pearl (3s) | Dragon's Breath (30s) | Dragon Egg |
+| Crown of Chaos | Fire and lava immunity, Wither immunity, freeze immunity, teleport when hit | The pain of death (10s) | Death's door (30s) | Incomplete Crown of Chaos + Soul of Chaos (not craftable yet) |
 
 Times in brackets are cooldowns. "Aimed" abilities hit whatever you're looking at.
+
+**Crown of Chaos** (in progress; creative tab only for now): it has the Crown of Nether's fire and lava
+immunity, the Crown of Wither's Wither immunity, the Crown of Winter's freeze immunity and the Crown of
+Void's teleport when hit, but not the crowns' other powers. **The pain of death** fires a Wither Skull
+and a Fire Charge where you look, and, at whatever you're looking at, a Lightning Strike (within 30
+blocks) and an Arrow Volley (within 20), all at once, for the abilities' usual damage. **Death's door** is
+the Crown of Darkness's Darkness Pulse, lasting 300% longer (4 times as long). It commands every unit
+type.
 
 - Primary abilities with a cooldown show it on the crown's icon, and pressing the key early
   shows the time remaining in the action bar. Secondary ability cooldowns show in the action
@@ -278,7 +287,9 @@ Times in brackets are cooldowns. "Aimed" abilities hit whatever you're looking a
 | Heart of the Sea | Every Elder Guardian drops one when killed, on top of its usual drops (vanilla has no guaranteed source) | Crafting the Crown of Poseidon |
 | Ankh Charm | Desert pyramids: every pyramid has exactly one, in one of its four chests (also with Lootr, where each player finds it in that same chest) | Crafting the Crown of Sun |
 | Faction Coin | Crafted from 8 Gold Ingots around 1 Emerald (unlocked by picking up an Emerald) | Crafting the Commander's Table and Faction Flags |
+| Soul of Chaos | The Crown of Chaos boss's drop (the boss isn't in the game yet; creative tab only for now) | Smithed with the Incomplete Crown of Chaos to make the Crown of Chaos (in progress). Used for nothing else |
 | Incomplete Crown of Chaos | Crafted from all nine magical crowns, in any order; each can be its netherite version (unlocked by picking up a Crown of Void) | Completing the Crown of Chaos (in progress). It can't be worn or used, doesn't stack, and survives fire and lava |
+| Crown of Chaos | The finished crown, made from the Incomplete Crown and a Soul of Chaos (not craftable yet: creative tab only for now) | Netherite helmet stats, a custom 3D model, every crown's immunities and the Void teleport (see **Abilities**), two abilities of its own, and command over every unit type. It has no netherite upgrade and survives fire and lava |
 
 Descriptions: the Sculk Cord reads *"The screeching has finally ceased..."*, the Ankh
 Charm reads *"Ra would be proud."* and the Incomplete Crown of Chaos reads *"ERROR ERROR ERR"*

@@ -41,6 +41,16 @@ public final class WitherSkullAbility implements CrownAbility {
 			}
 		}
 
+		shoot(player);
+
+		player.sendOverlayMessage(Component.translatable("message.crownofchaos.ability.wither_skull.charges", result.charges(), CHARGES.maxCharges())
+				.withStyle(CrownAbilities.MESSAGE_COLOR));
+		// Charges are tracked by the ChargeTracker rather than the crown's item cooldown.
+		return false;
+	}
+
+	/** Fires one skull where the player is looking, without using a charge (the caller has checked those, if any). */
+	static void shoot(ServerPlayer player) {
 		// Like WitherBoss#performRangedAttack, fired from the player's head instead of the Wither's.
 		Vec3 look = player.getLookAngle();
 		WitherSkull skull = new WitherSkull(player.level(), player, look.normalize());
@@ -51,11 +61,6 @@ public final class WitherSkullAbility implements CrownAbility {
 		skull.addTag(CrownAbilities.CROWN_ABILITY_TAG);
 		player.level().addFreshEntity(skull);
 		player.level().levelEvent(null, WITHER_SHOOT_EVENT, player.blockPosition(), 0);
-
-		player.sendOverlayMessage(Component.translatable("message.crownofchaos.ability.wither_skull.charges", result.charges(), CHARGES.maxCharges())
-				.withStyle(CrownAbilities.MESSAGE_COLOR));
-		// Charges are tracked by the ChargeTracker rather than the crown's item cooldown.
-		return false;
 	}
 
 	@Override
