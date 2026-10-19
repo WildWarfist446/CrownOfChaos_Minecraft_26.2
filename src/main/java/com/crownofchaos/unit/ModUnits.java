@@ -74,9 +74,13 @@ public final class ModUnits {
 		return ALL;
 	}
 
-	/** The units a crown commands (a netherite crown commands the same as its base crown), in list order. */
+	/** The units a crown commands (a netherite crown commands the same as its base crown, and the Crown of Chaos commands all of them), in list order. */
 	public static List<UnitType> forCrown(Item crown) {
 		Item base = ModItems.baseCrown(crown);
+		// The Crown of Chaos commands, and so makes, every unit.
+		if (base == ModItems.CROWN_OF_CHAOS) {
+			return List.copyOf(ALL);
+		}
 		return ALL.stream().filter(unit -> unit.crown() == base).toList();
 	}
 
