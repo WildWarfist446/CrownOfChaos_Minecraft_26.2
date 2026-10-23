@@ -119,7 +119,7 @@ public final class ChaosKing extends Monster {
 	/** How long after he finishes rising before the first wave (15 seconds): time to ready yourself and back away from the altar. */
 	private static final int FIRST_WAVE_DELAY_TICKS = 300;
 	/** The time between uses of his Wither Skull, Fire Charge and Lightning Strike (30 seconds), and the wait before the first. */
-	private static final int ABILITY_COOLDOWN_TICKS = 600;
+	private static final int ABILITY_COOLDOWN_TICKS = 240;
 	private static final int FIRST_ABILITY_TICKS = 200;
 	/** The Warden of the last wave has this share of its health for each player. */
 	private static final double WARDEN_HEALTH_PER_PLAYER = 0.25;

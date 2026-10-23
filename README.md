@@ -305,7 +305,7 @@ on repeat for everyone in the arena until he is defeated.
   4 Guardians and 3 Drowned; then one Warden with 25% of its health.
 - The first wave comes 15 seconds after he rises, so you can ready yourself and back away from the altar;
   when a wave is cleared a banner says so and the next one follows 6 seconds later.
-- When the last wave falls he draws an enchanted-looking diamond sword (for show; it adds no damage), flies down onto the altar and fights you with melee and, every 30 seconds, a
+- When the last wave falls he draws an enchanted-looking diamond sword (for show; it adds no damage), flies down onto the altar and fights you with melee and, every 12 seconds, a
   Wither Skull, a Fire Charge or a Lightning Strike. He has a Warden's health and stays on the floor, away from the lava.
 - If every player in the arena dies or leaves, the fight clears itself and the altar must be lit again.
 
