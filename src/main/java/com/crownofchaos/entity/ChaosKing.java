@@ -110,7 +110,10 @@ public final class ChaosKing extends Monster {
 	/** The pause after a wave is cleared before the next one (8 seconds). */
 	/** He is kept this many blocks in from the floor's edge, so he never walks into the lava wall. */
 	private static final double EDGE_MARGIN = 2.0;
-	private static final int WAVE_PAUSE_TICKS = 160;
+	/** His units appear on the floor between these distances from the altar, so they reach the players soon even in the big arena. */
+	private static final double MINION_MIN_DISTANCE = 5.0;
+	private static final double MINION_MAX_DISTANCE = 24.0;
+	private static final int WAVE_PAUSE_TICKS = 120;
 	/** The shorter pause after the last wave, before he comes down. */
 	private static final int LAST_WAVE_PAUSE_TICKS = 80;
 	/** How long after he finishes rising before the first wave (15 seconds): time to ready yourself and back away from the altar. */
@@ -463,7 +466,7 @@ public final class ChaosKing extends Monster {
 		java.util.ArrayList<T> spawned = new java.util.ArrayList<>();
 		for (int i = 0; i < count; i++) {
 			double angle = this.random.nextDouble() * Math.PI * 2.0;
-			double distance = 5.0 + this.random.nextDouble() * (ChaosArena.ARENA_RADIUS - 8.0);
+			double distance = MINION_MIN_DISTANCE + this.random.nextDouble() * (MINION_MAX_DISTANCE - MINION_MIN_DISTANCE);
 			BlockPos pos = BlockPos.containing(Math.cos(angle) * distance, ChaosArena.FLOOR_Y + 1 + lift, Math.sin(angle) * distance);
 			T mob = type.spawn(level, pos, EntitySpawnReason.MOB_SUMMONED);
 			if (mob != null) {

@@ -288,13 +288,13 @@ The final crown (in progress) is made in five steps:
    template into it and it becomes a Chaos Upgrade.
 5. **Smith the crown** at a smithing table: Chaos Upgrade + Incomplete Crown of Chaos + Soul of Chaos.
 
-**The Chaos Arena** (`crownofchaos:chaos_arena`) is a dark purple void with a small round floating arena (a
+**The Chaos Arena** (`crownofchaos:chaos_arena`) is a dark purple void with a large round floating arena, about 73 blocks across (a
 glitched mix of netherrack, cobblestone, mossy cobblestone and nether bricks) and a gold-and-redstone-torch
 altar. A solid wall of lava that never flows rings it and climbs out of sight, so don't back off too far; bedrock seals it on the outside, underneath and on top, so nothing gets out.
 Nothing spawns there on its own and there's no treasure: only the boss, what he summons, and what he drops (his units drop experience but none of their usual items).
 Once he is beaten, an unbreakable null portal opens behind where you arrived and takes you back to where you
 came in; it closes again if the altar is relit. Ops can also
-`/execute in crownofchaos:chaos_arena run tp @s 0 65 -14`.
+`/execute in crownofchaos:chaos_arena run tp @s 0 65 -32`.
 
 **The fight** (balance isn't tuned yet): lighting the altar summons **Herobrine, The Chaos King**, a
 player-style boss wearing the Crown of Chaos, in a storm of lightning. Music ("Empire" by Laudividni) plays
@@ -304,7 +304,7 @@ on repeat for everyone in the arena until he is defeated.
   each other). Per player: 5 Strays and 5 Husks; then 1 Ravager, 2 Evokers and 3 Vindicators; then
   4 Guardians and 3 Drowned; then one Warden with 25% of its health.
 - The first wave comes 15 seconds after he rises, so you can ready yourself and back away from the altar;
-  when a wave is cleared a banner says so and the next one follows 8 seconds later.
+  when a wave is cleared a banner says so and the next one follows 6 seconds later.
 - When the last wave falls he draws an enchanted-looking diamond sword (for show; it adds no damage), flies down onto the altar and fights you with melee and, every 30 seconds, a
   Wither Skull, a Fire Charge or a Lightning Strike. He has a Warden's health and stays on the floor, away from the lava.
 - If every player in the arena dies or leaves, the fight clears itself and the altar must be lit again.

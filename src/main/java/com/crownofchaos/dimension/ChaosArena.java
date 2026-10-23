@@ -55,8 +55,10 @@ import net.minecraft.world.phys.AABB;
 public final class ChaosArena {
 	public static final ResourceKey<Level> DIMENSION = ResourceKey.create(Registries.DIMENSION, CrownOfChaos.id("chaos_arena"));
 
-	/** The arena floor is a disc this many blocks from the centre to the edge (about 37 across). */
-	public static final int ARENA_RADIUS = 18;
+	/** The arena floor is a disc this many blocks from the centre to the edge (about 73 across: twice the first version, so several players and their units fit). */
+	public static final int ARENA_RADIUS = 36;
+	/** Radii the arena has had before (the first version, and a briefly tried triple size), cleared away from worlds that still have them. */
+	private static final int[] LEGACY_ARENA_RADII = {18, 54};
 	/** The y of the top layer of the floor; the bedrock layer is just under it. */
 	public static final int FLOOR_Y = 64;
 	/** The altar's centre block, the netherrack you light: on top of the gold blocks, which stand on the floor. */
@@ -70,6 +72,9 @@ public final class ChaosArena {
 	public static final int LAVA_WALL_BELOW_FLOOR = 6;
 	/** ...to this many blocks above it. */
 	public static final int LAVA_WALL_ABOVE_FLOOR = 100;
+	/** A block of the floor's bedrock layer at its edge, which tells whether the floor has its current size. */
+	private static final BlockPos FLOOR_MARKER = new BlockPos(ARENA_RADIUS - 1, FLOOR_Y - 1, 0);
+
 	/** The lava wall is sealed in bedrock: a ring outside it, a floor under it and a lid over the whole arena. */
 	private static final int BEDROCK_SHELL_THICKNESS = 1;
 	/** A block of the shell (in its outer ring) that tells whether it has been built. */
@@ -213,8 +218,8 @@ public final class ChaosArena {
 		}
 	}
 
-	/** The bottom corner of the exit portal's 2 wide, 3 tall opening, behind the arrival spot. */
-	public static final BlockPos EXIT_PORTAL = new BlockPos(0, FLOOR_Y + 1, -17);
+	/** The bottom corner of the exit portal's 2 wide, 3 tall opening, behind the arrival spot. A solid bedrock row sits right behind it. */
+	public static final BlockPos EXIT_PORTAL = new BlockPos(0, FLOOR_Y + 1, -(ARENA_RADIUS - 2));
 
 	/** Sends the player to the arena's arrival spot, building the arena first if needed. */
 	public static boolean enter(ServerPlayer player) {
@@ -229,8 +234,18 @@ public final class ChaosArena {
 
 	/** Builds the arena, and its lava wall, if they are not there. Safe to call any time. */
 	public static void ensureBuilt(ServerLevel level) {
-		if (!level.getBlockState(ALTAR.below()).is(Blocks.GOLD_BLOCK)) {
-			buildFloorAndAltar(level);
+		boolean altarBuilt = level.getBlockState(ALTAR.below()).is(Blocks.GOLD_BLOCK);
+		for (int legacy : LEGACY_ARENA_RADII) {
+			// An arena of another size (its lava wall starts right at its edge): clear what doesn't fit the current one.
+			if (legacy != ARENA_RADIUS && level.getBlockState(new BlockPos(legacy + 1, FLOOR_Y + 1, 0)).is(Blocks.LAVA)) {
+				clearLegacyArena(level, legacy);
+			}
+		}
+		if (!level.getBlockState(FLOOR_MARKER).is(Blocks.BEDROCK)) {
+			buildFloor(level);
+		}
+		if (!altarBuilt) {
+			buildAltar(level);
 		}
 		if (!level.getBlockState(LAVA_WALL_MARKER).is(Blocks.LAVA)) {
 			buildLavaWall(level);
@@ -239,17 +254,33 @@ public final class ChaosArena {
 			buildBedrockShell(level);
 		}
 		// The way out exists only once the boss is beaten (the soul fire on the altar marks that).
-		if (!level.getBlockState(ALTAR.above()).is(Blocks.SOUL_FIRE) && level.getBlockState(EXIT_PORTAL).is(ModBlocks.NULL_EXIT)) {
+		// (An earlier version put it one block further back, so that spot is checked too.)
+		boolean beaten = level.getBlockState(ALTAR.above()).is(Blocks.SOUL_FIRE);
+		boolean hasExit = level.getBlockState(EXIT_PORTAL).is(ModBlocks.NULL_EXIT);
+		boolean hasOldExit = level.getBlockState(EXIT_PORTAL.north()).is(ModBlocks.NULL_EXIT);
+		if (!beaten && (hasExit || hasOldExit)) {
 			removeExitPortal(level);
+		} else if (beaten && (!hasExit || hasOldExit)) {
+			buildExitPortal(level);
 		}
+	}
+
+	/** The glitched floor block for a spot: the same mix every time, so rebuilding does not change it. */
+	private static BlockState floorBlockAt(int x, int z) {
+		RandomSource random = RandomSource.create(Mth.getSeed(x, FLOOR_Y, z));
+		return FLOOR_BLOCKS.get(random.nextInt(FLOOR_BLOCKS.size()));
 	}
 
 	/** The way back: a bedrock frame filled with unbreakable null blocks, behind the arrival spot. */
 	private static void removeExitPortal(ServerLevel level) {
 		BlockState air = Blocks.AIR.defaultBlockState();
 		for (int x = EXIT_PORTAL.getX() - 1; x <= EXIT_PORTAL.getX() + 2; x++) {
-			for (int y = EXIT_PORTAL.getY() - 1; y <= EXIT_PORTAL.getY() + 3; y++) {
-				place(level, new BlockPos(x, y, EXIT_PORTAL.getZ()), air);
+			for (int z = EXIT_PORTAL.getZ() - 1; z <= EXIT_PORTAL.getZ(); z++) {
+				// The frame's bottom row stood in the floor: put the floor back.
+				place(level, new BlockPos(x, FLOOR_Y, z), floorBlockAt(x, z));
+				for (int y = EXIT_PORTAL.getY(); y <= EXIT_PORTAL.getY() + 3; y++) {
+					place(level, new BlockPos(x, y, z), air);
+				}
 			}
 		}
 	}
@@ -261,6 +292,14 @@ public final class ChaosArena {
 			for (int y = EXIT_PORTAL.getY() - 1; y <= EXIT_PORTAL.getY() + 3; y++) {
 				boolean inside = x >= EXIT_PORTAL.getX() && x <= EXIT_PORTAL.getX() + 1 && y >= EXIT_PORTAL.getY() && y <= EXIT_PORTAL.getY() + 2;
 				place(level, new BlockPos(x, y, EXIT_PORTAL.getZ()), inside ? exit : bedrock);
+				// A solid row right behind it, so walking through the portal can't lead on towards the lava.
+				if (y >= EXIT_PORTAL.getY()) {
+					place(level, new BlockPos(x, y, EXIT_PORTAL.getZ() - 1), bedrock);
+				}
+				// ...and the floor under that row, which an earlier exit position left a hole in.
+				if (y == EXIT_PORTAL.getY() - 1 && level.getBlockState(new BlockPos(x, y, EXIT_PORTAL.getZ() - 1)).isAir()) {
+					place(level, new BlockPos(x, y, EXIT_PORTAL.getZ() - 1), floorBlockAt(x, EXIT_PORTAL.getZ() - 1));
+				}
 			}
 		}
 	}
@@ -323,8 +362,46 @@ public final class ChaosArena {
 		}
 	}
 
-	private static void buildFloorAndAltar(ServerLevel level) {
-		CrownOfChaos.LOGGER.info("Building the Chaos Arena");
+	/**
+	 * Clears an arena of another size: its lava wall, bedrock shell and exit portal and, if it was bigger, the
+	 * floor and lid that stick out past the current one.
+	 */
+	private static void clearLegacyArena(ServerLevel level, int legacy) {
+		CrownOfChaos.LOGGER.info("Clearing the Chaos Arena's old walls (radius {})", legacy);
+		int shellOuter = legacy + LAVA_WALL_THICKNESS + BEDROCK_SHELL_THICKNESS;
+		int floorInner = Math.min(legacy, ARENA_RADIUS);
+		int top = FLOOR_Y + LAVA_WALL_ABOVE_FLOOR + 1;
+		BlockState air = Blocks.AIR.defaultBlockState();
+		for (int x = -shellOuter; x <= shellOuter; x++) {
+			for (int z = -shellOuter; z <= shellOuter; z++) {
+				int distance = x * x + z * z;
+				if (distance <= floorInner * floorInner || distance > shellOuter * shellOuter) {
+					continue;
+				}
+				if (distance <= legacy * legacy) {
+					// Floor (and its bedrock layer) and lid of a bigger arena, past the new edge.
+					place(level, new BlockPos(x, FLOOR_Y - 1, z), air);
+					place(level, new BlockPos(x, FLOOR_Y, z), air);
+					place(level, new BlockPos(x, top, z), air);
+				} else {
+					for (int y = FLOOR_Y - LAVA_WALL_BELOW_FLOOR - 1; y <= top; y++) {
+						place(level, new BlockPos(x, y, z), air);
+					}
+				}
+			}
+		}
+		// The old exit portal and its frame, just inside the old edge.
+		for (int x = -1; x <= 2; x++) {
+			for (int z = -legacy + 1; z <= -legacy + 2; z++) {
+				for (int y = FLOOR_Y + 1; y <= FLOOR_Y + 4; y++) {
+					place(level, new BlockPos(x, y, z), air);
+				}
+			}
+		}
+	}
+
+	private static void buildFloor(ServerLevel level) {
+		CrownOfChaos.LOGGER.info("Building the Chaos Arena's floor");
 
 		int radiusSquared = ARENA_RADIUS * ARENA_RADIUS;
 		BlockState bedrock = Blocks.BEDROCK.defaultBlockState();
@@ -340,6 +417,9 @@ public final class ChaosArena {
 			}
 		}
 
+	}
+
+	private static void buildAltar(ServerLevel level) {
 		// The altar: 3x3 gold blocks standing on the floor (so their sides show), the netherrack on the
 		// centre one, and a redstone torch on each gold block beside it.
 		BlockState gold = Blocks.GOLD_BLOCK.defaultBlockState();
