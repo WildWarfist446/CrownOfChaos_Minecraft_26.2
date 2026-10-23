@@ -2,6 +2,7 @@ package com.crownofchaos.ability;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.hurtingprojectile.WitherSkull;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
@@ -51,16 +52,20 @@ public final class WitherSkullAbility implements CrownAbility {
 
 	/** Fires one skull where the player is looking, without using a charge (the caller has checked those, if any). */
 	static void shoot(ServerPlayer player) {
-		// Like WitherBoss#performRangedAttack, fired from the player's head instead of the Wither's.
-		Vec3 look = player.getLookAngle();
-		WitherSkull skull = new WitherSkull(player.level(), player, look.normalize());
-		skull.setOwner(player);
-		Vec3 start = player.getEyePosition().add(look.scale(0.5));
+		shoot(player, player.getLookAngle());
+	}
+
+	/** Fires one skull from the shooter's head in a direction (the Chaos King aims it at his target). */
+	public static void shoot(LivingEntity shooter, Vec3 direction) {
+		// Like WitherBoss#performRangedAttack, fired from the shooter's head instead of the Wither's.
+		WitherSkull skull = new WitherSkull(shooter.level(), shooter, direction.normalize());
+		skull.setOwner(shooter);
+		Vec3 start = shooter.getEyePosition().add(direction.normalize().scale(0.5));
 		skull.setPos(start.x, start.y, start.z);
 		skull.addTag(SKULL_TAG);
 		skull.addTag(CrownAbilities.CROWN_ABILITY_TAG);
-		player.level().addFreshEntity(skull);
-		player.level().levelEvent(null, WITHER_SHOOT_EVENT, player.blockPosition(), 0);
+		shooter.level().addFreshEntity(skull);
+		shooter.level().levelEvent(null, WITHER_SHOOT_EVENT, shooter.blockPosition(), 0);
 	}
 
 	@Override

@@ -1,0 +1,8 @@
+{
+	"portal_activate": {
+		"sounds": [ "crownofchaos:portal_activate" ]
+	},
+	"boss_music": {
+		"sounds": [ { "name": "crownofchaos:boss_music", "stream": true } ]
+	}
+}

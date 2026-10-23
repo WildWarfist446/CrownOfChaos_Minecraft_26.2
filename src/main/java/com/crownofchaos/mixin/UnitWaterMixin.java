@@ -19,7 +19,8 @@ import net.minecraft.world.entity.monster.Guardian;
 public abstract class UnitWaterMixin {
 	@Inject(method = "isInWater()Z", at = @At("HEAD"), cancellable = true)
 	private void crownofchaos$guardianUnitsSwimInAir(CallbackInfoReturnable<Boolean> cir) {
-		if ((Object) this instanceof Guardian && ((Entity) (Object) this).hasAttached(UnitManager.UNIT)) {
+		if ((Object) this instanceof Guardian && (((Entity) (Object) this).hasAttached(UnitManager.UNIT)
+				|| ((Entity) (Object) this).entityTags().contains(com.crownofchaos.entity.ChaosKing.MINION_TAG))) {
 			cir.setReturnValue(true);
 		}
 	}

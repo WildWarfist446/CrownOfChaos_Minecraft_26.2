@@ -25,6 +25,14 @@ public final class ModEntities {
 					.clientTrackingRange(10)
 					.updateInterval(5));
 
+	/** The boss of the Chaos Arena. */
+	public static final EntityType<ChaosKing> CHAOS_KING = registerEntity("chaos_king",
+			EntityType.Builder.of(ChaosKing::new, MobCategory.MONSTER)
+					.sized(0.6F, 1.95F)
+					.eyeHeight(1.74F)
+					.fireImmune()
+					.clientTrackingRange(10));
+
 	private ModEntities() {
 	}
 
@@ -33,7 +41,13 @@ public final class ModEntities {
 		return Registry.register(BuiltInRegistries.ENTITY_TYPE, key, builder.build(key));
 	}
 
+	private static <T extends net.minecraft.world.entity.Entity> EntityType<T> registerEntity(String name, EntityType.Builder<T> builder) {
+		ResourceKey<EntityType<?>> key = ResourceKey.create(Registries.ENTITY_TYPE, CrownOfChaos.id(name));
+		return Registry.register(BuiltInRegistries.ENTITY_TYPE, key, builder.build(key));
+	}
+
 	/** Loads this class so the entity types are registered. */
 	public static void initialize() {
+		net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(CHAOS_KING, ChaosKing.createAttributes());
 	}
 }

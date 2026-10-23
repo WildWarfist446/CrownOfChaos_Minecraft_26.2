@@ -26,6 +26,23 @@ public final class ModBlocks {
 			.sound(SoundType.WOOD)
 			.noOcclusion());
 
+	/** The swirl of a glitched portal: drawn with Minecraft's missing-texture purple and black. No item. */
+	public static final Block NULL_PORTAL = registerWithoutItem("null_portal", NullPortalBlock::new, BlockBehaviour.Properties.of()
+			.mapColor(MapColor.COLOR_PURPLE)
+			.strength(1.0F)
+			.noCollision()
+			.noLootTable()
+			.lightLevel(state -> 11)
+			.sound(SoundType.GLASS));
+	/** The Chaos Arena's way back: the same look, but it cannot be broken. */
+	public static final Block NULL_EXIT = registerWithoutItem("null_exit", NullPortalBlock.Exit::new, BlockBehaviour.Properties.of()
+			.mapColor(MapColor.COLOR_PURPLE)
+			.strength(-1.0F, 3600000.0F)
+			.noCollision()
+			.noLootTable()
+			.lightLevel(state -> 11)
+			.sound(SoundType.GLASS));
+
 	private ModBlocks() {
 	}
 
@@ -35,6 +52,11 @@ public final class ModBlocks {
 		ResourceKey<Item> itemKey = ResourceKey.create(Registries.ITEM, CrownOfChaos.id(name));
 		Registry.register(BuiltInRegistries.ITEM, itemKey, new BlockItem(block, new Item.Properties().setId(itemKey).useBlockDescriptionPrefix()));
 		return block;
+	}
+
+	private static Block registerWithoutItem(String name, Function<BlockBehaviour.Properties, Block> factory, BlockBehaviour.Properties properties) {
+		ResourceKey<Block> blockKey = ResourceKey.create(Registries.BLOCK, CrownOfChaos.id(name));
+		return Registry.register(BuiltInRegistries.BLOCK, blockKey, factory.apply(properties.setId(blockKey)));
 	}
 
 	/** Loads this class so the blocks are registered. */

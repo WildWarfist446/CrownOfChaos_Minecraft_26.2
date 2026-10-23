@@ -44,6 +44,7 @@
   "item.crownofchaos.chaos_smithing_template.ingredients": "Soul of Chaos",
   "item.crownofchaos.chaos_smithing_template.base_slot_description": "Add the Incomplete Crown of Chaos",
   "item.crownofchaos.chaos_smithing_template.additions_slot_description": "Add the Soul of Chaos",
+  "entity.crownofchaos.chaos_king": "Herobrine, The Chaos King",
   "item.crownofchaos.faction_coin": "Faction Coin",
 
   "key.category.crownofchaos.crowns": "Crown of Chaos",
@@ -202,6 +203,8 @@
   "gui.crownofchaos.faction.page.previous": "◀",
   "gui.crownofchaos.faction.page.next": "▶",
 
+  "block.crownofchaos.null_portal": "null",
+  "block.crownofchaos.null_exit": "null",
   "block.crownofchaos.commander_table": "Commander's Table",
   "container.crownofchaos.commander_table": "Commander's Table",
   "item.crownofchaos.unit.commanded_by": "Commanded by the %s",

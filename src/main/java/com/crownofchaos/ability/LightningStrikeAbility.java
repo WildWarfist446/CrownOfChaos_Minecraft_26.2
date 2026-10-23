@@ -45,8 +45,8 @@ public final class LightningStrikeAbility implements CrownAbility {
 	}
 
 	/** Calls a bolt down on the target (the caller has checked it's in range and in sight). */
-	static void strike(ServerPlayer player, LivingEntity target) {
-		ServerLevel level = (ServerLevel) player.level();
+	public static void strike(LivingEntity shooter, LivingEntity target) {
+		ServerLevel level = (ServerLevel) shooter.level();
 		// A visual-only bolt gives the real look and sound without vanilla's damage, fire and
 		// mob transformations; the damage is dealt below instead.
 		LightningBolt bolt = EntityTypes.LIGHTNING_BOLT.create(level, EntitySpawnReason.TRIGGERED);
@@ -61,11 +61,13 @@ public final class LightningStrikeAbility implements CrownAbility {
 		AABB area = new AABB(target.getX() - HIT_RADIUS, target.getY() - HIT_RADIUS, target.getZ() - HIT_RADIUS,
 				target.getX() + HIT_RADIUS, target.getY() + target.getBbHeight() + HIT_RADIUS, target.getZ() + HIT_RADIUS);
 		for (LivingEntity entity : level.getEntitiesOfClass(LivingEntity.class, area)) {
-			if (entity == player || CrownEffects.isPetOf(entity, player) || !entity.isAlive()) {
+			if (entity == shooter || CrownEffects.isPetOf(entity, shooter) || !entity.isAlive()
+					// The Chaos King's own legion is not hurt by his lightning.
+					|| shooter instanceof com.crownofchaos.entity.ChaosKing && entity.entityTags().contains(com.crownofchaos.entity.ChaosKing.MINION_TAG)) {
 				continue;
 			}
 			// Credited to the wearer, so kills count as theirs.
-			if (entity.hurtServer(level, level.damageSources().source(DamageTypes.LIGHTNING_BOLT, bolt, player), DAMAGE)) {
+			if (entity.hurtServer(level, level.damageSources().source(DamageTypes.LIGHTNING_BOLT, bolt, shooter), DAMAGE)) {
 				entity.igniteForSeconds(BURN_SECONDS);
 			}
 		}

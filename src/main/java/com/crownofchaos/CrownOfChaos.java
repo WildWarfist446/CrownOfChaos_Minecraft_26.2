@@ -9,6 +9,7 @@ import com.crownofchaos.faction.FactionManager;
 import com.crownofchaos.item.ModComponents;
 import com.crownofchaos.block.ModBlocks;
 import com.crownofchaos.menu.ModMenus;
+import com.crownofchaos.sound.ModSounds;
 import com.crownofchaos.unit.ModUnits;
 import com.crownofchaos.unit.UnitCommands;
 import com.crownofchaos.unit.UnitManager;
@@ -37,6 +38,7 @@ public class CrownOfChaos implements ModInitializer {
 		LOGGER.info("The Crown of Chaos is loading...");
 
 		ModComponents.initialize();
+		ModSounds.initialize();
 		ModItems.initialize();
 		ModBlocks.initialize();
 		ModUnits.initialize();

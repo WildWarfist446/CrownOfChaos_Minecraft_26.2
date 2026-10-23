@@ -5,6 +5,7 @@ import org.jspecify.annotations.Nullable;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -46,19 +47,24 @@ public final class FireChargeAbility implements CrownAbility {
 
 	/** Shoots one fireball where the player is looking. */
 	static void shoot(ServerPlayer player) {
-		Vec3 look = player.getLookAngle();
-		LargeFireball fireball = new LargeFireball(player.level(), player, look, EXPLOSION_POWER);
-		// Spawn just in front of the player's eyes, like a thrown projectile.
-		Vec3 start = player.getEyePosition().add(look.scale(0.5));
+		shoot(player, player.getLookAngle());
+	}
+
+	/** Shoots one fireball from the shooter's eyes in a direction (the Chaos King aims it at his target). */
+	public static void shoot(LivingEntity shooter, Vec3 direction) {
+		Vec3 look = direction.normalize();
+		LargeFireball fireball = new LargeFireball(shooter.level(), shooter, look, EXPLOSION_POWER);
+		// Spawn just in front of the shooter's eyes, like a thrown projectile.
+		Vec3 start = shooter.getEyePosition().add(look.scale(0.5));
 		fireball.setPos(start.x, start.y, start.z);
 		fireball.accelerationPower = ACCELERATION;
-		fireball.setDeltaMovement(look.normalize().scale(ACCELERATION));
+		fireball.setDeltaMovement(look.scale(ACCELERATION));
 		fireball.addTag(FIREBALL_TAG);
 		fireball.addTag(CrownAbilities.CROWN_ABILITY_TAG);
-		player.level().addFreshEntity(fireball);
+		shooter.level().addFreshEntity(fireball);
 
-		player.level().playSound(null, player, SoundEvents.GHAST_SHOOT, SoundSource.PLAYERS, 1.0F,
-				(player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.2F + 1.0F);
+		shooter.level().playSound(null, shooter, SoundEvents.GHAST_SHOOT, shooter instanceof ServerPlayer ? SoundSource.PLAYERS : SoundSource.HOSTILE, 1.0F,
+				(shooter.getRandom().nextFloat() - shooter.getRandom().nextFloat()) * 0.2F + 1.0F);
 	}
 
 	@Override

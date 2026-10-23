@@ -15,9 +15,12 @@ What's left for The Crown of Chaos, as of 6 October 2026. Tick items off with `[
 - [x] Incomplete Crown of Chaos: crafted from all nine crowns; can't be worn or used
 - [x] Soul of Chaos: the boss's item drop, a material used only for the Crown of Chaos
 - [x] Chaos Arena dimension: a floating round arena in a dark purple void, glitched floor, Herobrine altar (lighting it is the fight trigger; for now it only announces itself)
-- [ ] Glitched portal: throw Disc 13 into a nether portal; the frame becomes "null" blocks and the obsidian random blocks; breaking the null blocks destroys the whole portal
+- [x] Chaos Arena has no natural mob spawns and no treasure (only the boss and its drops)
+- [x] Lava wall around the arena (never flows)
+- [x] Glitched portal: throw Disc 11 into a nether portal; the frame becomes "null" blocks and the obsidian random blocks; breaking the null blocks destroys the whole portal
 - [ ] "Null" block art (purple and black)
-- [ ] Boss fight (to be designed) that drops the Soul of Chaos and a smithing template
+- [x] Herobrine, The Chaos King: a player-style boss in Warfist's skin with the Crown of Chaos; the altar spawns him in the fire with lightning, he floats up, four waves of units, then he lands and fights with melee and the Wither Skull, Fire Charge and Lightning Strike every 30 s; drops the Soul of Chaos; soul fire turns a Netherite Upgrade thrown into it into a Chaos Upgrade
+- [ ] Tune the Chaos King fight in play (health, damage, wave sizes, his lines)
 - [x] Chaos smithing template item ("Chaos Upgrade"); how to get it comes after the boss
 - [x] Smithing recipe: Incomplete Crown of Chaos + Soul of Chaos + Chaos Upgrade = Crown of Chaos
 - [x] All the crowns' immunities, plus the Crown of Void's teleport dodge

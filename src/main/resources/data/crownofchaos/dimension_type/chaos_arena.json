@@ -1,5 +1,5 @@
 {
-  "ambient_light": 0.08,
+  "ambient_light": 0.04,
   "attributes": {
     "minecraft:gameplay/bed_rule": {
       "can_set_spawn": "never",
@@ -13,10 +13,10 @@
     "minecraft:gameplay/sky_light_level": 0.0,
     "minecraft:gameplay/snow_golem_melts": true,
     "minecraft:gameplay/water_evaporates": true,
-    "minecraft:visual/ambient_light_color": "#2a0f47",
-    "minecraft:visual/fog_end_distance": 64.0,
+    "minecraft:visual/ambient_light_color": "#1a0930",
+    "minecraft:visual/fog_end_distance": 48.0,
     "minecraft:visual/fog_start_distance": 4.0,
-    "minecraft:visual/sky_light_color": "#3a1a66",
+    "minecraft:visual/sky_light_color": "#26104a",
     "minecraft:visual/sky_light_factor": 0.0
   },
   "cardinal_light": "nether",
