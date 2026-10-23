@@ -15,6 +15,7 @@ import com.crownofchaos.mixin.MobAccessor;
 import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry;
 import net.fabricmc.fabric.api.attachment.v1.AttachmentSyncPredicate;
 import net.fabricmc.fabric.api.attachment.v1.AttachmentType;
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 
 import net.minecraft.server.MinecraftServer;
@@ -112,6 +113,9 @@ public final class UnitManager {
 	}
 
 	public static void initialize() {
+		// Nobody hurts their own faction's units, however they try (melee, arrows, crown abilities).
+		ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) ->
+				!(source.getEntity() instanceof ServerPlayer player && isOwnFactionUnit(player, entity)));
 		ServerEntityEvents.ENTITY_LOAD.register((entity, level) -> {
 			adoptSummons(entity);
 			UnitData data = entity.getAttached(UNIT);

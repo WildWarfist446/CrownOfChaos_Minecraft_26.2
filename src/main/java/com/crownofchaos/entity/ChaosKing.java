@@ -15,6 +15,7 @@ import com.crownofchaos.unit.UnitManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetSubtitleTextPacket;
 import net.minecraft.network.protocol.game.ClientboundSetTitleTextPacket;
@@ -54,7 +55,10 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -104,6 +108,8 @@ public final class ChaosKing extends Monster {
 	private static final int INTRO_BOLTS = 12;
 	private static final int TICKS_BETWEEN_BOLTS = 3;
 	/** The pause after a wave is cleared before the next one (8 seconds). */
+	/** He is kept this many blocks in from the floor's edge, so he never walks into the lava wall. */
+	private static final double EDGE_MARGIN = 2.0;
 	private static final int WAVE_PAUSE_TICKS = 160;
 	/** The shorter pause after the last wave, before he comes down. */
 	private static final int LAST_WAVE_PAUSE_TICKS = 80;
@@ -143,6 +149,9 @@ public final class ChaosKing extends Monster {
 		this.setPersistenceRequired();
 		this.bossEvent.setDarkenScreen(true);
 		this.xpReward = 0;
+		// Never path through lava or fire, even though he is immune to them.
+		this.setPathfindingMalus(PathType.LAVA, -1.0F);
+		this.setPathfindingMalus(PathType.FIRE, -1.0F);
 	}
 
 	/**
@@ -217,11 +226,42 @@ public final class ChaosKing extends Monster {
 			case DESCENDING -> this.tickDescending(level);
 			case FIGHTING -> this.tickFighting(level);
 		}
+		this.keepInArena();
 		this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
 		// With every player dead or gone, the fight is over: it cleans itself up and has to be started again.
 		if (this.stageTicks % 20 == 0 && ChaosArena.livingPlayers(level).isEmpty()) {
 			ChaosArena.resetFight(level);
 		}
+	}
+
+	/** He stays on the floor, away from the lava: pushed back from the edge, and put back on the altar if he ever ends up below the arena. */
+	private void keepInArena() {
+		double x = this.getX();
+		double z = this.getZ();
+		if (this.getY() < ChaosArena.FLOOR_Y - 1) {
+			this.setDeltaMovement(Vec3.ZERO);
+			this.teleportTo(ChaosArena.BOSS_LANDING.getX() + 0.5, ChaosArena.BOSS_LANDING.getY(), ChaosArena.BOSS_LANDING.getZ() + 0.5);
+			return;
+		}
+		double distance = Math.sqrt(x * x + z * z);
+		double max = ChaosArena.ARENA_RADIUS - EDGE_MARGIN;
+		if (distance > max) {
+			this.setPos(x * max / distance, this.getY(), z * max / distance);
+			this.setDeltaMovement(0.0, this.getDeltaMovement().y, 0.0);
+			this.getNavigation().stop();
+		}
+	}
+
+	/**
+	 * An enchanted-looking diamond sword in his hand, for show: its attribute modifiers are emptied, so it adds
+	 * no damage, and it has no real enchantments, only the glint. He never drops it.
+	 */
+	private void drawSword() {
+		ItemStack sword = new ItemStack(Items.DIAMOND_SWORD);
+		sword.set(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.EMPTY);
+		sword.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
+		this.setItemSlot(EquipmentSlot.MAINHAND, sword);
+		this.setDropChance(EquipmentSlot.MAINHAND, 0.0F);
 	}
 
 	private void setStage(Stage stage) {
@@ -270,6 +310,8 @@ public final class ChaosKing extends Monster {
 				this.pauseTicks = 0;
 				if (this.wave >= 4) {
 					this.say(level, "MY LEGION FALLS", "Then I will finish you myself.");
+				} else {
+					this.say(level, "WAVE " + this.wave + " CLEARED", "Wave " + (this.wave + 1) + " arrives in " + WAVE_PAUSE_TICKS / 20 + " seconds.");
 				}
 			}
 			this.pauseTicks++;
@@ -282,7 +324,8 @@ public final class ChaosKing extends Monster {
 		if (ready) {
 			this.pauseTicks = -1;
 			if (this.wave >= 4) {
-				// The last wave is dead: he comes down.
+				// The last wave is dead: he draws his sword and comes down.
+				this.drawSword();
 				this.setInvulnerable(false);
 				this.setStage(Stage.DESCENDING);
 				return;

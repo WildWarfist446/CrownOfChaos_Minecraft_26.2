@@ -70,6 +70,11 @@ public final class ChaosArena {
 	public static final int LAVA_WALL_BELOW_FLOOR = 6;
 	/** ...to this many blocks above it. */
 	public static final int LAVA_WALL_ABOVE_FLOOR = 100;
+	/** The lava wall is sealed in bedrock: a ring outside it, a floor under it and a lid over the whole arena. */
+	private static final int BEDROCK_SHELL_THICKNESS = 1;
+	/** A block of the shell (in its outer ring) that tells whether it has been built. */
+	private static final BlockPos BEDROCK_SHELL_MARKER = new BlockPos(ARENA_RADIUS + LAVA_WALL_THICKNESS + 1, FLOOR_Y, 0);
+
 	/** A block at the very top of the lava wall that tells whether it has been built (so a lower, older wall is rebuilt taller). */
 	private static final BlockPos LAVA_WALL_MARKER = new BlockPos(ARENA_RADIUS + 2, FLOOR_Y + LAVA_WALL_ABOVE_FLOOR, 0);
 
@@ -230,6 +235,9 @@ public final class ChaosArena {
 		if (!level.getBlockState(LAVA_WALL_MARKER).is(Blocks.LAVA)) {
 			buildLavaWall(level);
 		}
+		if (!level.getBlockState(BEDROCK_SHELL_MARKER).is(Blocks.BEDROCK)) {
+			buildBedrockShell(level);
+		}
 		// The way out exists only once the boss is beaten (the soul fire on the altar marks that).
 		if (!level.getBlockState(ALTAR.above()).is(Blocks.SOUL_FIRE) && level.getBlockState(EXIT_PORTAL).is(ModBlocks.NULL_EXIT)) {
 			removeExitPortal(level);
@@ -276,6 +284,40 @@ public final class ChaosArena {
 				}
 				for (int y = FLOOR_Y - LAVA_WALL_BELOW_FLOOR; y <= FLOOR_Y + LAVA_WALL_ABOVE_FLOOR; y++) {
 					place(level, new BlockPos(x, y, z), lava);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Bedrock all round the outside of the lava, under it and over the top of the whole arena, so nothing
+	 * (the boss included) can get out through the lava or fly out over it.
+	 */
+	private static void buildBedrockShell(ServerLevel level) {
+		CrownOfChaos.LOGGER.info("Building the Chaos Arena's bedrock shell");
+		int lavaOuter = ARENA_RADIUS + LAVA_WALL_THICKNESS;
+		int shellOuter = lavaOuter + BEDROCK_SHELL_THICKNESS;
+		int lavaOuterSquared = lavaOuter * lavaOuter;
+		int shellOuterSquared = shellOuter * shellOuter;
+		int bottom = FLOOR_Y - LAVA_WALL_BELOW_FLOOR - 1;
+		int top = FLOOR_Y + LAVA_WALL_ABOVE_FLOOR + 1;
+		BlockState bedrock = Blocks.BEDROCK.defaultBlockState();
+		for (int x = -shellOuter; x <= shellOuter; x++) {
+			for (int z = -shellOuter; z <= shellOuter; z++) {
+				int distance = x * x + z * z;
+				if (distance > shellOuterSquared) {
+					continue;
+				}
+				// Under the lava (the arena's own floor is not touched) and over the whole disc.
+				if (distance > ARENA_RADIUS * ARENA_RADIUS) {
+					place(level, new BlockPos(x, bottom, z), bedrock);
+				}
+				place(level, new BlockPos(x, top, z), bedrock);
+				// The ring just outside the lava.
+				if (distance > lavaOuterSquared) {
+					for (int y = bottom; y <= top; y++) {
+						place(level, new BlockPos(x, y, z), bedrock);
+					}
 				}
 			}
 		}

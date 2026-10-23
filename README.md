@@ -279,7 +279,7 @@ The final crown (in progress) is made in five steps:
 1. **Craft the Incomplete Crown of Chaos** from all nine magical crowns, in any order (each can be its
    netherite version; unlocked by picking up a Crown of Void). It reads *"ERROR ERROR ERR"* followed by six
    scrambled, ever-changing letters in the Standard Galactic Alphabet (the enchanting table's script).
-2. **Open the portal:** throw a **Music Disc 11** into a normal nether portal. The disc is swallowed, the
+2. **Open the portal:** throw a **Music Disc 11** into a normal nether portal in the Overworld (it does nothing in the Nether, so nobody gets trapped). The disc is swallowed, the
    swirl turns into purple-and-black "null" blocks and the obsidian frame into random blocks that never
    fall or update, different every time. Walk into the null blocks to enter the Chaos Arena. Breaking a null
    block destroys the whole portal.
@@ -290,8 +290,8 @@ The final crown (in progress) is made in five steps:
 
 **The Chaos Arena** (`crownofchaos:chaos_arena`) is a dark purple void with a small round floating arena (a
 glitched mix of netherrack, cobblestone, mossy cobblestone and nether bricks) and a gold-and-redstone-torch
-altar. A solid wall of lava that never flows rings it and climbs out of sight, so don't back off too far.
-Nothing spawns there on its own and there's no treasure: only the boss, what he summons, and what he drops.
+altar. A solid wall of lava that never flows rings it and climbs out of sight, so don't back off too far; bedrock seals it on the outside, underneath and on top, so nothing gets out.
+Nothing spawns there on its own and there's no treasure: only the boss, what he summons, and what he drops (his units drop experience but none of their usual items).
 Once he is beaten, an unbreakable null portal opens behind where you arrived and takes you back to where you
 came in; it closes again if the altar is relit. Ops can also
 `/execute in crownofchaos:chaos_arena run tp @s 0 65 -14`.
@@ -304,9 +304,9 @@ on repeat for everyone in the arena until he is defeated.
   each other). Per player: 5 Strays and 5 Husks; then 1 Ravager, 2 Evokers and 3 Vindicators; then
   4 Guardians and 3 Drowned; then one Warden with 25% of its health.
 - The first wave comes 15 seconds after he rises, so you can ready yourself and back away from the altar;
-  the waves are 8 seconds apart.
-- When the last wave falls he flies down onto the altar and fights you with melee and, every 30 seconds, a
-  Wither Skull, a Fire Charge or a Lightning Strike. He has a Warden's health.
+  when a wave is cleared a banner says so and the next one follows 8 seconds later.
+- When the last wave falls he draws an enchanted-looking diamond sword (for show; it adds no damage), flies down onto the altar and fights you with melee and, every 30 seconds, a
+  Wither Skull, a Fire Charge or a Lightning Strike. He has a Warden's health and stays on the floor, away from the lava.
 - If every player in the arena dies or leaves, the fight clears itself and the altar must be lit again.
 
 **The Crown of Chaos** has netherite helmet stats, a custom 3D model, no netherite upgrade, and:
@@ -405,7 +405,7 @@ faction (you must be in one). Units:
   don't count toward the limit);
 - never block your Riptide dash (the Crown of Poseidon's ability or a Riptide trident): you pass through your
   own and your faction's units;
-- are limited to **40 per player** (reclaim or lose some to summon more);
+- are limited to **40 per player** (reclaim or lose some to summon more), and can't be hurt by anyone in your faction;
 - never despawn or burn in daylight, and Piglins and Hoglins don't turn into zombies outside the Nether;
 - Guardians treat air as water, so they float and fight on land and follow orders out of the sea; Wardens
   stay above ground and give no Darkness;

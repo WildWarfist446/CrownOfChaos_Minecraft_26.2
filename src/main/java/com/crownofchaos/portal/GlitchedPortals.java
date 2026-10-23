@@ -115,10 +115,14 @@ public final class GlitchedPortals extends SavedData {
 	}
 
 	/**
-	 * Turns a nether portal into a glitched one: the swirl into null blocks and the obsidian frame into
+	 * Turns a nether portal in the Overworld into a glitched one: the swirl into null blocks and the obsidian frame into
 	 * random blocks, placed without neighbor updates so nothing in them reacts. Returns whether it did.
 	 */
 	public static boolean convert(ServerLevel level, BlockPos start) {
+		// Only portals in the Overworld: one in the Nether could trap a player between a portal back to the Overworld and one to the arena.
+		if (level.dimension() != Level.OVERWORLD) {
+			return false;
+		}
 		BlockState startState = level.getBlockState(start);
 		if (!startState.is(Blocks.NETHER_PORTAL)) {
 			return false;
