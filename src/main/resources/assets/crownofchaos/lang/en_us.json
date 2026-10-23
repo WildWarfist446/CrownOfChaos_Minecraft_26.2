@@ -39,6 +39,11 @@
   "item.crownofchaos.incomplete_crown_of_chaos": "Incomplete Crown of Chaos",
   "item.crownofchaos.incomplete_crown_of_chaos.lore": "ERROR ERROR ERR",
   "item.crownofchaos.soul_of_chaos": "Soul of Chaos",
+  "item.crownofchaos.chaos_smithing_template": "Chaos Upgrade",
+  "item.crownofchaos.chaos_smithing_template.applies_to": "Incomplete Crown of Chaos",
+  "item.crownofchaos.chaos_smithing_template.ingredients": "Soul of Chaos",
+  "item.crownofchaos.chaos_smithing_template.base_slot_description": "Add the Incomplete Crown of Chaos",
+  "item.crownofchaos.chaos_smithing_template.additions_slot_description": "Add the Soul of Chaos",
   "item.crownofchaos.faction_coin": "Faction Coin",
 
   "key.category.crownofchaos.crowns": "Crown of Chaos",

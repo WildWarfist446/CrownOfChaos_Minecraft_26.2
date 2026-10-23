@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "crownofchaos:soul_of_chaos",
+  "base": "crownofchaos:incomplete_crown_of_chaos",
+  "result": {
+    "id": "crownofchaos:crown_of_chaos"
+  },
+  "template": "crownofchaos:chaos_smithing_template"
+}

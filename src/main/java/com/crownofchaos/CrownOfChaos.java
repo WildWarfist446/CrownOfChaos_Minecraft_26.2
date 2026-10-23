@@ -4,6 +4,7 @@ import com.crownofchaos.item.ModItems;
 import com.crownofchaos.ability.CrownAbilities;
 import com.crownofchaos.item.CrownEffects;
 import com.crownofchaos.entity.ModEntities;
+import com.crownofchaos.dimension.ChaosArena;
 import com.crownofchaos.faction.FactionManager;
 import com.crownofchaos.item.ModComponents;
 import com.crownofchaos.block.ModBlocks;
@@ -46,6 +47,7 @@ public class CrownOfChaos implements ModInitializer {
 		FactionManager.initialize();
 		UnitManager.initialize();
 		UnitCommands.initialize();
+		ChaosArena.initialize();
 	}
 
 	public static Identifier id(String path) {

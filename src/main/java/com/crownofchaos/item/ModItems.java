@@ -23,6 +23,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FontDescription;
 import net.minecraft.network.chat.Style;
@@ -34,6 +35,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SmithingTemplateItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
@@ -128,6 +130,22 @@ public final class ModItems {
 	public static final Item SOUL_OF_CHAOS = register("soul_of_chaos", Item::new, new Item.Properties()
 			.rarity(Rarity.EPIC)
 			.fireResistant());
+
+	/**
+	 * The smithing template for the Crown of Chaos: Incomplete Crown of Chaos + Soul of Chaos + this
+	 * makes the finished crown. How to get it, and the smithing recipe itself, come once the boss exists
+	 * (no recipe yet). The empty-slot icons are vanilla's own sprites, referenced rather than copied.
+	 */
+	public static final Item CHAOS_SMITHING_TEMPLATE = register("chaos_smithing_template",
+			properties -> new SmithingTemplateItem(
+					Component.translatable("item.crownofchaos.chaos_smithing_template.applies_to").withStyle(ChatFormatting.BLUE),
+					Component.translatable("item.crownofchaos.chaos_smithing_template.ingredients").withStyle(ChatFormatting.BLUE),
+					Component.translatable("item.crownofchaos.chaos_smithing_template.base_slot_description"),
+					Component.translatable("item.crownofchaos.chaos_smithing_template.additions_slot_description"),
+					List.of(Identifier.withDefaultNamespace("container/slot/helmet")),
+					List.of(Identifier.withDefaultNamespace("container/slot/ingot")),
+					properties),
+			new Item.Properties().rarity(Rarity.EPIC));
 
 	public static final Item INCOMPLETE_CROWN_OF_CHAOS = register("incomplete_crown_of_chaos", Item::new,
 			new Item.Properties()
@@ -310,6 +328,7 @@ public final class ModItems {
 					output.accept(ANKH_CHARM);
 					output.accept(INCOMPLETE_CROWN_OF_CHAOS);
 					output.accept(SOUL_OF_CHAOS);
+					output.accept(CHAOS_SMITHING_TEMPLATE);
 					output.accept(FACTION_COIN);
 					output.accept(FACTION_FLAG);
 					output.accept(ModBlocks.COMMANDER_TABLE);
@@ -322,7 +341,7 @@ public final class ModItems {
 				.register(output -> output.insertAfter(Items.NETHERITE_BOOTS, GOLDEN_CROWN, UNDER_CROWN, CROWN_OF_POSEIDON, CROWN_OF_NETHER, CROWN_OF_DARKNESS, CROWN_OF_SUN, CROWN_OF_WITHER, CROWN_OF_WINTER, CROWN_OF_IRON, CROWN_OF_VOID,
 						NETHERITE_UNDER_CROWN, NETHERITE_CROWN_OF_POSEIDON, NETHERITE_CROWN_OF_NETHER, NETHERITE_CROWN_OF_DARKNESS, NETHERITE_CROWN_OF_SUN, NETHERITE_CROWN_OF_WITHER, NETHERITE_CROWN_OF_WINTER, NETHERITE_CROWN_OF_IRON, NETHERITE_CROWN_OF_VOID));
 		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.INGREDIENTS)
-				.register(output -> output.insertAfter(Items.ECHO_SHARD, SCULK_CORD, ANKH_CHARM, INCOMPLETE_CROWN_OF_CHAOS, SOUL_OF_CHAOS, FACTION_COIN));
+				.register(output -> output.insertAfter(Items.ECHO_SHARD, SCULK_CORD, ANKH_CHARM, INCOMPLETE_CROWN_OF_CHAOS, SOUL_OF_CHAOS, CHAOS_SMITHING_TEMPLATE, FACTION_COIN));
 
 		ResourceKey<LootTable> wardenLoot = EntityTypes.WARDEN.getDefaultLootTable().orElseThrow();
 		ResourceKey<LootTable> elderGuardianLoot = EntityTypes.ELDER_GUARDIAN.getDefaultLootTable().orElseThrow();
