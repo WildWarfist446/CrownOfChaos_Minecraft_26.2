@@ -244,7 +244,7 @@ See each crown's section above for details.
 | Crown of Winter | Freeze on hit, freeze immunity, Swiftness and grip on snow and ice | Frost Walker (toggle) | Icicle Drop, 5 icicles, aimed (6s) | Powder Snow Bucket |
 | Crown of Iron | +50% bow and crossbow damage | Arrow Volley, aimed (10s) | Glowing Arrows (toggle) | Totem of Undying |
 | Crown of Void | Teleport when hit, Swiftness on End blocks, faster elytra flight | Ender Pearl (3s) | Dragon's Breath (30s) | Dragon Egg |
-| Crown of Chaos | Fire and lava immunity, Wither immunity, freeze immunity, teleport when hit | The pain of death (10s) | Death's door (30s) | Incomplete Crown of Chaos + Soul of Chaos (not craftable yet) |
+| Crown of Chaos | Fire and lava immunity, Wither immunity, freeze immunity, teleport when hit | The pain of death (10s) | Death's door (30s) | Incomplete Crown of Chaos + Soul of Chaos + Chaos Upgrade |
 
 Times in brackets are cooldowns. "Aimed" abilities hit whatever you're looking at.
 
@@ -276,7 +276,7 @@ Descriptions: the Sculk Cord reads *"The screeching has finally ceased..."* and 
 
 ## The Crown of Chaos
 
-The final crown (in progress) is made in five steps:
+The final crown is made in five steps:
 
 1. **Craft the Incomplete Crown of Chaos** from all nine magical crowns, in any order (each can be its
    netherite version; unlocked by picking up a Crown of Void). It reads *"ERROR ERROR ERR"* followed by six

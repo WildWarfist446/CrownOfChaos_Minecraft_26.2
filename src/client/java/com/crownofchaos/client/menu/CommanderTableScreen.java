@@ -32,18 +32,18 @@ import net.minecraft.world.item.ItemStack;
  */
 public class CommanderTableScreen extends AbstractContainerScreen<CommanderTableMenu> {
 	// Colors (ARGB), matching the faction menu.
-	private static final int PANEL_OUTER = 0xF02A1B10;
-	private static final int PANEL_INNER = 0xF03A2715;
-	private static final int GOLD = 0xFFD4AF37;
-	private static final int GOLD_DARK = 0xFF8B6F1E;
-	private static final int TEXT = 0xFFEFE3C2;
-	private static final int TEXT_DIM = 0xFFB3A27F;
-	private static final int SLOT_BORDER = 0xFF6B5320;
-	private static final int SLOT_FILL = 0xFF1E140B;
-	private static final int LIST_FILL = 0x70120A04;
+	private static final int PANEL_OUTER = 0xF0031F28;
+	private static final int PANEL_INNER = 0xF005404F;
+	private static final int ACCENT = 0xFF35E9F5;
+	private static final int ACCENT_DARK = 0xFF079093;
+	private static final int TEXT = 0xFFDFFBFD;
+	private static final int TEXT_DIM = 0xFF8FCBD1;
+	private static final int SLOT_BORDER = 0xFF076D72;
+	private static final int SLOT_FILL = 0xFF03181E;
+	private static final int LIST_FILL = 0x70021017;
 	private static final int ENTRY_FILL = 0x40000000;
-	private static final int ENTRY_HOVER_FILL = 0x40FFF2D0;
-	private static final int ENTRY_SELECTED_FILL = 0x60D4AF37;
+	private static final int ENTRY_HOVER_FILL = 0x40C8FEFF;
+	private static final int ENTRY_SELECTED_FILL = 0x6035E9F5;
 	/** The faint tint drawn behind and over a ghost cost item (the same values vanilla's recipe book uses). */
 	private static final int GHOST_BACK = 0x30FF0000;
 	private static final int GHOST_FRONT = 0x30FFFFFF;
@@ -157,10 +157,10 @@ public class CommanderTableScreen extends AbstractContainerScreen<CommanderTable
 		// Panel with a double gold border and studs in the corners.
 		graphics.fill(x0, y0, x1, y1, PANEL_OUTER);
 		graphics.fill(x0 + 3, y0 + 3, x1 - 3, y1 - 3, PANEL_INNER);
-		graphics.outline(x0, y0, this.imageWidth, this.imageHeight, GOLD);
-		graphics.outline(x0 + 2, y0 + 2, this.imageWidth - 4, this.imageHeight - 4, GOLD_DARK);
+		graphics.outline(x0, y0, this.imageWidth, this.imageHeight, ACCENT);
+		graphics.outline(x0 + 2, y0 + 2, this.imageWidth - 4, this.imageHeight - 4, ACCENT_DARK);
 		for (int[] c : new int[][] {{x0 + 4, y0 + 4}, {x1 - 7, y0 + 4}, {x0 + 4, y1 - 7}, {x1 - 7, y1 - 7}}) {
-			graphics.fill(c[0], c[1], c[0] + 3, c[1] + 3, GOLD);
+			graphics.fill(c[0], c[1], c[0] + 3, c[1] + 3, ACCENT);
 		}
 
 		// A slot background behind every slot; the crown and result slots get an extra gold frame.
@@ -168,7 +168,7 @@ public class CommanderTableScreen extends AbstractContainerScreen<CommanderTable
 			int sx = x0 + slot.x;
 			int sy = y0 + slot.y;
 			if (slot.index == CommanderTableMenu.CROWN_SLOT || slot.index == CommanderTableMenu.RESULT_SLOT) {
-				graphics.outline(sx - 3, sy - 3, 22, 22, GOLD_DARK);
+				graphics.outline(sx - 3, sy - 3, 22, 22, ACCENT_DARK);
 			}
 			graphics.fill(sx - 1, sy - 1, sx + 17, sy + 17, SLOT_BORDER);
 			graphics.fill(sx, sy, sx + 16, sy + 16, SLOT_FILL);
@@ -180,7 +180,7 @@ public class CommanderTableScreen extends AbstractContainerScreen<CommanderTable
 
 	/** An arrow from the cost slots to the result slot, bright gold when the unit can be made. */
 	private void drawArrow(GuiGraphicsExtractor graphics) {
-		int color = this.menu.canAfford() ? GOLD : GOLD_DARK;
+		int color = this.menu.canAfford() ? ACCENT : ACCENT_DARK;
 		int left = this.leftPos + CommanderTableMenu.COST_B_X + 16 + 7;
 		int right = this.leftPos + CommanderTableMenu.RESULT_X - 3 - 6;
 		int midY = this.topPos + CommanderTableMenu.COST_Y + 8;
@@ -199,7 +199,7 @@ public class CommanderTableScreen extends AbstractContainerScreen<CommanderTable
 		int aw = CommanderTableMenu.UNITS_WIDTH;
 		int ah = CommanderTableMenu.UNITS_HEIGHT;
 		graphics.fill(ax, ay, ax + aw, ay + ah, LIST_FILL);
-		graphics.outline(ax - 1, ay - 1, aw + 2, ah + 2, GOLD_DARK);
+		graphics.outline(ax - 1, ay - 1, aw + 2, ah + 2, ACCENT_DARK);
 
 		List<UnitType> units = this.menu.units();
 		if (units.isEmpty()) {
@@ -215,13 +215,13 @@ public class CommanderTableScreen extends AbstractContainerScreen<CommanderTable
 			boolean selected = index == this.menu.selectedIndex();
 			if (selected) {
 				graphics.fill(x, y, x + width, y + ENTRY_HEIGHT, ENTRY_SELECTED_FILL);
-				graphics.outline(x, y, width, ENTRY_HEIGHT, GOLD);
+				graphics.outline(x, y, width, ENTRY_HEIGHT, ACCENT);
 			} else if (index == hovered) {
 				graphics.fill(x, y, x + width, y + ENTRY_HEIGHT, ENTRY_HOVER_FILL);
 				graphics.outline(x, y, width, ENTRY_HEIGHT, TEXT_DIM);
 			} else {
 				graphics.fill(x, y, x + width, y + ENTRY_HEIGHT, ENTRY_FILL);
-				graphics.outline(x, y, width, ENTRY_HEIGHT, 0x60D4AF37);
+				graphics.outline(x, y, width, ENTRY_HEIGHT, 0x6035E9F5);
 			}
 			if (index == hovered) {
 				graphics.requestCursor(CursorTypes.POINTING_HAND);
@@ -230,7 +230,7 @@ public class CommanderTableScreen extends AbstractContainerScreen<CommanderTable
 			int textSpace = width - 20;
 			if (textSpace > 8) {
 				graphics.text(this.font, this.fit(unit.entity().getDescription(), textSpace), x + 18, y + 4,
-						selected ? GOLD : TEXT, true);
+						selected ? ACCENT : TEXT, true);
 			}
 		}
 
@@ -241,20 +241,20 @@ public class CommanderTableScreen extends AbstractContainerScreen<CommanderTable
 			graphics.fill(trackX, trackY, trackX + SCROLLBAR_WIDTH, trackY + trackHeight, 0x60000000);
 			int thumbHeight = Math.max(4, trackHeight * LIST_VISIBLE_ROWS / this.totalRows());
 			int thumbY = trackY + (trackHeight - thumbHeight) * this.startRow / Math.max(1, this.maxStartRow());
-			graphics.fill(trackX, thumbY, trackX + SCROLLBAR_WIDTH, thumbY + thumbHeight, GOLD);
+			graphics.fill(trackX, thumbY, trackX + SCROLLBAR_WIDTH, thumbY + thumbHeight, ACCENT);
 		}
 	}
 
 	/** Drawn relative to the panel's top left corner. */
 	@Override
 	protected void extractLabels(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
-		graphics.centeredText(this.font, this.title, this.imageWidth / 2, 6, GOLD);
+		graphics.centeredText(this.font, this.title, this.imageWidth / 2, 6, ACCENT);
 		graphics.text(this.font, this.playerInventoryTitle, this.inventoryLabelX, this.inventoryLabelY, TEXT_DIM, false);
 
 		// "Crown" above the crown slot, "Cost" beside the cost slots.
-		graphics.centeredText(this.font, tr("crown"), CommanderTableMenu.CROWN_X + 8, CommanderTableMenu.CROWN_Y - 12, GOLD);
+		graphics.centeredText(this.font, tr("crown"), CommanderTableMenu.CROWN_X + 8, CommanderTableMenu.CROWN_Y - 12, ACCENT);
 		Component cost = tr("cost");
-		graphics.text(this.font, cost, CommanderTableMenu.COST_A_X - 5 - this.font.width(cost), CommanderTableMenu.COST_Y + 4, GOLD, true);
+		graphics.text(this.font, cost, CommanderTableMenu.COST_A_X - 5 - this.font.width(cost), CommanderTableMenu.COST_Y + 4, ACCENT, true);
 
 		int areaCenter = CommanderTableMenu.UNITS_X + CommanderTableMenu.UNITS_WIDTH / 2;
 		int areaWidth = CommanderTableMenu.UNITS_WIDTH - 6;
@@ -273,7 +273,7 @@ public class CommanderTableScreen extends AbstractContainerScreen<CommanderTable
 		Optional<UnitType> selected = this.menu.selectedUnit();
 		if (selected.isPresent()) {
 			Component name = new ItemStack(selected.get().item()).getHoverName();
-			graphics.centeredText(this.font, this.fit(name, areaWidth), areaCenter, NAME_LINE_Y, GOLD);
+			graphics.centeredText(this.font, this.fit(name, areaWidth), areaCenter, NAME_LINE_Y, ACCENT);
 			if (!this.menu.canAfford()) {
 				graphics.centeredText(this.font, this.fit(tr("add_cost"), areaWidth), areaCenter, STATUS_LINE_Y, TEXT_DIM);
 			}

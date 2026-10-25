@@ -50,10 +50,10 @@ public class ColorSwatch extends AbstractButton {
 		int x = this.getX();
 		int y = this.getY();
 		int s = this.getWidth();
-		int frame = this.selected ? FactionScreen.GOLD
-				: this.isHoveredOrFocused() && !this.taken ? FactionScreen.TEXT : 0xFF1A110A;
+		int frame = this.selected ? FactionScreen.ACCENT
+				: this.isHoveredOrFocused() && !this.taken ? FactionScreen.TEXT : 0xFF03181E;
 		graphics.fill(x, y, x + s, y + s, frame);
-		graphics.fill(x + 1, y + 1, x + s - 1, y + s - 1, this.selected ? 0xFF1A110A : frame);
+		graphics.fill(x + 1, y + 1, x + s - 1, y + s - 1, this.selected ? 0xFF03181E : frame);
 		graphics.fill(x + 2, y + 2, x + s - 2, y + s - 2, argb(this.color));
 		if (this.taken) {
 			graphics.fill(x + 2, y + 2, x + s - 2, y + s - 2, 0xA0000000);

@@ -43,7 +43,7 @@ public final class UnitCommandOverlay implements HudElement {
 	/** The hint wraps at this width (before shrinking), so it stays a few short lines. */
 	private static final int HINT_WRAP_WIDTH = 420;
 	/** The panel's see-through background (ARGB): faint, so the world shows clearly behind it. */
-	private static final int PANEL_BACKGROUND = 0x60140C06;
+	private static final int PANEL_BACKGROUND = 0x60031A21;
 	private static final int CELL_BACKGROUND = 0x40000000;
 	private static final int RED = 0xFFE05A4F;
 	private static final int GREEN = 0xFF6FD66F;
@@ -54,7 +54,7 @@ public final class UnitCommandOverlay implements HudElement {
 			new Order("sentry", FactionScreen.TEXT, Command.SENTRY),
 			new Order("attack", RED, Command.ATTACK),
 			new Order("free", FactionScreen.TEXT, Command.FREE),
-			new Order("reclaim", FactionScreen.GOLD, Command.RECLAIM),
+			new Order("reclaim", FactionScreen.ACCENT, Command.RECLAIM),
 			new Order("select_nearby", GREEN, Command.SELECT_NEARBY),
 			new Order("clear_selection", FactionScreen.TEXT, Command.CLEAR_SELECTION));
 
@@ -110,7 +110,7 @@ public final class UnitCommandOverlay implements HudElement {
 		int left = -totalWidth / 2;
 		int cellTop = -CELL_HEIGHT;
 		graphics.fill(left - 3, cellTop - 3, left + totalWidth + 3, 3, PANEL_BACKGROUND);
-		graphics.outline(left - 3, cellTop - 3, totalWidth + 6, CELL_HEIGHT + 6, FactionScreen.GOLD_DARK);
+		graphics.outline(left - 3, cellTop - 3, totalWidth + 6, CELL_HEIGHT + 6, FactionScreen.ACCENT_DARK);
 		int x = left;
 		for (int i = 0; i < ORDERS.size(); i++) {
 			int width = font.width(labels.get(i)) + CELL_PADDING * 2;
@@ -127,7 +127,7 @@ public final class UnitCommandOverlay implements HudElement {
 		Component status = selected > 0 ? Component.translatable("gui.crownofchaos.units.selected", selected)
 				: nearby > 0 ? Component.translatable("gui.crownofchaos.units.nearby", nearby)
 				: Component.translatable("gui.crownofchaos.units.none");
-		int statusColor = selected + nearby > 0 ? FactionScreen.GOLD : FactionScreen.TEXT_DIM;
+		int statusColor = selected + nearby > 0 ? FactionScreen.ACCENT : FactionScreen.TEXT_DIM;
 		int y = top - (int) Math.ceil(8 * STATUS_SCALE) - 2;
 		drawSmall(graphics, font, status.getVisualOrderText(), centerX, y, STATUS_SCALE, statusColor);
 		if (selected + nearby == 0) {

@@ -37,16 +37,16 @@ import net.minecraft.world.item.DyeColor;
  * the server checks it and replies in chat, and the updated factions it sends back call
  * {@link #refresh()}. The UI mirrors the server's rules only to grey out useless buttons.
  *
- * <p>Everything is drawn with flat fills and outlines (no textures).
+ * <p>Everything is drawn with flat fills and outlines (no textures), in the Crown of Darkness's teal and cyan.
  */
 public class FactionScreen extends Screen {
 	// Colors (ARGB).
-	static final int PANEL_OUTER = 0xF02A1B10;
-	static final int PANEL_INNER = 0xF03A2715;
-	static final int GOLD = 0xFFD4AF37;
-	static final int GOLD_DARK = 0xFF8B6F1E;
-	static final int TEXT = 0xFFEFE3C2;
-	static final int TEXT_DIM = 0xFFB3A27F;
+	static final int PANEL_OUTER = 0xF0031F28;
+	static final int PANEL_INNER = 0xF005404F;
+	static final int ACCENT = 0xFF35E9F5;
+	static final int ACCENT_DARK = 0xFF079093;
+	static final int TEXT = 0xFFDFFBFD;
+	static final int TEXT_DIM = 0xFF8FCBD1;
 	static final int GREEN = 0xFF6FD66F;
 	static final int RED = 0xFFE05A4F;
 	static final int GRAY = 0xFFAAAAAA;
@@ -357,7 +357,7 @@ public class FactionScreen extends Screen {
 		});
 
 		this.createButton = this.addRenderableWidget(new FactionButton(cx - 60, this.top + this.panelHeight - 30, 120, 20,
-				tr("create.button"), GOLD, () -> {
+				tr("create.button"), ACCENT, () -> {
 					if (this.createProblem() == null) {
 						send(new FactionActionPayload(Action.CREATE, this.createName.trim(), Optional.empty(), this.selectedColor.getId()));
 					}
@@ -539,12 +539,12 @@ public class FactionScreen extends Screen {
 			List<RowButton> buttons = List.of();
 			if (owner && !isOwner) {
 				buttons = List.of(
-						this.confirmRowButton("transfer:" + id, tr("members.make_owner"), 70, GOLD,
+						this.confirmRowButton("transfer:" + id, tr("members.make_owner"), 70, ACCENT,
 								() -> send(FactionActionPayload.withTarget(Action.TRANSFER, id))),
 						new RowButton(tr("members.kick"), 40, RED, true,
 								() -> send(FactionActionPayload.withTarget(Action.KICK, id))));
 			}
-			rows.add(Row.entry(Component.literal(member.getValue()), detail, isOwner ? GOLD : TEXT_DIM, buttons));
+			rows.add(Row.entry(Component.literal(member.getValue()), detail, isOwner ? ACCENT : TEXT_DIM, buttons));
 		}
 		if (owner) {
 			if (!faction.invites().isEmpty()) {
@@ -739,11 +739,11 @@ public class FactionScreen extends Screen {
 
 		if (this.pageCount > 1) {
 			int cx = this.centerX();
-			this.addRenderableWidget(new FactionButton(cx - 70, pagerY, 16, 14, tr("page.previous"), GOLD, () -> {
+			this.addRenderableWidget(new FactionButton(cx - 70, pagerY, 16, 14, tr("page.previous"), ACCENT, () -> {
 				this.pages.put(this.tab, page - 1);
 				this.needsRebuild = true;
 			}).setActive(page > 0));
-			this.addRenderableWidget(new FactionButton(cx + 54, pagerY, 16, 14, tr("page.next"), GOLD, () -> {
+			this.addRenderableWidget(new FactionButton(cx + 54, pagerY, 16, 14, tr("page.next"), ACCENT, () -> {
 				this.pages.put(this.tab, page + 1);
 				this.needsRebuild = true;
 			}).setActive(page < this.pageCount - 1));
@@ -839,22 +839,22 @@ public class FactionScreen extends Screen {
 		int y1 = y0 + this.panelHeight;
 		graphics.fill(x0, y0, x1, y1, PANEL_OUTER);
 		graphics.fill(x0 + 3, y0 + 3, x1 - 3, y1 - 3, PANEL_INNER);
-		graphics.outline(x0, y0, this.panelWidth, this.panelHeight, GOLD);
-		graphics.outline(x0 + 2, y0 + 2, this.panelWidth - 4, this.panelHeight - 4, GOLD_DARK);
+		graphics.outline(x0, y0, this.panelWidth, this.panelHeight, ACCENT);
+		graphics.outline(x0 + 2, y0 + 2, this.panelWidth - 4, this.panelHeight - 4, ACCENT_DARK);
 		// Gold studs in the corners.
 		for (int[] c : new int[][] {{x0 + 4, y0 + 4}, {x1 - 7, y0 + 4}, {x0 + 4, y1 - 7}, {x1 - 7, y1 - 7}}) {
-			graphics.fill(c[0], c[1], c[0] + 3, c[1] + 3, GOLD);
+			graphics.fill(c[0], c[1], c[0] + 3, c[1] + 3, ACCENT);
 		}
 		// Line under the tabs.
 		int lineY = y0 + TAB_Y + TAB_HEIGHT + 3;
-		graphics.fill(x0 + 8, lineY, x1 - 8, lineY + 1, GOLD_DARK);
+		graphics.fill(x0 + 8, lineY, x1 - 8, lineY + 1, ACCENT_DARK);
 		this.minecraft.gui.hud.extractDeferredSubtitles();
 	}
 
 	@Override
 	public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
 		super.extractRenderState(graphics, mouseX, mouseY, a);
-		graphics.centeredText(this.font, this.title, this.centerX(), this.top + 6, GOLD);
+		graphics.centeredText(this.font, this.title, this.centerX(), this.top + 6, ACCENT);
 
 		Optional<Faction> mine = this.mine();
 		switch (this.tab) {
@@ -870,7 +870,7 @@ public class FactionScreen extends Screen {
 	private void drawCreate(GuiGraphicsExtractor graphics) {
 		int ct = this.contentTop();
 		int cx = this.centerX();
-		graphics.centeredText(this.font, tr("create.name"), cx, ct, GOLD);
+		graphics.centeredText(this.font, tr("create.name"), cx, ct, ACCENT);
 		if (this.nameBox != null) {
 			int count = codePoints(this.createName);
 			graphics.text(this.font, count + "/" + FactionManager.MAX_NAME_LENGTH,
@@ -882,7 +882,7 @@ public class FactionScreen extends Screen {
 		graphics.centeredText(this.font, tr("create.preview", tag), cx, ct + 36, TEXT);
 		Component colorLine = this.selectedColor == null ? tr("create.no_color")
 				: tr("create.color", ColorSwatch.colorName(this.selectedColor).copy().withColor(tagColor));
-		graphics.centeredText(this.font, colorLine, cx, ct + 50, GOLD);
+		graphics.centeredText(this.font, colorLine, cx, ct + 50, ACCENT);
 		Component problem = this.createProblem();
 		graphics.centeredText(this.font, problem == null ? tr("status.ready") : problem, cx, ct + 106,
 				problem == null ? GREEN : TEXT_DIM);
@@ -904,12 +904,12 @@ public class FactionScreen extends Screen {
 			graphics.centeredText(this.font, name, cx, ct + 4, -1);
 		}
 		String ownerName = faction.members().getOrDefault(faction.owner(), "?");
-		graphics.centeredText(this.font, tr("overview.owner", Component.literal(ownerName).withColor(GOLD)), cx, ct + 22, TEXT);
+		graphics.centeredText(this.font, tr("overview.owner", Component.literal(ownerName).withColor(ACCENT)), cx, ct + 22, TEXT);
 		graphics.centeredText(this.font, tr("overview.stats", faction.members().size(), faction.flagCount(), onOff(faction.redAlert())),
 				cx, ct + 34, TEXT);
 		if (faction.isOwner(this.me())) {
-			graphics.text(this.font, tr("overview.rename_label"), x0, ct + 56, GOLD);
-			graphics.text(this.font, tr("overview.color_label"), x0, ct + 77, GOLD);
+			graphics.text(this.font, tr("overview.rename_label"), x0, ct + 56, ACCENT);
+			graphics.text(this.font, tr("overview.color_label"), x0, ct + 77, ACCENT);
 			this.drawInfoLines(graphics, ct + 122);
 		}
 	}
@@ -937,10 +937,10 @@ public class FactionScreen extends Screen {
 			int y = placed.y();
 			if (row.header()) {
 				int textY = y + (this.rowHeight - 8) / 2;
-				graphics.text(this.font, row.text(), x0, textY, GOLD);
+				graphics.text(this.font, row.text(), x0, textY, ACCENT);
 				int lineX = x0 + this.font.width(row.text()) + 4;
 				if (lineX < x1) {
-					graphics.fill(lineX, textY + 4, x1, textY + 5, GOLD_DARK);
+					graphics.fill(lineX, textY + 4, x1, textY + 5, ACCENT_DARK);
 				}
 				continue;
 			}
@@ -950,7 +950,7 @@ public class FactionScreen extends Screen {
 			}
 			int available = x1 - x0 - 4 - buttonsWidth;
 			// Faint separator under each entry.
-			graphics.fill(x0, y + this.rowHeight - 1, x1, y + this.rowHeight, 0x30D4AF37);
+			graphics.fill(x0, y + this.rowHeight - 1, x1, y + this.rowHeight, 0x3035E9F5);
 			if (this.twoLineRows) {
 				graphics.text(this.font, this.fit(row.text(), available), x0 + 4, y + 2, TEXT);
 				if (row.detail() != null) {

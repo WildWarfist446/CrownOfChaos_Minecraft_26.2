@@ -13,11 +13,11 @@ import net.minecraft.network.chat.Component;
  * textures. Tabs use the same button with {@link #setSelected}.
  */
 public class FactionButton extends AbstractButton {
-	private static final int FILL = 0xFF4A3420;
-	private static final int FILL_HOVER = 0xFF5E4329;
-	private static final int FILL_SELECTED = 0xFF6B4E2A;
-	private static final int FILL_INACTIVE = 0xFF33241A;
-	private static final int TEXT_INACTIVE = 0xFF7A6A55;
+	private static final int FILL = 0xFF0A5A63;
+	private static final int FILL_HOVER = 0xFF0F7480;
+	private static final int FILL_SELECTED = 0xFF138C99;
+	private static final int FILL_INACTIVE = 0xFF08333B;
+	private static final int TEXT_INACTIVE = 0xFF5E8D93;
 
 	/** Background opacity for see-through buttons (used by the unit command menu during fights). */
 	private static final int TRANSLUCENT_ALPHA = 0xA0;
@@ -65,8 +65,8 @@ public class FactionButton extends AbstractButton {
 		int h = this.getHeight();
 		boolean hovered = this.active && this.isHoveredOrFocused() && !this.selected;
 		int fill = !this.active ? FILL_INACTIVE : this.selected ? FILL_SELECTED : hovered ? FILL_HOVER : FILL;
-		int border = !this.active ? FactionScreen.GOLD_DARK & 0x80FFFFFF
-				: this.selected || hovered ? FactionScreen.GOLD : FactionScreen.GOLD_DARK;
+		int border = !this.active ? FactionScreen.ACCENT_DARK & 0x80FFFFFF
+				: this.selected || hovered ? FactionScreen.ACCENT : FactionScreen.ACCENT_DARK;
 		if (this.translucent) {
 			fill = fill & 0x00FFFFFF | TRANSLUCENT_ALPHA << 24;
 		}
@@ -76,7 +76,7 @@ public class FactionButton extends AbstractButton {
 		Font font = Minecraft.getInstance().font;
 		int textY = y + (h - 8) / 2;
 		if (this.active) {
-			int color = this.selected ? FactionScreen.GOLD : this.textColor;
+			int color = this.selected ? FactionScreen.ACCENT : this.textColor;
 			graphics.centeredText(font, this.getMessage(), x + w / 2, textY, color);
 		} else {
 			// Plain text so colored labels turn gray too.
