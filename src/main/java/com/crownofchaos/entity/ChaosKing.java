@@ -9,12 +9,17 @@ import com.crownofchaos.ability.LightningStrikeAbility;
 import com.crownofchaos.ability.WitherSkullAbility;
 import com.crownofchaos.dimension.ChaosArena;
 import com.crownofchaos.item.ModItems;
+import com.crownofchaos.sound.ModSounds;
 import com.crownofchaos.mixin.MobAccessor;
 import com.crownofchaos.unit.UnitManager;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.protocol.game.ClientboundSoundPacket;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetSubtitleTextPacket;
@@ -113,6 +118,14 @@ public final class ChaosKing extends Monster {
 	/** His units appear on the floor between these distances from the altar, so they reach the players soon even in the big arena. */
 	private static final double MINION_MIN_DISTANCE = 5.0;
 	private static final double MINION_MAX_DISTANCE = 24.0;
+	/** The laugh is 3 seconds long; he waits this long (in ticks) before he can start another. */
+	private static final int LAUGH_COOLDOWN_TICKS = 80;
+	/**
+	 * The laugh reaches every player in the arena at the same loudness: each is sent the sound a couple of
+	 * blocks from them, in the direction he is in, so it is not quieter for those far away.
+	 */
+	private static final double LAUGH_DISTANCE_FROM_LISTENER = 2.0;
+	private static final float LAUGH_VOLUME = 1.5F;
 	private static final int WAVE_PAUSE_TICKS = 120;
 	/** The shorter pause after the last wave, before he comes down. */
 	private static final int LAST_WAVE_PAUSE_TICKS = 80;
@@ -147,6 +160,8 @@ public final class ChaosKing extends Monster {
 	private int pauseTicks = -1;
 	private double hoverY = Double.NaN;
 	private int abilityCooldown = FIRST_ABILITY_TICKS;
+	/** Ticks until he may laugh again, so one moment (a lightning strike hitting three players) is one laugh. */
+	private int laughCooldown;
 	private @Nullable Ability lastAbility;
 
 	public ChaosKing(EntityType<? extends ChaosKing> type, Level level) {
@@ -225,6 +240,9 @@ public final class ChaosKing extends Monster {
 			return;
 		}
 		this.stageTicks++;
+		if (this.laughCooldown > 0) {
+			this.laughCooldown--;
+		}
 		switch (this.stage) {
 			case RISING -> this.tickRising(level);
 			case WAVES -> this.tickWaves(level);
@@ -267,6 +285,28 @@ public final class ChaosKing extends Monster {
 		sword.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
 		this.setItemSlot(EquipmentSlot.MAINHAND, sword);
 		this.setDropChance(EquipmentSlot.MAINHAND, 0.0F);
+	}
+
+	/** His evil laugh, heard across the arena. Ignored while the last one is still playing. */
+	public void laugh(ServerLevel level) {
+		if (this.laughCooldown > 0) {
+			return;
+		}
+		this.laughCooldown = LAUGH_COOLDOWN_TICKS;
+		this.playToEveryone(level, ModSounds.CHAOS_KING_LAUGH);
+	}
+
+	/** Plays a sound of his to every player in the arena at the same loudness, from his direction (see {@link #LAUGH_DISTANCE_FROM_LISTENER}). */
+	private void playToEveryone(ServerLevel level, SoundEvent soundEvent) {
+		Holder<SoundEvent> sound = BuiltInRegistries.SOUND_EVENT.wrapAsHolder(soundEvent);
+		long seed = level.getRandom().nextLong();
+		Vec3 king = this.position();
+		for (ServerPlayer player : level.players()) {
+			Vec3 toKing = king.subtract(player.position());
+			Vec3 at = toKing.lengthSqr() < 1.0E-4 ? player.position()
+					: player.position().add(toKing.normalize().scale(Math.min(LAUGH_DISTANCE_FROM_LISTENER, toKing.length())));
+			player.connection.send(new ClientboundSoundPacket(sound, SoundSource.HOSTILE, at.x, at.y, at.z, LAUGH_VOLUME, 1.0F, seed));
+		}
 	}
 
 	private void setStage(Stage stage) {
@@ -436,6 +476,7 @@ public final class ChaosKing extends Monster {
 			default -> "WAKE, WARDEN";
 		};
 		this.say(level, title, "Wave " + number + " of 4");
+		this.laugh(level);
 		level.playSound(null, this.blockPosition(), SoundEvents.ENDER_DRAGON_GROWL, SoundSource.HOSTILE, 2.0F, 0.6F);
 
 		if (number < 4) {
@@ -559,6 +600,8 @@ public final class ChaosKing extends Monster {
 	public void die(DamageSource source) {
 		super.die(source);
 		if (this.level() instanceof ServerLevel level) {
+			// His last cry, heard by everyone, before the altar's soul fire rises.
+			this.playToEveryone(level, ModSounds.CHAOS_KING_DEATH);
 			ChaosArena.onBossDefeated(level);
 		}
 	}

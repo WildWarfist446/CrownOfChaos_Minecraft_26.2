@@ -26,6 +26,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -41,7 +42,9 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractBannerBlock;
 import net.minecraft.world.level.block.BannerBlock;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BannerBlockEntity;
 import net.minecraft.world.level.block.WallBannerBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.scores.PlayerTeam;
@@ -682,9 +685,14 @@ public final class FactionManager {
 		}
 		Faction faction = owner.get();
 		removeFlag(level.getServer(), faction, flag, breaker == null ? null : breaker.getScoreboardName());
+		// The flag keeps the patterns it was given at a loom.
+		ItemStack dropped = FactionFlagItem.forFaction(faction);
+		if (level.getBlockEntity(pos) instanceof BannerBlockEntity banner) {
+			dropped.set(DataComponents.BANNER_PATTERNS, banner.getPatterns());
+		}
 		level.removeBlock(pos, false);
 		if (breaker == null || !breaker.isCreative()) {
-			Block.popResource(level, pos, FactionFlagItem.forFaction(faction));
+			Block.popResource(level, pos, dropped);
 		}
 		return true;
 	}

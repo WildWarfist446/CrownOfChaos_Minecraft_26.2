@@ -21,6 +21,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BannerItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
@@ -30,6 +31,7 @@ import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.AbstractBannerBlock;
+import net.minecraft.world.level.block.Blocks;
 
 /**
  * A Faction Flag. Crafting one makes it belong to the crafter's faction (a flag from the
@@ -38,9 +40,14 @@ import net.minecraft.world.level.block.AbstractBannerBlock;
  * that faction. Only members can place it, and not so close to another faction's flag that
  * their territories would overlap. Breaking the banner removes the claim and drops the flag.
  */
-public final class FactionFlagItem extends Item {
+public final class FactionFlagItem extends BannerItem {
+	/**
+	 * It is a banner item (on a plain white banner's blocks, which it never places: it places a banner
+	 * of its faction's color itself), so a loom takes it, patterns and dyes can be added, and a cauldron
+	 * washes them off, as with any banner. The patterns are kept when it is placed and when it is picked up.
+	 */
 	public FactionFlagItem(Item.Properties properties) {
-		super(properties);
+		super(Blocks.BANNER.pick(DyeColor.WHITE), Blocks.WALL_BANNER.pick(DyeColor.WHITE), properties);
 	}
 
 	/** A Faction Flag belonging to the faction. */

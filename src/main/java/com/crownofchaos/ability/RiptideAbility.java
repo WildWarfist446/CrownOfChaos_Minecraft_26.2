@@ -26,7 +26,7 @@ public final class RiptideAbility implements CrownAbility {
 	private static final float SPIN_ATTACK_DAMAGE = 8.0F;
 
 	/** 4.5 seconds between launches. */
-	private static final int COOLDOWN_TICKS = 90;
+	private static final int COOLDOWN_TICKS = 45;
 
 	@Override
 	public boolean activate(ServerPlayer player, ItemStack crown) {

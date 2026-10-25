@@ -151,7 +151,18 @@ public final class ChaosArena {
 		// When the last player dies or logs out, the fight resets at once; the boss's own tick (every second) covers leaving the dimension.
 		ServerLivingEntityEvents.AFTER_DEATH.register((entity, source) -> {
 			if (entity instanceof ServerPlayer player && player.level() instanceof ServerLevel level) {
+				// He laughs when a player falls, before a wipe (if it was the last) clears him away.
+				if (level.dimension() == DIMENSION) {
+					level.getEntitiesOfClass(ChaosKing.class, arenaBox()).forEach(king -> king.laugh(level));
+				}
 				resetIfEmpty(level, player);
+			}
+		});
+		// ...and when one of his abilities (a skull, a fireball or a lightning strike) hurts someone; his own legion doesn't count.
+		ServerLivingEntityEvents.AFTER_DAMAGE.register((target, source, baseDamage, damageTaken, blocked) -> {
+			if (damageTaken > 0.0F && source.getEntity() instanceof ChaosKing king && source.getDirectEntity() != king
+					&& !ChaosKing.isLegion(target) && target.level() instanceof ServerLevel level) {
+				king.laugh(level);
 			}
 		});
 		net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> {
@@ -181,6 +192,10 @@ public final class ChaosArena {
 				checkAltar(level);
 			}
 		});
+	}
+
+	private static AABB arenaBox() {
+		return new AABB(-ARENA_RADIUS - 1, FLOOR_Y - 10, -ARENA_RADIUS - 1, ARENA_RADIUS + 1, FLOOR_Y + 120, ARENA_RADIUS + 1);
 	}
 
 	/** The living players in the arena (not spectators). The fight is over when there are none. */

@@ -2,6 +2,12 @@
 	"portal_activate": {
 		"sounds": [ "crownofchaos:portal_activate" ]
 	},
+	"chaos_king_laugh": {
+		"sounds": [ "crownofchaos:chaos_king_laugh" ]
+	},
+	"chaos_king_death": {
+		"sounds": [ "crownofchaos:chaos_king_death" ]
+	},
 	"boss_music": {
 		"sounds": [ { "name": "crownofchaos:boss_music", "stream": true } ]
 	}

@@ -71,7 +71,7 @@ ability (the ability keys do nothing while it's worn), and keeps Piglins calm li
 | Regeneration I | While you are in water |
 | Night Vision | Permanent while worn |
 | Water damage bonus | Attacks deal 50% more damage while you are in water, including arrows and tridents you fire |
-| **Ability: Riptide** | Press **R** to launch yourself exactly like a Riptide III trident. Works in water or rain, not while riding. 4.5 second cooldown. |
+| **Ability: Riptide** | Press **R** to launch yourself exactly like a Riptide III trident. Works in water or rain, not while riding. 2.25 second cooldown. |
 | **Secondary ability: Lightning Strike** | Look at a mob or player within 30 blocks and press **G** to strike it with lightning. Slightly weaker than natural lightning: 4 damage and 4 seconds of fire to everything within 2 blocks (vanilla is 5 damage, 8 seconds, 3 blocks), and it never sets blocks on fire or transforms mobs (no charged creepers or witches). Never hurts you. 20 second cooldown. |
 
 **Recipe** (unlocked by picking up a Heart of the Sea):
@@ -236,7 +236,7 @@ See each crown's section above for details.
 |---|---|---|---|---|
 | Golden Crown | None (base crown) | None | None | Gold Ingot |
 | Under Crown | Haste II, Night Vision, Hero of the Village, Fortune III | Vein Miner (toggle) | Ore Sense (60s) | Golden Crown |
-| Crown of Poseidon | Water Breathing, Dolphin's Grace, Night Vision, Regeneration in water, +50% damage in water | Riptide (4.5s) | Lightning Strike, aimed (20s) | Heart of the Sea |
+| Crown of Poseidon | Water Breathing, Dolphin's Grace, Night Vision, Regeneration in water, +50% damage in water | Riptide (2.25s) | Lightning Strike, aimed (20s) | Heart of the Sea |
 | Crown of Nether | Fire Resistance, Fire Aspect, Flame | Fire Charge (2s) | Blaze Flight, 60s of flight (2 min) | Nether Star |
 | Crown of Darkness | Night Vision, Darkness on hit | Sonic Boom, aimed (15s) | Darkness Pulse (30s) | Sculk Cord |
 | Crown of Sun | Swiftness II on sand and terracotta | Wind Charge (3 charges, 6s each) | Sun Cycle (20s) | Ankh Charm |
@@ -310,6 +310,8 @@ on repeat for everyone in the arena until he is defeated.
   when a wave is cleared a banner says so and the next one follows 6 seconds later.
 - When the last wave falls he draws an enchanted-looking diamond sword (for show; it adds no damage), flies down onto the altar and fights you with melee and, every 12 seconds, a
   Wither Skull, a Fire Charge or a Lightning Strike. He has a Warden's health and stays on the floor, away from the lava.
+- He lets out an evil laugh, heard at full volume by everyone in the arena, wherever they stand, whenever a player dies, one of his abilities hurts someone, or a new wave starts.
+- When you finally kill him he lets out a death wail, heard by everyone in the arena.
 - If every player in the arena dies or leaves, the fight clears itself and the altar must be lit again.
 
 **The Crown of Chaos** has netherite helmet stats, a custom 3D model, no netherite upgrade, and:
@@ -348,7 +350,7 @@ Members' names show their faction as a colored `[Faction Name]` tag in chat and 
 
 **Faction Flag:** crafted from 8 wool of any color around a Faction Coin (unlocked by picking up a Faction
 Coin). It belongs to the faction of whoever crafts it and shows as a banner in that faction's color, with the
-faction's name floating above it.
+faction's name floating above it. It works like any banner: put it in a loom to add patterns and dyes (the base stays your faction's color), wash layers off in a cauldron, and the patterns stay on it when it's placed and picked up again.
 
 - Placing it (members only) claims everything within **100 blocks**, at any height. Flags of different
   factions must be at least 200 blocks apart, so territories never overlap; your own flags can overlap.
