@@ -204,7 +204,7 @@ ability (the ability keys do nothing while it's worn), and keeps Piglins calm li
 |---|---|
 | Teleport when hit | Getting hit teleports you up to 5 blocks to a safe spot to your attacker's left or right (not straight back, so archers can't keep a clean shot) and turns you to face them. Hits with no attacker, like falls or lava, teleport you to a random safe spot nearby. At most once every 5 seconds, and not from ender pearl landing damage |
 | Swiftness II | While standing on end stone, end stone bricks, purpur, obsidian or End portal frames (and their slabs, stairs and walls). Lasts 1 second after stepping off |
-| Elytra speed | While gliding with an elytra you keep gaining speed, up to about 44 blocks a second (a firework boost is about 32) |
+| Elytra speed | While gliding with an elytra you keep gaining speed, up to about 60 blocks a second (a firework boost is about 32), and once you're moving you never slow below about 28 blocks a second |
 | **Ability: Ender Pearl** | Press **R** to throw an ender pearl, exactly like the item, no pearl needed. 3 second cooldown. |
 | **Secondary ability: Dragon's Breath** | Press **G** to surround yourself with the Ender Dragon's breath: a cloud that starts 3 blocks wide, spreads to 7 over 30 seconds, and deals 6 damage a second to everything inside except you and your pets, undead mobs included. It can't be bottled. 30 second cooldown. |
 

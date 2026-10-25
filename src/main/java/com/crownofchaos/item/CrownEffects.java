@@ -84,10 +84,14 @@ public final class CrownEffects {
 
 	/** Minimum time between Crown of Void teleports (5 seconds), so every hit doesn't bounce them around. */
 	private static final int VOID_CROWN_TELEPORT_COOLDOWN_TICKS = 100;
-	/** Crown of Void: while gliding with an elytra, your velocity is multiplied by this every tick (about 1.5% faster each tick)... */
-	public static final double VOID_CROWN_ELYTRA_SPEED_BONUS = 1.015;
-	/** ...until you reach this speed in blocks per tick (2.2 is 44 blocks a second; a firework boost is about 1.6). */
-	public static final double VOID_CROWN_ELYTRA_MAX_SPEED = 2.2;
+	/** Crown of Void: while gliding with an elytra, your velocity is multiplied by this every tick (3% faster; the elytra's drag takes back about 1%)... */
+	public static final double VOID_CROWN_ELYTRA_SPEED_BONUS = 1.03;
+	/** ...until you reach this speed in blocks per tick (3.0 is 60 blocks a second; a firework boost is about 1.6). */
+	public static final double VOID_CROWN_ELYTRA_MAX_SPEED = 3.0;
+	/** Cruising: a gliding wearer who is already moving never slows below this (blocks per tick, 1.4 is 28 blocks a second), speeding up to it by at most 5% a tick. */
+	public static final double VOID_CROWN_ELYTRA_CRUISE_SPEED = 1.4;
+	/** The speed below which the cruise speed is not applied, so taking off and stalling are left alone. */
+	public static final double VOID_CROWN_ELYTRA_CRUISE_MIN_START = 0.5;
 
 	/** Server tick of each Crown of Void wearer's last teleport. */
 	private static final Map<UUID, Integer> LAST_VOID_TELEPORT = new HashMap<>();
