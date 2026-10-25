@@ -8,6 +8,7 @@ import com.crownofchaos.faction.Faction;
 import com.crownofchaos.faction.FactionData;
 import com.crownofchaos.unit.ModUnits;
 import com.crownofchaos.unit.UnitManager;
+import com.crownofchaos.unit.UnitPeaceful;
 import com.crownofchaos.unit.UnitType;
 
 import net.minecraft.ChatFormatting;
@@ -41,7 +42,7 @@ public final class UnitItem extends Item {
 	@Override
 	public InteractionResult useOn(UseOnContext context) {
 		UnitType unit = ModUnits.byItem(this);
-		if (unit == null || !unit.entity().canSpawn(context.getLevel())) {
+		if (unit == null || !unit.entity().isEnabled(context.getLevel().enabledFeatures())) {
 			return InteractionResult.FAIL;
 		}
 		if (!(context.getLevel() instanceof ServerLevel level) || !(context.getPlayer() instanceof ServerPlayer player)) {
@@ -64,11 +65,12 @@ public final class UnitItem extends Item {
 		BlockPos spawnPos = level.getBlockState(clicked).getCollisionShape(level, clicked).isEmpty() ? clicked : clicked.relative(face);
 		@SuppressWarnings("unchecked")
 		EntityType<Entity> type = (EntityType<Entity>) unit.entity();
-		Entity spawned = type.spawn(level, entity -> {
+		// Units may be summoned on Peaceful too, where vanilla would refuse the hostile ones (see UnitPeaceful).
+		Entity spawned = UnitPeaceful.summoning(() -> type.spawn(level, entity -> {
 			if (entity instanceof Mob mob) {
 				UnitManager.makeUnit(mob, player, faction.get(), unit);
 			}
-		}, spawnPos, EntitySpawnReason.SPAWN_ITEM_USE, true, !Objects.equals(clicked, spawnPos) && face == Direction.UP);
+		}, spawnPos, EntitySpawnReason.SPAWN_ITEM_USE, true, !Objects.equals(clicked, spawnPos) && face == Direction.UP));
 		if (spawned == null) {
 			return InteractionResult.FAIL;
 		}

@@ -424,6 +424,7 @@ faction (you must be in one). Units:
   don't count toward the limit);
 - never block your Riptide dash (the Crown of Poseidon's ability or a Riptide trident): you pass through your
   own and your faction's units;
+- can be summoned and kept on **Peaceful** difficulty too, where vanilla would remove hostile mobs (Peaceful stops mobs attacking players, and Shulker units won't shoot there, as in vanilla);
 - are limited to **40 per player** (reclaim or lose some to summon more), and can't be hurt by anyone in your faction;
 - never despawn or burn in daylight, and Piglins and Hoglins don't turn into zombies outside the Nether;
 - Guardians treat air as water, so they float and fight on land and follow orders out of the sea; Wardens

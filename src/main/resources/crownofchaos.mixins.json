@@ -5,6 +5,7 @@
 	"mixins": [
 		"AbstractArrowMixin",
 		"EnderDragonFightMixin",
+		"EntityTypeMixin",
 		"EntityAlliesMixin",
 		"FallingBlockMixin",
 		"FluidSpreadMixin",
@@ -14,6 +15,7 @@
 		"LivingEntityEffectMixin",
 		"LivingEntityMixin",
 		"MobAccessor",
+		"MobDespawnMixin",
 		"MobSunMixin",
 		"NetherPortalMixin",
 		"PistonStructureResolverMixin",
