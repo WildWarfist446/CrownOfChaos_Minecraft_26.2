@@ -275,7 +275,7 @@
   "gui.crownofchaos.faction.war.players": "Players",
   "gui.crownofchaos.faction.war.no_factions": "There are no other factions.",
   "gui.crownofchaos.faction.war.no_players": "Not at war with any players.",
-  "advancements.crownofchaos.root.title": "Fit for a King",
+  "advancements.crownofchaos.root.title": "The Crown of Chaos",
   "advancements.crownofchaos.root.description": "Obtain a Golden Crown",
   "advancements.crownofchaos.under_crown.title": "Under Crown",
   "advancements.crownofchaos.under_crown.description": "Obtain the Under Crown",
@@ -315,6 +315,6 @@
   "advancements.crownofchaos.soul_of_chaos.description": "Obtain the Soul of Chaos",
   "advancements.crownofchaos.chaos_smithing_template.title": "Glitch in the Forge",
   "advancements.crownofchaos.chaos_smithing_template.description": "Turn a Netherite Upgrade into a Chaos Upgrade in the soul fire",
-  "advancements.crownofchaos.crown_of_chaos.title": "The Crown of Chaos",
+  "advancements.crownofchaos.crown_of_chaos.title": "Crowned in Chaos",
   "advancements.crownofchaos.crown_of_chaos.description": "Smith the Crown of Chaos"
 }

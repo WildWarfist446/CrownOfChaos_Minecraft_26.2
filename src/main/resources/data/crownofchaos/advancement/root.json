@@ -19,7 +19,7 @@
       "translate": "advancements.crownofchaos.root.description"
     },
     "icon": {
-      "id": "crownofchaos:golden_crown"
+      "id": "crownofchaos:crown_of_darkness"
     },
     "frame": "task",
     "announce_to_chat": false,

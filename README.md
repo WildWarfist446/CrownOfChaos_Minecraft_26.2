@@ -326,17 +326,17 @@ on repeat for everyone in the arena until he is defeated.
 
 ## Advancements
 
-The mod adds its own advancement tab, **Fit for a King**, for getting the major items. Each is awarded when
+The mod adds its own advancement tab, **The Crown of Chaos** (with the Crown of Darkness as its icon), for getting the major items. Each is awarded when
 the item first enters your inventory (the last four also need their step):
 
-- **Fit for a King:** a Golden Crown, which opens the tab.
+- **The Crown of Chaos:** the tab itself, opened by obtaining a Golden Crown.
 - **Each of the nine magical crowns** (Under, Poseidon, Nether, Darkness, Sun, Wither, Winter, Iron, Void).
   **A Crown for Every Occasion** is for having obtained all nine, not necessarily at once.
 - **The Screeching Has Ceased** (Sculk Cord) and **Ra Would Be Proud** (Ankh Charm).
 - **Heavy Is the Head** (any netherite crown) and **Dressed in Netherite** (all nine).
 - **Something Is Wrong** (the Incomplete Crown of Chaos), **Into the Glitch** (enter the Chaos Arena),
   **The King Falls** (defeat the Chaos King), **A Piece of Chaos** (Soul of Chaos), **Glitch in the Forge**
-  (Chaos Upgrade) and **The Crown of Chaos**, the challenge for smithing the finished crown.
+  (Chaos Upgrade) and **Crowned in Chaos**, the challenge for smithing the finished crown.
 
 ## Factions & Units (beta)
 
