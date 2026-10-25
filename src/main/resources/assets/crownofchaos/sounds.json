@@ -8,6 +8,9 @@
 	"chaos_king_death": {
 		"sounds": [ "crownofchaos:chaos_king_death" ]
 	},
+	"victory_music": {
+		"sounds": [ { "name": "crownofchaos:victory_music", "stream": true } ]
+	},
 	"boss_music": {
 		"sounds": [ { "name": "crownofchaos:boss_music", "stream": true } ]
 	}

@@ -22,6 +22,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundSetSubtitleTextPacket;
+import net.minecraft.network.protocol.game.ClientboundSetTitleTextPacket;
+import net.minecraft.network.protocol.game.ClientboundSetTitlesAnimationPacket;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -100,6 +103,11 @@ public final class ChaosArena {
 
 	private static boolean altarWasLit;
 
+	/** The victory banner fades in over half a second, stays for 6 seconds and fades out over 1.5 (ticks). */
+	private static final int VICTORY_BANNER_FADE_IN = 10;
+	private static final int VICTORY_BANNER_STAY = 120;
+	private static final int VICTORY_BANNER_FADE_OUT = 30;
+
 	/** How often (in ticks) the fight music is started for new arrivals and stopped when the fight ends. */
 	private static final int MUSIC_CHECK_TICKS = 20;
 	/** The players whose game is playing the fight music. */
@@ -117,7 +125,7 @@ public final class ChaosArena {
 			for (ServerPlayer player : level.players()) {
 				wanted.add(player.getUUID());
 				if (musicPlayers.add(player.getUUID()) && ServerPlayNetworking.canSend(player, BossMusicPayload.TYPE)) {
-					ServerPlayNetworking.send(player, new BossMusicPayload(true));
+					ServerPlayNetworking.send(player, new BossMusicPayload(BossMusicPayload.Mode.FIGHT));
 				}
 			}
 		}
@@ -127,7 +135,7 @@ public final class ChaosArena {
 				it.remove();
 				ServerPlayer player = level.getServer().getPlayerList().getPlayer(id);
 				if (player != null && ServerPlayNetworking.canSend(player, BossMusicPayload.TYPE)) {
-					ServerPlayNetworking.send(player, new BossMusicPayload(false));
+					ServerPlayNetworking.send(player, new BossMusicPayload(BossMusicPayload.Mode.NONE));
 				}
 			}
 		}
@@ -488,7 +496,17 @@ public final class ChaosArena {
 		place(level, ALTAR.above(), Blocks.SOUL_FIRE.defaultBlockState());
 		buildExitPortal(level);
 		for (ServerPlayer player : level.players()) {
+			// The big banner across the screen, then the line about the altar in chat.
+			player.connection.send(new ClientboundSetTitlesAnimationPacket(VICTORY_BANNER_FADE_IN, VICTORY_BANNER_STAY, VICTORY_BANNER_FADE_OUT));
+			player.connection.send(new ClientboundSetSubtitleTextPacket(Component.literal("The Chaos King has fallen.").withStyle(ChatFormatting.YELLOW)));
+			player.connection.send(new ClientboundSetTitleTextPacket(Component.literal("VICTORY").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD)));
 			player.sendSystemMessage(Component.literal("A strange blue flame rises from the altar...").withStyle(ChatFormatting.AQUA));
+			// The victory music takes over from the fight music. These players are no longer tracked as hearing the
+			// fight music, so the check that stops it (see updateMusic) does not cut the victory music off.
+			if (ServerPlayNetworking.canSend(player, BossMusicPayload.TYPE)) {
+				ServerPlayNetworking.send(player, new BossMusicPayload(BossMusicPayload.Mode.VICTORY));
+			}
+			musicPlayers.remove(player.getUUID());
 		}
 		level.playSound(null, ALTAR, SoundEvents.SOUL_ESCAPE.value(), SoundSource.BLOCKS, 2.0F, 0.8F);
 	}

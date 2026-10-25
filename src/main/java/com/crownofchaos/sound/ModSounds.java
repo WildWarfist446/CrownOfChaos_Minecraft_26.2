@@ -12,6 +12,8 @@ public final class ModSounds {
 	public static final SoundEvent PORTAL_ACTIVATE = register("portal_activate");
 	/** "Empire" by Laudividni: the Chaos King's fight music (see CREDITS.md). Loops until he is beaten. */
 	public static final SoundEvent BOSS_MUSIC = register("boss_music");
+	/** "Celebration" by Laudividni ft. TenM: plays once after the Chaos King is beaten (see CREDITS.md). */
+	public static final SoundEvent VICTORY_MUSIC = register("victory_music");
 	/** The Chaos King's evil laugh: when a player dies, when his abilities hit, and when a wave starts. */
 	public static final SoundEvent CHAOS_KING_LAUGH = register("chaos_king_laugh");
 	/** His death wail, when he is finally killed. */

@@ -311,7 +311,7 @@ on repeat for everyone in the arena until he is defeated.
 - When the last wave falls he draws an enchanted-looking diamond sword (for show; it adds no damage), flies down onto the altar and fights you with melee and, every 12 seconds, a
   Wither Skull, a Fire Charge or a Lightning Strike. He has a Warden's health and stays on the floor, away from the lava.
 - He lets out an evil laugh, heard at full volume by everyone in the arena, wherever they stand, whenever a player dies, one of his abilities hurts someone, or a new wave starts.
-- When you finally kill him he lets out a death wail, heard by everyone in the arena.
+- When you finally kill him he lets out a death wail, heard by everyone in the arena, a large gold **VICTORY** banner fills the screen and the victory music ("Celebration") plays once.
 - If every player in the arena dies or leaves, the fight clears itself and the altar must be lit again.
 
 **The Crown of Chaos** has netherite helmet stats, a custom 3D model, no netherite upgrade, and:
@@ -534,6 +534,7 @@ covered in [DEVELOPMENT.md](DEVELOPMENT.md).
 
 Created by Warfist. The art is hand-drawn by the mod's creators and the code was written with AI (see the disclosure at the top).
 
-The Chaos King's boss music is **"Empire" by Laudividni**, used with credit as the artist
-requires: [Laudividni on YouTube](https://www.youtube.com/channel/UCTIkTFLZVbxuDZvTynhv2uw). The
-track is not covered by the mod's license; see [CREDITS.md](CREDITS.md).
+The Chaos King's boss music is **"Empire" by Laudividni**, and the victory music after he falls is
+**"Celebration" by Laudividni, featuring @TenM**, both used with credit as the artists require:
+[Laudividni on YouTube](https://www.youtube.com/channel/UCTIkTFLZVbxuDZvTynhv2uw). The tracks are not
+covered by the mod's license; see [CREDITS.md](CREDITS.md).

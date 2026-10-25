@@ -8,5 +8,11 @@ It plays on repeat during the boss fight until he is defeated.
 - Artist: Laudividni
 - YouTube channel: https://www.youtube.com/channel/UCTIkTFLZVbxuDZvTynhv2uw
 
-The track is Laudividni's work and is **not** covered by this mod's CC0 license; all rights to it
-stay with the artist.
+The victory music, played once after the Chaos King is defeated, is **"Celebration" by Laudividni,
+featuring @TenM**, with the same credit.
+
+- Artists: Laudividni, featuring @TenM
+- Laudividni's YouTube channel: https://www.youtube.com/channel/UCTIkTFLZVbxuDZvTynhv2uw
+
+Both tracks are the artists' work and are **not** covered by this mod's CC0 license; all rights to them
+stay with the artists.
