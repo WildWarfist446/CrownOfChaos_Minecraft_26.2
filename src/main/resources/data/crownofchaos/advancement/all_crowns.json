@@ -1,0 +1,138 @@
+{
+  "parent": "crownofchaos:root",
+  "criteria": {
+    "under_crown": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "crownofchaos:under_crown"
+          }
+        ]
+      }
+    },
+    "crown_of_poseidon": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "crownofchaos:crown_of_poseidon"
+          }
+        ]
+      }
+    },
+    "crown_of_nether": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "crownofchaos:crown_of_nether"
+          }
+        ]
+      }
+    },
+    "crown_of_darkness": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "crownofchaos:crown_of_darkness"
+          }
+        ]
+      }
+    },
+    "crown_of_sun": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "crownofchaos:crown_of_sun"
+          }
+        ]
+      }
+    },
+    "crown_of_wither": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "crownofchaos:crown_of_wither"
+          }
+        ]
+      }
+    },
+    "crown_of_winter": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "crownofchaos:crown_of_winter"
+          }
+        ]
+      }
+    },
+    "crown_of_iron": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "crownofchaos:crown_of_iron"
+          }
+        ]
+      }
+    },
+    "crown_of_void": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "crownofchaos:crown_of_void"
+          }
+        ]
+      }
+    }
+  },
+  "display": {
+    "title": {
+      "translate": "advancements.crownofchaos.all_crowns.title"
+    },
+    "description": {
+      "translate": "advancements.crownofchaos.all_crowns.description"
+    },
+    "icon": {
+      "id": "crownofchaos:crown_of_chaos"
+    },
+    "frame": "goal",
+    "announce_to_chat": true,
+    "show_toast": true
+  },
+  "requirements": [
+    [
+      "under_crown"
+    ],
+    [
+      "crown_of_poseidon"
+    ],
+    [
+      "crown_of_nether"
+    ],
+    [
+      "crown_of_darkness"
+    ],
+    [
+      "crown_of_sun"
+    ],
+    [
+      "crown_of_wither"
+    ],
+    [
+      "crown_of_winter"
+    ],
+    [
+      "crown_of_iron"
+    ],
+    [
+      "crown_of_void"
+    ]
+  ]
+}

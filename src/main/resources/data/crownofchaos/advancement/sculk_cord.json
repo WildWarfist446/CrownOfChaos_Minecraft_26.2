@@ -1,0 +1,34 @@
+{
+  "parent": "crownofchaos:crown_of_darkness",
+  "criteria": {
+    "sculk_cord": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "crownofchaos:sculk_cord"
+          }
+        ]
+      }
+    }
+  },
+  "display": {
+    "title": {
+      "translate": "advancements.crownofchaos.sculk_cord.title"
+    },
+    "description": {
+      "translate": "advancements.crownofchaos.sculk_cord.description"
+    },
+    "icon": {
+      "id": "crownofchaos:sculk_cord"
+    },
+    "frame": "task",
+    "announce_to_chat": false,
+    "show_toast": true
+  },
+  "requirements": [
+    [
+      "sculk_cord"
+    ]
+  ]
+}

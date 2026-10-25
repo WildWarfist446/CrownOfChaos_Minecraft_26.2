@@ -1,0 +1,38 @@
+{
+  "parent": "crownofchaos:enter_arena",
+  "criteria": {
+    "killed": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "minecraft:entity_type": "crownofchaos:chaos_king"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "display": {
+    "title": {
+      "translate": "advancements.crownofchaos.defeat_chaos_king.title"
+    },
+    "description": {
+      "translate": "advancements.crownofchaos.defeat_chaos_king.description"
+    },
+    "icon": {
+      "id": "crownofchaos:crown_of_chaos"
+    },
+    "frame": "goal",
+    "announce_to_chat": true,
+    "show_toast": true
+  },
+  "requirements": [
+    [
+      "killed"
+    ]
+  ]
+}

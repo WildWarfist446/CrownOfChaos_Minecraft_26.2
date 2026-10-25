@@ -1,0 +1,30 @@
+{
+  "parent": "crownofchaos:incomplete_crown_of_chaos",
+  "criteria": {
+    "entered": {
+      "trigger": "minecraft:changed_dimension",
+      "conditions": {
+        "to": "crownofchaos:chaos_arena"
+      }
+    }
+  },
+  "display": {
+    "title": {
+      "translate": "advancements.crownofchaos.enter_arena.title"
+    },
+    "description": {
+      "translate": "advancements.crownofchaos.enter_arena.description"
+    },
+    "icon": {
+      "id": "crownofchaos:soul_of_chaos"
+    },
+    "frame": "task",
+    "announce_to_chat": false,
+    "show_toast": true
+  },
+  "requirements": [
+    [
+      "entered"
+    ]
+  ]
+}

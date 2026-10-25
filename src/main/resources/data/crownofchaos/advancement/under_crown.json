@@ -1,0 +1,34 @@
+{
+  "parent": "crownofchaos:root",
+  "criteria": {
+    "under_crown": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "crownofchaos:under_crown"
+          }
+        ]
+      }
+    }
+  },
+  "display": {
+    "title": {
+      "translate": "advancements.crownofchaos.under_crown.title"
+    },
+    "description": {
+      "translate": "advancements.crownofchaos.under_crown.description"
+    },
+    "icon": {
+      "id": "crownofchaos:under_crown"
+    },
+    "frame": "task",
+    "announce_to_chat": false,
+    "show_toast": true
+  },
+  "requirements": [
+    [
+      "under_crown"
+    ]
+  ]
+}

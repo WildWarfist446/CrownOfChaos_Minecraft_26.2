@@ -1,0 +1,34 @@
+{
+  "parent": "crownofchaos:all_crowns",
+  "criteria": {
+    "incomplete": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "crownofchaos:incomplete_crown_of_chaos"
+          }
+        ]
+      }
+    }
+  },
+  "display": {
+    "title": {
+      "translate": "advancements.crownofchaos.incomplete_crown_of_chaos.title"
+    },
+    "description": {
+      "translate": "advancements.crownofchaos.incomplete_crown_of_chaos.description"
+    },
+    "icon": {
+      "id": "crownofchaos:incomplete_crown_of_chaos"
+    },
+    "frame": "task",
+    "announce_to_chat": false,
+    "show_toast": true
+  },
+  "requirements": [
+    [
+      "incomplete"
+    ]
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "parent": "crownofchaos:soul_of_chaos",
+  "criteria": {
+    "upgrade": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "crownofchaos:chaos_smithing_template"
+          }
+        ]
+      }
+    }
+  },
+  "display": {
+    "title": {
+      "translate": "advancements.crownofchaos.chaos_smithing_template.title"
+    },
+    "description": {
+      "translate": "advancements.crownofchaos.chaos_smithing_template.description"
+    },
+    "icon": {
+      "id": "crownofchaos:chaos_smithing_template"
+    },
+    "frame": "task",
+    "announce_to_chat": false,
+    "show_toast": true
+  },
+  "requirements": [
+    [
+      "upgrade"
+    ]
+  ]
+}

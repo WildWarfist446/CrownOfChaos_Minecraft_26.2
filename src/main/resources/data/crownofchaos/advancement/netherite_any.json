@@ -1,0 +1,122 @@
+{
+  "parent": "crownofchaos:root",
+  "criteria": {
+    "netherite_under_crown": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "crownofchaos:netherite_under_crown"
+          }
+        ]
+      }
+    },
+    "netherite_crown_of_poseidon": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "crownofchaos:netherite_crown_of_poseidon"
+          }
+        ]
+      }
+    },
+    "netherite_crown_of_nether": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "crownofchaos:netherite_crown_of_nether"
+          }
+        ]
+      }
+    },
+    "netherite_crown_of_darkness": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "crownofchaos:netherite_crown_of_darkness"
+          }
+        ]
+      }
+    },
+    "netherite_crown_of_sun": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "crownofchaos:netherite_crown_of_sun"
+          }
+        ]
+      }
+    },
+    "netherite_crown_of_wither": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "crownofchaos:netherite_crown_of_wither"
+          }
+        ]
+      }
+    },
+    "netherite_crown_of_winter": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "crownofchaos:netherite_crown_of_winter"
+          }
+        ]
+      }
+    },
+    "netherite_crown_of_iron": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "crownofchaos:netherite_crown_of_iron"
+          }
+        ]
+      }
+    },
+    "netherite_crown_of_void": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "crownofchaos:netherite_crown_of_void"
+          }
+        ]
+      }
+    }
+  },
+  "display": {
+    "title": {
+      "translate": "advancements.crownofchaos.netherite_any.title"
+    },
+    "description": {
+      "translate": "advancements.crownofchaos.netherite_any.description"
+    },
+    "icon": {
+      "id": "crownofchaos:netherite_crown_of_void"
+    },
+    "frame": "task",
+    "announce_to_chat": false,
+    "show_toast": true
+  },
+  "requirements": [
+    [
+      "netherite_under_crown",
+      "netherite_crown_of_poseidon",
+      "netherite_crown_of_nether",
+      "netherite_crown_of_darkness",
+      "netherite_crown_of_sun",
+      "netherite_crown_of_wither",
+      "netherite_crown_of_winter",
+      "netherite_crown_of_iron",
+      "netherite_crown_of_void"
+    ]
+  ]
+}

@@ -12,7 +12,7 @@ is worn. Every magical crown can also be upgraded to netherite.
 > hand by the mod's creators.
 
 **Contents:** [Crowns](#crowns) · [Netherite crowns](#netherite-crowns) ·
-[Abilities](#abilities) · [Materials](#materials) · [The Crown of Chaos](#the-crown-of-chaos) ·
+[Abilities](#abilities) · [Materials](#materials) · [The Crown of Chaos](#the-crown-of-chaos) · [Advancements](#advancements) ·
 [Factions (beta)](#factions-beta) · [Changes to vanilla](#changes-to-vanilla) ·
 [Installation](#installation) · [Finding the items](#finding-the-items) ·
 [Development](#development) · [Credits](#credits)
@@ -323,6 +323,20 @@ on repeat for everyone in the arena until he is defeated.
   abilities' usual damage;
 - **Death's door** (secondary): the Crown of Darkness's Darkness Pulse, lasting 300% longer (4 times as long);
 - command over every unit type; in a Commander's Table it lists and makes all of them.
+
+## Advancements
+
+The mod adds its own advancement tab, **Fit for a King**, for getting the major items. Each is awarded when
+the item first enters your inventory (the last four also need their step):
+
+- **Fit for a King:** a Golden Crown, which opens the tab.
+- **Each of the nine magical crowns** (Under, Poseidon, Nether, Darkness, Sun, Wither, Winter, Iron, Void).
+  **A Crown for Every Occasion** is for having obtained all nine, not necessarily at once.
+- **The Screeching Has Ceased** (Sculk Cord) and **Ra Would Be Proud** (Ankh Charm).
+- **Heavy Is the Head** (any netherite crown) and **Dressed in Netherite** (all nine).
+- **Something Is Wrong** (the Incomplete Crown of Chaos), **Into the Glitch** (enter the Chaos Arena),
+  **The King Falls** (defeat the Chaos King), **A Piece of Chaos** (Soul of Chaos), **Glitch in the Forge**
+  (Chaos Upgrade) and **The Crown of Chaos**, the challenge for smithing the finished crown.
 
 ## Factions & Units (beta)
 

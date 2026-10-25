@@ -1,0 +1,34 @@
+{
+  "parent": "crownofchaos:defeat_chaos_king",
+  "criteria": {
+    "soul": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "crownofchaos:soul_of_chaos"
+          }
+        ]
+      }
+    }
+  },
+  "display": {
+    "title": {
+      "translate": "advancements.crownofchaos.soul_of_chaos.title"
+    },
+    "description": {
+      "translate": "advancements.crownofchaos.soul_of_chaos.description"
+    },
+    "icon": {
+      "id": "crownofchaos:soul_of_chaos"
+    },
+    "frame": "task",
+    "announce_to_chat": false,
+    "show_toast": true
+  },
+  "requirements": [
+    [
+      "soul"
+    ]
+  ]
+}
