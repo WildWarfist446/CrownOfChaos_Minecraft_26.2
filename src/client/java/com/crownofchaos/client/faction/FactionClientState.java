@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.crownofchaos.faction.Faction;
+import com.crownofchaos.network.FactionActionPayload;
 import com.crownofchaos.network.FactionSyncPayload;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
@@ -30,6 +31,15 @@ public final class FactionClientState {
 			}
 		});
 		ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> factions = List.of());
+		// Ask for the factions as soon as we are in, so the menu never starts from an empty list.
+		ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> requestSync());
+	}
+
+	/** Asks the server to send all the factions again. */
+	public static void requestSync() {
+		if (ClientPlayNetworking.canSend(FactionActionPayload.TYPE)) {
+			ClientPlayNetworking.send(FactionActionPayload.of(FactionActionPayload.Action.SYNC));
+		}
 	}
 
 	/** Every faction, in the order they were founded. */

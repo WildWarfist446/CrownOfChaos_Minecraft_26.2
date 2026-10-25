@@ -22,6 +22,7 @@ public class CrownOfChaosClient implements ClientModInitializer {
 		FactionClientState.initialize();
 		UnitClient.initialize();
 		BossMusicClient.initialize();
+		VoidElytraClient.initialize();
 		CrownModels.initialize();
 		EntityRendererRegistry.register(ModEntities.ICICLE, IcicleRenderer::new);
 		EntityRendererRegistry.register(ModEntities.CHAOS_KING, com.crownofchaos.client.render.ChaosKingRenderer::new);

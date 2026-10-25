@@ -12,6 +12,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -24,7 +25,7 @@ import net.minecraft.world.item.ItemStack;
 /**
  * The Commander's Table menu. Put a crown in the crown slot to see the units it commands, pick
  * one, and put its two cost items in the cost slots (in either order); the unit item then
- * appears in the result slot. Taking it uses up the cost items; the crown stays. Like a
+ * appears in the result slot. A crown you are wearing counts too, when the crown slot is empty. Taking it uses up the cost items; the crown stays. Like a
  * crafting table, the table keeps nothing: closing the menu gives the items back.
  *
  * <p>Selecting a unit works like the stonecutter: the screen calls
@@ -59,6 +60,7 @@ public class CommanderTableMenu extends AbstractContainerMenu {
 	public static final int UNITS_HEIGHT = 46;
 
 	private final ContainerLevelAccess access;
+	private final Player player;
 	private final DataSlot selectedUnit = DataSlot.standalone();
 	private final Slot crownSlot;
 	private final Slot costASlot;
@@ -87,6 +89,7 @@ public class CommanderTableMenu extends AbstractContainerMenu {
 	public CommanderTableMenu(int containerId, Inventory inventory, ContainerLevelAccess access) {
 		super(ModMenus.COMMANDER_TABLE, containerId);
 		this.access = access;
+		this.player = inventory.player;
 		this.crownSlot = this.addSlot(new Slot(this.inputs, 0, CROWN_X, CROWN_Y) {
 			@Override
 			public boolean mayPlace(ItemStack stack) {
@@ -123,6 +126,8 @@ public class CommanderTableMenu extends AbstractContainerMenu {
 		this.addStandardInventorySlots(inventory, INVENTORY_X, INVENTORY_Y);
 		this.selectedUnit.set(-1);
 		this.addDataSlot(this.selectedUnit);
+		// A crown already on your head lists its units from the moment the table opens.
+		this.refreshUnits();
 	}
 
 	// For the screen
@@ -142,8 +147,19 @@ public class CommanderTableMenu extends AbstractContainerMenu {
 		return index >= 0 && index < this.units.size() ? Optional.of(this.units.get(index)) : Optional.empty();
 	}
 
+	/** Whether there is a crown to list units for: one in the crown slot, or else the one you are wearing. */
 	public boolean hasCrown() {
-		return this.crownSlot.hasItem();
+		return !this.effectiveCrown().isEmpty();
+	}
+
+	/** The crown in the crown slot, or, with that empty, the crown on the player's head (if it is one). */
+	private ItemStack effectiveCrown() {
+		ItemStack inSlot = this.crownSlot.getItem();
+		if (!inSlot.isEmpty()) {
+			return inSlot;
+		}
+		ItemStack worn = this.player.getItemBySlot(EquipmentSlot.HEAD);
+		return ModItems.isCrown(worn.getItem()) ? worn : ItemStack.EMPTY;
 	}
 
 	/** Whether the cost slots hold enough of the chosen unit's two cost items (in either order). */
@@ -170,14 +186,19 @@ public class CommanderTableMenu extends AbstractContainerMenu {
 
 	@Override
 	public void slotsChanged(Container container) {
-		ItemStack crown = this.crownSlot.getItem();
+		this.refreshUnits();
+		this.updateResult();
+	}
+
+	/** Lists the units of the crown in use when that crown changes. */
+	private void refreshUnits() {
+		ItemStack crown = this.effectiveCrown();
 		if (!ItemStack.isSameItem(crown, this.lastCrown) || crown.isEmpty() != this.lastCrown.isEmpty()) {
 			this.lastCrown = crown.copy();
 			this.units = crown.isEmpty() ? List.of() : ModUnits.forCrown(crown.getItem());
 			// A crown with only one kind of unit picks it straight away.
 			this.selectedUnit.set(this.units.size() == 1 ? 0 : -1);
 		}
-		this.updateResult();
 	}
 
 	private boolean isPaid(UnitType unit) {

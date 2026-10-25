@@ -70,7 +70,9 @@ public record FactionActionPayload(Action action, String text, Optional<UUID> ta
 		 */
 		DECLARE_WAR_ON_PLAYER,
 		/** Owner: make peace with player {@code target}. */
-		END_WAR_ON_PLAYER
+		END_WAR_ON_PLAYER,
+		/** Anyone: send me all the factions again (asked when joining and when the menu opens, in case an earlier update was missed). */
+		SYNC
 	}
 
 	public static final CustomPacketPayload.Type<FactionActionPayload> TYPE =

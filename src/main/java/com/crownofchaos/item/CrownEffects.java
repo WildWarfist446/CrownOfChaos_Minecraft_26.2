@@ -84,9 +84,16 @@ public final class CrownEffects {
 
 	/** Minimum time between Crown of Void teleports (5 seconds), so every hit doesn't bounce them around. */
 	private static final int VOID_CROWN_TELEPORT_COOLDOWN_TICKS = 100;
+	/** Crown of Void: while gliding with an elytra, your velocity is multiplied by this every tick (about 1.5% faster each tick)... */
+	public static final double VOID_CROWN_ELYTRA_SPEED_BONUS = 1.015;
+	/** ...until you reach this speed in blocks per tick (2.2 is 44 blocks a second; a firework boost is about 1.6). */
+	public static final double VOID_CROWN_ELYTRA_MAX_SPEED = 2.2;
 
 	/** Server tick of each Crown of Void wearer's last teleport. */
 	private static final Map<UUID, Integer> LAST_VOID_TELEPORT = new HashMap<>();
+
+	/** Regeneration I, which the Crown of Poseidon grants while its wearer is in water. */
+	private static final CrownEffect POSEIDON_WATER_REGENERATION = new CrownEffect(MobEffects.REGENERATION, 0);
 
 	/** Swiftness II, the strongest level potions and beacons give. */
 	private static final CrownEffect TERRAIN_SWIFTNESS = new CrownEffect(MobEffects.SPEED, 1);
@@ -249,6 +256,10 @@ public final class CrownEffects {
 					active = new ArrayList<>(active);
 					active.add(TERRAIN_SWIFTNESS);
 				}
+				if (worn == ModItems.CROWN_OF_POSEIDON && player.isInWater()) {
+					active = new ArrayList<>(active);
+					active.add(POSEIDON_WATER_REGENERATION);
+				}
 
 				// Remove effects from crowns that are no longer worn, e.g. after swapping crowns.
 				for (Map.Entry<Item, List<CrownEffect>> entry : EFFECTS.entrySet()) {
@@ -256,7 +267,7 @@ public final class CrownEffects {
 						removeCrownEffects(player, entry.getValue(), active);
 					}
 				}
-				removeCrownEffects(player, List.of(TERRAIN_SWIFTNESS), active);
+				removeCrownEffects(player, List.of(TERRAIN_SWIFTNESS, POSEIDON_WATER_REGENERATION), active);
 
 				apply(player, active);
 

@@ -68,6 +68,7 @@ ability (the ability keys do nothing while it's worn), and keeps Piglins calm li
 |---|---|
 | Water Breathing | Permanent while worn |
 | Dolphin's Grace | Permanent while worn |
+| Regeneration I | While you are in water |
 | Night Vision | Permanent while worn |
 | Water damage bonus | Attacks deal 50% more damage while you are in water, including arrows and tridents you fire |
 | **Ability: Riptide** | Press **R** to launch yourself exactly like a Riptide III trident. Works in water or rain, not while riding. 4.5 second cooldown. |
@@ -203,6 +204,7 @@ ability (the ability keys do nothing while it's worn), and keeps Piglins calm li
 |---|---|
 | Teleport when hit | Getting hit teleports you up to 5 blocks to a safe spot to your attacker's left or right (not straight back, so archers can't keep a clean shot) and turns you to face them. Hits with no attacker, like falls or lava, teleport you to a random safe spot nearby. At most once every 5 seconds, and not from ender pearl landing damage |
 | Swiftness II | While standing on end stone, end stone bricks, purpur, obsidian or End portal frames (and their slabs, stairs and walls). Lasts 1 second after stepping off |
+| Elytra speed | While gliding with an elytra you keep gaining speed, up to about 44 blocks a second (a firework boost is about 32) |
 | **Ability: Ender Pearl** | Press **R** to throw an ender pearl, exactly like the item, no pearl needed. 3 second cooldown. |
 | **Secondary ability: Dragon's Breath** | Press **G** to surround yourself with the Ender Dragon's breath: a cloud that starts 3 blocks wide, spreads to 7 over 30 seconds, and deals 6 damage a second to everything inside except you and your pets, undead mobs included. It can't be bottled. 30 second cooldown. |
 
@@ -234,14 +236,14 @@ See each crown's section above for details.
 |---|---|---|---|---|
 | Golden Crown | None (base crown) | None | None | Gold Ingot |
 | Under Crown | Haste II, Night Vision, Hero of the Village, Fortune III | Vein Miner (toggle) | Ore Sense (60s) | Golden Crown |
-| Crown of Poseidon | Water Breathing, Dolphin's Grace, Night Vision, +50% damage in water | Riptide (4.5s) | Lightning Strike, aimed (20s) | Heart of the Sea |
+| Crown of Poseidon | Water Breathing, Dolphin's Grace, Night Vision, Regeneration in water, +50% damage in water | Riptide (4.5s) | Lightning Strike, aimed (20s) | Heart of the Sea |
 | Crown of Nether | Fire Resistance, Fire Aspect, Flame | Fire Charge (2s) | Blaze Flight, 60s of flight (2 min) | Nether Star |
 | Crown of Darkness | Night Vision, Darkness on hit | Sonic Boom, aimed (15s) | Darkness Pulse (30s) | Sculk Cord |
 | Crown of Sun | Swiftness II on sand and terracotta | Wind Charge (3 charges, 6s each) | Sun Cycle (20s) | Ankh Charm |
 | Crown of Wither | Wither immunity, Wither on hit | Wither Skull (3 charges, 6s each, 3s between shots) | Wither Flight, 60s of flight (2 min) | Wither Skeleton Skull |
 | Crown of Winter | Freeze on hit, freeze immunity, Swiftness and grip on snow and ice | Frost Walker (toggle) | Icicle Drop, 5 icicles, aimed (6s) | Powder Snow Bucket |
 | Crown of Iron | +50% bow and crossbow damage | Arrow Volley, aimed (10s) | Glowing Arrows (toggle) | Totem of Undying |
-| Crown of Void | Teleport when hit, Swiftness on End blocks | Ender Pearl (3s) | Dragon's Breath (30s) | Dragon Egg |
+| Crown of Void | Teleport when hit, Swiftness on End blocks, faster elytra flight | Ender Pearl (3s) | Dragon's Breath (30s) | Dragon Egg |
 | Crown of Chaos | Fire and lava immunity, Wither immunity, freeze immunity, teleport when hit | The pain of death (10s) | Death's door (30s) | Incomplete Crown of Chaos + Soul of Chaos (not craftable yet) |
 
 Times in brackets are cooldowns. "Aimed" abilities hit whatever you're looking at.
@@ -301,8 +303,9 @@ player-style boss wearing the Crown of Chaos, in a storm of lightning. Music ("E
 on repeat for everyone in the arena until he is defeated.
 
 - He floats up, invulnerable, and calls four waves of units that attack you and your army units (and never
-  each other). Per player: 5 Strays and 5 Husks; then 1 Ravager, 2 Evokers and 3 Vindicators; then
+  each other). Per player (counted when the altar is lit, so a player dying or arriving mid-fight doesn't change later waves): 5 Strays and 5 Husks; then 1 Ravager, 2 Evokers and 3 Vindicators; then
   4 Guardians and 3 Drowned; then one Warden with 25% of its health.
+- A player who arrives after the altar was lit is counted from then on: the wave in progress gets their share of extra units (or Warden health) and later waves are sized for them too.
 - The first wave comes 15 seconds after he rises, so you can ready yourself and back away from the altar;
   when a wave is cleared a banner says so and the next one follows 6 seconds later.
 - When the last wave falls he draws an enchanted-looking diamond sword (for show; it adds no damage), flies down onto the altar and fights you with melee and, every 12 seconds, a
@@ -358,7 +361,7 @@ Territory" (or "Your Faction's Territory") underneath. Leaving shows a short not
 
 ### Commander's Table and units
 
-The Commander's Table makes army units. Put a crown in its crown slot to see the units it commands, pick
+The Commander's Table makes army units. Wear a crown, or put one in its crown slot, to see the units it commands, pick
 one, and put the unit's two cost items in the cost slots (either order). Taking the unit item uses up the
 costs; the crown stays. Shift-click makes as many as the costs allow. Netherite crowns command the same units
 as their crown. Like a crafting table it keeps no items (closing it gives them back) and turns to face you

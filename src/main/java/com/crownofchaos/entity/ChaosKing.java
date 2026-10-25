@@ -141,6 +141,8 @@ public final class ChaosKing extends Monster {
 	private int stageTicks;
 	/** The wave called most recently, 0 before the first. */
 	private int wave;
+	/** How many players were in the arena when the altar was lit; every wave is sized by this, so a player dying (or arriving) mid-fight doesn't change the next one. 0 until then. */
+	private int fightPlayers;
 	/** Ticks since the last wave was cleared, while waiting to call the next. */
 	private int pauseTicks = -1;
 	private double hoverY = Double.NaN;
@@ -275,6 +277,7 @@ public final class ChaosKing extends Monster {
 	/** He appears in lightning, says something and floats up. Invulnerable from here until the last wave is dead. */
 	private void tickRising(ServerLevel level) {
 		if (this.stageTicks == 1) {
+			this.fightPlayers = Math.max(1, this.arenaPlayers(level).size());
 			this.setNoAi(true);
 			this.setNoGravity(true);
 			this.setInvulnerable(true);
@@ -306,6 +309,7 @@ public final class ChaosKing extends Monster {
 		this.faceNearestPlayer(level);
 		if (this.stageTicks % 20 == 0) {
 			this.keepWardensUp(level);
+			this.catchUpLatecomers(level);
 		}
 
 		if (this.wave > 0 && this.minions(level).isEmpty()) {
@@ -421,7 +425,10 @@ public final class ChaosKing extends Monster {
 
 	private void callWave(ServerLevel level, int number) {
 		List<ServerPlayer> players = this.arenaPlayers(level);
-		int count = Math.max(1, players.size());
+		if (this.fightPlayers <= 0) {
+			this.fightPlayers = Math.max(1, players.size());
+		}
+		int count = this.fightPlayers;
 		String title = switch (number) {
 			case 1 -> "THE DEAD RISE";
 			case 2 -> "TEAR THEM APART";
@@ -431,6 +438,25 @@ public final class ChaosKing extends Monster {
 		this.say(level, title, "Wave " + number + " of 4");
 		level.playSound(null, this.blockPosition(), SoundEvents.ENDER_DRAGON_GROWL, SoundSource.HOSTILE, 2.0F, 0.6F);
 
+		if (number < 4) {
+			this.spawnWaveUnits(level, number, count);
+		} else {
+			for (Mob mob : this.spawnMinions(level, EntityTypes.WARDEN, 1, 0)) {
+				// A quarter of a Warden's health for each player in the fight.
+				double health = mob.getMaxHealth() * WARDEN_HEALTH_PER_PLAYER * count;
+				mob.getAttribute(Attributes.MAX_HEALTH).setBaseValue(health);
+				mob.setHealth((float) health);
+				if (mob instanceof Warden warden) {
+					for (ServerPlayer player : players) {
+						warden.increaseAngerAt(player, 150, false);
+					}
+				}
+			}
+		}
+	}
+
+	/** The units of waves 1 to 3 for {@code count} players' worth. */
+	private void spawnWaveUnits(ServerLevel level, int number, int count) {
 		switch (number) {
 			case 1 -> {
 				this.spawnMinions(level, EntityTypes.STRAY, 5 * count, 0);
@@ -441,21 +467,41 @@ public final class ChaosKing extends Monster {
 				this.spawnMinions(level, EntityTypes.EVOKER, 2 * count, 0);
 				this.spawnMinions(level, EntityTypes.VINDICATOR, 3 * count, 0);
 			}
-			case 3 -> {
+			default -> {
 				this.spawnMinions(level, EntityTypes.GUARDIAN, 4 * count, 2);
 				this.spawnMinions(level, EntityTypes.DROWNED, 3 * count, 0);
 			}
-			default -> {
-				for (Mob mob : this.spawnMinions(level, EntityTypes.WARDEN, 1, 0)) {
-					// A quarter of a Warden's health for each player in the arena.
-					double health = mob.getMaxHealth() * WARDEN_HEALTH_PER_PLAYER * count;
-					mob.getAttribute(Attributes.MAX_HEALTH).setBaseValue(health);
-					mob.setHealth((float) health);
-					if (mob instanceof Warden warden) {
-						for (ServerPlayer player : players) {
-							warden.increaseAngerAt(player, 150, false);
-						}
-					}
+		}
+	}
+
+	/**
+	 * Players who arrive after the altar was lit: the fight counts them from now on, and the wave in
+	 * progress gets their share of units (or, for the Warden, their share of its health) added.
+	 */
+	private void catchUpLatecomers(ServerLevel level) {
+		List<ServerPlayer> players = this.arenaPlayers(level);
+		int extra = players.size() - this.fightPlayers;
+		if (this.fightPlayers <= 0 || extra <= 0) {
+			return;
+		}
+		int before = this.fightPlayers;
+		this.fightPlayers = players.size();
+		List<Mob> alive = this.minions(level);
+		if (this.wave < 1 || alive.isEmpty()) {
+			return;
+		}
+		this.say(level, "MORE FOOLS ARRIVE", "My legion grows to meet you.");
+		if (this.wave < 4) {
+			this.spawnWaveUnits(level, this.wave, extra);
+			return;
+		}
+		for (Mob mob : alive) {
+			if (mob instanceof Warden warden) {
+				double share = mob.getMaxHealth() / before * extra;
+				warden.getAttribute(Attributes.MAX_HEALTH).setBaseValue(mob.getMaxHealth() + share);
+				warden.heal((float) share);
+				for (ServerPlayer player : players) {
+					warden.increaseAngerAt(player, 150, false);
 				}
 			}
 		}
@@ -525,6 +571,7 @@ public final class ChaosKing extends Monster {
 		output.putInt("Stage", this.stage.ordinal());
 		output.putInt("StageTicks", this.stageTicks);
 		output.putInt("Wave", this.wave);
+		output.putInt("FightPlayers", this.fightPlayers);
 		output.putDouble("HoverY", Double.isNaN(this.hoverY) ? this.getY() : this.hoverY);
 		output.putInt("AbilityCooldown", this.abilityCooldown);
 	}
@@ -535,6 +582,7 @@ public final class ChaosKing extends Monster {
 		this.stage = Stage.values()[Mth.clamp(input.getIntOr("Stage", 0), 0, Stage.values().length - 1)];
 		this.stageTicks = input.getIntOr("StageTicks", 0);
 		this.wave = input.getIntOr("Wave", 0);
+		this.fightPlayers = input.getIntOr("FightPlayers", 0);
 		this.hoverY = input.getDoubleOr("HoverY", this.getY());
 		this.abilityCooldown = input.getIntOr("AbilityCooldown", FIRST_ABILITY_TICKS);
 		if (this.hasCustomName()) {

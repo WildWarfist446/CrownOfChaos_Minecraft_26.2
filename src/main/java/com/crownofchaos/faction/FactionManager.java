@@ -78,6 +78,10 @@ public final class FactionManager {
 	/** The faction territory each player was last in (null for none). Only touched on the server thread. */
 	private static final Map<UUID, UUID> LAST_TERRITORY = new HashMap<>();
 
+	/** Players who just joined, and the tick at which they are sent all the factions a second time, in case the first was missed. */
+	private static final Map<UUID, Integer> RESYNC_AT = new HashMap<>();
+	private static final int RESYNC_DELAY_TICKS = 40;
+
 	private static @Nullable MinecraftServer server;
 
 	private FactionManager() {
@@ -96,6 +100,7 @@ public final class FactionManager {
 		ServerLifecycleEvents.SERVER_STOPPED.register(stopped -> {
 			server = null;
 			LAST_TERRITORY.clear();
+			RESYNC_AT.clear();
 		});
 
 		ServerPlayConnectionEvents.JOIN.register((handler, sender, joined) -> {
@@ -112,8 +117,13 @@ public final class FactionManager {
 			}
 			data.factionOf(player.getUUID()).ifPresent(FactionManager::updateTeam);
 			sendAll();
+			// Again a moment later, once the player's game has surely finished joining.
+			RESYNC_AT.put(player.getUUID(), joined.getTickCount() + RESYNC_DELAY_TICKS);
 		});
-		ServerPlayConnectionEvents.DISCONNECT.register((handler, stopped) -> LAST_TERRITORY.remove(handler.getPlayer().getUUID()));
+		ServerPlayConnectionEvents.DISCONNECT.register((handler, stopped) -> {
+			LAST_TERRITORY.remove(handler.getPlayer().getUUID());
+			RESYNC_AT.remove(handler.getPlayer().getUUID());
+		});
 
 		PlayerBlockBreakEvents.BEFORE.register((level, player, pos, state, blockEntity) -> {
 			if (!(level instanceof ServerLevel serverLevel) || !(player instanceof ServerPlayer serverPlayer)) {
@@ -131,6 +141,18 @@ public final class FactionManager {
 
 		ServerTickEvents.END_SERVER_TICK.register(ticking -> {
 			int tick = ticking.getTickCount();
+			if (!RESYNC_AT.isEmpty()) {
+				RESYNC_AT.entrySet().removeIf(entry -> {
+					if (tick < entry.getValue()) {
+						return false;
+					}
+					ServerPlayer joinedPlayer = ticking.getPlayerList().getPlayer(entry.getKey());
+					if (joinedPlayer != null) {
+						sendTo(joinedPlayer);
+					}
+					return true;
+				});
+			}
 			if (tick % TERRITORY_CHECK_TICKS == 0) {
 				checkTerritories(ticking);
 			}
@@ -143,6 +165,10 @@ public final class FactionManager {
 	// Actions from the faction menu
 
 	private static void handle(ServerPlayer player, FactionActionPayload payload) {
+		if (payload.action() == FactionActionPayload.Action.SYNC) {
+			sendTo(player);
+			return;
+		}
 		MinecraftServer server = player.level().getServer();
 		FactionData data = FactionData.get(server);
 		Optional<Faction> mine = data.factionOf(player.getUUID());
@@ -500,13 +526,27 @@ public final class FactionManager {
 		if (server == null) {
 			return;
 		}
-		FactionSyncPayload payload = new FactionSyncPayload(
-				FactionData.get(server).all().stream().map(Faction::withoutFlagPositions).toList());
+		FactionSyncPayload payload = syncPayload();
 		for (ServerPlayer player : server.getPlayerList().getPlayers()) {
-			// Players without the mod can't receive it.
-			if (ServerPlayNetworking.canSend(player, FactionSyncPayload.TYPE)) {
-				ServerPlayNetworking.send(player, payload);
-			}
+			send(player, payload);
+		}
+	}
+
+	/** Sends one player all the factions again (asked for by their game, and sent shortly after they join). */
+	private static void sendTo(ServerPlayer player) {
+		if (server != null) {
+			send(player, syncPayload());
+		}
+	}
+
+	private static FactionSyncPayload syncPayload() {
+		return new FactionSyncPayload(FactionData.get(server).all().stream().map(Faction::withoutFlagPositions).toList());
+	}
+
+	private static void send(ServerPlayer player, FactionSyncPayload payload) {
+		// Players without the mod can't receive it.
+		if (ServerPlayNetworking.canSend(player, FactionSyncPayload.TYPE)) {
+			ServerPlayNetworking.send(player, payload);
 		}
 	}
 

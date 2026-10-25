@@ -1,6 +1,7 @@
 package com.crownofchaos.client;
 
 import com.crownofchaos.CrownOfChaos;
+import com.crownofchaos.client.faction.FactionClientState;
 import com.crownofchaos.client.faction.FactionScreen;
 import com.mojang.blaze3d.platform.InputConstants;
 
@@ -28,6 +29,8 @@ public final class FactionKeybind {
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			while (KEY.consumeClick()) {
 				if (client.player != null && client.gui.screen() == null) {
+					// Refresh first: the menu updates itself when the answer arrives.
+					FactionClientState.requestSync();
 					client.gui.setScreen(new FactionScreen());
 				}
 			}

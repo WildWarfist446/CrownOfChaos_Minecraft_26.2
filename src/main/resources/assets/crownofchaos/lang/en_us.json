@@ -232,7 +232,7 @@
 
   "gui.crownofchaos.commander_table.crown": "Crown",
   "gui.crownofchaos.commander_table.cost": "Cost",
-  "gui.crownofchaos.commander_table.place_crown": "Place a crown to see the units it commands",
+  "gui.crownofchaos.commander_table.place_crown": "Wear or place a crown to see the units it commands",
   "gui.crownofchaos.commander_table.no_units": "This crown commands no units",
   "gui.crownofchaos.commander_table.pick_unit": "Pick a unit to make",
   "gui.crownofchaos.commander_table.add_cost": "Add the cost items",
