@@ -87,4 +87,4 @@ One player:
 
 ## Housekeeping
 
-- [ ] The version number (gradle.properties) stays 1.0.0 until the first official release (Warfist, 25 October 2026), which waits for a couple more ideas; don't bump it before then
+- [ ] The version number (gradle.properties) stays 1.0.0 until the first official release (Warfist, 25 October 2026); don't bump it before then. The idea that release was waiting on was the lore book, which is done (26 October 2026)
