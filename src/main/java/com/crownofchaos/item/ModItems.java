@@ -165,6 +165,10 @@ public final class ModItems {
 	public static final Item FACTION_FLAG = register("faction_flag", FactionFlagItem::new, new Item.Properties()
 			.stacksTo(16));
 
+	/** The lore book every player starts with, and a Golden Crown and a book make another (see {@link com.crownofchaos.lore.LoreBook}). */
+	public static final Item LORE_BOOK = register("lore_book", LoreBookItem::new, new Item.Properties()
+			.stacksTo(1).rarity(Rarity.EPIC));
+
 	/** The mod's own creative tab, holding every Crown of Chaos item. */
 	public static final ResourceKey<CreativeModeTab> CREATIVE_TAB =
 			ResourceKey.create(Registries.CREATIVE_MODE_TAB, CrownOfChaos.id("crown_of_chaos"));
@@ -329,6 +333,7 @@ public final class ModItems {
 					output.accept(INCOMPLETE_CROWN_OF_CHAOS);
 					output.accept(SOUL_OF_CHAOS);
 					output.accept(CHAOS_SMITHING_TEMPLATE);
+					output.accept(LORE_BOOK);
 					output.accept(FACTION_COIN);
 					output.accept(FACTION_FLAG);
 					output.accept(ModBlocks.COMMANDER_TABLE);

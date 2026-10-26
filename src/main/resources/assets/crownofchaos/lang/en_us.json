@@ -316,5 +316,19 @@
   "advancements.crownofchaos.chaos_smithing_template.title": "Glitch in the Forge",
   "advancements.crownofchaos.chaos_smithing_template.description": "Turn a Netherite Upgrade into a Chaos Upgrade in the soul fire",
   "advancements.crownofchaos.crown_of_chaos.title": "Crowned in Chaos",
-  "advancements.crownofchaos.crown_of_chaos.description": "Smith the Crown of Chaos"
+  "advancements.crownofchaos.crown_of_chaos.description": "Smith the Crown of Chaos",
+  "item.crownofchaos.lore_book": "A Warning from a Former King",
+  "lore.crownofchaos.title": "A Warning from a Former King",
+  "lore.crownofchaos.page_counter": "Page %s of %s",
+  "lore.crownofchaos.page.1": "If you are reading this, the crown has already found you.\nI will not tell you to stop. No one ever stopped.\nI can only tell you what it cost me, and what I learned before the [[silence]].",
+  "lore.crownofchaos.page.2": "Nine crowns, and one beneath them all.\nEach lends the strength of what it was made from. Wear it on your head. It answers when you ask, and sometimes asks back.\nNever ask what it [[wants]].\nThe pages ahead are static until you have earned them. Grow stronger, and I can tell you more.",
+  "lore.crownofchaos.page.3": "Power is borrowed. Every crown took something back: sleep first, then the faces of my friends, then my own [[name]].\nThey say he was removed.\nRemoval is not the same as gone.",
+  "lore.crownofchaos.page.4": "Gold is only the beginning. Each crown hungers for something the world hides: a screech from the deep, a charm from the sand, a heart from the sea, an egg from an ending.\nEvery crown remembers where it was [[born]].",
+  "lore.crownofchaos.page.5": "Nine on a table, and not one of them is a crown any more.\nLay them all down together and let them be a single thing that does not work.\nA crown that is only a [[question]].",
+  "lore.crownofchaos.page.6": "Now you need a door that does not open.\nThe Nether's own gate, in the world you were born in. Do not walk through. Give it the one record that was never meant to finish: the one with the eleven on its label.\nThe door will remember [[wrongly]]. Wrong is the way.",
+  "lore.crownofchaos.page.7": "You feel him now, don't you?\nGold laid in a ring beneath. A heart of red stone. Four small torches in the dark. He has always been drawn to this shape.\nPut a flame to the heart, and he will come to his own [[fire]].",
+  "lore.crownofchaos.page.8": "He does not come alone.\nFour times he will call what he has buried. Do not fight alone. Do not stand where he is looking.\nAnd when the last is gone, he will come down to [[finish]] you.",
+  "lore.crownofchaos.page.9": "The flame that rose is not the one you lit. It has no hunger for wood or flesh, only for what has been spent.\nOffer it the pattern that made your armour heavier, the one that remembers netherite, and let it teach the pattern something [[new]].",
+  "lore.crownofchaos.page.10": "Three things for the last anvil: the empty crown, the thing he left behind in the fire, and the template that learned a new name.\nSmith them as you would smith netherite.\nBe sure you want what waits on the other [[side]].",
+  "lore.crownofchaos.page.11": "You did it. I hoped you wouldn't. I hoped you would.\nWear it carefully. It remembers every head before yours.\nIf you ever hear the fog humming, take it off.\n— a former [[bearer]]"
 }

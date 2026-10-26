@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "crownofchaos:golden_crown",
+    "minecraft:book"
+  ],
+  "result": {
+    "id": "crownofchaos:lore_book"
+  }
+}

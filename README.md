@@ -12,7 +12,7 @@ is worn. Every magical crown can also be upgraded to netherite.
 > hand by the mod's creators.
 
 **Contents:** [Crowns](#crowns) · [Netherite crowns](#netherite-crowns) ·
-[Abilities](#abilities) · [Materials](#materials) · [The Crown of Chaos](#the-crown-of-chaos) · [Advancements](#advancements) ·
+[Abilities](#abilities) · [Materials](#materials) · [The Crown of Chaos](#the-crown-of-chaos) · [Advancements](#advancements) · [The lore book](#the-lore-book) ·
 [Factions (beta)](#factions-beta) · [Changes to vanilla](#changes-to-vanilla) ·
 [Installation](#installation) · [Finding the items](#finding-the-items) ·
 [Development](#development) · [Credits](#credits)
@@ -338,6 +338,15 @@ the item first enters your inventory (the last four also need their step):
   **The King Falls** (defeat the Chaos King), **A Piece of Chaos** (Soul of Chaos), **Glitch in the Forge**
   (Chaos Upgrade) and **Crowned in Chaos**, the challenge for smithing the finished crown.
 
+## The lore book
+
+You are given **A Warning from a Former King** the first time you have a Golden Crown: a book written by
+someone who wore the crowns before you. It hints, in riddles about the old Herobrine stories, at the secret steps on the way to the
+Crown of Chaos (what to do with the Nether portal, the altar and the soul fire), without giving them away.
+Use it to read it. Its pages are scrambled until you have earned them: each page after the first three
+unlocks with the advancement for the step before the secret it hints at. Lost it? Craft another from a
+**Golden Crown and a Book**.
+
 ## Factions & Units (beta)
 
 > **Beta:** the faction system's main features are complete: factions, the faction menu,
@@ -521,6 +530,7 @@ Combat tab and materials in the Ingredients tab). With cheats on, they can also 
 /give @s crownofchaos:ankh_charm
 /give @s crownofchaos:incomplete_crown_of_chaos
 /give @s crownofchaos:faction_flag   (belongs to whoever places it first)
+/give @s crownofchaos:lore_book
 /give @s crownofchaos:faction_coin
 /give @s crownofchaos:commander_table
 /give @s crownofchaos:pillager_unit   (any unit's mob name + _unit)

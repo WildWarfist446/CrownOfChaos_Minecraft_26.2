@@ -41,12 +41,12 @@ import net.minecraft.world.item.DyeColor;
  */
 public class FactionScreen extends Screen {
 	// Colors (ARGB).
-	static final int PANEL_OUTER = 0xF0031F28;
-	static final int PANEL_INNER = 0xF005404F;
-	static final int ACCENT = 0xFF35E9F5;
-	static final int ACCENT_DARK = 0xFF079093;
-	static final int TEXT = 0xFFDFFBFD;
-	static final int TEXT_DIM = 0xFF8FCBD1;
+	public static final int PANEL_OUTER = 0xF0031F28;
+	public static final int PANEL_INNER = 0xF005404F;
+	public static final int ACCENT = 0xFF35E9F5;
+	public static final int ACCENT_DARK = 0xFF079093;
+	public static final int TEXT = 0xFFDFFBFD;
+	public static final int TEXT_DIM = 0xFF8FCBD1;
 	static final int GREEN = 0xFF6FD66F;
 	static final int RED = 0xFFE05A4F;
 	static final int GRAY = 0xFFAAAAAA;

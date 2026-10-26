@@ -29,6 +29,7 @@ Built and in the game:
 - [x] Secondary ability "Death's door": Darkness Pulse lasting 300% longer
 - [x] Can command every unit type
 - [x] Art: 3D model
+- [x] The lore book "A Warning from a Former King": given the first time you have a Golden Crown, pages unlock with advancements, craftable from a Golden Crown and a book
 - [x] The advancement tab "The Crown of Chaos": the nine crowns, all of them, netherite crowns, and the path to the finished crown
 
 Still open:

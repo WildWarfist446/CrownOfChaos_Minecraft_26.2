@@ -9,6 +9,7 @@ import com.crownofchaos.faction.FactionManager;
 import com.crownofchaos.item.ModComponents;
 import com.crownofchaos.block.ModBlocks;
 import com.crownofchaos.menu.ModMenus;
+import com.crownofchaos.lore.LoreBook;
 import com.crownofchaos.sound.ModSounds;
 import com.crownofchaos.unit.ModUnits;
 import com.crownofchaos.unit.UnitCommands;
@@ -50,6 +51,7 @@ public class CrownOfChaos implements ModInitializer {
 		UnitManager.initialize();
 		UnitCommands.initialize();
 		ChaosArena.initialize();
+		LoreBook.initialize();
 	}
 
 	public static Identifier id(String path) {
