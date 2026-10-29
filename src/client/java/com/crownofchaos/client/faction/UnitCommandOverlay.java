@@ -21,7 +21,7 @@ import net.minecraft.util.FormattedCharSequence;
  * The unit command menu (default key V): a slim, see-through row of orders above the hotbar and
  * its status bars, drawn as part of the HUD rather than as a screen. The game keeps control of the mouse,
  * camera and movement while it's open, so you can keep fighting. Each order has a number key
- * (1-7), which gives it instead of switching the hotbar (see {@link UnitClient}); the scroll
+ * (1-8), which gives it instead of switching the hotbar (see {@link UnitClient}); the scroll
  * wheel still changes the held item. It stays open until you press V again.
  * Orders go to the selected units, or with none selected, every unit nearby you can command.
  */
@@ -48,7 +48,7 @@ public final class UnitCommandOverlay implements HudElement {
 	private static final int RED = 0xFFE05A4F;
 	private static final int GREEN = 0xFF6FD66F;
 
-	/** The orders in menu order; the number key for each is its position (1-7). */
+	/** The orders in menu order; the number key for each is its position (1-8; Hunt came last so the older keys stayed where they were). */
 	private static final List<Order> ORDERS = List.of(
 			new Order("follow", FactionScreen.TEXT, Command.FOLLOW),
 			new Order("sentry", FactionScreen.TEXT, Command.SENTRY),
@@ -56,7 +56,8 @@ public final class UnitCommandOverlay implements HudElement {
 			new Order("free", FactionScreen.TEXT, Command.FREE),
 			new Order("reclaim", FactionScreen.ACCENT, Command.RECLAIM),
 			new Order("select_nearby", GREEN, Command.SELECT_NEARBY),
-			new Order("clear_selection", FactionScreen.TEXT, Command.CLEAR_SELECTION));
+			new Order("clear_selection", FactionScreen.TEXT, Command.CLEAR_SELECTION),
+			new Order("hunt", FactionScreen.TEXT, Command.HUNT));
 
 	private record Order(String key, int color, Command command) {
 	}

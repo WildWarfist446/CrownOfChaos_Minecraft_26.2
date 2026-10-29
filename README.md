@@ -441,11 +441,15 @@ faction (you must be in one). Units:
 - are **passive** toward players and other units, and never attack their own faction, except:
   - **wild hostile mobs** (zombies, skeletons, creepers...) attacking you or your faction's units, or, when
     told to **Attack**, any within 24 blocks;
-  - any **mob you attack**, for 10 seconds after your last hit (not players or your pets), after which they go
-    back to following, standing sentry or wandering;
+  - anything **you attack** (a mob, a player or a unit that isn't Allowed, never your pets), for 10 seconds after
+    your last hit, after which they go back to following, standing sentry or wandering;
   - inside your territory, players and units of **Targeted** factions, and with **red alert** on, everyone
     not **Allowed** (unfactioned players included);
   - anywhere, factions and players you're at war with (see **War**).
+
+Players and units your units would fight (the war enemies, and the Targeted or not-Allowed ones in your
+territory) are **enemy combatants**. Whatever else a unit is fighting, such as a wild mob, it drops for an
+enemy combatant it can see, or for what you are attacking.
 
 **Commanding units:** you command your faction's units whose crown you're wearing (the Crown of Iron for
 Pillagers, Vindicators, Ravagers and Evokers).
@@ -456,11 +460,14 @@ Pillagers, Vindicators, Ravagers and Evokers).
 - **Unit Commands** key (default **V**) toggles the command menu: a slim see-through row above your hotbar and
   status bars, with a status line (and a "Sneak + Click to select one unit" hint when you have nothing to
   command). It doesn't take over the mouse, camera or movement, and stays open after an order until you press
-  V again. Each order has a number key (1-7), so V then 3 orders an attack without aiming:
+  V again. Each order has a number key (1-8), so V then 3 orders an attack without aiming:
   - **Follow Me:** they follow you, teleporting if they fall 24 blocks behind, and still fight mobs that
     attack you or your units. They come back if they end up more than 40 blocks away.
-  - **Sentry:** they guard where they stand, move to fight any hostile mob or enemy that enters their aggro
-    range (chasing at most 16 blocks from their post), then walk back.
+  - **Sentry:** they guard where they stand. An enemy combatant that comes into their aggro range is chased for
+    as long as it stays in your territory, however far, until it dies or leaves; wild mobs are chased at most
+    16 blocks from the post. Then they walk back to the post.
+  - **Hunt** (key 8): they hold a post like a sentry, but go after enemy combatants anywhere in your territory,
+    even far beyond their aggro range and out of sight, until they die or leave it, then walk back to the post.
   - **Attack:** they hunt enemies within 24 blocks, anywhere: players and units of every faction you
     haven't set to Allowed. Overrides sentry and following.
   - **Free:** no orders; wander, passive except for the rules above.

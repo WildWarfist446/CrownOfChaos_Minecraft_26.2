@@ -16,7 +16,13 @@ public enum UnitOrder implements StringRepresentable {
 	/** Follows its leader (the player who gave the order). */
 	FOLLOW("follow"),
 	/** Hunts enemies nearby: other factions' players and units, wherever they are. */
-	ATTACK("attack");
+	ATTACK("attack"),
+	/**
+	 * Holds its post like a sentry, but goes after enemy combatants (units and players it is at war with, or
+	 * that its territory rules say to fight) anywhere in its faction's territory, however far, until they die
+	 * or leave it, then walks back to its post.
+	 */
+	HUNT("hunt");
 
 	public static final Codec<UnitOrder> CODEC = StringRepresentable.fromEnum(UnitOrder::values);
 	public static final StreamCodec<ByteBuf, UnitOrder> STREAM_CODEC = ByteBufCodecs.VAR_INT.map(i -> values()[i], UnitOrder::ordinal);

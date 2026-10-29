@@ -18,6 +18,7 @@ import net.fabricmc.fabric.api.attachment.v1.AttachmentType;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -25,6 +26,9 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.hoglin.Hoglin;
 import net.minecraft.world.entity.monster.piglin.AbstractPiglin;
@@ -57,6 +61,10 @@ import net.minecraft.world.phys.Vec3;
  *     to Targeted, or, while it's on red alert, of any faction it hasn't set to Allowed
  *     (including players with no faction).
  * </ul>
+ * Those players and units are the faction's <i>enemy combatants</i> (see {@link #isEnemyCombatant}). A sentry
+ * chases them for as long as they are in the faction's territory, a hunter ({@link UnitOrder#HUNT}) also seeks
+ * them out anywhere in it, and every unit prefers them, and whatever its owner attacks, to a wild mob (see
+ * {@link UnitGoals}).
  * Units never fight their own faction. The rule is applied through {@code Entity.isAlliedTo},
  * which every vanilla mob checks before targeting anything (see
  * {@link com.crownofchaos.mixin.EntityAlliesMixin}).
@@ -104,6 +112,9 @@ public final class UnitManager {
 
 	/** A following unit stops fighting and rejoins its leader once it is this many blocks from them. */
 	public static final double FOLLOW_FIGHT_RANGE = 40.0;
+	/** A hunter's follow range (how far it notices and chases enemies) grows by this much. */
+	private static final double HUNT_FOLLOW_RANGE_BONUS = 100.0;
+	private static final Identifier HUNT_RANGE_MODIFIER = CrownOfChaos.id("hunt_range");
 	/** A mob the owner hit this recently (10 seconds) is still the owner's target, so their units go for it. */
 	private static final int OWNER_ATTACK_TICKS = 200;
 	/** A mob that hurt the owner this recently (5 seconds) still counts as attacking them. */
@@ -203,6 +214,7 @@ public final class UnitManager {
 		goals.crownofchaos$goalSelector().addGoal(0, new UnitGoals.WatchGoal(mob));
 		goals.crownofchaos$goalSelector().addGoal(1, new UnitGoals.OrdersGoal(mob));
 		UnitGoals.keepWardenFromDigging(mob);
+		refreshOrderEffects(mob);
 	}
 
 	/** When a faction changes color, recolors its units in loaded chunks (the rest catch up when they load). */
@@ -241,10 +253,19 @@ public final class UnitManager {
 		if (faction.id().equals(targetFaction)) {
 			return false;
 		}
-		// A sentry doesn't chase anyone too far from its post.
-		if (data.order() == UnitOrder.SENTRY && data.post().isPresent()
-				&& target.position().distanceTo(Vec3.atBottomCenterOf(data.post().get())) > UnitGoals.SENTRY_LEASH) {
-			return false;
+		boolean combatant = isEnemyCombatant(faction, factions, target, targetFaction);
+		// A sentry or hunter holds its post. It chases enemy combatants for as long as they stay in its faction's
+		// territory (however far from the post that is, if the post is in it too), and anything else only up to
+		// SENTRY_LEASH from the post. Past that it gives up and goes back.
+		if ((data.order() == UnitOrder.SENTRY || data.order() == UnitOrder.HUNT) && data.post().isPresent()) {
+			Vec3 post = Vec3.atBottomCenterOf(data.post().get());
+			if (combatant && isInTerritory(factions, faction, unit.level().dimension(), post.x, post.z)) {
+				if (!isInTerritory(factions, faction, target.level().dimension(), target.getX(), target.getZ())) {
+					return false;
+				}
+			} else if (target.position().distanceTo(post) > UnitGoals.SENTRY_LEASH) {
+				return false;
+			}
 		}
 		if (atWar(faction, target, targetFaction)) {
 			return true;
@@ -253,11 +274,12 @@ public final class UnitManager {
 		if (data.order() == UnitOrder.FOLLOW && isFarFromLeader(unit, data)) {
 			return false;
 		}
-		// Wild hostile mobs (not other units, even hostile-type ones): fought by a sentry (inside its leash, checked
-		// above) when they come into its aggro range, when told to attack, or, whatever the order (following
+		// Wild hostile mobs (not other units, even hostile-type ones): fought by a sentry or hunter (inside its leash,
+		// checked above) when they come into its aggro range, when told to attack, or, whatever the order (following
 		// included), when they're after the owner or their faction's units.
 		if (target instanceof Enemy && !target.hasAttached(UNIT)
-				&& (data.order() == UnitOrder.SENTRY || data.order() == UnitOrder.ATTACK && unit.distanceTo(target) <= ATTACK_RANGE
+				&& (data.order() == UnitOrder.SENTRY || data.order() == UnitOrder.HUNT
+						|| data.order() == UnitOrder.ATTACK && unit.distanceTo(target) <= ATTACK_RANGE
 						|| isAggroOnUs(unit, data, target))) {
 			return true;
 		}
@@ -273,19 +295,69 @@ public final class UnitManager {
 			return true;
 		}
 		// Otherwise only inside its own territory, and only players and units.
-		Optional<Faction> territory = factions.territoryAt(target.level().dimension(), target.getX(), target.getZ());
-		if (!playerOrUnit || territory.isEmpty() || territory.get() != faction) {
-			return false;
-		}
-		return stance == FactionStance.TARGETED || faction.redAlert() && stance != FactionStance.ALLOWED;
+		return combatant;
+	}
+
+	private static boolean isInTerritory(FactionData factions, Faction faction, net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> dimension, double x, double z) {
+		Optional<Faction> territory = factions.territoryAt(dimension, x, z);
+		return territory.isPresent() && territory.get() == faction;
 	}
 
 	/**
-	 * Whether the mob is what the owner attacked within the last {@link #OWNER_ATTACK_TICKS}.
-	 * Only mobs, not players (those follow the stances and war), and never the owner's own pets.
+	 * Whether the target is an enemy combatant of the faction: a player or a unit (never a wild mob) that the faction
+	 * is at war with, or that is in its territory while its stance is Targeted, or, on red alert, anything that isn't
+	 * Allowed. Units prefer these to anything else (see {@link UnitGoals}), and hunters seek them out.
+	 */
+	private static boolean isEnemyCombatant(Faction faction, FactionData factions, LivingEntity target, @Nullable UUID targetFaction) {
+		if (!(target instanceof Player) && !target.hasAttached(UNIT) || faction.id().equals(targetFaction)) {
+			return false;
+		}
+		if (atWar(faction, target, targetFaction)) {
+			return true;
+		}
+		if (!isInTerritory(factions, faction, target.level().dimension(), target.getX(), target.getZ())) {
+			return false;
+		}
+		FactionStance stance = targetFaction == null ? FactionStance.NEUTRAL : faction.stanceToward(targetFaction);
+		return stance == FactionStance.TARGETED || faction.redAlert() && stance != FactionStance.ALLOWED;
+	}
+
+	/** Whether the target is an enemy combatant of the unit's faction (see above). Server side. */
+	public static boolean isEnemyCombatant(Entity unit, LivingEntity target) {
+		UnitData data = unit.getAttached(UNIT);
+		if (data == null || unit.level().getServer() == null) {
+			return false;
+		}
+		FactionData factions = FactionData.get(unit.level().getServer());
+		Faction faction = factions.get(data.faction());
+		return faction != null && isEnemyCombatant(faction, factions, target, factionOf(target, factions));
+	}
+
+	/** Whether the target is what the unit's owner attacked recently (see {@link #isOwnerTarget(Entity, UnitData, LivingEntity)}). */
+	public static boolean isOwnerTarget(Entity unit, LivingEntity target) {
+		UnitData data = unit.getAttached(UNIT);
+		return data != null && isOwnerTarget(unit, data, target);
+	}
+
+	/** Gives a hunter's follow range the extra it needs to chase far (and takes it away from everyone else). */
+	public static void refreshOrderEffects(Mob mob) {
+		AttributeInstance range = mob.getAttribute(Attributes.FOLLOW_RANGE);
+		UnitData data = mob.getAttached(UNIT);
+		if (range == null || data == null) {
+			return;
+		}
+		range.removeModifier(HUNT_RANGE_MODIFIER);
+		if (data.order() == UnitOrder.HUNT) {
+			range.addTransientModifier(new AttributeModifier(HUNT_RANGE_MODIFIER, HUNT_FOLLOW_RANGE_BONUS, AttributeModifier.Operation.ADD_VALUE));
+		}
+	}
+
+	/**
+	 * Whether the mob is what the owner attacked within the last {@link #OWNER_ATTACK_TICKS}: a mob, a player
+	 * or a unit (not their own faction's, and never the owner's own pets).
 	 */
 	private static boolean isOwnerTarget(Entity unit, UnitData data, LivingEntity target) {
-		if (!(target instanceof Mob) || target.hasAttached(UNIT) && target.getAttached(UNIT).faction().equals(data.faction())) {
+		if (!(target instanceof Mob) && !(target instanceof Player) || target.hasAttached(UNIT) && target.getAttached(UNIT).faction().equals(data.faction())) {
 			return false;
 		}
 		Player owner = unit.level().getPlayerByUUID(data.owner());

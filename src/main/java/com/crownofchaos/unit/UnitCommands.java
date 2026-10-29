@@ -145,7 +145,7 @@ public final class UnitCommands {
 			player.sendOverlayMessage(Component.translatable(added ? "message.crownofchaos.unit.selected" : "message.crownofchaos.unit.deselected",
 					mob.getName(), selected.size()).withStyle(INFO));
 			sendSelection(player);
-		} else if (data.order() == UnitOrder.SENTRY) {
+		} else if (data.order() == UnitOrder.SENTRY || data.order() == UnitOrder.HUNT) {
 			order(mob, UnitOrder.FREE, player);
 			player.sendOverlayMessage(Component.translatable("message.crownofchaos.unit.sentry_off", mob.getName()).withStyle(INFO));
 		} else {
@@ -201,6 +201,7 @@ public final class UnitCommands {
 		UnitOrder order = switch (command) {
 			case FOLLOW -> UnitOrder.FOLLOW;
 			case SENTRY -> UnitOrder.SENTRY;
+			case HUNT -> UnitOrder.HUNT;
 			case ATTACK -> UnitOrder.ATTACK;
 			case FREE -> UnitOrder.FREE;
 			case TOGGLE_FOLLOW -> units.stream().allMatch(mob -> isFollowing(mob, player)) ? UnitOrder.FREE : UnitOrder.FOLLOW;
@@ -214,15 +215,16 @@ public final class UnitCommands {
 		player.sendOverlayMessage(Component.translatable("message.crownofchaos.unit.ordered." + order.getSerializedName(), units.size()).withStyle(INFO));
 	}
 
-	/** Gives the unit an order: a sentry guards the spot it's on, a follower follows the player. */
+	/** Gives the unit an order: a sentry or hunter guards the spot it's on, a follower follows the player. */
 	private static void order(Mob mob, UnitOrder order, ServerPlayer player) {
 		UnitData data = mob.getAttached(UnitManager.UNIT);
 		if (data == null) {
 			return;
 		}
 		mob.setAttached(UnitManager.UNIT, data.withOrder(order,
-				order == UnitOrder.SENTRY ? Optional.of(mob.blockPosition()) : Optional.empty(),
+				order == UnitOrder.SENTRY || order == UnitOrder.HUNT ? Optional.of(mob.blockPosition()) : Optional.empty(),
 				order == UnitOrder.FOLLOW ? Optional.of(player.getUUID()) : Optional.empty()));
+		UnitManager.refreshOrderEffects(mob);
 		// A new order replaces whatever it was doing, fights included (attacking units find new targets).
 		UnitGoals.clearTarget(mob);
 		mob.getNavigation().stop();

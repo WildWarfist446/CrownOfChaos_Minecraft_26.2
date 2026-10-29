@@ -60,7 +60,7 @@ Two players (LAN with a second account):
 - [x] Kicking a member, and handing over ownership
 - [x] Flags of different factions must be 200 blocks apart
 - [x] Another faction's territory title ("Faction Territory")
-- [ ] War between two real factions, and units fighting each other
+- [ ] War between two real factions, and units fighting each other: play it again with the 28 October changes (sentry pursuit within the territory, enemy combatants first, the owner's targets, the new Hunt order on key 8)
 
 One player:
 - [x] Poseidon's Regeneration switching off again after you leave water

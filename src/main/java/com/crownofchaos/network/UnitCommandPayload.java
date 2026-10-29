@@ -29,7 +29,9 @@ public record UnitCommandPayload(Command command) implements CustomPacketPayload
 		/** Select every unit nearby the player can command. */
 		SELECT_NEARBY,
 		/** Deselect everything. */
-		CLEAR_SELECTION
+		CLEAR_SELECTION,
+		/** Stand guard like a sentry, and hunt enemy combatants anywhere in the faction's territory. */
+		HUNT
 	}
 
 	public static final CustomPacketPayload.Type<UnitCommandPayload> TYPE =

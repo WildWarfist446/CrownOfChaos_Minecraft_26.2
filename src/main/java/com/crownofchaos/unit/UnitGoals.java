@@ -30,6 +30,8 @@ import net.minecraft.world.phys.Vec3;
 final class UnitGoals {
 	/** A sentry chases enemies up to this many blocks from its post, then gives up and goes back. */
 	static final double SENTRY_LEASH = 16.0;
+	/** A hunter looks this far (blocks) for enemy combatants, which covers a whole territory. */
+	static final double HUNT_SEARCH_RANGE = 128.0;
 	/** A following unit teleports to its leader when it falls this far behind. */
 	private static final double FOLLOW_TELEPORT_DISTANCE = 24.0;
 	/** A following unit stops this close to its leader. */
@@ -74,6 +76,44 @@ final class UnitGoals {
 		}
 	}
 
+	/** 2 for a target a unit should drop everything for (an enemy combatant, or what its owner is attacking), 0 for any other. */
+	static int rank(Mob mob, LivingEntity target) {
+		return UnitManager.isHostile(mob, target) && (UnitManager.isEnemyCombatant(mob, target) || UnitManager.isOwnerTarget(mob, target)) ? 2 : 0;
+	}
+
+	/**
+	 * The target a unit should fight first: what its owner attacked recently, else the nearest enemy combatant
+	 * within the range (that it can see, unless {@code needSight} is false, as for a hunter).
+	 */
+	static @Nullable LivingEntity findPriorityTarget(Mob mob, double range, boolean needSight) {
+		UnitData data = mob.getAttached(UnitManager.UNIT);
+		if (data == null || !(mob.level() instanceof ServerLevel level)) {
+			return null;
+		}
+		Player owner = level.getPlayerByUUID(data.owner());
+		if (owner != null) {
+			LivingEntity hit = owner.getLastHurtMob();
+			if (hit != null && hit.isAlive() && mob.distanceTo(hit) <= range && UnitManager.isHostile(mob, hit) && UnitManager.isOwnerTarget(mob, hit)) {
+				return hit;
+			}
+		}
+		LivingEntity nearest = null;
+		double nearestDistance = Double.MAX_VALUE;
+		for (LivingEntity candidate : level.getEntitiesOfClass(LivingEntity.class, mob.getBoundingBox().inflate(range))) {
+			if (candidate == mob || !candidate.isAlive() || !EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(candidate)
+					|| !UnitManager.isEnemyCombatant(mob, candidate) || !UnitManager.isHostile(mob, candidate)
+					|| needSight && !mob.hasLineOfSight(candidate)) {
+				continue;
+			}
+			double distance = mob.distanceToSqr(candidate);
+			if (distance < nearestDistance) {
+				nearest = candidate;
+				nearestDistance = distance;
+			}
+		}
+		return nearest;
+	}
+
 	/** Walks the unit toward a spot, by path finding or, for brain mobs, by setting its walk target. */
 	private static void walkTo(Mob mob, Vec3 to, double speed, int closeEnough) {
 		if (hasMemory(mob, MemoryModuleType.WALK_TARGET)) {
@@ -110,7 +150,7 @@ final class UnitGoals {
 			if (data == null || targetOf(this.mob) != null) {
 				return false;
 			}
-			return data.order() == UnitOrder.SENTRY && data.post().isPresent()
+			return (data.order() == UnitOrder.SENTRY || data.order() == UnitOrder.HUNT) && data.post().isPresent()
 					|| data.order() == UnitOrder.FOLLOW && this.leader(data) != null;
 		}
 
@@ -135,7 +175,7 @@ final class UnitGoals {
 			if (data == null) {
 				return;
 			}
-			if (data.order() == UnitOrder.SENTRY) {
+			if (data.order() == UnitOrder.SENTRY || data.order() == UnitOrder.HUNT) {
 				BlockPos post = data.post().orElseThrow();
 				Vec3 spot = Vec3.atBottomCenterOf(post);
 				if (this.mob.position().distanceToSqr(spot) > 1.5 * 1.5) {
@@ -202,8 +242,38 @@ final class UnitGoals {
 			LivingEntity target = targetOf(this.mob);
 			if (target != null && !UnitManager.isHostile(this.mob, target)) {
 				clearTarget(this.mob);
-			} else if (target == null && hasMemory(this.mob, MemoryModuleType.ATTACK_TARGET)) {
+				target = null;
+			}
+			// Enemy combatants, and whatever the owner is attacking, come before anything else it is fighting.
+			if (target == null || rank(this.mob, target) < 2) {
+				UnitData data = this.mob.getAttached(UnitManager.UNIT);
+				boolean hunting = data != null && data.order() == UnitOrder.HUNT;
+				double range = hunting ? HUNT_SEARCH_RANGE : this.mob.getAttributeValue(Attributes.FOLLOW_RANGE);
+				LivingEntity best = findPriorityTarget(this.mob, range, !hunting);
+				if (best != null && best != target) {
+					this.handTo(best);
+					return;
+				}
+			}
+			if (target == null && hasMemory(this.mob, MemoryModuleType.ATTACK_TARGET)) {
 				this.findTargetForBrain();
+			}
+		}
+
+		/** Makes this the unit's target, whether it fights by goals or by brain. */
+		private void handTo(LivingEntity enemy) {
+			if (this.mob instanceof Warden warden) {
+				// Wardens fight whoever they're angriest at; make this enemy that.
+				warden.increaseAngerAt(enemy, AngerLevel.ANGRY.getMinimumAnger() + 20, false);
+			} else if (hasMemory(this.mob, MemoryModuleType.ATTACK_TARGET)) {
+				// Piglins drop any target that isn't the one they'd pick themselves, and they pick
+				// whoever they're angry at first, so make them angry at it too.
+				if (hasMemory(this.mob, MemoryModuleType.ANGRY_AT)) {
+					this.mob.getBrain().setMemoryWithExpiry(MemoryModuleType.ANGRY_AT, enemy.getUUID(), ANGER_TICKS);
+				}
+				this.mob.getBrain().setMemory(MemoryModuleType.ATTACK_TARGET, enemy);
+			} else {
+				this.mob.setTarget(enemy);
 			}
 		}
 
@@ -217,17 +287,7 @@ final class UnitGoals {
 			if (enemy == null || !this.mob.hasLineOfSight(enemy)) {
 				return;
 			}
-			if (this.mob instanceof Warden warden) {
-				// Wardens fight whoever they're angriest at; make this enemy that.
-				warden.increaseAngerAt(enemy, AngerLevel.ANGRY.getMinimumAnger() + 20, false);
-			} else {
-				// Piglins drop any target that isn't the one they'd pick themselves, and they pick
-				// whoever they're angry at first, so make them angry at it too.
-				if (hasMemory(this.mob, MemoryModuleType.ANGRY_AT)) {
-					this.mob.getBrain().setMemoryWithExpiry(MemoryModuleType.ANGRY_AT, enemy.getUUID(), ANGER_TICKS);
-				}
-				this.mob.getBrain().setMemory(MemoryModuleType.ATTACK_TARGET, enemy);
-			}
+			this.handTo(enemy);
 		}
 	}
 }

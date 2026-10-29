@@ -330,5 +330,7 @@
   "lore.crownofchaos.page.8": "He does not come alone.\nFour times he will call what he has buried. Do not fight alone. Do not stand where he is looking.\nAnd when the last is gone, he will come down to [[finish]] you.",
   "lore.crownofchaos.page.9": "The flame that rose is not the one you lit. It has no hunger for wood or flesh, only for what has been spent.\nOffer it the pattern that made your armour heavier, the one that remembers netherite, and let it teach the pattern something [[new]].",
   "lore.crownofchaos.page.10": "Three things for the last anvil: the empty crown, the thing he left behind in the fire, and the template that learned a new name.\nSmith them as you would smith netherite.\nBe sure you want what waits on the other [[side]].",
-  "lore.crownofchaos.page.11": "You did it. I hoped you wouldn't. I hoped you would.\nWear it carefully. It remembers every head before yours.\nIf you ever hear the fog humming, take it off.\n— a former [[bearer]]"
+  "lore.crownofchaos.page.11": "You did it. I hoped you wouldn't. I hoped you would.\nWear it carefully. It remembers every head before yours.\nIf you ever hear the fog humming, take it off.\n— a former [[bearer]]",
+  "gui.crownofchaos.units.hunt": "Hunt",
+  "message.crownofchaos.unit.ordered.hunt": "Units hunting enemies in your territory: %s"
 }
