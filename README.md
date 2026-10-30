@@ -50,7 +50,7 @@ ability (the ability keys do nothing while it's worn), and keeps Piglins calm li
 | Hero of the Village I | Permanent while worn |
 | Fortune III | Applies to block drops such as ores and crops. If your tool has higher Fortune, the tool's level is used. |
 | **Ability: Vein Miner** | Press **R** to toggle Vein Miner on or off. While it's on, mining an ore breaks the whole connected vein, up to 64 extra blocks. Ores only. Each block costs normal tool durability, and mining stops before your tool would break. |
-| **Secondary ability: Ore Sense** | Press **G** to see every ore within 16 blocks through walls for 40 seconds, outlined in its ore's color: gray coal, tan iron, orange copper, yellow gold, red redstone, blue lapis, cyan diamond, green emerald, white quartz and brown ancient debris (ores from other mods are white). The action bar says how many were found. Only you see the outlines, and a mined ore's outline disappears. 60 second cooldown. |
+| **Secondary ability: Ore Sense** | Press **G** to see every ore within 16 blocks through walls for 40 seconds, outlined in its ore's color: gray coal, tan iron, orange copper, yellow gold, red redstone, blue lapis, cyan diamond, green emerald, white quartz and magenta ancient debris (ores from other mods are white). Ancient debris, diamonds and emeralds are always shown first. The action bar says how many were found. Only you see the outlines, and a mined ore's outline disappears. 60 second cooldown. |
 
 **Recipe** (unlocked by picking up a Golden Crown):
 

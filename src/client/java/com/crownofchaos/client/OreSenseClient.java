@@ -37,7 +37,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * like the shulker's, are drawn the vanilla way there too.
  */
 public final class OreSenseClient {
-	/** Most ores shown at once, nearest first, to keep the outlines readable. */
+	/** Most ores shown at once (the prized ones first, then nearest first), to keep the outlines readable. */
 	private static final int MAX_MARKERS = 512;
 
 	/** Outline color for each kind of ore. Ores from other mods in {@code c:ores} are white. */
@@ -51,7 +51,7 @@ public final class OreSenseClient {
 			ConventionalBlockTags.DIAMOND_ORES, 0x5DECF5,
 			ConventionalBlockTags.EMERALD_ORES, 0x17DD62,
 			ConventionalBlockTags.QUARTZ_ORES, 0xF0EDE6,
-			ConventionalBlockTags.NETHERITE_SCRAP_ORES, 0x9A5B44);
+			ConventionalBlockTags.NETHERITE_SCRAP_ORES, 0xE040FF);
 	private static final int OTHER_ORE_COLOR = 0xFFFFFF;
 
 	/** Markers currently shown. Only touched on the client thread. */
@@ -102,7 +102,10 @@ public final class OreSenseClient {
 				ores.add(pos.immutable());
 			}
 		}
-		ores.sort(Comparator.comparingDouble(pos -> pos.distSqr(center)));
+		// The rarest ores first, then nearest first, so a crowd of common ores (the Nether is full of quartz and gold)
+		// cannot push ancient debris out of the limit.
+		ores.sort(Comparator.<BlockPos>comparingInt(pos -> isPrized(level.getBlockState(pos)) ? 0 : 1)
+				.thenComparingDouble(pos -> pos.distSqr(center)));
 
 		for (BlockPos pos : ores.subList(0, Math.min(ores.size(), MAX_MARKERS))) {
 			OreMarker marker = new OreMarker(level, colorOf(level.getBlockState(pos)));
@@ -118,6 +121,11 @@ public final class OreSenseClient {
 				? Component.translatable("message.crownofchaos.ability.ore_sense.none")
 				: Component.translatable("message.crownofchaos.ability.ore_sense.found", ores.size());
 		client.player.sendOverlayMessage(message.copy().withStyle(CrownAbilities.MESSAGE_COLOR));
+	}
+
+	/** Ores worth never missing: ancient debris, diamonds and emeralds. */
+	private static boolean isPrized(BlockState state) {
+		return state.is(ConventionalBlockTags.NETHERITE_SCRAP_ORES) || state.is(ConventionalBlockTags.DIAMOND_ORES) || state.is(ConventionalBlockTags.EMERALD_ORES);
 	}
 
 	private static int colorOf(BlockState state) {
