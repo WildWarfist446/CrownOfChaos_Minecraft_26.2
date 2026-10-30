@@ -89,6 +89,8 @@ ability (the ability keys do nothing while it's worn), and keeps Piglins calm li
 | Ability | Details |
 |---|---|
 | Fire Resistance | Permanent while worn: immune to fire and lava damage |
+| Lava vision | You see through lava as clearly as through water (tinted orange) |
+| Lava swimming | You move through lava like water: the same speed and drag, and sneaking sinks you |
 | Fire Aspect | Your melee hits set the target on fire for 8 seconds, like Fire Aspect II |
 | Flame | Arrows you fire are lit like Flame arrows, setting targets on fire and lighting TNT |
 | **Ability: Fire Charge** | Press **R** to shoot a Ghast fireball where you're looking, no fire charge item needed. It flies 25% faster than a Ghast's and explodes like one but deals 50% more damage (9 on a direct hit), and sets everything it damages on fire for 5 seconds. It never breaks blocks or starts fires on the ground. The blast can hurt you too, so don't fire it at point-blank range. 2 second cooldown. |
@@ -237,7 +239,7 @@ See each crown's section above for details.
 | Golden Crown | None (base crown) | None | None | Gold Ingot |
 | Under Crown | Haste II, Night Vision, Hero of the Village, Fortune III | Vein Miner (toggle) | Ore Sense (60s) | Golden Crown |
 | Crown of Poseidon | Water Breathing, Dolphin's Grace, Night Vision, Regeneration in water, +50% damage in water | Riptide (2.25s) | Lightning Strike, aimed (20s) | Heart of the Sea |
-| Crown of Nether | Fire Resistance, Fire Aspect, Flame | Fire Charge (2s) | Blaze Flight, 60s of flight (2 min) | Nether Star |
+| Crown of Nether | Fire Resistance, lava vision and swimming, Fire Aspect, Flame | Fire Charge (2s) | Blaze Flight, 60s of flight (2 min) | Nether Star |
 | Crown of Darkness | Night Vision, Darkness on hit | Sonic Boom, aimed (15s) | Darkness Pulse (30s) | Sculk Cord |
 | Crown of Sun | Swiftness II on sand and terracotta | Wind Charge (3 charges, 6s each) | Sun Cycle (20s) | Ankh Charm |
 | Crown of Wither | Wither immunity, Wither on hit | Wither Skull (3 charges, 6s each, 3s between shots) | Wither Flight, 60s of flight (2 min) | Wither Skeleton Skull |
@@ -319,7 +321,7 @@ on repeat for everyone in the arena until he is defeated.
 
 **The Crown of Chaos** has netherite helmet stats, a custom 3D model, no netherite upgrade, and:
 
-- the Crown of Nether's fire and lava immunity, the Crown of Wither's Wither immunity, the Crown of Winter's
+- the Crown of Nether's fire and lava immunity, lava vision and lava swimming, the Crown of Wither's Wither immunity, the Crown of Winter's
   freeze immunity and the Crown of Void's teleport when hit, but not the crowns' other powers;
 - **The pain of death** (primary): fires a Wither Skull and a Fire Charge where you look and, at whatever you're
   looking at, a Lightning Strike (within 30 blocks) and an Arrow Volley (within 20), all at once, for the
