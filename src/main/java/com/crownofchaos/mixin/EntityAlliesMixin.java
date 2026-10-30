@@ -7,9 +7,12 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.crownofchaos.entity.ChaosKing;
+import com.crownofchaos.item.CrownPassivity;
 import com.crownofchaos.unit.UnitManager;
 
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.player.Player;
 
 /**
  * Makes army units passive: a unit counts everyone as an ally except those the faction rules
@@ -28,6 +31,9 @@ public abstract class EntityAlliesMixin {
 			cir.setReturnValue(UnitManager.isAlly(self, other));
 		} else if (ChaosKing.isLegion(self) && ChaosKing.isLegion(other)) {
 			// The Chaos King's legion never turns on itself.
+			cir.setReturnValue(true);
+		} else if (self instanceof Mob mob && other instanceof Player player && CrownPassivity.isPassiveTo(mob, player)) {
+			// A crown makes the hostile mobs it can make units of leave its wearer alone.
 			cir.setReturnValue(true);
 		}
 	}

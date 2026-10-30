@@ -255,6 +255,9 @@ Times in brackets are cooldowns. "Aimed" abilities hit whatever you're looking a
   world or server. Other ability messages are light purple, like the crowns' item names.
 - Pressing a key without a crown on shows "Wear a crown to use its power"; pressing **G** on a crown without
   a secondary ability says so.
+- A crown makes the hostile mobs it can make units of leave its wearer alone (Wither Skeletons for the Crown of
+  Wither, Husks and Parched for the Sun, Piglins, Hoglins and Ghasts for the Nether, and so on; the Crown of
+  Chaos covers every unit type). Hit one and it fights back for 10 seconds. The Chaos King's legion is not covered.
 - Crown abilities never hurt animals you've tamed, and on-hit effects (Darkness, Wither, freezing, Fire Aspect)
   don't apply to them. Other players' pets can still be hit.
 

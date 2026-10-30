@@ -315,9 +315,19 @@ the mob as a unit of the player's faction (they must be in one). `unit/UnitManag
   water-only navigation for a `FlyingPathNavigation`, since a Guardian's own one finds no path through air).
   Tested in game on dry land: they follow, and shoot their beam at a target; they float a little off the
   ground while moving and settle on it when idle.
-- **No crown passivity** (Warfist, 12 October 2026): wearing a crown does *not* make its own kinds of
-  mobs (Wither Skeletons for the Crown of Wither, and so on) ignore you. He tried it and removed it: you
-  should have to fight for the mobs you make units from. Don't add it back without asking.
+- **Crown passivity** (Warfist reversed his 12 October decision on 30 October 2026, after testing in single
+  player and finding his crowns did not do it: "all the crowns have the hostile mobs that match the units
+  they can create be passive to the player"): `item/CrownPassivity.isPassiveTo`, called from
+  `mixin/EntityAlliesMixin` (so every vanilla targeting check, brain mobs included, treats the wearer as an
+  ally), makes a mob whose type a crown can make a unit of leave its wearer alone (a netherite crown counts, and
+  the Crown of Chaos covers every unit type; the Golden and Under crowns have no units). My choices: a mob the
+  wearer hurt fights back for `PROVOKED_TICKS` (200, 10 s), and the Chaos King's legion and army units are not
+  covered, so the boss fight and the unit rules are unchanged. Tested in game on Hard-ish survival: with the
+  crown a Husk, Stray, Wither Skeleton, Pillager, Vindicator, Piglin, Hoglin, Shulker (and a Husk with the
+  Crown of Chaos) ignored the player 8 blocks away while the same mob without the crown targeted them, a Zombie
+  stayed hostile to a Crown of Sun wearer, and a hit Husk then targeted its attacker. The Warden was not
+  conclusive (it did not notice the player without a crown either in the time tested), Endermen and
+  Guardians were not tested.
 - Units never despawn and don't burn in daylight (`mixin/MobSunMixin`); Piglin and Hoglin units
   don't zombify. Warden units never give Darkness (`mixin/WardenDarknessMixin`) and always keep
   a dig cooldown, because a Warden with none digs into the ground and is removed (Warfist:
