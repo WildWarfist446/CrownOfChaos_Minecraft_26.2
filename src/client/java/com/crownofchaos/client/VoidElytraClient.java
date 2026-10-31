@@ -22,7 +22,7 @@ public final class VoidElytraClient {
 
 	private static void tick(Minecraft client) {
 		LocalPlayer player = client.player;
-		if (player == null || !player.isFallFlying() || !CrownEffects.isWearing(player, ModItems.CROWN_OF_VOID)) {
+		if (player == null || !player.isFallFlying() || !CrownEffects.isWearingOrChaos(player, ModItems.CROWN_OF_VOID)) {
 			return;
 		}
 		Vec3 velocity = player.getDeltaMovement();

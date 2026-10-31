@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.PowderSnowBlock;
 public abstract class PowderSnowBlockMixin {
 	@Inject(method = "canEntityWalkOnPowderSnow", at = @At("HEAD"), cancellable = true)
 	private static void crownofchaos$winterCrownWalksOnSnow(Entity entity, CallbackInfoReturnable<Boolean> cir) {
-		if (entity instanceof LivingEntity living && CrownEffects.isWearing(living, ModItems.CROWN_OF_WINTER)) {
+		if (entity instanceof LivingEntity living && CrownEffects.isWearingOrChaos(living, ModItems.CROWN_OF_WINTER)) {
 			cir.setReturnValue(true);
 		}
 	}

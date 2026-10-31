@@ -6,6 +6,7 @@ import com.crownofchaos.unit.UnitManager;
 
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
@@ -29,7 +30,9 @@ public final class CrownPassivity {
 		if (head.isEmpty() || !ModItems.isCrown(head.getItem()) || ChaosKing.isLegion(mob) || mob.hasAttached(UnitManager.UNIT)) {
 			return false;
 		}
-		boolean matches = ModUnits.forCrown(head.getItem()).stream().anyMatch(unit -> unit.entity() == mob.getType());
+		// The Crown of Chaos calms every hostile mob (Warfist, 31 October 2026), not only the ones it can make units of.
+		boolean matches = (ModItems.baseCrown(head.getItem()) == ModItems.CROWN_OF_CHAOS && mob instanceof Enemy)
+				|| ModUnits.forCrown(head.getItem()).stream().anyMatch(unit -> unit.entity() == mob.getType());
 		return matches && !(mob.getLastHurtByMob() == player && mob.tickCount - mob.getLastHurtByMobTimestamp() <= PROVOKED_TICKS);
 	}
 }

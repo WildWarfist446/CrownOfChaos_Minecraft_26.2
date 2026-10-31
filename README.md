@@ -248,7 +248,7 @@ See each crown's section above for details.
 | Crown of Winter | Freeze on hit, freeze immunity, Swiftness and grip on snow and ice | Frost Walker (toggle) | Icicle Drop, 5 icicles, aimed (6s) | Powder Snow Bucket |
 | Crown of Iron | +50% bow and crossbow damage | Arrow Volley, aimed (10s) | Glowing Arrows (toggle) | Totem of Undying |
 | Crown of Void | Teleport when hit, Swiftness on End blocks, faster elytra flight | Ender Pearl (3s) | Dragon's Breath (30s) | Dragon Egg |
-| Crown of Chaos | Fire and lava immunity, Wither immunity, freeze immunity, teleport when hit | The pain of death (10s) | Death's door (30s) | Incomplete Crown of Chaos + Soul of Chaos + Chaos Upgrade |
+| Crown of Chaos | Every other crown's status effects, 4 extra hearts, hostile mobs passive, fire and lava immunity, Wither immunity, freeze immunity, teleport when hit | The pain of death (10s) | Death's door (30s) | Incomplete Crown of Chaos + Soul of Chaos + Chaos Upgrade |
 
 Times in brackets are cooldowns. "Aimed" abilities hit whatever you're looking at.
 
@@ -311,7 +311,7 @@ on repeat for everyone in the arena until he is defeated.
 
 - He floats up, invulnerable, and calls four waves of units that attack you and your army units (and never
   each other). Per player (counted when the altar is lit, so a player dying or arriving mid-fight doesn't change later waves): 5 Strays and 5 Husks; then 1 Ravager, 2 Evokers and 3 Vindicators; then
-  4 Guardians and 3 Drowned; then one Warden with 25% of its health.
+  4 Guardians and 6 Drowned; then one Warden with 25% of its health per player, hitting 25% weaker (melee and sonic boom).
 - A player who arrives after the altar was lit is counted from then on: the wave in progress gets their share of extra units (or Warden health) and later waves are sized for them too.
 - The first wave comes 15 seconds after he rises, so you can ready yourself and back away from the altar;
   when a wave is cleared a banner says so and the next one follows 6 seconds later.
@@ -325,6 +325,11 @@ on repeat for everyone in the arena until he is defeated.
 
 - the Crown of Nether's fire and lava immunity, lava vision and lava swimming, the Crown of Wither's Wither immunity, the Crown of Winter's
   freeze immunity and the Crown of Void's teleport when hit, but not the crowns' other powers;
+- every status effect the other crowns give: Haste II, Night Vision, Hero of the Village, Water Breathing, Dolphin's
+  Grace and Fire Resistance, Swiftness II on the Sun, Winter and Void crowns' blocks, and Regeneration I in water;
+- all the crowns' speed features: normal grip on ice, walking on powder snow (the Crown of Winter's) and the Crown of Void's faster elytra flight;
+- **4 extra hearts** (28 health);
+- every hostile mob leaves you alone (not the Chaos King's legion), until you hurt one, which then fights back for 10 seconds;
 - **The pain of death** (primary): fires a Wither Skull and a Fire Charge where you look and, at whatever you're
   looking at, a Lightning Strike (within 30 blocks) and an Arrow Volley (within 20), all at once, for the
   abilities' usual damage;

@@ -18,6 +18,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
@@ -30,6 +31,9 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.OwnableEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.entity.projectile.arrow.ThrownTrident;
 import net.minecraft.util.Mth;
@@ -96,6 +100,10 @@ public final class CrownEffects {
 	/** Server tick of each Crown of Void wearer's last teleport. */
 	private static final Map<UUID, Integer> LAST_VOID_TELEPORT = new HashMap<>();
 
+	/** The Crown of Chaos gives this many extra hearts (4, set by Warfist, 31 October 2026). */
+	public static final int CHAOS_CROWN_EXTRA_HEARTS = 4;
+	private static final Identifier CHAOS_HEALTH_ID = CrownOfChaos.id("chaos_crown_health");
+
 	/** Regeneration II, the strongest level potions give, for the 22 seconds a strong Regeneration potion lasts. */
 	public static final int POSEIDON_BOTTLE_REGENERATION_AMPLIFIER = 1;
 	public static final int POSEIDON_BOTTLE_REGENERATION_TICKS = 22 * 20;
@@ -136,8 +144,15 @@ public final class CrownEffects {
 					new CrownEffect(MobEffects.NIGHT_VISION, 0)),
 			ModItems.CROWN_OF_NETHER, List.of(
 					new CrownEffect(MobEffects.FIRE_RESISTANCE, 0)),
-			// The Crown of Chaos's one potion-style power: the Crown of Nether's fire and lava immunity.
+			// The Crown of Chaos has every effect the other crowns give (Warfist, 31 October 2026): Haste II, Night Vision,
+			// Hero of the Village, Water Breathing, Dolphin's Grace and Fire Resistance here, plus the terrain Swiftness
+			// and the Regeneration in water below.
 			ModItems.CROWN_OF_CHAOS, List.of(
+					new CrownEffect(MobEffects.HASTE, 1),
+					new CrownEffect(MobEffects.NIGHT_VISION, 0),
+					new CrownEffect(MobEffects.HERO_OF_THE_VILLAGE, 0),
+					new CrownEffect(MobEffects.WATER_BREATHING, 0),
+					new CrownEffect(MobEffects.DOLPHINS_GRACE, 0),
 					new CrownEffect(MobEffects.FIRE_RESISTANCE, 0)),
 			ModItems.CROWN_OF_DARKNESS, List.of(
 					new CrownEffect(MobEffects.NIGHT_VISION, 0)));
@@ -259,12 +274,21 @@ public final class CrownEffects {
 			for (ServerPlayer player : server.getPlayerList().getPlayers()) {
 				Item worn = ModItems.baseCrown(player.getItemBySlot(EquipmentSlot.HEAD).getItem());
 				List<CrownEffect> active = EFFECTS.getOrDefault(worn, List.of());
-				TagKey<Block> speedBlocks = TERRAIN_SPEED_BLOCKS.get(worn);
-				if (speedBlocks != null && isOnTerrain(player, speedBlocks, server.getTickCount())) {
+				boolean onTerrain = false;
+				if (worn == ModItems.CROWN_OF_CHAOS) {
+					for (TagKey<Block> speedBlocks : TERRAIN_SPEED_BLOCKS.values()) {
+						onTerrain |= isOnTerrain(player, speedBlocks, server.getTickCount());
+					}
+				} else {
+					TagKey<Block> speedBlocks = TERRAIN_SPEED_BLOCKS.get(worn);
+					onTerrain = speedBlocks != null && isOnTerrain(player, speedBlocks, server.getTickCount());
+				}
+				if (onTerrain) {
 					active = new ArrayList<>(active);
 					active.add(TERRAIN_SWIFTNESS);
 				}
-				if (worn == ModItems.CROWN_OF_POSEIDON && player.isInWater()) {
+				updateChaosHealth(player, worn == ModItems.CROWN_OF_CHAOS);
+				if ((worn == ModItems.CROWN_OF_POSEIDON || worn == ModItems.CROWN_OF_CHAOS) && player.isInWater()) {
 					active = new ArrayList<>(active);
 					active.add(POSEIDON_WATER_REGENERATION);
 				}
@@ -387,6 +411,19 @@ public final class CrownEffects {
 		}
 		Integer last = LAST_ON_TERRAIN.get(player.getUUID());
 		return last != null && tick - last <= TERRAIN_GRACE_TICKS;
+	}
+
+	/** Adds or removes the Crown of Chaos's extra hearts. The modifier is transient, so it is never saved with the player. */
+	private static void updateChaosHealth(ServerPlayer player, boolean wearing) {
+		AttributeInstance maxHealth = player.getAttribute(Attributes.MAX_HEALTH);
+		if (maxHealth == null) {
+			return;
+		}
+		if (wearing && !maxHealth.hasModifier(CHAOS_HEALTH_ID)) {
+			maxHealth.addTransientModifier(new AttributeModifier(CHAOS_HEALTH_ID, CHAOS_CROWN_EXTRA_HEARTS * 2.0, AttributeModifier.Operation.ADD_VALUE));
+		} else if (!wearing && maxHealth.hasModifier(CHAOS_HEALTH_ID)) {
+			maxHealth.removeModifier(CHAOS_HEALTH_ID);
+		}
 	}
 
 	private static void apply(ServerPlayer player, List<CrownEffect> effects) {

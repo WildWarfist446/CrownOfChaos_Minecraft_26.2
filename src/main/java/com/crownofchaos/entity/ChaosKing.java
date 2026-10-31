@@ -80,7 +80,7 @@ import net.minecraft.world.phys.Vec3;
  *     about 5 blocks. He is invulnerable from the start.
  * <li><b>Waves:</b> he stays in the air and calls four waves of units, each starting once the last is
  *     dead, that attack players and players' units: 5 Strays and 5 Husks per player; then per player 1
- *     Ravager, 2 Evokers and 3 Vindicators; then per player 4 Guardians and 3 Drowned; then one Warden
+ *     Ravager, 2 Evokers and 3 Vindicators; then per player 4 Guardians and 6 Drowned; then one Warden
  *     with 25% of its usual health for each player.
  * <li><b>Descending:</b> with the last wave dead he is no longer invulnerable and flies quickly down onto the altar.
  * <li><b>Fighting:</b> he attacks in melee and, every 30 seconds, uses one of three of the crowns'
@@ -136,6 +136,10 @@ public final class ChaosKing extends Monster {
 	private static final int FIRST_ABILITY_TICKS = 200;
 	/** The Warden of the last wave has this share of its health for each player. */
 	private static final double WARDEN_HEALTH_PER_PLAYER = 0.25;
+	/** His Warden hits (melee and sonic boom) for this share of a Warden's damage: 25% weaker (Warfist, 31 October 2026). */
+	public static final float WARDEN_DAMAGE_MULTIPLIER = 0.75F;
+	/** Drowned in wave 3 for each player: double the original 3. */
+	private static final int DROWNED_PER_PLAYER = 6;
 	/** How many Souls of Chaos he drops. */
 	private static final int SOULS_DROPPED = 1;
 
@@ -487,6 +491,7 @@ public final class ChaosKing extends Monster {
 				double health = mob.getMaxHealth() * WARDEN_HEALTH_PER_PLAYER * count;
 				mob.getAttribute(Attributes.MAX_HEALTH).setBaseValue(health);
 				mob.setHealth((float) health);
+				mob.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(mob.getAttributeBaseValue(Attributes.ATTACK_DAMAGE) * WARDEN_DAMAGE_MULTIPLIER);
 				if (mob instanceof Warden warden) {
 					for (ServerPlayer player : players) {
 						warden.increaseAngerAt(player, 150, false);
@@ -510,7 +515,7 @@ public final class ChaosKing extends Monster {
 			}
 			default -> {
 				this.spawnMinions(level, EntityTypes.GUARDIAN, 4 * count, 2);
-				this.spawnMinions(level, EntityTypes.DROWNED, 3 * count, 0);
+				this.spawnMinions(level, EntityTypes.DROWNED, DROWNED_PER_PLAYER * count, 0);
 			}
 		}
 	}

@@ -2,6 +2,7 @@ package com.crownofchaos.mixin;
 
 import com.crownofchaos.ability.ArrowVolleyAbility;
 import com.crownofchaos.ability.FireChargeAbility;
+import com.crownofchaos.entity.ChaosKing;
 import com.crownofchaos.item.CrownEffects;
 import com.crownofchaos.item.ModItems;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -12,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.warden.Warden;
 
 /**
  * Crown damage bonuses: a Crown of Poseidon wearer deals more damage while in water (arrows
@@ -40,6 +42,13 @@ public abstract class LivingEntityMixin {
 		// Crown of Nether fireballs: both the direct hit and the explosion come from the fireball.
 		if (FireChargeAbility.isCrownFireball(source.getDirectEntity())) {
 			damage *= FireChargeAbility.DAMAGE_MULTIPLIER;
+		}
+
+		// The Chaos King's Warden: its sonic boom (a fixed 10 in vanilla) is weakened like its melee.
+		if (source.is(DamageTypes.SONIC_BOOM)
+				&& source.getEntity() instanceof Warden warden
+				&& warden.entityTags().contains(ChaosKing.MINION_TAG)) {
+			damage *= ChaosKing.WARDEN_DAMAGE_MULTIPLIER;
 		}
 
 		return damage;

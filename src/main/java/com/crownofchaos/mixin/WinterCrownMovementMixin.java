@@ -21,7 +21,7 @@ public abstract class WinterCrownMovementMixin {
 			method = "travelInAir",
 			at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/Block;getFriction()F"))
 	private float crownofchaos$winterCrownIceGrip(float friction) {
-		if (friction > NORMAL_FRICTION && CrownEffects.isWearing((LivingEntity) (Object) this, ModItems.CROWN_OF_WINTER)) {
+		if (friction > NORMAL_FRICTION && CrownEffects.isWearingOrChaos((LivingEntity) (Object) this, ModItems.CROWN_OF_WINTER)) {
 			return NORMAL_FRICTION;
 		}
 		return friction;
