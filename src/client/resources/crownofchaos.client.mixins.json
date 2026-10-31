@@ -5,6 +5,7 @@
 	"client": [
 		"ExampleClientMixin",
 		"LavaFogMixin",
+		"FlightSmokeMixin",
 		"LivingEntityRendererMixin",
 		"MinecraftGlowMixin",
 		"UnitOutlineMixin"

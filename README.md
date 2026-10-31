@@ -69,6 +69,8 @@ ability (the ability keys do nothing while it's worn), and keeps Piglins calm li
 | Water Breathing | Permanent while worn |
 | Dolphin's Grace | Permanent while worn |
 | Regeneration I | While you are in water |
+| Water bottle regeneration | Drinking a plain water bottle on land gives Regeneration II for 22 seconds |
+| Normal mining underwater | Blocks break at full speed while you are in water, as if on dry land |
 | Night Vision | Permanent while worn |
 | Water damage bonus | Attacks deal 50% more damage while you are in water, including arrows and tridents you fire |
 | **Ability: Riptide** | Press **R** to launch yourself exactly like a Riptide III trident. Works in water or rain, not while riding. 2.25 second cooldown. |
@@ -150,7 +152,7 @@ ability (the ability keys do nothing while it's worn), and keeps Piglins calm li
 | Wither immunity | Immune to the Wither effect from any source: Wither Skeletons, the Wither, wither roses and potions |
 | Wither on hit | Your melee hits give the target Wither I for 10 seconds, like a Wither Skeleton's |
 | **Ability: Wither Skull** | Press **R** to shoot a wither skull where you're looking, like the Wither: 8 damage and Wither II on a hit (10 seconds on Normal, 40 on Hard, none on Easy), and you heal 2.5 hearts if it kills. The small explosion never breaks blocks. Holds 3 skulls, each taking 6 seconds to recharge, with 3 seconds between shots. |
-| **Secondary ability: Wither Flight** | Press **G** to fly exactly like Blaze Flight (60 seconds at 40% of creative speed, Slow Falling afterwards, 2 minute cooldown), trailing smoke from your head like the Wither does. |
+| **Secondary ability: Wither Flight** | Press **G** to fly exactly like Blaze Flight (60 seconds at 40% of creative speed, Slow Falling afterwards, 2 minute cooldown), trailing smoke from your head like the Wither does (other players and your third-person view see it; your own first-person view hides it so you can see). |
 
 **Recipe** (unlocked by picking up a Wither Skeleton Skull):
 
@@ -238,7 +240,7 @@ See each crown's section above for details.
 |---|---|---|---|---|
 | Golden Crown | None (base crown) | None | None | Gold Ingot |
 | Under Crown | Haste II, Night Vision, Hero of the Village, Fortune III | Vein Miner (toggle) | Ore Sense (60s) | Golden Crown |
-| Crown of Poseidon | Water Breathing, Dolphin's Grace, Night Vision, Regeneration in water, +50% damage in water | Riptide (2.25s) | Lightning Strike, aimed (20s) | Heart of the Sea |
+| Crown of Poseidon | Water Breathing, Dolphin's Grace, Night Vision, Regeneration in water (a water bottle on land), normal mining underwater, +50% damage in water | Riptide (2.25s) | Lightning Strike, aimed (20s) | Heart of the Sea |
 | Crown of Nether | Fire Resistance, lava vision and swimming, Fire Aspect, Flame | Fire Charge (2s) | Blaze Flight, 60s of flight (2 min) | Nether Star |
 | Crown of Darkness | Night Vision, Darkness on hit | Sonic Boom, aimed (15s) | Darkness Pulse (30s) | Sculk Cord |
 | Crown of Sun | Swiftness II on sand and terracotta | Wind Charge (3 charges, 6s each) | Sun Cycle (20s) | Ankh Charm |

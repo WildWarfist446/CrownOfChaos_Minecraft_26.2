@@ -96,6 +96,10 @@ public final class CrownEffects {
 	/** Server tick of each Crown of Void wearer's last teleport. */
 	private static final Map<UUID, Integer> LAST_VOID_TELEPORT = new HashMap<>();
 
+	/** Regeneration II, the strongest level potions give, for the 22 seconds a strong Regeneration potion lasts. */
+	public static final int POSEIDON_BOTTLE_REGENERATION_AMPLIFIER = 1;
+	public static final int POSEIDON_BOTTLE_REGENERATION_TICKS = 22 * 20;
+
 	/** Regeneration I, which the Crown of Poseidon grants while its wearer is in water. */
 	private static final CrownEffect POSEIDON_WATER_REGENERATION = new CrownEffect(MobEffects.REGENERATION, 0);
 

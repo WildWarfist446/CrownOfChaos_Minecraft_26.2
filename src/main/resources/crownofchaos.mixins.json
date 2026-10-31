@@ -12,6 +12,8 @@
 		"ApplyBonusCountMixin",
 		"LargeFireballMixin",
 		"LivingEntityLavaMixin",
+		"WaterBottleMixin",
+		"PlayerUnderwaterMiningMixin",
 		"LegionDropsMixin",
 		"LivingEntityEffectMixin",
 		"LivingEntityMixin",
