@@ -100,6 +100,9 @@ public final class CrownEffects {
 	/** Server tick of each Crown of Void wearer's last teleport. */
 	private static final Map<UUID, Integer> LAST_VOID_TELEPORT = new HashMap<>();
 
+	/** Damage multiplier for everything a Crown of Chaos wearer hits (25% more, set by Warfist, 31 October 2026). */
+	public static final float CHAOS_CROWN_DAMAGE_MULTIPLIER = 1.25F;
+
 	/** The Crown of Chaos gives this many extra hearts (4, set by Warfist, 31 October 2026). */
 	public static final int CHAOS_CROWN_EXTRA_HEARTS = 4;
 	private static final Identifier CHAOS_HEALTH_ID = CrownOfChaos.id("chaos_crown_health");

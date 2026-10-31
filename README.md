@@ -328,7 +328,7 @@ on repeat for everyone in the arena until he is defeated.
 - every status effect the other crowns give: Haste II, Night Vision, Hero of the Village, Water Breathing, Dolphin's
   Grace and Fire Resistance, Swiftness II on the Sun, Winter and Void crowns' blocks, and Regeneration I in water;
 - all the crowns' speed features: normal grip on ice, walking on powder snow (the Crown of Winter's) and the Crown of Void's faster elytra flight;
-- **4 extra hearts** (28 health);
+- **4 extra hearts** (28 health) and **25% more damage** on everything you hit;
 - every hostile mob leaves you alone (not the Chaos King's legion), until you hurt one, which then fights back for 10 seconds;
 - **The pain of death** (primary): fires a Wither Skull and a Fire Charge where you look and, at whatever you're
   looking at, a Lightning Strike (within 30 blocks) and an Arrow Volley (within 20), all at once, for the

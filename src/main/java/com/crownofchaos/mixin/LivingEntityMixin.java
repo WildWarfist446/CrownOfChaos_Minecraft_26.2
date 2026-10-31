@@ -44,6 +44,13 @@ public abstract class LivingEntityMixin {
 			damage *= FireChargeAbility.DAMAGE_MULTIPLIER;
 		}
 
+		// Crown of Chaos: everything the wearer hits, projectiles and abilities included, does 25% more.
+		if (source.getEntity() instanceof LivingEntity attacker
+				&& attacker != (Object) this
+				&& CrownEffects.isWearing(attacker, ModItems.CROWN_OF_CHAOS)) {
+			damage *= CrownEffects.CHAOS_CROWN_DAMAGE_MULTIPLIER;
+		}
+
 		// The Chaos King's Warden: its sonic boom (a fixed 10 in vanilla) is weakened like its melee.
 		if (source.is(DamageTypes.SONIC_BOOM)
 				&& source.getEntity() instanceof Warden warden
